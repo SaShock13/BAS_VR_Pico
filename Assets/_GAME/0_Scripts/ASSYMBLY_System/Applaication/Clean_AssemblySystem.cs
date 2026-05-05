@@ -17,6 +17,9 @@ public class Clean_AssemblySystem : IInitializable
     private readonly Dictionary<string, PartDomainState> _parts =
         new Dictionary<string, PartDomainState>();
 
+
+    private UndoRedoService _undoRedo;
+
     public Clean_AssemblySystem(
         IEventBus eventBus,
         IPartConfigRepository repository,
@@ -41,12 +44,42 @@ public class Clean_AssemblySystem : IInitializable
         _eventBus.Subscribe<ApplyPartVisualCommand>(OnApplyPartVisual);
 
 
+        _undoRedo = new UndoRedoService(
+                   capture: BuildSaveData,
+                   restore: LoadSaveData);
+
+        _undoRedo.Initialize();
+
+        
+        SubscribesForSnapshots();
+
         Debug.Log($"---------Application.persistentDataPath {Application.persistentDataPath}");
     }
 
 
+    private void SubscribesForSnapshots()
+    {
+        _eventBus.Subscribe<Clean_PartCreatedEvent>(OnPartChanged);
+        _eventBus.Subscribe<Clean_PartDeletedEvent>(OnPartChanged);
 
-  
+    }
+
+
+    public void Undo()
+    {
+        _undoRedo.Undo();
+    }
+
+    public void Redo()
+    {
+        _undoRedo.Redo();
+    }
+
+
+    private void OnPartChanged(object _)
+    {
+        _undoRedo.Record();
+    }
 
     private void OnDublicateRequested(Clean_DuiblicatePartRequest @event)
     {
@@ -180,7 +213,7 @@ public class Clean_AssemblySystem : IInitializable
 
     public void Save()
     {
-        var saveData = BuildSaveData(_parts.Values, _viewRegistry);
+        var saveData = BuildSaveData();
         _saveService.Save(saveData);
     }
     public void Load()
@@ -197,15 +230,15 @@ public class Clean_AssemblySystem : IInitializable
     }
 
 
-    public AssemblySaveData BuildSaveData(IEnumerable<PartDomainState> states, PartViewRegistry registry)
+    public AssemblySaveData BuildSaveData()
     {
         var result = new AssemblySaveData();
 
-        foreach (var state in states)
+        foreach (var state in _parts.Values)
         {
             //DronePartView view = new DronePartView();
 
-            registry.TryGet(state.InstanceId, out DronePartView view);
+            _viewRegistry.TryGet(state.InstanceId, out DronePartView view);
 
             var data = PartMapper.ToSaveData(state, view.transform);
             result.Parts.Add(data);
