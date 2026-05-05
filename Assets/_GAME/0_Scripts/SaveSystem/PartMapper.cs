@@ -1,0 +1,102 @@
+﻿using System;
+using UnityEngine;
+
+public static class PartMapper
+{
+    // =========================
+    // DOMAIN to SAVE
+    // =========================
+    public static PartSaveData ToSaveData(PartDomainState state, Transform transform)
+    {
+        if (state == null)
+            throw new ArgumentNullException(nameof(state));
+
+        var data = new PartSaveData
+        {
+            InstanceId = state.InstanceId,
+            PartId = state.PartId,
+            LifecycleState = state.LifecycleState,
+            AttachedSocketId = state.AttachedSocketId,
+            VisualProperties = state.VisualProperties
+        };
+
+        // Transform ????????? ?????? ???? ?????? ?????????
+        if (state.LifecycleState == PartLifecycleState.Free && transform != null)
+        {
+            data.Transform = new TransformSaveData
+            {
+                Position = transform.position,
+                Rotation = transform.rotation
+            };
+        }
+
+        return data;
+    }
+
+    // =========================
+    // SAVE to DOMAIN
+    // =========================
+    public static PartDomainState ToDomain(PartSaveData data)
+    {
+        if (data == null)
+            throw new ArgumentNullException(nameof(data));
+
+        var state = new PartDomainState(data.InstanceId, data.PartId);
+
+        // Восстановление визуальных параметров
+        if (data.VisualProperties.HasValue)
+        {
+            state.SetVisual(data.VisualProperties);
+        }
+
+        // Восстановление логического состояния
+        if (data.LifecycleState == PartLifecycleState.Installed)
+        {
+            if (string.IsNullOrEmpty(data.AttachedSocketId))
+                throw new Exception($"SocketId is null for installed part {data.InstanceId}");
+
+            state.AttachToSocket(data.AttachedSocketId);
+        }
+        else
+        {
+            state.Detach();
+        }
+
+        return state;
+    }
+
+    // =========================
+    // APPLY VIEW -- Применяет трансформ, 
+    // =========================
+    public static void ApplyToView(PartSaveData data, DronePartView view, ISocketResolver socketResolver)   /// todo Реализовать сокетирование и применение визуала
+    {
+        if (data == null) throw new ArgumentNullException(nameof(data));
+        if (view == null) throw new ArgumentNullException(nameof(view));
+
+        if (data.LifecycleState == PartLifecycleState.Installed)
+        {
+            var socket = socketResolver.Resolve(data.AttachedSocketId);
+
+            if (socket == null)
+                throw new Exception($"Socket not found: {data.AttachedSocketId}");
+
+            //view.AttachTo(socket);
+        }
+        else
+        {
+            if (data.Transform != null)
+            {
+                view.transform.position = data.Transform.Position;
+                view.transform.rotation = data.Transform.Rotation;
+            }
+
+            //view.Detach(); // ???? ???? ??????
+        }
+
+        //// ????????? ??????
+        //if (data.VisualProperties != null)
+        //{
+        //    view.ApplyVisual(data.VisualProperties);
+        //}
+    }
+}
