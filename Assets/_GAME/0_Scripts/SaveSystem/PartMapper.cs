@@ -17,7 +17,7 @@ public static class PartMapper
             PartId = state.PartId,
             LifecycleState = state.LifecycleState,
             AttachedSocketId = state.AttachedSocketId,
-            VisualProperties = state.VisualProperties
+            VisualProperties = state.VisualProperties 
         };
 
         // Transform ????????? ?????? ???? ?????? ?????????
@@ -44,10 +44,8 @@ public static class PartMapper
         var state = new PartDomainState(data.InstanceId, data.PartId);
 
         // Восстановление визуальных параметров
-        if (data.VisualProperties.HasValue)
-        {
+       
             state.SetVisual(data.VisualProperties);
-        }
 
         // Восстановление логического состояния
         if (data.LifecycleState == PartLifecycleState.Installed)
@@ -93,10 +91,10 @@ public static class PartMapper
             //view.Detach(); // ???? ???? ??????
         }
 
-        //// ????????? ??????
-        //if (data.VisualProperties != null)
-        //{
-        //    view.ApplyVisual(data.VisualProperties);
-        //}
+        // Применяем визуал
+        if (data.VisualProperties is PartVisualProperties visual)
+        {
+            view.ApplyVisualCommitted(visual);
+        }
     }
 }

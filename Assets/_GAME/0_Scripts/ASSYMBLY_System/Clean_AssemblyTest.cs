@@ -51,14 +51,11 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     private void OnHoverExit(HoverExitEventArgs arg0)
     {
-        Debug.Log($"Clean_AssemblyTest OnHoverEXit {this}");
         _highlightService.Exit();
     }
 
     private void OnHoverEnter(HoverEnterEventArgs arg0)
     {
-
-        Debug.Log($"Clean_AssemblyTest OnHoverEnter {this}");
         var view = arg0.interactableObject.transform.GetComponent<DronePartView>();
         _highlightService.Enter(view);
     }
@@ -104,7 +101,12 @@ public class Clean_AssemblyTest : MonoBehaviour
             Debug.Log($"SelectedPartId {_selectionService.SelectedPartId}");
             if (_selectionService.SelectedPartId != null)
             {
-                _eventBus.Publish(new Clean_DeletePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
+                //_eventBus.Publish(new Clean_DeletePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
+
+                var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+
+                var newVisual = new PartVisualProperties() { Color = randColor, Smoothness = 1 };
+                _eventBus.Publish(new ApplyPartVisualCommand (_selectionService.SelectedPartId, newVisual) {Timestamp = DateTime.UtcNow });
             }
 
 

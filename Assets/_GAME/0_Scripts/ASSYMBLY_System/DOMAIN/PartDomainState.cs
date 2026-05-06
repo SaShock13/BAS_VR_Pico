@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class PartDomainState 
 {
     public string InstanceId { get; }
@@ -7,16 +9,17 @@ public class PartDomainState
     public PartLifecycleState LifecycleState { get; private set; }
     public string AttachedSocketId { get; private set; }
 
-    public PartVisualProperties? VisualProperties { get; private set; }
+    public PartVisualProperties VisualProperties { get; private set; }
 
     public PartDomainState(string instanceId, string partId)
     {
         InstanceId = instanceId;
         PartId = partId;
         LifecycleState = PartLifecycleState.Free;
+        SetVisual(new PartVisualProperties() {Color = Color.gray , Smoothness = 0 });
     }
 
-    public void SetVisual(PartVisualProperties? visual)
+    public void SetVisual(PartVisualProperties visual)
     {
         VisualProperties = visual;
     }

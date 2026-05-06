@@ -56,11 +56,14 @@ public class Clean_AssemblySystem : IInitializable
         Debug.Log($"---------Application.persistentDataPath {Application.persistentDataPath}");
     }
 
-
+    /// <summary>
+    /// Подписки на события при которых состояние сборки сохраняется для истории отмены
+    /// </summary>
     private void SubscribesForSnapshots()
     {
-        _eventBus.Subscribe<Clean_PartCreatedEvent>(OnPartChanged);
+        _eventBus.Subscribe<Clean_PartCreatedEvent>(OnPartChanged);  
         _eventBus.Subscribe<Clean_PartDeletedEvent>(OnPartChanged);
+        _eventBus.Subscribe<PartVisualChangedEvent>(OnPartChanged);
 
     }
 
@@ -138,6 +141,7 @@ public class Clean_AssemblySystem : IInitializable
         var view = go.AddComponent<DronePartView>();
         view.Init(instanceId);
 
+        view.ApplyVisualCommitted(domainState.VisualProperties);
 
         // 6. Уведомление
         _eventBus.Publish(new Clean_PartCreatedEvent {InstanceId = instanceId, GameObject = go,Timestamp = DateTime.Now } );
@@ -175,12 +179,15 @@ public class Clean_AssemblySystem : IInitializable
         string dublicateInstanceId = Guid.NewGuid().ToString();
 
 
-
-        var partId = GetDomainState(instanceId).PartId;
+        var oldDomain = GetDomainState(instanceId);
+        var partId = oldDomain.PartId;
 
 
         // 2. Создание доменного состояния
         PartDomainState domainState = new PartDomainState(dublicateInstanceId, partId);
+
+        // Применяем тот же визуал
+        domainState.SetVisual(oldDomain.VisualProperties);
 
         _parts.Add(dublicateInstanceId, domainState);
 
@@ -198,6 +205,8 @@ public class Clean_AssemblySystem : IInitializable
         var view = go.AddComponent<DronePartView>();
         view.Init(dublicateInstanceId);
 
+        // Применяем визуал domain на view
+        view.ApplyVisualCommitted(domainState.VisualProperties);
 
         // 6. Уведомление
         _eventBus.Publish(new Clean_PartCreatedEvent { InstanceId = dublicateInstanceId, GameObject = go, Timestamp = DateTime.Now });
@@ -210,6 +219,7 @@ public class Clean_AssemblySystem : IInitializable
         return _parts[instanceId];
     }
 
+    #region Сохранения/Загрузка сцены
 
     public void Save()
     {
@@ -229,8 +239,11 @@ public class Clean_AssemblySystem : IInitializable
         LoadSaveData(saveData);
     }
 
+    #endregion
 
-    public AssemblySaveData BuildSaveData()
+    #region Build/LoadData
+
+    public AssemblySaveData BuildSaveData()  // todo чтото не сохраняет визуал - ПОправить!!!
     {
         var result = new AssemblySaveData();
 
@@ -240,14 +253,16 @@ public class Clean_AssemblySystem : IInitializable
 
             _viewRegistry.TryGet(state.InstanceId, out DronePartView view);
 
-            var data = PartMapper.ToSaveData(state, view.transform);
+            Debug.Log($"!!!!!!!!Color of {view.name } is  {state.VisualProperties.Color} SAVED");
+            //else Debug.Log($"state.VisualProperties of {view.name}  == null {this}");
+
+                var data = PartMapper.ToSaveData(state, view.transform);
             result.Parts.Add(data);
         }
 
         return result;
     }
 
-    #region LoadData
 
     public void LoadSaveData(AssemblySaveData saveData)
     {
@@ -292,6 +307,8 @@ public class Clean_AssemblySystem : IInitializable
         foreach (var partData in saveData.Parts)
         {
             var domain = PartMapper.ToDomain(partData);
+
+            Debug.Log($"!!!!!!!!Color of {domain.InstanceId} is  {domain.VisualProperties.Color} LOADED");
             result.Add(domain.InstanceId, domain);
         }
 
@@ -339,6 +356,9 @@ public class Clean_AssemblySystem : IInitializable
         foreach (var partData in saveData.Parts)
         {
             var view = views[partData.InstanceId];
+
+
+            Debug.Log($"1111partData color  {partData.VisualProperties.Color}");
 
             PartMapper.ApplyToView(partData, view, _socketResolver);
         }

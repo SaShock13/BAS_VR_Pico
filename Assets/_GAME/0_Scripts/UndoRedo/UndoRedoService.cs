@@ -42,7 +42,6 @@ public class UndoRedoService
     public void Record()
     {
 
-        Debug.Log($"----------Record snapshot {this}");
         if (_isRestoring)
             return;
 
@@ -54,6 +53,7 @@ public class UndoRedoService
             _history.RemoveRange(_currentIndex + 1, _history.Count - _currentIndex - 1);
         }
 
+        Debug.Log($"----------Record snapshot {this}");
         _history.Add(snapshot);
         _currentIndex++;
 

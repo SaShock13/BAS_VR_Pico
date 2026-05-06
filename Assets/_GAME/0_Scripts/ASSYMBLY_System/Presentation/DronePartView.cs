@@ -34,8 +34,9 @@ public class DronePartView : MonoBehaviour
     // PREVIEW — вызывается каждый кадр
     public void ApplyVisualPreview(PartVisualProperties visual)
     {
+        _color = visual.Color;
         _renderer.GetPropertyBlock(_mpb);
-        _mpb.SetColor("_BaseColor", visual.Color);
+        _mpb.SetColor("_BaseColor", _color);
         _mpb.SetFloat("_Smoothness", visual.Smoothness);
         _renderer.SetPropertyBlock(_mpb);
     }
@@ -48,16 +49,17 @@ public class DronePartView : MonoBehaviour
 
     public void Highlight(bool on)
     {
-        _color = _renderer.material.color;
 
         _renderer.GetPropertyBlock(_mpb);
+        //_color = _mpb.GetColor("_BaseColor");
+
         if (on&& !highlighted )
         {
             highlightedColor = _color * 1.2f;
             _mpb.SetColor("_BaseColor", highlightedColor);
             highlighted = true;
         }
-        else if(highlighted)
+        else if (!on && highlighted)
         {
             _mpb.SetColor("_BaseColor", _color);
             highlighted = false;
