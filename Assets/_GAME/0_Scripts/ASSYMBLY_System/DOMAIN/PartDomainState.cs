@@ -9,6 +9,8 @@ public class PartDomainState
     public PartLifecycleState LifecycleState { get; private set; }
     public string AttachedSocketId { get; private set; }
 
+    public string? AttachedPartInstanceId { get; private set; }
+
     public PartVisualProperties VisualProperties { get; private set; }
 
     public PartDomainState(string instanceId, string partId)
@@ -24,15 +26,21 @@ public class PartDomainState
         VisualProperties = visual;
     }
 
-    public void AttachToSocket(string socketId)
+    public void AttachToPartSocket(
+    string attachedPartInstanceId,
+    string socketId)
     {
         LifecycleState = PartLifecycleState.Installed;
+
+        AttachedPartInstanceId = attachedPartInstanceId;
         AttachedSocketId = socketId;
     }
 
     public void Detach()
     {
         LifecycleState = PartLifecycleState.Free;
+
+        AttachedPartInstanceId = null;
         AttachedSocketId = null;
     }
 }

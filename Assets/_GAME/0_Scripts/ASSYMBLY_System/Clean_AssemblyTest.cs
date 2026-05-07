@@ -18,6 +18,9 @@ public class Clean_AssemblyTest : MonoBehaviour
     [SerializeField] private XRBaseInteractor[] _interactors;
 
 
+    private string _mainPartId = null;
+
+
     [Inject]
     public void Construct(IEventBus eventBus,SelectionService selectionService, PartHighlightService highlightService)
     {
@@ -85,6 +88,8 @@ public class Clean_AssemblyTest : MonoBehaviour
     {
 
         Debug.Log($"OnPartCreated event handled / Instance {@event.InstanceId}");
+
+        if (_mainPartId == null) _mainPartId = @event.InstanceId;  // самый первый деталь. Для теста
     }
 
     private void Update()
@@ -93,6 +98,8 @@ public class Clean_AssemblyTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Y))
         {
             _eventBus.Publish(new Clean_CreatePartRequestEvent{PartId = partId, Timestamp = DateTime.UtcNow});
+
+
         }
 
         if (Input.GetKeyDown(KeyCode.I))
@@ -103,10 +110,15 @@ public class Clean_AssemblyTest : MonoBehaviour
             {
                 //_eventBus.Publish(new Clean_DeletePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
 
-                var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+                //var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
 
-                var newVisual = new PartVisualProperties() { Color = randColor, Smoothness = 1 };
-                _eventBus.Publish(new ApplyPartVisualCommand (_selectionService.SelectedPartId, newVisual) {Timestamp = DateTime.UtcNow });
+                //var newVisual = new PartVisualProperties() { Color = randColor, Smoothness = 1 };
+                //_eventBus.Publish(new ApplyPartVisualCommand (_selectionService.SelectedPartId, newVisual) {Timestamp = DateTime.UtcNow });
+
+                if(_selectionService.SelectedPartId == _mainPartId) return;
+
+                _eventBus.Publish(new PartSocketAttachRequest() { PartInstanceId = _selectionService.SelectedPartId, AttachedPartId = _mainPartId , AttachedSocketId = "engineSocket" ,Timestamp = DateTime.UtcNow });
+
             }
 
 

@@ -16,6 +16,7 @@ public static class PartMapper
             InstanceId = state.InstanceId,
             PartId = state.PartId,
             LifecycleState = state.LifecycleState,
+            AttachedPartId = state.AttachedPartInstanceId,
             AttachedSocketId = state.AttachedSocketId,
             VisualProperties = state.VisualProperties 
         };
@@ -53,7 +54,7 @@ public static class PartMapper
             if (string.IsNullOrEmpty(data.AttachedSocketId))
                 throw new Exception($"SocketId is null for installed part {data.InstanceId}");
 
-            state.AttachToSocket(data.AttachedSocketId);
+            state.AttachToPartSocket(data.AttachedPartId, data.AttachedSocketId);
         }
         else
         {

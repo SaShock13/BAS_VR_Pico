@@ -41,6 +41,7 @@ public class Clean_AssemblySystem : IInitializable
         _eventBus.Subscribe<Clean_CreatePartRequestEvent>(OnCreateRequested);
         _eventBus.Subscribe<Clean_DeletePartRequest>(OnDeleteRequested);
         _eventBus.Subscribe<Clean_DuiblicatePartRequest>(OnDublicateRequested);
+        _eventBus.Subscribe<PartSocketAttachRequest>(OnAttachRequested);
         _eventBus.Subscribe<ApplyPartVisualCommand>(OnApplyPartVisual);
 
 
@@ -55,6 +56,7 @@ public class Clean_AssemblySystem : IInitializable
 
         Debug.Log($"---------Application.persistentDataPath {Application.persistentDataPath}");
     }
+
 
     /// <summary>
     /// Подписки на события при которых состояние сборки сохраняется для истории отмены
@@ -82,6 +84,30 @@ public class Clean_AssemblySystem : IInitializable
     private void OnPartChanged(object _)
     {
         _undoRedo.Record();
+    }
+    private void OnAttachRequested(PartSocketAttachRequest request)
+    {
+
+
+        Debug.Log($"OnAttachRequested {this}");
+
+        var partDomain = GetDomainState(request.PartInstanceId);
+        Debug.Log($"partDomain {partDomain}");
+        _viewRegistry.TryGet(partDomain.InstanceId, out var partView);
+        Debug.Log($"partView {partView}");
+
+        _viewRegistry.TryGet(request.AttachedPartId, out var attachedView);
+        Debug.Log($"attachedView {attachedView}");
+
+        var attachedSocket = attachedView.GetSocket(request.AttachedSocketId);
+        Debug.Log($"attachedSocket {attachedSocket}");
+
+        // Прикрепляем домен
+        partDomain.AttachToPartSocket(request.AttachedPartId, request.AttachedSocketId);
+
+        // Прикрепляем view
+        partView.AttachTo(attachedSocket.transform);
+
     }
 
     private void OnDublicateRequested(Clean_DuiblicatePartRequest @event)
@@ -117,7 +143,13 @@ public class Clean_AssemblySystem : IInitializable
         //_eventBus.Unsubscribe<Clean_CreatePartRequestEvent>(OnCreateRequested);
     }
 
+    // Пример доступа к состоянию
+    public PartDomainState GetDomainState(string instanceId)
+    {
+        return _parts[instanceId];
+    }
 
+    #region CRUD
     private void CreatePart(string partId)
     {
         // 1. Генерация ID экземпляра
@@ -144,22 +176,22 @@ public class Clean_AssemblySystem : IInitializable
         view.ApplyVisualCommitted(domainState.VisualProperties);
 
         // 6. Уведомление
-        _eventBus.Publish(new Clean_PartCreatedEvent {InstanceId = instanceId, GameObject = go,Timestamp = DateTime.Now } );
+        _eventBus.Publish(new Clean_PartCreatedEvent { InstanceId = instanceId, GameObject = go, Timestamp = DateTime.Now });
     }
 
     private void DeletePart(string instanceId)
     {
         var domainState = GetDomainState(instanceId);
-        if (domainState != null ) 
+        if (domainState != null)
         {
-            _parts.Remove(instanceId); 
+            _parts.Remove(instanceId);
 
             // todo Обработка ошибок
-            _eventBus.Publish(new Clean_PartDeletedEvent { InstanceId = instanceId, Timestamp = DateTime.Now } );
+            _eventBus.Publish(new Clean_PartDeletedEvent { InstanceId = instanceId, Timestamp = DateTime.Now });
         }
         else
         {
-            _eventBus.Publish(new Clean_PartCantBeDeletedEvent {InstanceId = instanceId,Timestamp = DateTime.Now } );
+            _eventBus.Publish(new Clean_PartCantBeDeletedEvent { InstanceId = instanceId, Timestamp = DateTime.Now });
 
         }
 
@@ -212,12 +244,8 @@ public class Clean_AssemblySystem : IInitializable
         _eventBus.Publish(new Clean_PartCreatedEvent { InstanceId = dublicateInstanceId, GameObject = go, Timestamp = DateTime.Now });
     }
 
+    #endregion
 
-    // Пример доступа к состоянию
-    public PartDomainState GetDomainState(string instanceId)
-    {
-        return _parts[instanceId];
-    }
 
     #region Сохранения/Загрузка сцены
 

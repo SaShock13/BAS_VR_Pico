@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
@@ -15,11 +16,44 @@ public class DronePartView : MonoBehaviour
     private bool highlighted = false;
     private bool selected = false;
 
+    private Dictionary<string, SocketView> _sockets;
+
+    public SocketView GetSocket(string socketId)
+    {
+        return _sockets[socketId];
+    }
+
+    public void AttachTo(Transform parent)
+    {
+
+
+        transform.SetParent(parent);
+
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+
+        Debug.Log($"{gameObject.name} AttachTo {parent.name}");
+    }
+
+
     private void Awake()
     {
         _mpb = new MaterialPropertyBlock();
+
+        InitializeSockets();
     }
 
+    private void InitializeSockets()
+    {
+        _sockets = new Dictionary<string, SocketView>();
+
+        var sockets = GetComponentsInChildren<SocketView>();
+
+        foreach (var socket in sockets)
+        {
+            _sockets.Add(socket.SocketId, socket);
+        }
+    }
 
     public void Init(string instanceId)
     {
