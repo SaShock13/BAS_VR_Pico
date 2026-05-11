@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartConfigRepository : IPartConfigRepository
+public class PartConfigRepository : IPartConfigRegistry
 {
 
     private readonly Dictionary<string, PartConfig> _configs;

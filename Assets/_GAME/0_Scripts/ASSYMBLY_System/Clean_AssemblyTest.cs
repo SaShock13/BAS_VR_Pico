@@ -1,16 +1,14 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit;
 using Zenject;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
-using static UnityEngine.Rendering.GPUSort;
-using Pico.Platform;
 
 public class Clean_AssemblyTest : MonoBehaviour
 {
 
     [SerializeField] private string partId;
+    [SerializeField] private string partId2;
     IEventBus _eventBus;
     private SelectionService _selectionService;
     private PartHighlightService _highlightService;
@@ -98,6 +96,7 @@ public class Clean_AssemblyTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Y))
         {
             _eventBus.Publish(new Clean_CreatePartRequestEvent{PartId = partId, Timestamp = DateTime.UtcNow});
+            _eventBus.Publish(new Clean_CreatePartRequestEvent{PartId = partId2, Timestamp = DateTime.UtcNow});
 
 
         }
@@ -117,7 +116,7 @@ public class Clean_AssemblyTest : MonoBehaviour
 
                 if(_selectionService.SelectedPartId == _mainPartId) return;
 
-                _eventBus.Publish(new PartSocketAttachRequest() { PartInstanceId = _selectionService.SelectedPartId, AttachedPartId = _mainPartId , AttachedSocketId = "engineSocket" ,Timestamp = DateTime.UtcNow });
+                //_eventBus.Publish(new PartSocketAttachRequest() { PartInstanceId = _selectionService.SelectedPartId, AttachedPartId = _mainPartId , AttachedSocketId = "engineSocket" ,Timestamp = DateTime.UtcNow });
 
             }
 

@@ -12,6 +12,7 @@ public class PartDomainState
     public string? AttachedPartInstanceId { get; private set; }
 
     public PartVisualProperties VisualProperties { get; private set; }
+    public PartType Type { get; private set; }
 
     public PartDomainState(string instanceId, string partId)
     {

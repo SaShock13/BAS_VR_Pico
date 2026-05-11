@@ -17,6 +17,17 @@ public class DronePartView : MonoBehaviour
     private bool selected = false;
 
     private Dictionary<string, SocketView> _sockets;
+    private IEventBus _eventBus;
+    private Clean_AssemblySystem _assembly;
+    private SelectionService _selectionService;
+
+    [Inject]
+    public void Construct(Clean_AssemblySystem assembly)
+    {
+
+        Debug.Log($"22222222 Construct Zenject {this}");
+        _assembly = assembly;
+    }
 
     public SocketView GetSocket(string socketId)
     {
@@ -40,7 +51,7 @@ public class DronePartView : MonoBehaviour
     {
         _mpb = new MaterialPropertyBlock();
 
-        InitializeSockets();
+        //InitializeSockets();
     }
 
     private void InitializeSockets()
@@ -49,20 +60,25 @@ public class DronePartView : MonoBehaviour
 
         var sockets = GetComponentsInChildren<SocketView>();
 
+
+
+        Debug.Log($"!!!!!!!!!_assembly {_assembly != null}");
         foreach (var socket in sockets)
         {
             _sockets.Add(socket.SocketId, socket);
+            socket.Init(_eventBus,_assembly);
         }
     }
 
-    public void Init(string instanceId)
+    public void Init(string instanceId,IEventBus eventBus)
     {
 
         Debug.Log($"!!!!PArt Initialized with ID  {instanceId}");
         InstanceId = instanceId;
         _renderer = GetComponentInChildren<Renderer>();
         _color = _renderer.material.color;
-
+        _eventBus = eventBus;
+        InitializeSockets();
     }
 
     // PREVIEW — вызывается каждый кадр

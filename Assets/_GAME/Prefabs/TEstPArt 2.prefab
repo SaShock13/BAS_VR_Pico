@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6508802944501029694}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.716}
+  m_LocalPosition: {x: 0, y: 0.674, z: 0.015}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7644bec2d2f076348b035207c30e90bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SocketView
-  AllowedTypes: 02000000
+  AllowedTypes: 01000000
   AttachPoint: {fileID: 4150625569396921801}
   _socketInteractor: {fileID: 2828930676560574456}
   _socketId: engineSocket
@@ -152,7 +152,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.13, y: 0.13, z: 1.43}
+  m_LocalScale: {x: 0.13, y: 1.21, z: 1.43}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1849187271226038944}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 7865895251465963167}
   - component: {fileID: 6494140227431048552}
   m_Layer: 0
-  m_Name: TEstPArt
+  m_Name: TEstPArt 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

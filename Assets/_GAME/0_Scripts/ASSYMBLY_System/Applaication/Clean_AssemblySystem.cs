@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using Zenject;
 
 public class Clean_AssemblySystem : IInitializable
 {
     private readonly IEventBus _eventBus;
-    private readonly IPartConfigRepository _repository;
+    private readonly IPartConfigRegistry _repository;
     private readonly IPartFactory _factory;
     private readonly PartViewRegistry _viewRegistry;
     private readonly Transform _spawnPoint;
     private readonly ISocketResolver _socketResolver;
     private readonly ISaveService _saveService;
+    private SelectionService _selectionService;
 
     // ХРАНИЛИЩЕ СОСТОЯНИЙ
     private readonly Dictionary<string, PartDomainState> _parts =
@@ -19,20 +22,26 @@ public class Clean_AssemblySystem : IInitializable
 
 
     private UndoRedoService _undoRedo;
+    private DiContainer _container;
+
 
     public Clean_AssemblySystem(
         IEventBus eventBus,
-        IPartConfigRepository repository,
+        IPartConfigRegistry repository,
         IPartFactory factory,
         PartViewRegistry viewRegistry,
+        DiContainer container,
         ISocketResolver socketResolver,
+        SelectionService selectionService,
         ISaveService saveService)
     {
         _eventBus = eventBus;
         _repository = repository;
         _factory = factory;
         _viewRegistry = viewRegistry;
+        _container = container;
         _socketResolver = socketResolver;
+        _selectionService = selectionService;
         _saveService = saveService;
     }
 
@@ -85,10 +94,12 @@ public class Clean_AssemblySystem : IInitializable
     {
         _undoRedo.Record();
     }
+
+
+
+
     private void OnAttachRequested(PartSocketAttachRequest request)
     {
-
-
         Debug.Log($"OnAttachRequested {this}");
 
         var partDomain = GetDomainState(request.PartInstanceId);
@@ -101,13 +112,71 @@ public class Clean_AssemblySystem : IInitializable
 
         var attachedSocket = attachedView.GetSocket(request.AttachedSocketId);
         Debug.Log($"attachedSocket {attachedSocket}");
+        if (IsCanAttach(partDomain, attachedSocket))
+        {
+            // Прикрепляем домен
+            partDomain.AttachToPartSocket(request.AttachedPartId, request.AttachedSocketId);
 
-        // Прикрепляем домен
-        partDomain.AttachToPartSocket(request.AttachedPartId, request.AttachedSocketId);
+            // Прикрепляем view
+            partView.AttachTo(attachedSocket.transform); /// TODO Прикреплять нужно во вью по событию!
 
-        // Прикрепляем view
-        partView.AttachTo(attachedSocket.transform);
+            _eventBus.Publish(new PartSocketAttachedEvent() { Timestamp = DateTime.Now });
+        }
+        else Debug.Log($"!!!!!! {partView.transform.name} Can NOT be Attached {this}");
 
+
+
+    }
+
+
+    public bool IsInHands(DronePartView part)
+    {
+        if (part == null)
+            return false;
+
+        XRGrabInteractable grab =
+            part.GetComponent<XRGrabInteractable>();
+
+        if (grab == null)
+            return false;
+
+        return grab.isSelected;
+    }
+
+
+    /// <summary>
+    /// Публичный метод проверки совместимости
+    /// </summary>
+    /// <param name="instanceId"></param>
+    /// <param name="socketView"></param>
+    /// <returns></returns>
+
+    public bool CanAttach(string instanceId, SocketView socketView)
+    {
+        var partDomain = GetDomainState(instanceId);
+        return IsCanAttach(partDomain, socketView);
+    }
+
+
+
+    /// <summary>
+    /// пРОХОДИМ ПО ВСЕМ ТИПАМ СОКЕТА, Если хоть один совпадает = true
+    /// </summary>
+    /// <param name="partDomain"></param>
+    /// <param name="attachedSocket"></param>
+    /// <returns></returns>
+    private  bool IsCanAttach(PartDomainState partDomain, SocketView attachedSocket) 
+    {
+
+        var childConfig =
+        _repository.Get(partDomain.PartId);        
+
+        foreach (var allowedType in attachedSocket.AllowedTypes)
+        {
+            if (allowedType == childConfig.PartType) return true;
+
+        }
+        return false;
     }
 
     private void OnDublicateRequested(Clean_DuiblicatePartRequest @event)
@@ -171,7 +240,12 @@ public class Clean_AssemblySystem : IInitializable
 
         // 5. Инициализация и связь Unity ↔ Domain
         var view = go.AddComponent<DronePartView>();
-        view.Init(instanceId);
+
+        // Zenject Зависимости прокидывает
+        _container.InjectGameObject(go);
+
+
+        view.Init(instanceId,_eventBus);
 
         view.ApplyVisualCommitted(domainState.VisualProperties);
 
@@ -232,10 +306,14 @@ public class Clean_AssemblySystem : IInitializable
             spawnPos,
             spawnRot
         );
-
+        go.name = sourceView.transform.name + "_Clone";
         // 5. Инициализация и связь Unity ↔ Domain
         var view = go.AddComponent<DronePartView>();
-        view.Init(dublicateInstanceId);
+
+        // Zenject Зависимости прокидывает
+        _container.InjectGameObject(go);
+
+        view.Init(dublicateInstanceId, _eventBus);
 
         // Применяем визуал domain на view
         view.ApplyVisualCommitted(domainState.VisualProperties);
@@ -360,7 +438,7 @@ public class Clean_AssemblySystem : IInitializable
             if (view == null)
                 view = go.AddComponent<DronePartView>();
 
-            view.Init(domain.InstanceId);
+            view.Init(domain.InstanceId, _eventBus);
 
             result.Add(domain.InstanceId, view);
             _viewRegistry.Register(domain.InstanceId, view.gameObject);
@@ -404,6 +482,8 @@ public class Clean_AssemblySystem : IInitializable
         //    Timestamp = DateTime.Now
         //});
     }
+
+   
 
     #endregion
 
