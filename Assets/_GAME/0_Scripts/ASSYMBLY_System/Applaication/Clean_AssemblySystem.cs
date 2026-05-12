@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -154,10 +155,25 @@ public class Clean_AssemblySystem : IInitializable
     public bool CanAttach(string instanceId, SocketView socketView)
     {
         var partDomain = GetDomainState(instanceId);
+
+        if (IsSocketOccupied(socketView.ParentView.InstanceId, socketView.SocketId)) // todo как получить здесь instanceId детали с сокетом? Как еще проверить на занятость сокет?
+        {
+
+            Debug.Log($"33333 Socket is already Occupied!!!! {this}");
+            return false;
+        }
+        Debug.Log($"33333 Socket is FREE!!!! {this}");
+
         return IsCanAttach(partDomain, socketView);
     }
 
 
+    public bool IsSocketOccupied(string AttachedPartInstanceId, string socketId) // todo   оптимизировать проверку
+    {
+        return _parts.Values.Any(p =>
+            p.AttachedPartInstanceId == AttachedPartInstanceId &&
+            p.AttachedSocketId == socketId);
+    }
 
     /// <summary>
     /// пРОХОДИМ ПО ВСЕМ ТИПАМ СОКЕТА, Если хоть один совпадает = true
@@ -470,7 +486,7 @@ public class Clean_AssemblySystem : IInitializable
 
             Debug.Log($"1111partData color  {partData.VisualProperties.Color}");
 
-            PartMapper.ApplyToView(partData, view, _socketResolver);
+            PartMapper.ApplyToView(partData, view, _viewRegistry);
         }
     }
 

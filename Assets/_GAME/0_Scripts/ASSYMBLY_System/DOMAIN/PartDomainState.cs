@@ -1,4 +1,4 @@
-
+﻿
 using UnityEngine;
 
 public class PartDomainState 
@@ -35,6 +35,9 @@ public class PartDomainState
 
         AttachedPartInstanceId = attachedPartInstanceId;
         AttachedSocketId = socketId;
+
+
+        Debug.Log($"77777Деталь {InstanceId}  присоединенна к детали {AttachedPartInstanceId} к сокету {AttachedSocketId}");
     }
 
     public void Detach()

@@ -10,11 +10,16 @@ using Zenject;
 public class SocketView : MonoBehaviour
 {
     //#region OLD
-   
+
+
+    private const string _validPreviewMaterialName = "GreenTrtansparent";
+    private const string _invalidPreviewMaterialName = "FakeTransparentRed";
 
     private IEventBus _eventBus;  /// todo Как получить зависимости Zenject?????????
 
     public string SocketId => _socketId;
+
+    public DronePartView ParentView { get { _parentView = GetComponentInParent<DronePartView>();return _parentView; } }
 
     //public string[] MatchPartIdlist;
 
@@ -173,6 +178,10 @@ public class SocketView : MonoBehaviour
 
     private void Awake()
     {
+        _validPreviewMaterial = Resources.Load<Material>("Materials/" +$"{_validPreviewMaterialName}");
+        _invalidPreviewMaterial = Resources.Load<Material>("Materials/" +$"{_invalidPreviewMaterialName}");
+
+
         _previewSystem = new SocketPreviewSystem(
             _validPreviewMaterial,
             _invalidPreviewMaterial);
@@ -210,8 +219,6 @@ public class SocketView : MonoBehaviour
         // ПРоверка если Обьект не в руке, не показывают превью. 
         if (!(args.interactableObject as XRGrabInteractable).isSelected)
         {
-
-            Debug.Log($"777777_parentView == _assemblySystem.ReturnSelectedPart() {this}");
             return;
         }
 
@@ -282,7 +289,7 @@ public class SocketView : MonoBehaviour
 
 
         _parentView = GetComponentInParent<DronePartView>();
-        var parentPartId = _parentView.InstanceId;
+        var parentPartId = ParentView.InstanceId;
         var childPartId = _hoveredPart.GetComponent<DronePartView>().InstanceId;
         var socketId = SocketId;
 

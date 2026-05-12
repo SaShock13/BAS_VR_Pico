@@ -67,19 +67,23 @@ public static class PartMapper
     // =========================
     // APPLY VIEW -- Применяет трансформ, 
     // =========================
-    public static void ApplyToView(PartSaveData data, DronePartView view, ISocketResolver socketResolver)   /// todo Реализовать сокетирование и применение визуала
+    public static void ApplyToView(PartSaveData data, DronePartView view, PartViewRegistry viewRegistry)   /// todo Реализовать сокетирование и применение визуала
     {
         if (data == null) throw new ArgumentNullException(nameof(data));
         if (view == null) throw new ArgumentNullException(nameof(view));
 
         if (data.LifecycleState == PartLifecycleState.Installed)
         {
-            var socket = socketResolver.Resolve(data.AttachedSocketId);
+            viewRegistry.TryGet(data.AttachedPartId, out var parentView);
+
+            var socket = parentView.GetSocket(data.AttachedSocketId);
+
+            //var socket = socketResolver.Resolve(data.AttachedSocketId);
 
             if (socket == null)
                 throw new Exception($"Socket not found: {data.AttachedSocketId}");
 
-            //view.AttachTo(socket);
+            view.AttachTo(socket.transform);
         }
         else
         {

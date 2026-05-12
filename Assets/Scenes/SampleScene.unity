@@ -1808,7 +1808,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 16750562604e04a49b84796f5c9d308b, type: 2}
+  - {fileID: 2100000, guid: 78327fa31e2dcbf469b2153fc55053e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2788,16 +2788,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partIds:
+  - "\u0432\u0438\u043D\u04421"
+  - "\u0432\u0438\u043D\u04421"
+  - "\u0432\u0438\u043D\u04421"
+  - "\u0432\u0438\u043D\u04421"
+  - "\u043C\u043E\u0442\u043E\u04401"
+  - "\u043C\u043E\u0442\u043E\u04401"
+  - "\u043C\u043E\u0442\u043E\u04401"
+  - "\u043C\u043E\u0442\u043E\u04401"
   - "\u043A\u043E\u0440\u043F\u0443\u04411"
   - "\u0431\u0430\u0442\u0430\u0440\u0435\u044F1"
-  - "\u043C\u043E\u0442\u043E\u04401"
-  - "\u043C\u043E\u0442\u043E\u04401"
-  - "\u043C\u043E\u0442\u043E\u04401"
-  - "\u043C\u043E\u0442\u043E\u04401"
-  - "\u0432\u0438\u043D\u04421"
-  - "\u0432\u0438\u043D\u04421"
-  - "\u0432\u0438\u043D\u04421"
-  - "\u0432\u0438\u043D\u04421"
   _interactors:
   - {fileID: 645077902}
   - {fileID: 178807446}
