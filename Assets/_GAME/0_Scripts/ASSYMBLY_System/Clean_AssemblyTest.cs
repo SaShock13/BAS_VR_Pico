@@ -7,8 +7,8 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 public class Clean_AssemblyTest : MonoBehaviour
 {
 
-    [SerializeField] private string partId;
-    [SerializeField] private string partId2;
+    [SerializeField] private string[] partIds;
+
     IEventBus _eventBus;
     private SelectionService _selectionService;
     private PartHighlightService _highlightService;
@@ -95,8 +95,11 @@ public class Clean_AssemblyTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            _eventBus.Publish(new Clean_CreatePartRequestEvent{PartId = partId, Timestamp = DateTime.UtcNow});
-            _eventBus.Publish(new Clean_CreatePartRequestEvent{PartId = partId2, Timestamp = DateTime.UtcNow});
+            foreach (var id in partIds)
+            {
+                _eventBus.Publish(new Clean_CreatePartRequestEvent{PartId = id, Timestamp = DateTime.UtcNow});
+
+            }
 
 
         }

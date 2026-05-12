@@ -438,7 +438,11 @@ public class Clean_AssemblySystem : IInitializable
             if (view == null)
                 view = go.AddComponent<DronePartView>();
 
+            // Zenject Зависимости прокидывает
+            _container.InjectGameObject(go);
+
             view.Init(domain.InstanceId, _eventBus);
+
 
             result.Add(domain.InstanceId, view);
             _viewRegistry.Register(domain.InstanceId, view.gameObject);

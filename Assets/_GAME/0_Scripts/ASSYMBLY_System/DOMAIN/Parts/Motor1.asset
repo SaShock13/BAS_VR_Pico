@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f6ff99ba2a43f4295bfe1a15924934, type: 3}
   m_Name: Motor1
   m_EditorClassIdentifier: Assembly-CSharp::MotorConfig
-  PartId: motor1
+  PartId: "\u043C\u043E\u0442\u043E\u04401"
   PartType: 2
   Prefab: {fileID: 8777026559667588407, guid: fab15cc9bab7eaf41accd0da2254473b, type: 3}
-  Mass: 15
-  LocalCenterOfMass: {x: 0, y: 0, z: 0}
+  Mass: 3
+  LocalCenterOfMass: {x: 0, y: -0.0651, z: 0}
   MaxThrust: 50
   ResponseSpeed: 13
   RotationDirection: 0

@@ -1,21 +1,27 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using Zenject;
 
 public class PhysicsBuilderTester : MonoBehaviour
 {
     [Header("Drone Root (drag here)")]
     [SerializeField] private Transform _droneRoot;
+    [SerializeField] private Rigidbody _droneRb;
 
     private DronePhysicsBuilder _physicsBuilder;
     [Inject] private Clean_AssemblySystem _domainRegistry;
     [Inject] private PartViewRegistry _viewRegistry;
     [Inject] private IPartConfigRegistry _configRegistry;
+    DronePhysicsApplier _applier;
 
 
     private void Awake()
     {
         _physicsBuilder = new DronePhysicsBuilder(_configRegistry, _viewRegistry);
+        //_droneRb = _droneRoot.GetComponent<Rigidbody>();
+
     }
     private DronePhysicsData _lastData;
 
@@ -24,6 +30,19 @@ public class PhysicsBuilderTester : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             RunTest();
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            _droneRb.AddTorque(
+                Vector3.forward * 20f,
+                ForceMode.Impulse);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _droneRb.AddForceAtPosition(
+                Vector3.up * 20f,
+                _droneRoot.position,
+                ForceMode.Impulse);
         }
     }
 
@@ -62,7 +81,34 @@ public class PhysicsBuilderTester : MonoBehaviour
         _lastData =
             _physicsBuilder.Build(domainStates, _droneRoot);
 
+        _applier = new DronePhysicsApplier();
+
         Print(_lastData);
+
+
+        //_droneRb = _droneRoot.GetComponent<Rigidbody>();
+        Debug.Log($"_applier {_applier != null}  _droneRb {_droneRb != null}");
+        DeactivateChildRBs(); 
+
+        _applier.Apply(_droneRb, _lastData);
+    }
+
+    private void DeactivateChildRBs()
+    {
+        var xrInteractables = _droneRoot.GetComponentsInChildren<XRGrabInteractable>();
+        var rigidBodies = _droneRoot.GetComponentsInChildren<Rigidbody>();
+        var mainRb = _droneRoot.GetComponent<Rigidbody>();
+
+        foreach (var interactable in xrInteractables)
+        {
+            Destroy(interactable);
+        }
+
+        foreach (var rb in rigidBodies)
+        {
+            if (mainRb == rb) continue;
+            Destroy(rb);
+        }
     }
 
     private void Print(DronePhysicsData data)

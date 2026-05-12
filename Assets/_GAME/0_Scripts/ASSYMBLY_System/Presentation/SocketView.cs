@@ -190,17 +190,25 @@ public class SocketView : MonoBehaviour
         _previewSystem.HidePreview();
     }
 
-    private void OnHoverEntered(
+    private void OnHoverEntered(  /// todo должно быть в сокетИнтерактор скорее всего. 
         HoverEnterEventArgs args)
     {
+
+
+        Debug.Log($"" +
+            $"part {args.interactableObject.transform.name} " +
+            $"is hovering over Socket {SocketId}  " +
+            //$"on  {_parentView.transform.name}" +
+            $"");
         DronePartView part =
             args.interactableObject.transform
                 .GetComponent<DronePartView>();
 
         if (part == null)
             return;
-        if ((args.interactableObject as XRGrabInteractable).isSelected )
-        //if (_assemblySystem.IsInHands(part))
+
+        // ПРоверка если Обьект не в руке, не показывают превью. 
+        if (!(args.interactableObject as XRGrabInteractable).isSelected)
         {
 
             Debug.Log($"777777_parentView == _assemblySystem.ReturnSelectedPart() {this}");
@@ -217,7 +225,7 @@ public class SocketView : MonoBehaviour
                 part.InstanceId,
                 this);
 
-        _previewSystem.ShowPreview(  /// todo Показывать превью только если сокет не в руке
+        _previewSystem.ShowPreview(  
             part,
             _previewAnchor,
             _isValidHover);
