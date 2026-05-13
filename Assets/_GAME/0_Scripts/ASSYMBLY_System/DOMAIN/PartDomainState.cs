@@ -14,10 +14,11 @@ public class PartDomainState
     public PartVisualProperties VisualProperties { get; private set; }
     public PartType Type { get; private set; }
 
-    public PartDomainState(string instanceId, string partId)
+    public PartDomainState(string instanceId, string partId, PartType type)
     {
         InstanceId = instanceId;
         PartId = partId;
+        Type = type;
         LifecycleState = PartLifecycleState.Free;
         SetVisual(new PartVisualProperties() {Color = Color.gray , Smoothness = 0 });
     }

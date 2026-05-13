@@ -565,7 +565,7 @@ Transform:
   m_GameObject: {fileID: 7244007454141268318}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.004, y: 0.149, z: -0.02}
+  m_LocalPosition: {x: -0.004, y: -0.086, z: -0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -938,6 +938,7 @@ GameObject:
   - component: {fileID: 7865895251465963167}
   - component: {fileID: 6494140227431048552}
   - component: {fileID: 3998834229193527679}
+  - component: {fileID: 4281848695628876745}
   m_Layer: 0
   m_Name: body1
   m_TagString: Untagged
@@ -977,7 +978,7 @@ Rigidbody:
   serializedVersion: 5
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1136,3 +1137,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: b73ce8181bd5abd43af371a46b53b194, type: 2}
+--- !u!114 &4281848695628876745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8777026559667588407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6e497503ab24a04c8c868472f6d780d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DronePhysicsSimulation
+  _rigidbody: {fileID: 7865895251465963167}
+  _globalThrottle: 0

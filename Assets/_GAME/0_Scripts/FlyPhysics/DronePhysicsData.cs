@@ -5,9 +5,9 @@ public class DronePhysicsData
 {
     public float TotalMass;
 
-    public Vector3 CenterOfMass;
+    public Vector3 LocalCenterOfMass;
 
-    public List<MotorPhysicsData> Motors;
+    public IReadOnlyList<MotorPhysicsData> Motors;
 
     public BatteryPhysicsData Battery;
 

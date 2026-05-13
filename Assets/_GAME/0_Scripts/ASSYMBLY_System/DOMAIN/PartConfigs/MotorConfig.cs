@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.GridBrushBase;
 
 [CreateAssetMenu]
 public class MotorConfig : PartConfig

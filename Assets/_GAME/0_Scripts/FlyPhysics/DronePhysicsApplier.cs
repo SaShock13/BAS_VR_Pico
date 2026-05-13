@@ -8,7 +8,7 @@ public class DronePhysicsApplier
     {
         rb.mass = data.TotalMass;
 
-        rb.centerOfMass = data.CenterOfMass;
+        rb.centerOfMass = data.LocalCenterOfMass;
 
         rb.automaticInertiaTensor = true;
     }

@@ -31,19 +31,49 @@ public class PhysicsBuilderTester : MonoBehaviour
         {
             RunTest();
         }
-        if (Input.GetKeyDown(KeyCode.T))
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    _droneRb.AddTorque(
+        //        Vector3.forward * 20f,
+        //        ForceMode.Impulse);
+        //}
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    _droneRb.AddForceAtPosition(
+        //        Vector3.up * 20f,
+        //        _droneRoot.position,
+        //        ForceMode.Impulse);
+        //}
+    }
+
+    public void CreateDrone(
+        DronePhysicsData physicsData
+        //,GameObject dronePrefab
+        )
+    {
+        //GameObject drone =
+        //    Object.Instantiate(dronePrefab);
+
+        var allViews = _droneRoot.GetComponentsInChildren<DronePartView>();
+
+        List <DronePartView> motorViews = new List<DronePartView> ();
+
+        foreach ( DronePartView view in allViews )   /// todo обьединить с другим проходом по всем вью.
         {
-            _droneRb.AddTorque(
-                Vector3.forward * 20f,
-                ForceMode.Impulse);
+            var domain = _domainRegistry.GetDomainState(view.InstanceId);
+
+            Debug.Log($"тип детали {view.transform.name} дрона {domain.Type}");
+            if (domain != null && domain.Type == PartType.Motor) motorViews.Add(view);
         }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            _droneRb.AddForceAtPosition(
-                Vector3.up * 20f,
-                _droneRoot.position,
-                ForceMode.Impulse);
-        }
+            
+
+        DronePhysicsSimulation simulation =
+            _droneRoot.GetComponent<DronePhysicsSimulation>();
+
+        simulation.Initialize(
+            physicsData
+            ,motorViews
+            );
     }
 
     private void RunTest()
@@ -88,9 +118,12 @@ public class PhysicsBuilderTester : MonoBehaviour
 
         //_droneRb = _droneRoot.GetComponent<Rigidbody>();
         Debug.Log($"_applier {_applier != null}  _droneRb {_droneRb != null}");
-        DeactivateChildRBs(); 
+        DeactivateChildRBs();
 
-        _applier.Apply(_droneRb, _lastData);
+        //_applier.Apply(_droneRb, _lastData);
+
+        Debug.Log($"!!!!!!!!Моторов количество {_lastData.Motors.Count}");
+        CreateDrone(_lastData);
     }
 
     private void DeactivateChildRBs()
@@ -115,7 +148,7 @@ public class PhysicsBuilderTester : MonoBehaviour
     {
         Debug.Log("===== DRONE PHYSICS SNAPSHOT =====");
         Debug.Log($"Mass: {data.TotalMass}");
-        Debug.Log($"COM: {data.CenterOfMass}");
+        Debug.Log($"COM: {data.LocalCenterOfMass}");
         Debug.Log($"Motors: {data.Motors?.Count ?? 0}");
         Debug.Log($"HoverThrottle: {data.HoverThrottle}");
         Debug.Log("==================================");
@@ -136,7 +169,7 @@ public class PhysicsBuilderTester : MonoBehaviour
         // --- CENTER OF MASS ---
         Gizmos.color = Color.red;
         Vector3 comWorld =
-            _droneRoot.TransformPoint(_lastData.CenterOfMass);
+            _droneRoot.TransformPoint(_lastData.LocalCenterOfMass);
 
         Gizmos.DrawSphere(comWorld, 0.05f);
 
@@ -186,7 +219,7 @@ public class PhysicsBuilderTester : MonoBehaviour
 
         // COM LINE
         Vector3 comWorld =
-            _droneRoot.TransformPoint(_lastData.CenterOfMass);
+            _droneRoot.TransformPoint(_lastData.LocalCenterOfMass);
 
         Debug.DrawLine(_droneRoot.position, comWorld, Color.red);
 

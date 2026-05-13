@@ -15,6 +15,7 @@ public static class PartMapper
         {
             InstanceId = state.InstanceId,
             PartId = state.PartId,
+            Type = state.Type,
             LifecycleState = state.LifecycleState,
             AttachedPartId = state.AttachedPartInstanceId,
             AttachedSocketId = state.AttachedSocketId,
@@ -42,7 +43,7 @@ public static class PartMapper
         if (data == null)
             throw new ArgumentNullException(nameof(data));
 
-        var state = new PartDomainState(data.InstanceId, data.PartId);
+        var state = new PartDomainState(data.InstanceId, data.PartId, data.Type);
 
         // Восстановление визуальных параметров
        

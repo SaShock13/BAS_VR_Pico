@@ -240,12 +240,13 @@ public class Clean_AssemblySystem : IInitializable
         // 1. Генерация ID экземпляра
         string instanceId = System.Guid.NewGuid().ToString();
 
-        // 2. Создание доменного состояния
-        PartDomainState domainState = new PartDomainState(instanceId, partId);
-        _parts.Add(instanceId, domainState);
-
         // 3. Получение конфигурации
         PartConfig config = _repository.Get(partId);
+
+        // 2. Создание доменного состояния
+        PartDomainState domainState = new PartDomainState(instanceId, partId, config.PartType );
+        _parts.Add(instanceId, domainState);
+
 
         // 4. Создание Unity-объекта
         GameObject go = _factory.Create(
@@ -304,17 +305,17 @@ public class Clean_AssemblySystem : IInitializable
         var oldDomain = GetDomainState(instanceId);
         var partId = oldDomain.PartId;
 
+        // 3. Получение конфигурации
+        PartConfig config = _repository.Get(partId);
 
         // 2. Создание доменного состояния
-        PartDomainState domainState = new PartDomainState(dublicateInstanceId, partId);
+        PartDomainState domainState = new PartDomainState(dublicateInstanceId, partId, config.PartType);
 
         // Применяем тот же визуал
         domainState.SetVisual(oldDomain.VisualProperties);
 
         _parts.Add(dublicateInstanceId, domainState);
 
-        // 3. Получение конфигурации
-        PartConfig config = _repository.Get(partId);
 
         // 4. Создание Unity-объекта
         GameObject go = _factory.Create(

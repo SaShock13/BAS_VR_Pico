@@ -154,7 +154,7 @@ public class DronePhysicsBuilder
 
         physicsData.TotalMass = totalMass;
 
-        physicsData.CenterOfMass = centerOfMass;
+        physicsData.LocalCenterOfMass = centerOfMass;
 
         physicsData.Motors = motors;
 

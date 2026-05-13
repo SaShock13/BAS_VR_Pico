@@ -11,6 +11,7 @@ public class DronePartView : MonoBehaviour
     [SerializeField] private Renderer _renderer;
 
     private MaterialPropertyBlock _mpb;
+    private Rigidbody _rigidBody;
     private Color _color;
     private Color highlightedColor;
     private bool highlighted = false;
@@ -39,7 +40,7 @@ public class DronePartView : MonoBehaviour
 
 
         transform.SetParent(parent);
-
+        _rigidBody.isKinematic = true;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
@@ -50,7 +51,7 @@ public class DronePartView : MonoBehaviour
     private void Awake()
     {
         _mpb = new MaterialPropertyBlock();
-
+        _rigidBody = GetComponent<Rigidbody>();
         //InitializeSockets();
     }
 

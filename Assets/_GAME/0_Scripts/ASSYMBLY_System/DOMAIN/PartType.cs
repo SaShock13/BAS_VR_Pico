@@ -2,7 +2,7 @@
 {
     Body,
     Rays,
-    Engine,
+    Motor,
     Propeller,
     Legs,
     Battery
