@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16f6ff99ba2a43f4295bfe1a15924934, type: 3}
+  m_Name: MotorRR
+  m_EditorClassIdentifier: Assembly-CSharp::MotorConfig
+  PartId: "\u043C\u043E\u0442\u043E\u0440\u0420\u0420"
+  PartType: 2
+  Prefab: {fileID: 8777026559667588407, guid: 7d65be471605d2645a8da0865265f574, type: 3}
+  Mass: 3
+  LocalCenterOfMass: {x: 0, y: -0.0651, z: 0}
+  MaxThrust: 50
+  ResponseSpeed: 4
+  RotationDirection: 0
+  MaxRPM: 7000
+  MixData:
+    PitchFactor: 1
+    RollFactor: 1
+    YawFactor: 1

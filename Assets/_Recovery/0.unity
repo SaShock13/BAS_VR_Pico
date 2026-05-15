@@ -2788,8 +2788,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partIds:
-  - "\u043C\u043E\u0442\u043E\u0440\u0424\u0420"
   - "\u043C\u043E\u0442\u043E\u0440\u0424\u041B"
+  - "\u043C\u043E\u0442\u043E\u0440\u0424\u0420"
   - "\u043A\u043E\u0440\u043F\u0443\u04411"
   - "\u043C\u043E\u0442\u043E\u0440\u0420\u0420"
   - "\u043C\u043E\u0442\u043E\u0440\u0420\u041B"
@@ -2864,8 +2864,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 14fa4ab3154ddbb4abe48a287ca9ee1f, type: 2}
   - {fileID: 11400000, guid: 9c9f5f20d02b40446b8ae3e1824ff741, type: 2}
   - {fileID: 11400000, guid: 7e94d3b5d4ae1814098d971f5145e119, type: 2}
-  - {fileID: 11400000, guid: ac1b21c660097b545ac9e358541cfd2e, type: 2}
   - {fileID: 11400000, guid: 6b6b6cca5948a2947bd7ebb5527f490e, type: 2}
+  - {fileID: 11400000, guid: ac1b21c660097b545ac9e358541cfd2e, type: 2}
 --- !u!114 &1225735307
 MonoBehaviour:
   m_ObjectHideFlags: 0

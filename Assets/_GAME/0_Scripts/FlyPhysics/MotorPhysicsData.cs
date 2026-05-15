@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+
+[Serializable]
 public sealed class MotorPhysicsData
 {
     public string InstanceId;
@@ -13,7 +16,9 @@ public sealed class MotorPhysicsData
 
     public float ResponseSpeed;
 
-    public RotationDirection RotationDirection;  /// ЧТо за дирекшен????
+    public RotationDirection RotationDirection; 
 
     public float MaxRPM;
+
+    public MotorMixData MixData;
 }

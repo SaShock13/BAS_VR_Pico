@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -15,7 +16,7 @@ public class PhysicsBuilderTester : MonoBehaviour
     [Inject] private PartViewRegistry _viewRegistry;
     [Inject] private IPartConfigRegistry _configRegistry;
     DronePhysicsApplier _applier;
-
+    DronePhysicsSimulation physicsSimulation;
 
     private void Awake()
     {
@@ -31,6 +32,12 @@ public class PhysicsBuilderTester : MonoBehaviour
         {
             RunTest();
         }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            FindDrone();
+        }
+
+
         //if (Input.GetKeyDown(KeyCode.T))
         //{
         //    _droneRb.AddTorque(
@@ -44,6 +51,13 @@ public class PhysicsBuilderTester : MonoBehaviour
         //        _droneRoot.position,
         //        ForceMode.Impulse);
         //}
+    }
+
+    private void FindDrone()
+    {
+        physicsSimulation = FindAnyObjectByType<DronePhysicsSimulation>();
+        _droneRoot = physicsSimulation.transform;
+        _droneRb = _droneRoot.GetComponent<Rigidbody>();
     }
 
     public void CreateDrone(

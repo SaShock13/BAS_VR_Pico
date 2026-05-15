@@ -75,6 +75,15 @@ public class DronePhysicsBuilder
                     droneRoot.InverseTransformDirection(
                         transform.up);
 
+                MotorMixData motorMixData =
+                    new MotorMixData()
+                    {
+                        YawFactor = motorConfig.RotationDirection == RotationDirection.CounterClockwise ? -1f : 1f,
+                        PitchFactor = motorConfig.MixData.PitchFactor,
+                        RollFactor = motorConfig.MixData.RollFactor
+
+                    };
+
                 MotorPhysicsData motorData =
                     new MotorPhysicsData()
                     {
@@ -90,7 +99,10 @@ public class DronePhysicsBuilder
                             motorConfig.ResponseSpeed,
 
                         RotationDirection =
-                            motorConfig.RotationDirection
+                            motorConfig.RotationDirection,
+
+                        MixData = motorMixData
+
                     };
 
                 motors.Add(motorData);

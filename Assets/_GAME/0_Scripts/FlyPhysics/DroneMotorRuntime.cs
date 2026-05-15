@@ -6,6 +6,8 @@ public class DroneMotorRuntime
 
     public Transform Transform;
 
+    public float TargetThrottle;
+
     public float CurrentThrottle;
 
     public float CurrentThrust;

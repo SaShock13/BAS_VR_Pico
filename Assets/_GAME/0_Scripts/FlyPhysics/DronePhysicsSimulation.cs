@@ -6,10 +6,14 @@ public class DronePhysicsSimulation : MonoBehaviour
     [SerializeField]
     private Rigidbody _rigidbody;
 
+    [SerializeField]
+    private float yawTorqueMultiplier = 0.01f;
     private readonly List<DroneMotorRuntime> _motors
         = new();
 
-    [SerializeField] private float _globalThrottle;
+    public IReadOnlyList<DroneMotorRuntime> Motors
+    => _motors;
+
 
     public void Initialize(
         DronePhysicsData physicsData
@@ -68,32 +72,51 @@ public class DronePhysicsSimulation : MonoBehaviour
         foreach (DroneMotorRuntime motor in _motors)
         {
             SimulateMotor(motor);
+            ApplyYawTorque(motor);
         }
     }
 
     private void SimulateMotor(
-        DroneMotorRuntime motor)
+     DroneMotorRuntime motor)
     {
-        float targetThrust =
-            motor.Data.MaxThrust *
-            _globalThrottle;
-
-        motor.CurrentThrust =
+        motor.CurrentThrottle =
             Mathf.Lerp(
-                motor.CurrentThrust,
-                targetThrust,
+                motor.CurrentThrottle,
+                motor.TargetThrottle,
                 motor.Data.ResponseSpeed *
                 Time.fixedDeltaTime);
+
+        motor.CurrentThrust =
+            motor.Data.MaxThrust *
+            motor.CurrentThrottle;
 
         Vector3 force =
             motor.Transform.up *
             motor.CurrentThrust;
+
+
+        //Debug.Log($"******* SimulateMotor motorforce {force}");
 
         _rigidbody.AddForceAtPosition(
             force,
             motor.Transform.position,
             ForceMode.Force);
     }
+    private void ApplyYawTorque(
+    DroneMotorRuntime motor)
+    {
+        float yawTorque =
+            motor.CurrentThrust *
+            motor.Data.MixData.YawFactor *
+            yawTorqueMultiplier;
+
+
+        //Debug.Log($"YawFactor  {motor.Data.MixData.YawFactor}  yawTorque {yawTorque}");
+        _rigidbody.AddTorque(
+            _rigidbody.transform.up * yawTorque,
+            ForceMode.Force);
+    }
+
 
     private void ApplyRigidbodyData(
         DronePhysicsData data)
@@ -122,9 +145,4 @@ public class DronePhysicsSimulation : MonoBehaviour
         return null;
     }
 
-    public void SetThrottle(float value)
-    {
-        _globalThrottle =
-            Mathf.Clamp01(value);
-    }
 }

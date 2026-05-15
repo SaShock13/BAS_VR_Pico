@@ -12,4 +12,6 @@ public class MotorConfig : PartConfig
     public RotationDirection RotationDirection;
 
     public float MaxRPM;
+
+    public MotorMixData MixData;
 }
