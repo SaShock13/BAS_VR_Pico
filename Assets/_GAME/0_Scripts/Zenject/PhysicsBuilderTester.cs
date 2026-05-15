@@ -165,6 +165,7 @@ public class PhysicsBuilderTester : MonoBehaviour
         Debug.Log($"COM: {data.LocalCenterOfMass}");
         Debug.Log($"Motors: {data.Motors?.Count ?? 0}");
         Debug.Log($"HoverThrottle: {data.HoverThrottle}");
+        Debug.Log($"YAw BIAS : {data.YawBias}");
         Debug.Log("==================================");
     }
 

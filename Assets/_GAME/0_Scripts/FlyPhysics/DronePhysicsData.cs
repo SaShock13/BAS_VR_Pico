@@ -14,4 +14,6 @@ public class DronePhysicsData
     public float MaxAvailableThrust;
 
     public float HoverThrottle;
+
+    public int YawBias;
 }

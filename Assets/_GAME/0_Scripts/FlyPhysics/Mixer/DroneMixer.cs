@@ -26,7 +26,7 @@ public class DroneMixer
             motor.TargetThrottle = output;
 
 
-            Debug.Log($"********motor  TargetThrottle {motor.TargetThrottle}");
+            Debug.Log($"********motor  PitchFactor {motor.Data.MixData.PitchFactor}");
         }
     }
 }

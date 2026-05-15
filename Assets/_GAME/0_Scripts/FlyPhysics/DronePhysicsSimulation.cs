@@ -20,8 +20,6 @@ public class DronePhysicsSimulation : MonoBehaviour
         ,IReadOnlyList<DronePartView> motorViews
         )
     {
-
-        Debug.Log($"Start  Initialize DronePhysicsSimulation{this}");
         _motors.Clear();
 
         ApplyRigidbodyData(physicsData);
@@ -29,9 +27,6 @@ public class DronePhysicsSimulation : MonoBehaviour
         foreach (MotorPhysicsData motorData
                  in physicsData.Motors)
         {
-
-
-            Debug.Log($"4444444Пытаюсь получить вью мотора {motorData.InstanceId}");  /// todo Не находит вью . ПОчему???
             DronePartView view =
                 FindMotorView(
                     motorData.InstanceId,
@@ -55,11 +50,6 @@ public class DronePhysicsSimulation : MonoBehaviour
             _motors.Add(runtime);
 
         }
-            foreach (var motor in _motors)
-            {
-
-                Debug.Log($"Added motor  {motor.Data.InstanceId}");
-            }
     }
 
     private void FixedUpdate()
@@ -76,6 +66,10 @@ public class DronePhysicsSimulation : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Симуляция Тяги мотора
+    /// </summary>
+    /// <param name="motor"></param>
     private void SimulateMotor(
      DroneMotorRuntime motor)
     {
@@ -94,14 +88,17 @@ public class DronePhysicsSimulation : MonoBehaviour
             motor.Transform.up *
             motor.CurrentThrust;
 
-
-        //Debug.Log($"******* SimulateMotor motorforce {force}");
-
         _rigidbody.AddForceAtPosition(
             force,
             motor.Transform.position,
             ForceMode.Force);
     }
+
+
+    /// <summary>
+    /// Применить силу вращения от мотора к дрону
+    /// </summary>
+    /// <param name="motor"></param>
     private void ApplyYawTorque(
     DroneMotorRuntime motor)
     {
@@ -110,14 +107,15 @@ public class DronePhysicsSimulation : MonoBehaviour
             motor.Data.MixData.YawFactor *
             yawTorqueMultiplier;
 
-
-        //Debug.Log($"YawFactor  {motor.Data.MixData.YawFactor}  yawTorque {yawTorque}");
         _rigidbody.AddTorque(
             _rigidbody.transform.up * yawTorque,
             ForceMode.Force);
     }
 
-
+    /// <summary>
+    /// Применить данные дрона к RigidBOdy вью
+    /// </summary>
+    /// <param name="data"></param>
     private void ApplyRigidbodyData(
         DronePhysicsData data)
     {
