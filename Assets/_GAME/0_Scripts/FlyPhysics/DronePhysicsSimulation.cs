@@ -7,6 +7,9 @@ public class DronePhysicsSimulation : MonoBehaviour
     private Rigidbody _rigidbody;
 
     [SerializeField]
+    private float _maxAngularVelocity = 3;
+
+    [SerializeField]
     private float yawTorqueMultiplier = 0.01f;
     private readonly List<DroneMotorRuntime> _motors
         = new();
@@ -126,6 +129,10 @@ public class DronePhysicsSimulation : MonoBehaviour
             data.LocalCenterOfMass;
 
         _rigidbody.automaticInertiaTensor = true;
+
+        _rigidbody.isKinematic = false;
+
+        _rigidbody.maxAngularVelocity = _maxAngularVelocity;
     }
 
     private DronePartView FindMotorView(
@@ -134,8 +141,6 @@ public class DronePhysicsSimulation : MonoBehaviour
     {
         foreach (DronePartView view in views)
         {
-
-            Debug.Log($"4444444Смотрю вью  {view.InstanceId}");
             if (view.InstanceId == instanceId)
                 return view;
         }

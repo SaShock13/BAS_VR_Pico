@@ -606,6 +606,7 @@ public class EventBus : IEventBus, IInitializable, IDisposable
 
         // Логирование
         _logger.LogError($"[EventBus] Handler error in {subscription.CallerInfo}: {ex.Message}");
+             
 
         // Обновление статистики ошибок
         var stats = _statistics.GetOrAdd(subscription.EventType, _ => new EventStatistics());

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Local Materials
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Local Materials
+  m_GUID: 6d2bffc9a8ab7f84fb92ad44821e342b
+  m_SerializeEntries:
+  - m_GUID: 413eb0b59b33da04e81f0d6047905aea
+    m_Address: PlasticAddressablesMAt
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - materials
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3daf47dbdd5cf6444908ef9f0b1ae700, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 32053a9095bbc7143bbae5194514c0f8, type: 2}
+    - {fileID: 11400000, guid: 81c677956c28f4b4db3c618050585329, type: 2}

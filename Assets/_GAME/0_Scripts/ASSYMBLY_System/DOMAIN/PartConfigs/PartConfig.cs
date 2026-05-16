@@ -10,6 +10,8 @@ public class PartConfig : ScriptableObject
     [Header("Visual")]
     public GameObject Prefab;
 
+    public string PrefabAddress;
+
     [Header("Physics")]
     public float Mass;
 

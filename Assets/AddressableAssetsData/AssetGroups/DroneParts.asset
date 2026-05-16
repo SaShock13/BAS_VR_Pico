@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: DroneParts
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: DroneParts
+  m_GUID: b47538e60cabeaa4386adffa0353ccec
+  m_SerializeEntries:
+  - m_GUID: 4cb0aba9c1f381745ad11e3674efaa14
+    m_Address: BatteryExample1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - parts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59b4bfc884ea05d41b67968732c8d2c0
+    m_Address: BodyExample1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - parts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fab15cc9bab7eaf41accd0da2254473b
+    m_Address: MotorExample1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - parts
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd106ad6694d19643a7b7487b400ab18
+    m_Address: PropellerExample1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - parts
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3daf47dbdd5cf6444908ef9f0b1ae700, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 9bf7de1f1988e4d41a311d12f43dd867, type: 2}
+    - {fileID: 11400000, guid: c2bab03971e98df4f981404b9c352830, type: 2}

@@ -28,13 +28,11 @@ public class PhysicsBuilderTester : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            RunTest();
-        }
+       
         if (Input.GetKeyDown(KeyCode.P))
         {
             FindDrone();
+            RunTest();
         }
 
 
@@ -76,7 +74,7 @@ public class PhysicsBuilderTester : MonoBehaviour
         {
             var domain = _domainRegistry.GetDomainState(view.InstanceId);
 
-            Debug.Log($"тип детали {view.transform.name} дрона {domain.Type}");
+            //Debug.Log($"тип детали {view.transform.name} дрона {domain.Type}");
             if (domain != null && domain.Type == PartType.Motor) motorViews.Add(view);
         }
             
@@ -125,18 +123,17 @@ public class PhysicsBuilderTester : MonoBehaviour
         _lastData =
             _physicsBuilder.Build(domainStates, _droneRoot);
 
-        _applier = new DronePhysicsApplier();
+        //_applier = new DronePhysicsApplier();
 
         Print(_lastData);
 
 
         //_droneRb = _droneRoot.GetComponent<Rigidbody>();
-        Debug.Log($"_applier {_applier != null}  _droneRb {_droneRb != null}");
+        //Debug.Log($"_applier {_applier != null}  _droneRb {_droneRb != null}");
         DeactivateChildRBs();
 
         //_applier.Apply(_droneRb, _lastData);
 
-        Debug.Log($"!!!!!!!!Моторов количество {_lastData.Motors.Count}");
         CreateDrone(_lastData);
     }
 

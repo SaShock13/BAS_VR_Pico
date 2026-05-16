@@ -5,20 +5,20 @@ public class DroneMixer
 {
     public void Mix(
         IReadOnlyList<DroneMotorRuntime> motors,
-        FlightInput input)
+        MixerInput input)
     {
 
 
-        Debug.Log($"******Input throttle - {input.Throttle} roll - {input.Roll} YAw - {input.Yaw} Pitch - {input.Pitch} ");
+        Debug.Log($"******Input throttle - {input.Throttle} RollCorrection - {input.RollCorrection} YawCorrection - {input.YawCorrection} PitchCorrection - {input.PitchCorrection} ");
         foreach (DroneMotorRuntime motor in motors)
         {
             float output =
                 input.Throttle
-                + input.Pitch *
+                + input.PitchCorrection *
                 motor.Data.MixData.PitchFactor
-                + input.Roll *
+                + input.RollCorrection *
                 motor.Data.MixData.RollFactor
-                + input.Yaw *
+                + input.YawCorrection *
                 motor.Data.MixData.YawFactor;
 
             output = Mathf.Clamp01(output);
@@ -26,7 +26,7 @@ public class DroneMixer
             motor.TargetThrottle = output;
 
 
-            Debug.Log($"********motor  PitchFactor {motor.Data.MixData.PitchFactor}");
+            Debug.Log($"********motor  output {output}");
         }
     }
 }

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PartDomainState 
 {
+
+    public bool isLoaded = false;
     public string InstanceId { get; }
     public string PartId { get; }
 

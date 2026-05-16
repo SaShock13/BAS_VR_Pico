@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
@@ -21,13 +22,15 @@ public class DronePartView : MonoBehaviour
     private IEventBus _eventBus;
     private Clean_AssemblySystem _assembly;
     private SelectionService _selectionService;
+    private AddressablesAssetService _assets;
 
     [Inject]
-    public void Construct(Clean_AssemblySystem assembly)
+    public void Construct(Clean_AssemblySystem assembly, AddressablesAssetService assets)
     {
 
         Debug.Log($"22222222 Construct Zenject {this}");
         _assembly = assembly;
+        _assets = assets;
     }
 
     public SocketView GetSocket(string socketId)
@@ -83,12 +86,21 @@ public class DronePartView : MonoBehaviour
     }
 
     // PREVIEW — вызывается каждый кадр
-    public void ApplyVisualPreview(PartVisualProperties visual)
+    public async Task ApplyVisualPreview(PartVisualProperties visual)
     {
-        _color = visual.Color;
+        //Material material = await AddressablesLoader.LoadMaterial(visual.MaterialAddress);
+
+        Material mat = await _assets.Load<Material>(visual.MaterialAddress);
+
+
+        _renderer.sharedMaterial = mat;
+
+        _color = _renderer.sharedMaterial.color;
         _renderer.GetPropertyBlock(_mpb);
-        _mpb.SetColor("_BaseColor", _color);
-        _mpb.SetFloat("_Smoothness", visual.Smoothness);
+
+        _mpb.SetColor(ShaderIds.BaseColor, _color);
+        _mpb.SetFloat(ShaderIds.Smoothness, visual.Smoothness);
+
         _renderer.SetPropertyBlock(_mpb);
     }
 
@@ -107,12 +119,12 @@ public class DronePartView : MonoBehaviour
         if (on&& !highlighted )
         {
             highlightedColor = _color * 1.2f;
-            _mpb.SetColor("_BaseColor", highlightedColor);
+            _mpb.SetColor(ShaderIds.BaseColor, highlightedColor);
             highlighted = true;
         }
         else if (!on && highlighted)
         {
-            _mpb.SetColor("_BaseColor", _color);
+            _mpb.SetColor(ShaderIds.BaseColor, _color);
             highlighted = false;
 
         }

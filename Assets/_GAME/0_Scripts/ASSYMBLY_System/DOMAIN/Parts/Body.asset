@@ -15,5 +15,6 @@ MonoBehaviour:
   PartId: "\u043A\u043E\u0440\u043F\u0443\u04411"
   PartType: 0
   Prefab: {fileID: 8777026559667588407, guid: 59b4bfc884ea05d41b67968732c8d2c0, type: 3}
+  PrefabAddress: BodyExample1
   Mass: 1
   LocalCenterOfMass: {x: 0, y: 0, z: 0}

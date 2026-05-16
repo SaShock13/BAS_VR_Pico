@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using Zenject;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using System.Collections;
 
 public class Clean_AssemblyTest : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Clean_AssemblyTest : MonoBehaviour
     IEventBus _eventBus;
     private SelectionService _selectionService;
     private PartHighlightService _highlightService;
-
+    private AddressablesPrefabService _prefabs;
     [SerializeField] private XRBaseInteractor[] _interactors;
 
 
@@ -20,13 +21,19 @@ public class Clean_AssemblyTest : MonoBehaviour
 
 
     [Inject]
-    public void Construct(IEventBus eventBus,SelectionService selectionService, PartHighlightService highlightService)
+    public void Construct(
+        IEventBus eventBus,
+        SelectionService selectionService, 
+        PartHighlightService highlightService,
+        AddressablesPrefabService prefabs
+        )
     {
 
         _eventBus = eventBus;
         _selectionService = selectionService;
         _eventBus.Subscribe<Clean_PartCreatedEvent>(OnPartCreated);
         _highlightService = highlightService;
+        _prefabs = prefabs;
     }
 
     private void Awake()
@@ -34,6 +41,7 @@ public class Clean_AssemblyTest : MonoBehaviour
         //_interactors = FindObjectsByType<XRBaseInteractor>(FindObjectsSortMode.None);
 
         Debug.Log($"!!!!!!!!!!!!!!!!_interactors {_interactors.Length}");
+
     }
 
     private void OnEnable()
@@ -85,9 +93,9 @@ public class Clean_AssemblyTest : MonoBehaviour
     private void OnPartCreated(Clean_PartCreatedEvent @event)
     {
 
-        Debug.Log($"OnPartCreated event handled / Instance {@event.InstanceId}");
+        //Debug.Log($"OnPartCreated event handled / Instance {@event.InstanceId}");
 
-        if (_mainPartId == null) _mainPartId = @event.InstanceId;  // самый первый деталь. Для теста
+        //if (_mainPartId == null) _mainPartId = @event.InstanceId;  // самый первый деталь. Для теста
     }
 
     private void Update()
@@ -95,12 +103,7 @@ public class Clean_AssemblyTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            foreach (var id in partIds)
-            {
-                _eventBus.Publish(new Clean_CreatePartRequestEvent{PartId = id, Timestamp = DateTime.UtcNow});
-
-            }
-
+            CreateTestParts();   /// Костыль - друг за другом создавать Не получается из Addressables , Нужно либо с  паузами либо механизм ожидания окончания создания
 
         }
 
@@ -114,12 +117,14 @@ public class Clean_AssemblyTest : MonoBehaviour
 
                 //var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
 
-                //var newVisual = new PartVisualProperties() { Color = randColor, Smoothness = 1 };
-                //_eventBus.Publish(new ApplyPartVisualCommand (_selectionService.SelectedPartId, newVisual) {Timestamp = DateTime.UtcNow });
+                var newVisual = new PartVisualProperties() { Smoothness = 1 , MaterialAddress = "PlasticAddressablesMAt" };
+                _eventBus.Publish(new ApplyPartVisualCommand (_selectionService.SelectedPartId, newVisual) {Timestamp = DateTime.UtcNow });
 
-                if(_selectionService.SelectedPartId == _mainPartId) return;
+                //if(_selectionService.SelectedPartId == _mainPartId) return;
 
                 //_eventBus.Publish(new PartSocketAttachRequest() { PartInstanceId = _selectionService.SelectedPartId, AttachedPartId = _mainPartId , AttachedSocketId = "engineSocket" ,Timestamp = DateTime.UtcNow });
+
+
 
             }
 
@@ -142,5 +147,14 @@ public class Clean_AssemblyTest : MonoBehaviour
 
 
 
+    }
+
+    private void CreateTestParts()
+    {
+        foreach (var id in partIds) 
+        {
+            _eventBus.Publish(new Clean_CreatePartRequestEvent { PartId = id, Timestamp = DateTime.UtcNow });
+
+        }
     }
 }

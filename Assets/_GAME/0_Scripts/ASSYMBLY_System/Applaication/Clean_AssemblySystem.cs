@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using Zenject;
@@ -73,7 +73,7 @@ public class Clean_AssemblySystem : IInitializable
     /// </summary>
     private void SubscribesForSnapshots()
     {
-        _eventBus.Subscribe<Clean_PartCreatedEvent>(OnPartChanged);  
+        _eventBus.Subscribe<AssemblyChangedEvent>(OnPartChanged);  
         _eventBus.Subscribe<Clean_PartDeletedEvent>(OnPartChanged);
         _eventBus.Subscribe<PartVisualChangedEvent>(OnPartChanged);
 
@@ -93,7 +93,10 @@ public class Clean_AssemblySystem : IInitializable
 
     private void OnPartChanged(object _)
     {
+
+        Debug.Log($"_undoRedo {_undoRedo!= null}");
         _undoRedo.Record();
+
     }
 
 
@@ -220,7 +223,9 @@ public class Clean_AssemblySystem : IInitializable
     {
         Debug.Log($"_repository {_repository!=null}");
         Debug.Log($"@event PartId {@event.PartId != null}");
-         CreatePart(@event.PartId);
+        CreatePartAsync(@event.PartId);
+
+        Debug.Log($"000000  Возврат в OnCreateRequested {this}");
     }
 
     public void Dispose()
@@ -235,7 +240,7 @@ public class Clean_AssemblySystem : IInitializable
     }
 
     #region CRUD
-    private void CreatePart(string partId)
+    private async Task CreatePartAsync(string partId)
     {
         // 1. Генерация ID экземпляра
         string instanceId = System.Guid.NewGuid().ToString();
@@ -248,18 +253,27 @@ public class Clean_AssemblySystem : IInitializable
         _parts.Add(instanceId, domainState);
 
 
-        // 4. Создание Unity-объекта
-        GameObject go = _factory.Create(
+        //4.Создание Unity - объекта
+        GameObject go = await _factory.CreateFromAddressables(
             config,
             Vector3.zero,
             Quaternion.identity
         );
 
+        //GameObject go = _factory.Create(
+        //    config,
+        //    Vector3.zero,
+        //    Quaternion.identity
+        //);
+
+
+
+
         // 5. Инициализация и связь Unity ↔ Domain
         var view = go.AddComponent<DronePartView>();
 
         // Zenject Зависимости прокидывает
-        _container.InjectGameObject(go);
+       _container.InjectGameObject(go);
 
 
         view.Init(instanceId,_eventBus);
@@ -267,7 +281,16 @@ public class Clean_AssemblySystem : IInitializable
         view.ApplyVisualCommitted(domainState.VisualProperties);
 
         // 6. Уведомление
-        _eventBus.Publish(new Clean_PartCreatedEvent { InstanceId = instanceId, GameObject = go, Timestamp = DateTime.Now });
+
+
+        Debug.Log($"!!!!!!!instanceId {instanceId} go {go!= null} message {this} ");
+
+        _viewRegistry.Register(instanceId, go);
+
+        domainState.isLoaded = true;
+
+        _eventBus.Publish(new Clean_PartCreatedEvent { InstanceId = instanceId, GameObject = go, Timestamp = DateTime.Now });  /// TOdo не успевает видимо создать GO или что то не так и уже снапшот делает.
+
     }
 
     private void DeletePart(string instanceId)
@@ -289,7 +312,7 @@ public class Clean_AssemblySystem : IInitializable
 
     }
 
-    private void DublicatePart(string instanceId)
+    private async void DublicatePart(string instanceId)
     {
 
         if (!_viewRegistry.TryGet(instanceId, out var sourceView))
@@ -318,12 +341,15 @@ public class Clean_AssemblySystem : IInitializable
 
 
         // 4. Создание Unity-объекта
-        GameObject go = _factory.Create(
+        GameObject go = await _factory.CreateFromAddressables(
             config,
             spawnPos,
             spawnRot
         );
+
         go.name = sourceView.transform.name + "_Clone";
+
+
         // 5. Инициализация и связь Unity ↔ Domain
         var view = go.AddComponent<DronePartView>();
 
@@ -366,20 +392,29 @@ public class Clean_AssemblySystem : IInitializable
 
     #region Build/LoadData
 
-    public AssemblySaveData BuildSaveData()  // todo чтото не сохраняет визуал - ПОправить!!!
+    public AssemblySaveData BuildSaveData() 
     {
         var result = new AssemblySaveData();
 
+
+
         foreach (var state in _parts.Values)
         {
+            if (!state.isLoaded) continue;
             //DronePartView view = new DronePartView();
+            Debug.Log($"000000_viewRegistry {_viewRegistry!=null}");
+            DronePartView view;
 
-            _viewRegistry.TryGet(state.InstanceId, out DronePartView view);
+            Debug.Log($"00000000  TryGet {state.InstanceId} ");
 
-            Debug.Log($"!!!!!!!!Color of {view.name } is  {state.VisualProperties.Color} SAVED");
-            //else Debug.Log($"state.VisualProperties of {view.name}  == null {this}");
+            var found = _viewRegistry.TryGet(state.InstanceId, out view);
+
+            if (found) Debug.Log($"000000view found {state.InstanceId} {found} {view.name}");
+            else Debug.Log($"View with ID {state.InstanceId} NOT found ");
+                //Debug.Log($"!!!!!!!!Color of {view.name } is  {state.VisualProperties.Color} SAVED");
 
                 var data = PartMapper.ToSaveData(state, view.transform);
+
             result.Parts.Add(data);
         }
 
@@ -387,7 +422,7 @@ public class Clean_AssemblySystem : IInitializable
     }
 
 
-    public void LoadSaveData(AssemblySaveData saveData)
+    public async void LoadSaveData(AssemblySaveData saveData)
     {
 
         if (saveData == null)
@@ -400,7 +435,7 @@ public class Clean_AssemblySystem : IInitializable
         var domains = BuildDomain(saveData);
 
         // 2
-        var views = CreateViews(domains);
+        var views = await CreateViews(domains);
 
         // 3
         BindDomain(domains);
@@ -438,7 +473,7 @@ public class Clean_AssemblySystem : IInitializable
         return result;
     }
 
-    private Dictionary<string, DronePartView> CreateViews(
+    private async  Task<Dictionary<string, DronePartView>> CreateViews(
     Dictionary<string, PartDomainState> domains)
     {
         var result = new Dictionary<string, DronePartView>();
@@ -449,7 +484,7 @@ public class Clean_AssemblySystem : IInitializable
 
             var config = _repository.Get(domain.PartId);
 
-            var go = _factory.Create(config, Vector3.zero, Quaternion.identity);
+            GameObject go = await _factory.CreateFromAddressables(config, Vector3.zero, Quaternion.identity);
 
             var view = go.GetComponent<DronePartView>();
             if (view == null)
@@ -463,6 +498,7 @@ public class Clean_AssemblySystem : IInitializable
 
             result.Add(domain.InstanceId, view);
             _viewRegistry.Register(domain.InstanceId, view.gameObject);
+            domain.isLoaded = true;
         }
 
         return result;

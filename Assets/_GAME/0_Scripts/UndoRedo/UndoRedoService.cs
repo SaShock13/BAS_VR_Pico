@@ -46,6 +46,7 @@ public class UndoRedoService
             return;
 
         var snapshot = Clone(_capture());
+        Debug.Log($"zzzzzzzzzzzRecord _capture {_capture != null}");
 
         // если мы сделали undo и потом новое действие → обрезаем redo
         if (_currentIndex < _history.Count - 1)
@@ -53,16 +54,20 @@ public class UndoRedoService
             _history.RemoveRange(_currentIndex + 1, _history.Count - _currentIndex - 1);
         }
 
-        Debug.Log($"----------Record snapshot {this}");
+        Debug.Log($"zzzzzzzzRecord _history {_history != null}");
         _history.Add(snapshot);
         _currentIndex++;
 
         // ограничение истории
         if (_history.Count > MaxHistory)
         {
+
+            Debug.Log($"zzzzzzzzz_history.Count > MaxHistory {this}");
             _history.RemoveAt(0);
             _currentIndex--;
         }
+
+        Debug.Log($"Record Finished {this}");
     }
 
     // =========================
@@ -109,6 +114,8 @@ public class UndoRedoService
 
     private AssemblySaveData Clone(AssemblySaveData data)
     {
+
+
         var json = JsonUtility.ToJson(data);
         return JsonUtility.FromJson<AssemblySaveData>(json);
     }

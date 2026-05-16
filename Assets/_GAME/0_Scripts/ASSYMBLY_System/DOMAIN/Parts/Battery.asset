@@ -15,5 +15,6 @@ MonoBehaviour:
   PartId: "\u0431\u0430\u0442\u0430\u0440\u0435\u044F1"
   PartType: 5
   Prefab: {fileID: 8777026559667588407, guid: 4cb0aba9c1f381745ad11e3674efaa14, type: 3}
+  PrefabAddress: BatteryExample1
   Mass: 5
   LocalCenterOfMass: {x: 0, y: -0.24, z: -0.771}

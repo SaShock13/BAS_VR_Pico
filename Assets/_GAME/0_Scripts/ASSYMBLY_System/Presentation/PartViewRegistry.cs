@@ -53,9 +53,11 @@ public class PartViewRegistry : IInitializable
     {
         //_views[@event.InstanceId] = @event.GameObject;
 
-        Register(@event.InstanceId, @event.GameObject);
+        //Register(@event.InstanceId, @event.GameObject);
 
         Debug.Log($"Added Part with ID  {@event.InstanceId}");
+
+        _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });
     }
 
 
@@ -63,8 +65,17 @@ public class PartViewRegistry : IInitializable
 
     public bool TryGet(string partId, out DronePartView view)
     {
+
         _views.TryGetValue(partId, out var go);
-        return view = go.GetComponent<DronePartView>();
+        if(go == null)
+        {
+            view = null;
+            return false;
+        }
+
+        view = go.GetComponent<DronePartView>();        
+        if (view != null) return true;
+        else return false;
     }
 
 
