@@ -16,7 +16,7 @@ MonoBehaviour:
   PartType: 2
   Prefab: {fileID: 8777026559667588407, guid: fab15cc9bab7eaf41accd0da2254473b, type: 3}
   PrefabAddress: MotorExample1
-  Mass: 3
+  Mass: 1
   LocalCenterOfMass: {x: 0, y: -0.0651, z: 0}
   MaxThrust: 50
   ResponseSpeed: 4

@@ -15,7 +15,7 @@ public class UndoRedoService
 
     private bool _isRestoring;
 
-    private const int MaxHistory = 10;
+    private const int MaxHistory = 20;
 
     public UndoRedoService(
         Func<AssemblySaveData> capture,
@@ -61,7 +61,6 @@ public class UndoRedoService
         // ограничение истории
         if (_history.Count > MaxHistory)
         {
-
             Debug.Log($"zzzzzzzzz_history.Count > MaxHistory {this}");
             _history.RemoveAt(0);
             _currentIndex--;

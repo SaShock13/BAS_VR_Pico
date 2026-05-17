@@ -25,6 +25,7 @@ public class Clean_AssemblySystem : IInitializable
     private UndoRedoService _undoRedo;
     private DiContainer _container;
 
+    private const string DEFAULT_PART_MATERIAL = "DefaultBlackMat";
 
     public Clean_AssemblySystem(
         IEventBus eventBus,
@@ -74,7 +75,7 @@ public class Clean_AssemblySystem : IInitializable
     private void SubscribesForSnapshots()
     {
         _eventBus.Subscribe<AssemblyChangedEvent>(OnPartChanged);  
-        _eventBus.Subscribe<Clean_PartDeletedEvent>(OnPartChanged);
+        //_eventBus.Subscribe<Clean_PartDeletedEvent>(OnPartChanged);
         _eventBus.Subscribe<PartVisualChangedEvent>(OnPartChanged);
 
     }
@@ -125,6 +126,8 @@ public class Clean_AssemblySystem : IInitializable
             partView.AttachTo(attachedSocket.transform); /// TODO Прикреплять нужно во вью по событию!
 
             _eventBus.Publish(new PartSocketAttachedEvent() { Timestamp = DateTime.Now });
+
+            _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
         }
         else Debug.Log($"!!!!!! {partView.transform.name} Can NOT be Attached {this}");
 
@@ -248,8 +251,13 @@ public class Clean_AssemblySystem : IInitializable
         // 3. Получение конфигурации
         PartConfig config = _repository.Get(partId);
 
+
+
         // 2. Создание доменного состояния
-        PartDomainState domainState = new PartDomainState(instanceId, partId, config.PartType );
+
+        var defaultVisual = new PartVisualProperties() {MaterialAddress = DEFAULT_PART_MATERIAL, Smoothness = 0.5f  };
+
+        PartDomainState domainState = new PartDomainState(instanceId, partId, config.PartType , defaultVisual);
         _parts.Add(instanceId, domainState);
 
 
@@ -293,21 +301,33 @@ public class Clean_AssemblySystem : IInitializable
 
     }
 
-    private void DeletePart(string instanceId)
+    // todo оптимизировать евенты для сохранений
+    private void DeletePart(string instanceId)  // !!!!!!!todo Удаление делать также всех дочерних !!!! И  домены и вью. Желательно Ао доменным связям а не по вью-родительским.
     {
-        var domainState = GetDomainState(instanceId);
-        if (domainState != null)
-        {
-            _parts.Remove(instanceId);
 
-            // todo Обработка ошибок
-            _eventBus.Publish(new Clean_PartDeletedEvent { InstanceId = instanceId, Timestamp = DateTime.Now });
-        }
-        else
+        _viewRegistry.TryGetAllChildrenIds(instanceId, out List<string> allChildIds);
+
+        foreach (string childId in allChildIds)
         {
-            _eventBus.Publish(new Clean_PartCantBeDeletedEvent { InstanceId = instanceId, Timestamp = DateTime.Now });
+            var domainState = GetDomainState(childId);
+
+            if (domainState != null)
+            {
+                _parts.Remove(instanceId);
+
+                _viewRegistry.Remove(instanceId);
+                // todo Обработка ошибок
+                _eventBus.Publish(new Clean_PartDeletedEvent { InstanceId = instanceId, Timestamp = DateTime.Now });
+            }
+            else
+            {
+                _eventBus.Publish(new Clean_PartCantBeDeletedEvent { InstanceId = instanceId, Timestamp = DateTime.Now });
+
+            }
 
         }
+
+            _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
 
 
     }
@@ -332,10 +352,8 @@ public class Clean_AssemblySystem : IInitializable
         PartConfig config = _repository.Get(partId);
 
         // 2. Создание доменного состояния
-        PartDomainState domainState = new PartDomainState(dublicateInstanceId, partId, config.PartType);
+        PartDomainState domainState = new PartDomainState(dublicateInstanceId, partId, config.PartType, oldDomain.VisualProperties);
 
-        // Применяем тот же визуал
-        domainState.SetVisual(oldDomain.VisualProperties);
 
         _parts.Add(dublicateInstanceId, domainState);
 
@@ -350,13 +368,19 @@ public class Clean_AssemblySystem : IInitializable
         go.name = sourceView.transform.name + "_Clone";
 
 
+
         // 5. Инициализация и связь Unity ↔ Domain
         var view = go.AddComponent<DronePartView>();
 
         // Zenject Зависимости прокидывает
         _container.InjectGameObject(go);
 
+
         view.Init(dublicateInstanceId, _eventBus);
+
+        _viewRegistry.Register(dublicateInstanceId, go); // Обязательно регистрировать
+
+        domainState.isLoaded = true; /// Обязательно помечать, иначе не запишется в SaveData
 
         // Применяем визуал domain на view
         view.ApplyVisualCommitted(domainState.VisualProperties);
@@ -401,19 +425,15 @@ public class Clean_AssemblySystem : IInitializable
         foreach (var state in _parts.Values)
         {
             if (!state.isLoaded) continue;
-            //DronePartView view = new DronePartView();
-            Debug.Log($"000000_viewRegistry {_viewRegistry!=null}");
-            DronePartView view;
 
-            Debug.Log($"00000000  TryGet {state.InstanceId} ");
+            DronePartView view;
 
             var found = _viewRegistry.TryGet(state.InstanceId, out view);
 
             if (found) Debug.Log($"000000view found {state.InstanceId} {found} {view.name}");
             else Debug.Log($"View with ID {state.InstanceId} NOT found ");
-                //Debug.Log($"!!!!!!!!Color of {view.name } is  {state.VisualProperties.Color} SAVED");
 
-                var data = PartMapper.ToSaveData(state, view.transform);
+            var data = PartMapper.ToSaveData(state, view.transform);
 
             result.Parts.Add(data);
         }

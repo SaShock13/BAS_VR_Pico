@@ -23,7 +23,6 @@ public class PartViewRegistry : IInitializable
 
         Debug.Log($"Clean_PartViewRegistry Initialize {this}");
         _eventBus.Subscribe<Clean_PartCreatedEvent>(OnPartCreated);
-        _eventBus.Subscribe<Clean_PartDeletedEvent>(OnPartDeleted);
         _eventBus.Subscribe<PartVisualChangedEvent>(OnPartVisualChanged);
         
     }      
@@ -35,7 +34,7 @@ public class PartViewRegistry : IInitializable
         {
             var view = go.GetComponent<DronePartView>();
 
-            Debug.Log($"view {view!= null}");
+            Debug.Log($"view Visual Changed {view!= null}");
             view.ApplyVisualCommitted(@event.Visual);
         }
     }
@@ -44,10 +43,12 @@ public class PartViewRegistry : IInitializable
     {
         if (_views.TryGetValue(@event.InstanceId, out GameObject go))
         {
-            GameObject.Destroy(go);
             _views.Remove(@event.InstanceId);
+            if (go != null) GameObject.Destroy(go);
         }
     }
+
+
 
     private void OnPartCreated(Clean_PartCreatedEvent @event)
     {
@@ -79,8 +80,32 @@ public class PartViewRegistry : IInitializable
     }
 
 
+    public bool TryGetAllChildrenIds(string partId, out List<string> childrenIds)
+    {
+        childrenIds = new();
 
-    
+        _views.TryGetValue(partId, out var go);
+        if (go == null)
+        {
+
+            Debug.LogError($"Cannot find View with ID {partId}");
+            return false;
+        }
+
+        var viewsWithChildren = go.GetComponentsInChildren<DronePartView>();
+
+        foreach( var child in viewsWithChildren)
+        {
+            childrenIds.Add(child.InstanceId);
+        }
+
+        if(childrenIds.Count != 0 ) return true;
+        return false;
+
+    }
+
+
+
     public void VisualSelect(string InstanceId)
     {
         // Снять подсветку с предыдущей
@@ -116,5 +141,14 @@ public class PartViewRegistry : IInitializable
     internal void Clear()
     {
         _views.Clear();
+    }
+
+    public void Remove(string instanceId)
+    {
+        if (_views.TryGetValue(instanceId, out GameObject go))
+        {
+            _views.Remove(instanceId);
+            if (go != null) GameObject.Destroy(go);
+        }
     }
 }

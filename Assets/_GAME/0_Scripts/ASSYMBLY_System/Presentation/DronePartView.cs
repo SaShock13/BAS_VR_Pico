@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Zenject;
 
 public class DronePartView : MonoBehaviour
@@ -55,7 +53,6 @@ public class DronePartView : MonoBehaviour
     {
         _mpb = new MaterialPropertyBlock();
         _rigidBody = GetComponent<Rigidbody>();
-        //InitializeSockets();
     }
 
     private void InitializeSockets()
@@ -88,14 +85,13 @@ public class DronePartView : MonoBehaviour
     // PREVIEW — вызывается каждый кадр
     public async Task ApplyVisualPreview(PartVisualProperties visual)
     {
-        //Material material = await AddressablesLoader.LoadMaterial(visual.MaterialAddress);
-
         Material mat = await _assets.Load<Material>(visual.MaterialAddress);
 
+        Debug.Log($"!!!!!!!visual.MatAddress{visual.MaterialAddress}");
 
         _renderer.sharedMaterial = mat;
-
         _color = _renderer.sharedMaterial.color;
+
         _renderer.GetPropertyBlock(_mpb);
 
         _mpb.SetColor(ShaderIds.BaseColor, _color);

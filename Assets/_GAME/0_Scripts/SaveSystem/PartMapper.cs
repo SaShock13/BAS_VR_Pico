@@ -43,11 +43,11 @@ public static class PartMapper
         if (data == null)
             throw new ArgumentNullException(nameof(data));
 
-        var state = new PartDomainState(data.InstanceId, data.PartId, data.Type);
+        var state = new PartDomainState(data.InstanceId, data.PartId, data.Type, data.VisualProperties);
 
-        // Восстановление визуальных параметров
+        //// Восстановление визуальных параметров
        
-            state.SetVisual(data.VisualProperties);
+        //    state.SetVisual(data.VisualProperties);
 
         // Восстановление логического состояния
         if (data.LifecycleState == PartLifecycleState.Installed)

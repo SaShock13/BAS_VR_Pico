@@ -113,12 +113,14 @@ public class Clean_AssemblyTest : MonoBehaviour
             Debug.Log($"SelectedPartId {_selectionService.SelectedPartId}");
             if (_selectionService.SelectedPartId != null)
             {
-                //_eventBus.Publish(new Clean_DeletePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
+                // Тестирование удаления
+                _eventBus.Publish(new Clean_DeletePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
 
+
+                // Тест изменения визуала
                 //var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
-
-                var newVisual = new PartVisualProperties() { Smoothness = 1 , MaterialAddress = "PlasticAddressablesMAt" };
-                _eventBus.Publish(new ApplyPartVisualCommand (_selectionService.SelectedPartId, newVisual) {Timestamp = DateTime.UtcNow });
+                //var newVisual = new PartVisualProperties() { Smoothness = 1 , MaterialAddress = "PlasticAddressablesMAt" };
+                //_eventBus.Publish(new ApplyPartVisualCommand (_selectionService.SelectedPartId, newVisual) {Timestamp = DateTime.UtcNow });
 
                 //if(_selectionService.SelectedPartId == _mainPartId) return;
 

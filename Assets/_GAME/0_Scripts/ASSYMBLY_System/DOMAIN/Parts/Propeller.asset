@@ -16,5 +16,5 @@ MonoBehaviour:
   PartType: 3
   Prefab: {fileID: 8777026559667588407, guid: fd106ad6694d19643a7b7487b400ab18, type: 3}
   PrefabAddress: PropellerExample1
-  Mass: 1
+  Mass: 0.2
   LocalCenterOfMass: {x: 0, y: -0.031, z: 0}

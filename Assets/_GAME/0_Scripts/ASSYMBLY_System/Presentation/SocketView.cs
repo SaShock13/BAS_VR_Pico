@@ -228,8 +228,8 @@ public class SocketView : MonoBehaviour
 
 
         _isValidHover =
-            _assemblySystem.CanAttach(                
-                part.InstanceId,
+            _assemblySystem.CanAttach(
+                _hoveredPart.InstanceId,
                 this);
 
         _previewSystem.ShowPreview(  

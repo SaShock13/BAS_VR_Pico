@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Local Materials
   m_GUID: 6d2bffc9a8ab7f84fb92ad44821e342b
   m_SerializeEntries:
+  - m_GUID: 001c14430d112a549b1337fa7b471794
+    m_Address: DefaultBlackMat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - materials
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 413eb0b59b33da04e81f0d6047905aea
     m_Address: PlasticAddressablesMAt
     m_ReadOnly: 0
