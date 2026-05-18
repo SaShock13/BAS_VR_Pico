@@ -114,6 +114,11 @@ public class Clean_AssemblyTest : MonoBehaviour
             if (_selectionService.SelectedPartId != null)
             {
                 // Тестирование удаления
+
+
+
+
+                Debug.Log($"DDDDDD .Publish(new Clean_DeletePartRequest {this}");
                 _eventBus.Publish(new Clean_DeletePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
 
 

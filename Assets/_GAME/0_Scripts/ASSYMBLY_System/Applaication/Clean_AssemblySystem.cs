@@ -9,6 +9,7 @@ using Zenject;
 public class Clean_AssemblySystem : IInitializable
 {
     private readonly IEventBus _eventBus;
+    private readonly IAppLogger _logger;
     private readonly IPartConfigRegistry _repository;
     private readonly IPartFactory _factory;
     private readonly PartViewRegistry _viewRegistry;
@@ -29,6 +30,7 @@ public class Clean_AssemblySystem : IInitializable
 
     public Clean_AssemblySystem(
         IEventBus eventBus,
+        IAppLogger logger,
         IPartConfigRegistry repository,
         IPartFactory factory,
         PartViewRegistry viewRegistry,
@@ -38,6 +40,7 @@ public class Clean_AssemblySystem : IInitializable
         ISaveService saveService)
     {
         _eventBus = eventBus;
+        _logger = logger;
         _repository = repository;
         _factory = factory;
         _viewRegistry = viewRegistry;
@@ -219,7 +222,20 @@ public class Clean_AssemblySystem : IInitializable
 
     private void OnDeleteRequested(Clean_DeletePartRequest @event)
     {
-        DeletePart(@event.InstanceId);
+        //Debug
+            var domainState = GetDomainState(@event.InstanceId);
+        if(domainState!= null)
+        {
+            _viewRegistry.TryGet(@event.InstanceId, out var view);
+            var name = view.name;
+
+
+
+            Debug.Log($"DDDDDDDDDDDOnDeleteRequested {name}  - Domain found == {domainState != null} ");
+            DeletePart(@event.InstanceId);
+        }
+        else Debug.Log($"domainState == null {this}");
+
     }
 
     private void OnCreateRequested(Clean_CreatePartRequestEvent @event)
@@ -307,15 +323,43 @@ public class Clean_AssemblySystem : IInitializable
 
         _viewRegistry.TryGetAllChildrenIds(instanceId, out List<string> allChildIds);
 
+
+        Debug.Log($"ddddddddballChildIds.Count {allChildIds.Count}");
+        foreach (var child in allChildIds)
+        {
+            //debug
+            _viewRegistry.TryGet(child, out var view);
+            var name = view.name;
+
+            var domainState = GetDomainState(child);
+
+            Debug.Log($"DDDDDDDDDDD child  {name} - Domain found == {domainState  != null} ");
+
+
+        }
+
         foreach (string childId in allChildIds)
         {
             var domainState = GetDomainState(childId);
 
             if (domainState != null)
             {
-                _parts.Remove(instanceId);
+                //debug
+                _viewRegistry.TryGet(childId, out var view);
+                var name = view.name;
 
-                _viewRegistry.Remove(instanceId);
+                _parts.Remove(childId);
+                _logger.Log($"DDDDDDDDDDD RealDeleted {name} Domain");
+
+               
+                
+                _viewRegistry.Remove(childId);
+                Debug.Log($"DDDDDDDDDDD RealDeleted {name}  VIEW");
+
+
+
+
+                Debug.Log($"message {this}");
                 // todo Обработка ошибок
                 _eventBus.Publish(new Clean_PartDeletedEvent { InstanceId = instanceId, Timestamp = DateTime.Now });
             }
