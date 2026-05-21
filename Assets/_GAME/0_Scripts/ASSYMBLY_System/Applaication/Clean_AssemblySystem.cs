@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using Zenject;
@@ -10,7 +11,7 @@ public class Clean_AssemblySystem : IInitializable
 {
     private readonly IEventBus _eventBus;
     private readonly IAppLogger _logger;
-    private readonly IPartConfigRegistry _repository;
+    private readonly IPartConfigRegistry _configs;
     private readonly IPartFactory _factory;
     private readonly PartViewRegistry _viewRegistry;
     private readonly Transform _spawnPoint;
@@ -19,9 +20,8 @@ public class Clean_AssemblySystem : IInitializable
     private SelectionService _selectionService;
 
     // ХРАНИЛИЩЕ СОСТОЯНИЙ
-    private readonly Dictionary<string, PartDomainState> _parts =
-        new Dictionary<string, PartDomainState>();
-
+    private readonly Dictionary<string, PartDomainState> _parts = new Dictionary<string, PartDomainState>();
+    private Dictionary<string, DroneDomainState> _drones = new Dictionary<string, DroneDomainState>();
 
     private UndoRedoService _undoRedo;
     private DiContainer _container;
@@ -31,7 +31,7 @@ public class Clean_AssemblySystem : IInitializable
     public Clean_AssemblySystem(
         IEventBus eventBus,
         IAppLogger logger,
-        IPartConfigRegistry repository,
+        IPartConfigRegistry configs,
         IPartFactory factory,
         PartViewRegistry viewRegistry,
         DiContainer container,
@@ -41,7 +41,7 @@ public class Clean_AssemblySystem : IInitializable
     {
         _eventBus = eventBus;
         _logger = logger;
-        _repository = repository;
+        _configs = configs;
         _factory = factory;
         _viewRegistry = viewRegistry;
         _container = container;
@@ -125,8 +125,13 @@ public class Clean_AssemblySystem : IInitializable
             // Прикрепляем домен
             partDomain.AttachToPartSocket(request.AttachedPartId, request.AttachedSocketId);
 
+
             // Прикрепляем view
             partView.AttachTo(attachedSocket.transform); /// TODO Прикреплять нужно во вью по событию!
+
+
+            // Пересчитываем дроны
+           RebuildDrones();
 
             _eventBus.Publish(new PartSocketAttachedEvent() { Timestamp = DateTime.Now });
 
@@ -194,7 +199,7 @@ public class Clean_AssemblySystem : IInitializable
     {
 
         var childConfig =
-        _repository.Get(partDomain.PartId);        
+        _configs.Get(partDomain.PartId);        
 
         foreach (var allowedType in attachedSocket.AllowedTypes)
         {
@@ -240,7 +245,7 @@ public class Clean_AssemblySystem : IInitializable
 
     private void OnCreateRequested(Clean_CreatePartRequestEvent @event)
     {
-        Debug.Log($"_repository {_repository!=null}");
+        Debug.Log($"_repository {_configs!=null}");
         Debug.Log($"@event PartId {@event.PartId != null}");
         CreatePartAsync(@event.PartId);
 
@@ -258,6 +263,111 @@ public class Clean_AssemblySystem : IInitializable
         return _parts[instanceId];
     }
 
+
+    #region DroneRebuild
+
+    private void RebuildDrones() /// todo Оптимизировать .Сделать кэш для быстрого поиска
+    {
+        _drones.Clear();
+
+        HashSet<string> visited = new();
+
+        int droneIndex = 0;
+
+        // ИЩЕМ ROOT PARTS
+        foreach (var part in _parts.Values)
+        {
+            // root = не прикреплен ни к чему
+            if (part.AttachedPartInstanceId != null)
+                continue;
+
+            // уже обработан
+            if (visited.Contains(part.InstanceId))
+                continue;
+
+            DroneDomainState drone =
+                new($"Drone_{droneIndex++}");
+
+            BuildDroneRecursive(
+                rootPart: part,
+                drone: drone,
+                visited: visited);
+
+            // если нужен body-only drone
+            bool hasBody =
+                drone.partInstanseIds.Any(id =>
+                    _parts[id].Type == PartType.Body);
+
+            if (!hasBody)
+                continue;
+
+            CalculateDroneStats(drone);
+
+            _drones.Add(drone.InstanceId, drone);
+
+        }
+            Debug.Log($"+++RebuildDrones  {this}");
+            foreach (var oneDrone in _drones.Values)
+            {
+
+                Debug.Log($"++++ drone.Name {oneDrone.Name}");
+                foreach (var partId in oneDrone.partInstanseIds)
+                {
+                    _viewRegistry.TryGet(partId, out var view);
+
+                    Debug.Log($"+++Деталь {view.name}");
+                }
+            }
+    }
+
+    private void BuildDroneRecursive(
+    PartDomainState rootPart,
+    DroneDomainState drone,
+    HashSet<string> visited)
+    {
+        if (visited.Contains(rootPart.InstanceId))
+            return;
+
+        visited.Add(rootPart.InstanceId);
+
+        drone.partInstanseIds.Add(rootPart.InstanceId);
+
+        // ИЩЕМ ДЕТЕЙ
+        foreach (var part in _parts.Values)
+        {
+            if (part.AttachedPartInstanceId ==
+                rootPart.InstanceId)
+            {
+                BuildDroneRecursive(
+                    part,
+                    drone,
+                    visited);
+            }
+        }
+    }
+    private void CalculateDroneStats(
+        DroneDomainState drone)
+    {
+        float mass = 0f;
+
+        Debug.Log($"+++CalculateDroneStats {this}");
+
+        foreach (var partInstanseId in drone.partInstanseIds)
+        {
+
+            Debug.Log($"+++partId {partInstanseId}");
+            var domain = _parts[partInstanseId];
+            var config = _configs.Get(domain.PartId);
+            mass += config.Mass;
+        }
+
+        drone.TotalMass = mass;
+
+        Debug.Log($"+++drone.TotalMass {drone.TotalMass}");
+    } 
+    #endregion
+
+
     #region CRUD
     private async Task CreatePartAsync(string partId)
     {
@@ -265,7 +375,7 @@ public class Clean_AssemblySystem : IInitializable
         string instanceId = System.Guid.NewGuid().ToString();
 
         // 3. Получение конфигурации
-        PartConfig config = _repository.Get(partId);
+        PartConfig config = _configs.Get(partId);
 
 
 
@@ -371,7 +481,10 @@ public class Clean_AssemblySystem : IInitializable
 
         }
 
-            _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
+        // Пересчитываем дроны
+        RebuildDrones();
+
+        _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
 
 
     }
@@ -393,13 +506,15 @@ public class Clean_AssemblySystem : IInitializable
         var partId = oldDomain.PartId;
 
         // 3. Получение конфигурации
-        PartConfig config = _repository.Get(partId);
+        PartConfig config = _configs.Get(partId);
 
         // 2. Создание доменного состояния
         PartDomainState domainState = new PartDomainState(dublicateInstanceId, partId, config.PartType, oldDomain.VisualProperties);
 
 
         _parts.Add(dublicateInstanceId, domainState);
+
+        
 
 
         // 4. Создание Unity-объекта
@@ -423,6 +538,9 @@ public class Clean_AssemblySystem : IInitializable
         view.Init(dublicateInstanceId, _eventBus);
 
         _viewRegistry.Register(dublicateInstanceId, go); // Обязательно регистрировать
+
+        // Пересчитываем дроны
+         RebuildDrones(); // todo А надо ли ???
 
         domainState.isLoaded = true; /// Обязательно помечать, иначе не запишется в SaveData
 
@@ -546,7 +664,7 @@ public class Clean_AssemblySystem : IInitializable
         {
             var domain = pair.Value;
 
-            var config = _repository.Get(domain.PartId);
+            var config = _configs.Get(domain.PartId);
 
             GameObject go = await _factory.CreateFromAddressables(config, Vector3.zero, Quaternion.identity);
 

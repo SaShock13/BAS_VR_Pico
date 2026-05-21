@@ -105,13 +105,30 @@ public class DronePhysicsSimulation : MonoBehaviour
     private void ApplyYawTorque(
     DroneMotorRuntime motor)
     {
+        //float yawTorque =
+        //    motor.CurrentThrust *
+        //    motor.Data.MixData.YawFactor *
+        //    yawTorqueMultiplier;
+
+        //_rigidbody.AddTorque(
+        //    _rigidbody.transform.up * yawTorque,
+        //    ForceMode.Force);
+
+
+
+        float direction =
+        motor.Data.RotationDirection ==
+        RotationDirection.Clockwise
+            ? 1f
+            : -1f;
+
         float yawTorque =
             motor.CurrentThrust *
-            motor.Data.MixData.YawFactor *
-            yawTorqueMultiplier;
+            yawTorqueMultiplier *
+            direction;
 
-        _rigidbody.AddTorque(
-            _rigidbody.transform.up * yawTorque,
+        _rigidbody.AddRelativeTorque(
+            Vector3.up * yawTorque,
             ForceMode.Force);
     }
 

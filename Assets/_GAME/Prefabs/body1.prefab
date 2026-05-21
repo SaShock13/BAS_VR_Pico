@@ -1981,7 +1981,7 @@ Rigidbody:
   serializedVersion: 5
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 2
+  m_AngularDamping: 0.2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1996,7 +1996,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 62
   m_CollisionDetection: 0
 --- !u!114 &6494140227431048552
 MonoBehaviour:
@@ -2154,7 +2154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DronePhysicsSimulation
   _rigidbody: {fileID: 7865895251465963167}
   _maxAngularVelocity: 3
-  yawTorqueMultiplier: 0.1
+  yawTorqueMultiplier: 0.2
 --- !u!114 &7468837464945875126
 MonoBehaviour:
   m_ObjectHideFlags: 0

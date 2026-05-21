@@ -24,6 +24,10 @@ public class FlightController : MonoBehaviour
     [Header("PID")]
     [SerializeField]
     private PIDController _pitchPID;
+    [SerializeField]
+    private PIDController _rollPID;
+    [SerializeField]
+    private PIDController _yawPID;
 
     private bool _enabled = false;
 
@@ -85,8 +89,9 @@ public class FlightController : MonoBehaviour
             Throttle = input.Throttle,
 
             PitchCorrection = _pitchPID.Update( pitchError, Time.fixedDeltaTime),
-            RollCorrection = rollError * _rollGain,
-            YawCorrection = yawError * _yawGain
+            RollCorrection = _rollPID.Update(rollError, Time.fixedDeltaTime),
+            YawCorrection = _yawPID.Update(yawError, Time.fixedDeltaTime),
+            
         };
 
         mixerInput.PitchCorrection = Mathf.Clamp(
@@ -100,7 +105,7 @@ public class FlightController : MonoBehaviour
                         _maxRollCorrection);
 
         mixerInput.YawCorrection = Mathf.Clamp(
-                                        mixerInput.YawCorrection,
+                                        mixerInput.YawCorrection  ,
                                         -_maxYawCorrection,
                                         _maxYawCorrection);
 

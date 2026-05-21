@@ -906,21 +906,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FlightController
   _rb: {fileID: 0}
   _simulation: {fileID: 0}
-  _input: {fileID: 0}
-  _maxPitchRate: 3
-  _maxRollRate: 3
+  _input: {fileID: 800227178}
+  _maxPitchRate: 1.5
+  _maxRollRate: 1.5
   _maxYawRate: 2
   _pitchGain: 0.05
   _rollGain: 0.05
   _yawGain: 1
   _pitchPID:
-    _p: 0.05
+    _p: 0.35
     _i: 0
-    _d: 0
+    _d: 0.09
     _integralLimit: 1
-  _maxPitchCorrection: 0.2
-  _maxRollCorrection: 0.2
-  _maxYawCorrection: 0.1
+  _rollPID:
+    _p: 0.3
+    _i: 0
+    _d: 0.09
+    _integralLimit: 1
+  _yawPID:
+    _p: 0.2
+    _i: 0
+    _d: 0.05
+    _integralLimit: 1
+  _maxPitchCorrection: 0.5
+  _maxRollCorrection: 0.5
+  _maxYawCorrection: 0.2
 --- !u!4 &751904127
 Transform:
   m_ObjectHideFlags: 0

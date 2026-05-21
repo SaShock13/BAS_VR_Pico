@@ -163,6 +163,13 @@ public class PhysicsBuilderTester : MonoBehaviour
         Debug.Log($"Motors: {data.Motors?.Count ?? 0}");
         Debug.Log($"HoverThrottle: {data.HoverThrottle}");
         Debug.Log($"YAw BIAS : {data.YawBias}");
+        foreach (var motor in data.Motors)
+        {
+
+            Debug.Log($"motor.RotationDirection {motor.RotationDirection}");
+            Debug.Log($"motor YawFactor {motor.MixData.YawFactor}");
+        }
+        
         Debug.Log("==================================");
     }
 
