@@ -6,7 +6,12 @@ public class PartDomainState
 
     public bool isLoaded = false;
     public string InstanceId { get; }
+
+    public string DroneId { get; set; }
+
     public string PartId { get; }
+
+
 
     public PartLifecycleState LifecycleState { get; private set; }
     public string AttachedSocketId { get; private set; }

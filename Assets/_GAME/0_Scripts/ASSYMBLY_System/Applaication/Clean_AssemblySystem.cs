@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using Zenject;
 
-public class Clean_AssemblySystem : IInitializable
+public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 {
     private readonly IEventBus _eventBus;
     private readonly IAppLogger _logger;
@@ -21,7 +22,13 @@ public class Clean_AssemblySystem : IInitializable
 
     // ХРАНИЛИЩЕ СОСТОЯНИЙ
     private readonly Dictionary<string, PartDomainState> _parts = new Dictionary<string, PartDomainState>();
+
+    // drone state
     private Dictionary<string, DroneDomainState> _drones = new Dictionary<string, DroneDomainState>();
+    // drone persistent metadata
+    private readonly Dictionary<string, DroneMetadata> _dronesMetadata = new();
+    // drone computed
+    private readonly Dictionary<string, DroneComputedState> _droneComputed = new();
 
     private UndoRedoService _undoRedo;
     private DiContainer _container;
@@ -110,7 +117,7 @@ public class Clean_AssemblySystem : IInitializable
     {
         Debug.Log($"OnAttachRequested {this}");
 
-        var partDomain = GetDomainState(request.PartInstanceId);
+        var partDomain = GetPartDomainState(request.PartInstanceId);
         Debug.Log($"partDomain {partDomain}");
         _viewRegistry.TryGet(partDomain.InstanceId, out var partView);
         Debug.Log($"partView {partView}");
@@ -168,7 +175,7 @@ public class Clean_AssemblySystem : IInitializable
 
     public bool CanAttach(string instanceId, SocketView socketView)
     {
-        var partDomain = GetDomainState(instanceId);
+        var partDomain = GetPartDomainState(instanceId);
 
         if (IsSocketOccupied(socketView.ParentView.InstanceId, socketView.SocketId)) // todo как получить здесь instanceId детали с сокетом? Как еще проверить на занятость сокет?
         {
@@ -216,7 +223,7 @@ public class Clean_AssemblySystem : IInitializable
 
     private void OnApplyPartVisual(ApplyPartVisualCommand command)
     {
-        var partState = GetDomainState(command.InstanceId);
+        var partState = GetPartDomainState(command.InstanceId);
         partState.SetVisual(command.Visual);
 
         _eventBus.Publish(new PartVisualChangedEvent(
@@ -228,7 +235,7 @@ public class Clean_AssemblySystem : IInitializable
     private void OnDeleteRequested(Clean_DeletePartRequest @event)
     {
         //Debug
-            var domainState = GetDomainState(@event.InstanceId);
+            var domainState = GetPartDomainState(@event.InstanceId);
         if(domainState!= null)
         {
             _viewRegistry.TryGet(@event.InstanceId, out var view);
@@ -254,76 +261,115 @@ public class Clean_AssemblySystem : IInitializable
 
     public void Dispose()
     {
-        //_eventBus.Unsubscribe<Clean_CreatePartRequestEvent>(OnCreateRequested);
+       // _eventBus.Unsubscribe<Clean_CreatePartRequestEvent>(OnCreateRequested);
     }
 
-    // Пример доступа к состоянию
-    public PartDomainState GetDomainState(string instanceId)
+    // доступа к состоянию
+    public PartDomainState GetPartDomainState(string instanceId)
     {
         return _parts[instanceId];
     }
 
+    public DroneDomainState GetDroneDomainState(string instanceId)
+    {
+        return _drones[instanceId];
+    }
+
+
+
 
     #region DroneRebuild
 
-    private void RebuildDrones() /// todo Оптимизировать .Сделать кэш для быстрого поиска
+    public void RebuildDrones() /// todo Оптимизировать .Сделать кэш для быстрого поиска
     {
+        Debug.Log($"0000000RebuildDrones ");  // todo Имя дрона Всегда новое получается. Но нужно чтобы назвать дрон и закрепить это имя!!
+
         _drones.Clear();
+        _droneComputed.Clear();
 
         HashSet<string> visited = new();
 
-        int droneIndex = 0;
+        int autoNameIndex = 0;
 
-        // ИЩЕМ ROOT PARTS
         foreach (var part in _parts.Values)
         {
-            // root = не прикреплен ни к чему
+            // ROOT = BODY без родителя
+            if (part.Type != PartType.Body)
+                continue;
+
             if (part.AttachedPartInstanceId != null)
                 continue;
 
-            // уже обработан
             if (visited.Contains(part.InstanceId))
                 continue;
 
+            // STABLE ID
+            string droneId = part.InstanceId;
+
             DroneDomainState drone =
-                new($"Drone_{droneIndex++}");
+                new(droneId);
 
             BuildDroneRecursive(
                 rootPart: part,
                 drone: drone,
                 visited: visited);
 
-            // если нужен body-only drone
-            bool hasBody =
-                drone.partInstanseIds.Any(id =>
-                    _parts[id].Type == PartType.Body);
-
-            if (!hasBody)
-                continue;
-
-            CalculateDroneStats(drone);
-
-            _drones.Add(drone.InstanceId, drone);
-
-        }
-            Debug.Log($"+++RebuildDrones  {this}");
-            foreach (var oneDrone in _drones.Values)
+            // записываем droneId деталям
+            foreach (var partId in drone.partInstanseIds)
             {
-
-                Debug.Log($"++++ drone.Name {oneDrone.Name}");
-                foreach (var partId in oneDrone.partInstanseIds)
-                {
-                    _viewRegistry.TryGet(partId, out var view);
-
-                    Debug.Log($"+++Деталь {view.name}");
-                }
+                _parts[partId].DroneId = droneId;
             }
+
+            _drones.Add(droneId, drone);
+
+            EnsureMetadataExists(
+                droneId,
+                autoNameIndex++);
+
+            //EnsureRuntimeExists(droneId);
+
+            RecalculateComputed(drone);
+
+            DebugDrone(drone);
+        }
+
+        Debug.Log($"0000000=== FOUND {_drones.Count} DRONES ===");
+    }
+
+    public void RenameDrone(
+        string droneId,
+        string newName)
+    {
+
+            Debug.Log($"0000000TRY RenameDrone {this}");
+        if (_dronesMetadata.TryGetValue(droneId, out var metadata))
+        {
+            metadata.Name = newName;
+
+
+            Debug.Log($"000000000RenameDrone {this}");
+        }
+    }
+
+    public string GetDroneName(string droneId)
+    {
+        if (_dronesMetadata.TryGetValue(droneId, out var metadata))
+            return metadata.Name;
+
+        return "Unknown";
+    }
+
+    public DroneComputedState GetComputed(string droneId)
+    {
+        _droneComputed.TryGetValue(droneId, out var computed);
+
+        return computed;
     }
 
     private void BuildDroneRecursive(
-    PartDomainState rootPart,
-    DroneDomainState drone,
-    HashSet<string> visited)
+        PartDomainState rootPart,
+        DroneDomainState drone,
+        HashSet<string> visited)
     {
         if (visited.Contains(rootPart.InstanceId))
             return;
@@ -332,7 +378,6 @@ public class Clean_AssemblySystem : IInitializable
 
         drone.partInstanseIds.Add(rootPart.InstanceId);
 
-        // ИЩЕМ ДЕТЕЙ
         foreach (var part in _parts.Values)
         {
             if (part.AttachedPartInstanceId ==
@@ -345,26 +390,186 @@ public class Clean_AssemblySystem : IInitializable
             }
         }
     }
-    private void CalculateDroneStats(
+
+    #endregion
+
+    #region COMPUTED
+
+    private void RecalculateComputed(
         DroneDomainState drone)
     {
-        float mass = 0f;
+        DroneComputedState computed =
+            new()
+            {
+                DroneId = drone.InstanceId
+            };
 
-        Debug.Log($"+++CalculateDroneStats {this}");
+        float totalMass = 0f;
+        float totalThrust = 0f;
 
-        foreach (var partInstanseId in drone.partInstanseIds)
+        foreach (var partId in drone.partInstanseIds)
         {
+            PartDomainState part = _parts[partId];
 
-            Debug.Log($"+++partId {partInstanseId}");
-            var domain = _parts[partInstanseId];
-            var config = _configs.Get(domain.PartId);
-            mass += config.Mass;
+            var config = _configs.Get(part.PartId);
+
+            //if (!_configMap.TryGetValue(
+            //        part.PartId,
+            //        out var config))
+            //{
+            //    continue;
+            //}
+
+            totalMass += config.Mass;
+
+            //if (part.Type == PartType.Motor)
+            //{
+            //    totalThrust += config.MaxThrust;
+            //}
         }
 
-        drone.TotalMass = mass;
+        computed.TotalMass = totalMass;
+        computed.TotalThrust = totalThrust;
 
-        Debug.Log($"+++drone.TotalMass {drone.TotalMass}");
-    } 
+        if (totalMass > 0.01f)
+        {
+            computed.PowerToWeight =
+                totalThrust / totalMass;
+        }
+
+        _droneComputed[drone.InstanceId] = computed;
+    }
+
+    #endregion
+
+    #region METADATA
+
+    private void EnsureMetadataExists(
+        string droneId,
+        int autoIndex)
+    {
+        if (_dronesMetadata.ContainsKey(droneId))
+            return;
+
+        DroneMetadata metadata =
+            new()
+            {
+                DroneId = droneId,
+                Name = $"Drone_{autoIndex}"
+            };
+
+        _dronesMetadata.Add(droneId, metadata);
+    }
+
+    #endregion
+
+    //#region RUNTIME
+
+    //private void EnsureRuntimeExists(
+    //    string droneId)
+    //{
+    //    if (_runtime.ContainsKey(droneId))
+    //        return;
+
+    //    DroneRuntimeState runtime =
+    //        new()
+    //        {
+    //            DroneId = droneId
+    //        };
+
+    //    _runtime.Add(droneId, runtime);
+    //}
+
+    //#endregion
+
+    #region DEBUG
+
+    private void DebugDrone(
+        DroneDomainState drone)
+    {
+        string name =
+            GetDroneName(drone.InstanceId);
+
+        DroneComputedState computed =
+            GetComputed(drone.InstanceId);
+
+        Debug.Log(
+            $"0000000000DRONE: {name}");
+
+        Debug.Log(
+            $"0000000Mass: {computed.TotalMass}");
+
+        Debug.Log(
+            $"00000000000Thrust: {computed.TotalThrust}");
+
+        Debug.Log(
+            $"00000000PTW: {computed.PowerToWeight}");
+
+        foreach (var partId in drone.partInstanseIds)
+        {
+            Debug.Log(
+                $"0000000000000PART: {partId}");
+        }
+    }
+     
+
+    //private void BuildDroneRecursive(
+    //PartDomainState rootPart,
+    //DroneDomainState drone,
+    //HashSet<string> visited)
+    //{
+    //    if (visited.Contains(rootPart.InstanceId))
+    //        return;
+
+    //    visited.Add(rootPart.InstanceId); 
+
+    //    drone.partInstanseIds.Add(rootPart.InstanceId);
+
+
+
+
+    //    //part.RootInstanceId = rootPart.InstanceId; // задаем корневую деталь всем. НЕ ПРАВИЛЬНО РАБОТАЕТ
+    //    //rootPart.DroneId = drone.InstanceId;
+
+    //    //Debug.Log($"!!!!!!!! PArt {rootPart.InstanceId} is in drone {drone.InstanceId}");
+
+    //    // ИЩЕМ ДЕТЕЙ
+    //    foreach (var part in _parts.Values)
+    //    {
+
+    //        if (part.AttachedPartInstanceId ==
+    //            rootPart.InstanceId)
+    //        {
+    //            BuildDroneRecursive(
+    //                part,
+    //                drone,
+    //                visited);
+    //        }
+
+    //    }
+    //}
+    //private void CalculateDroneStats(
+    //    DroneDomainState drone)
+    //{
+    //    float mass = 0f;
+
+    //    Debug.Log($"+++CalculateDroneStats {this}");
+
+    //    foreach (var partInstanseId in drone.partInstanseIds)
+    //    {
+
+    //        Debug.Log($"+++partId {partInstanseId}");
+    //        var domain = _parts[partInstanseId];
+    //        var config = _configs.Get(domain.PartId);
+    //        mass += config.Mass;
+    //    }
+
+    //    drone.TotalMass = mass;
+        
+
+    //    Debug.Log($"+++drone.TotalMass {drone.TotalMass}");
+    //} 
+
     #endregion
 
 
@@ -441,7 +646,7 @@ public class Clean_AssemblySystem : IInitializable
             _viewRegistry.TryGet(child, out var view);
             var name = view.name;
 
-            var domainState = GetDomainState(child);
+            var domainState = GetPartDomainState(child);
 
             Debug.Log($"DDDDDDDDDDD child  {name} - Domain found == {domainState  != null} ");
 
@@ -450,7 +655,7 @@ public class Clean_AssemblySystem : IInitializable
 
         foreach (string childId in allChildIds)
         {
-            var domainState = GetDomainState(childId);
+            var domainState = GetPartDomainState(childId);
 
             if (domainState != null)
             {
@@ -502,7 +707,7 @@ public class Clean_AssemblySystem : IInitializable
         string dublicateInstanceId = Guid.NewGuid().ToString();
 
 
-        var oldDomain = GetDomainState(instanceId);
+        var oldDomain = GetPartDomainState(instanceId);
         var partId = oldDomain.PartId;
 
         // 3. Получение конфигурации
@@ -572,6 +777,7 @@ public class Clean_AssemblySystem : IInitializable
         }
 
         LoadSaveData(saveData);
+
     }
 
     #endregion
@@ -592,7 +798,7 @@ public class Clean_AssemblySystem : IInitializable
 
             var found = _viewRegistry.TryGet(state.InstanceId, out view);
 
-            if (found) Debug.Log($"000000view found {state.InstanceId} {found} {view.name}");
+            if (found) Debug.Log($"view found {state.InstanceId} {found} {view.name}");
             else Debug.Log($"View with ID {state.InstanceId} NOT found ");
 
             var data = PartMapper.ToSaveData(state, view.transform);
@@ -711,6 +917,8 @@ public class Clean_AssemblySystem : IInitializable
 
     private void PostInitialize()
     {
+        RebuildDrones();
+
         // например:
         // - пересчёт физики
         // - перестройка связей

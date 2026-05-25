@@ -4,6 +4,8 @@ using UnityEngine;
 public class SelectionService
 {
     public string SelectedPartId { get; private set; }
+    public string SelectedDroneId { get; private set; }
+
 
     private readonly IEventBus _eventBus;
 
@@ -18,16 +20,20 @@ public class SelectionService
         Clear();
     }
 
-    public void Select(string instanceId)
+    public void Select(string instanceId, string droneId = null)
     {
         if (SelectedPartId == instanceId)
             return;
 
         SelectedPartId = instanceId;
+        
+        SelectedDroneId = droneId;
 
         _eventBus.Publish(new PartSelectedEvent(instanceId));
+        _eventBus.Publish(new DroneSelectedEvent(droneId));
 
-        Debug.Log($"SelectionService Select {SelectedPartId}");
+
+        Debug.Log($"--- SelectionService Select part {SelectedPartId} on Drone {SelectedDroneId}");
     }
 
     public void Clear()

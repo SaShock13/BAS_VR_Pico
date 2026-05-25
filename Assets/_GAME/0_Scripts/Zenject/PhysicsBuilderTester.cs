@@ -72,7 +72,7 @@ public class PhysicsBuilderTester : MonoBehaviour
 
         foreach ( DronePartView view in allViews )   /// todo обьединить с другим проходом по всем вью.
         {
-            var domain = _domainRegistry.GetDomainState(view.InstanceId);
+            var domain = _domainRegistry.GetPartDomainState(view.InstanceId);
 
             //Debug.Log($"тип детали {view.transform.name} дрона {domain.Type}");
             if (domain != null && domain.Type == PartType.Motor) motorViews.Add(view);
@@ -112,7 +112,7 @@ public class PhysicsBuilderTester : MonoBehaviour
             if (view == null)
                 continue;
 
-            var domain = _domainRegistry.GetDomainState(view.InstanceId);
+            var domain = _domainRegistry.GetPartDomainState(view.InstanceId);
 
             if (domain == null)
                 continue;

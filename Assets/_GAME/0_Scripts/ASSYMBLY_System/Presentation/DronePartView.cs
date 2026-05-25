@@ -5,6 +5,7 @@ using Zenject;
 
 public class DronePartView : MonoBehaviour
 {
+    [field: SerializeField]
     public string InstanceId { get; private set; }
 
     [SerializeField] private Renderer _renderer;

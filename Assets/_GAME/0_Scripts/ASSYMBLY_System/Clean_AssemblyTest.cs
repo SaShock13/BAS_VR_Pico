@@ -11,8 +11,12 @@ public class Clean_AssemblyTest : MonoBehaviour
     [SerializeField] private string[] partIds;
 
     IEventBus _eventBus;
-    private SelectionService _selectionService;
+    private SelectionService _selectionService;  // todo избавиться
+    public ISelectionService Selection;   
     private PartHighlightService _highlightService;
+
+    private Clean_AssemblySystem _assemblySystem;
+
     private AddressablesPrefabService _prefabs;
     [SerializeField] private XRBaseInteractor[] _interactors;
 
@@ -23,17 +27,21 @@ public class Clean_AssemblyTest : MonoBehaviour
     [Inject]
     public void Construct(
         IEventBus eventBus,
-        SelectionService selectionService, 
+        SelectionService selectionService,
+        ISelectionService selection,
         PartHighlightService highlightService,
-        AddressablesPrefabService prefabs
+        AddressablesPrefabService prefabs, 
+        Clean_AssemblySystem assemblySystem
         )
     {
 
         _eventBus = eventBus;
         _selectionService = selectionService;
+        Selection = selection;
         _eventBus.Subscribe<Clean_PartCreatedEvent>(OnPartCreated);
         _highlightService = highlightService;
         _prefabs = prefabs;
+        _assemblySystem = assemblySystem;
     }
 
     private void Awake()
@@ -43,6 +51,8 @@ public class Clean_AssemblyTest : MonoBehaviour
         Debug.Log($"!!!!!!!!!!!!!!!!_interactors {_interactors.Length}");
 
     }
+
+
 
     private void OnEnable()
     {
@@ -80,7 +90,16 @@ public class Clean_AssemblyTest : MonoBehaviour
         if(args.interactableObject.transform.TryGetComponent<DronePartView>( out var dronePartView))
         {
             Debug.Log($"OnSelectEntered {dronePartView.InstanceId!= null}");
-            _selectionService.Select(dronePartView.InstanceId);
+
+
+            var domain = _assemblySystem.GetPartDomainState(dronePartView.InstanceId);
+
+            var selectedDroneId = domain.DroneId;
+
+            Selection.Select(
+            new SelectionTarget(SelectionType.Part, dronePartView.InstanceId));
+
+            //_selectionService.Select(dronePartView.InstanceId , selectedDroneId);
 
                 
         }
@@ -103,23 +122,23 @@ public class Clean_AssemblyTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            CreateTestParts();   /// Костыль - друг за другом создавать Не получается из Addressables , Нужно либо с  паузами либо механизм ожидания окончания создания
+            StartCoroutine( CreateTestPartsCoroutine());   /// Костыль - друг за другом создавать Не получается из Addressables , Нужно либо с  паузами либо механизм ожидания окончания создания
 
         }
 
         if (Input.GetKeyDown(KeyCode.I))
         {
 
-            Debug.Log($"SelectedPartId {_selectionService.SelectedPartId}");
-            if (_selectionService.SelectedPartId != null)
+            Debug.Log($"SelectedPartId {Selection.Current.Value.PartId}");
+            if (Selection.Current != null)
             {
                 // Тестирование удаления
 
 
 
 
-                Debug.Log($"DDDDDD .Publish(new Clean_DeletePartRequest {this}");
-                _eventBus.Publish(new Clean_DeletePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
+                //Debug.Log($"DDDDDD .Publish(new Clean_DeletePartRequest {this}");
+                //_eventBus.Publish(new Clean_DeletePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
 
 
                 // Тест изменения визуала
@@ -131,6 +150,13 @@ public class Clean_AssemblyTest : MonoBehaviour
 
                 //_eventBus.Publish(new PartSocketAttachRequest() { PartInstanceId = _selectionService.SelectedPartId, AttachedPartId = _mainPartId , AttachedSocketId = "engineSocket" ,Timestamp = DateTime.UtcNow });
 
+                _assemblySystem.RenameDrone(
+                                Selection.Current.Value.PartId,
+                                "Interceptor");
+
+                Debug.Log("====== SECOND REBUILD ======");
+
+                _assemblySystem.RebuildDrones();
 
 
             }
@@ -143,11 +169,15 @@ public class Clean_AssemblyTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.U))
         {
 
-            if (_selectionService.SelectedPartId != null)
+            if (Selection.Current != null)
 
             {
-                Debug.Log($"SelectedPartId {_selectionService.SelectedPartId}");
-                _eventBus.Publish(new Clean_DuiblicatePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
+                //Debug.Log($"SelectedPartId {_selectionService.SelectedPartId}");
+                _eventBus.Publish(new Clean_DuiblicatePartRequest { InstanceId = Selection.Current.Value.PartId, Timestamp = DateTime.UtcNow });
+
+
+                
+               
             }
           
         }
@@ -156,12 +186,13 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     }
 
-    private void CreateTestParts()
+    private IEnumerator CreateTestPartsCoroutine()
     {
         foreach (var id in partIds) 
         {
             _eventBus.Publish(new Clean_CreatePartRequestEvent { PartId = id, Timestamp = DateTime.UtcNow });
-
         }
+        yield return new WaitForSeconds(0.5f);
+        _assemblySystem.RebuildDrones();
     }
 }

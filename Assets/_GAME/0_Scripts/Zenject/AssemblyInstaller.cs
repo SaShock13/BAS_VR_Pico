@@ -19,5 +19,12 @@ public class AssemblyInstaller : MonoInstaller
 
         Container.Bind<ISaveService>().To<JsonSaveService>().AsSingle();
 
+
+        // Selection Install
+        Container.Bind<ISelectionService>().To<NewSelectionService>().AsSingle();
+        Container.BindInterfacesAndSelfTo<InspectorService>().AsSingle();
+
+
+
     }
 }
