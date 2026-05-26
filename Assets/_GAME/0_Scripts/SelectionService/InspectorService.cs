@@ -28,9 +28,14 @@ public class InspectorService
             return;
         }
 
+
+
         PartDomainState part =
             _assembly.GetPartDomainState(
                 target.Value.PartId);
+
+        Debug.Log($"ssssssssssSelectTarget  {part.PartId}");
+        Debug.Log($"ssssssssssSelectTarget  {part.DroneId}");
 
         DroneDomainState drone = null;
 
@@ -42,6 +47,7 @@ public class InspectorService
         }
 
         var config = _partConfigs.Get(part.PartId);
+        
 
         var context = new InspectionContext
         {
@@ -53,6 +59,9 @@ public class InspectorService
             IsRootPart =
                 part.Type == PartType.Body
         };
+
+
+
 
         Updated?.Invoke(context);
     }
@@ -71,12 +80,14 @@ public class InspectorService
 
     private DroneViewModel MapDrone(DroneDomainState domain, PartConfig config)
     {
+        var droneName = _assembly.GetDroneName(domain.InstanceId);
+        var weight = _assembly.GetComputed(domain.InstanceId).TotalMass;
         return new DroneViewModel
         {
             Id = domain.InstanceId,
-            Name = domain.Name,
+            Name = droneName,
             //MotorCount = domain.MotorCount,
-            TotalWeight = domain.TotalMass
+            TotalWeight = weight
         };
     }
 }

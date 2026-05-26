@@ -1,9 +1,15 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using Zenject;
 
 public class PartPanelUI : MonoBehaviour
 {
     InspectorService _inspector;
+
+
+    [SerializeField] private TMP_Text weight;
+    [SerializeField] private TMP_Text material;
+    [SerializeField] private TMP_Text color;
 
     [Inject]
     public void Construct(InspectorService inspector)
@@ -39,6 +45,10 @@ public class PartPanelUI : MonoBehaviour
         Debug.Log($"RRRRRRRRRRRender  PartPanelUI {this}");
 
         Debug.Log($"Part  {vm.Id} HAS Material {vm.Material} Color {vm.Color} Weight {vm.Weight}");
+
+        weight.text = vm.Weight.ToString();
+        color.text = vm.Color.ToString();
+        material.text = vm.Material.ToString();
     }
 
     private void Hide()

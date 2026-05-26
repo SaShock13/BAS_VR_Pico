@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -6,6 +7,11 @@ public class DronePanelUI : MonoBehaviour
 {
 
     InspectorService _inspector;
+
+
+
+    [SerializeField] private TMP_Text weight ;
+    [SerializeField] private TMP_Text name ;
 
     [Inject]
     public void Construct(InspectorService inspector)
@@ -42,6 +48,8 @@ public class DronePanelUI : MonoBehaviour
     {        
         Debug.Log($"RRRRRRRRRRender  DronePanelUI {this}");
         Debug.Log($"Part  Name {vm.Name} HAS  ID {vm.Id}  TotalWeight {vm.TotalWeight}");
+        weight.text = vm.TotalWeight.ToString();
+        name.text = vm.Name;
         // вес, моторы и т.д.
     }
 
