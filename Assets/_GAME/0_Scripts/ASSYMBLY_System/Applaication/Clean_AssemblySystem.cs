@@ -63,6 +63,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         _eventBus.Subscribe<Clean_DeletePartRequest>(OnDeleteRequested);
         _eventBus.Subscribe<Clean_DuiblicatePartRequest>(OnDublicateRequested);
         _eventBus.Subscribe<PartSocketAttachRequest>(OnAttachRequested);
+        _eventBus.Subscribe<PartSocketDetachRequest>(OnDetachRequested);
         _eventBus.Subscribe<ApplyPartVisualCommand>(OnApplyPartVisual);
 
 
@@ -78,6 +79,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         Debug.Log($"---------Application.persistentDataPath {Application.persistentDataPath}");
     }
 
+   
 
     /// <summary>
     /// Подписки на события при которых состояние сборки сохраняется для истории отмены
@@ -149,6 +151,32 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
 
     }
+
+
+    private void OnDetachRequested(PartSocketDetachRequest request)
+    {
+        Debug.Log($"OnDetachRequested {this}");
+
+        var partDomain = GetPartDomainState(request.PartInstanceId);
+        Debug.Log($"Detach partDomain {partDomain}");
+
+
+        _viewRegistry.TryGet(partDomain.InstanceId, out var partView);
+        Debug.Log($"Detach partView {partView}");
+
+        
+
+        partDomain.Detach();
+        partView.Detach();
+
+        // Пересчитываем дроны
+        RebuildDrones();
+
+        _eventBus.Publish(new PartSocketDetachedEvent() { Timestamp = DateTime.Now });
+
+        _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
+    }
+
 
 
     public bool IsInHands(DronePartView part)

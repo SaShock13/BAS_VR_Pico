@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using Zenject;
 
 public class DronePartView : MonoBehaviour
@@ -49,9 +51,20 @@ public class DronePartView : MonoBehaviour
         Debug.Log($"{gameObject.name} AttachTo {parent.name}");
     }
 
+    public void Detach()
+    {
+        transform.SetParent(null);
+    }
 
     private void Awake()
     {
+        XRGrabInteractable grab = GetComponent<XRGrabInteractable>();
+
+        if (grab != null)
+        {
+            grab.retainTransformParent = false;
+        }
+
         _mpb = new MaterialPropertyBlock();
         _rigidBody = GetComponent<Rigidbody>();
     }
@@ -145,4 +158,6 @@ public class DronePartView : MonoBehaviour
         }
         
     }
+
+   
 }

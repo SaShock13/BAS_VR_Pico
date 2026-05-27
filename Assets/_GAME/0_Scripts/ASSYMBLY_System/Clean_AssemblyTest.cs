@@ -101,7 +101,7 @@ public class Clean_AssemblyTest : MonoBehaviour
 
             //_selectionService.Select(dronePartView.InstanceId , selectedDroneId);
 
-                
+            _eventBus.Publish(new PartSocketDetachRequest { PartInstanceId = domain.InstanceId, Timestamp = DateTime.UtcNow });
         }
     }
 
