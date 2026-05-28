@@ -65,6 +65,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         _eventBus.Subscribe<PartSocketAttachRequest>(OnAttachRequested);
         _eventBus.Subscribe<PartSocketDetachRequest>(OnDetachRequested);
         _eventBus.Subscribe<ApplyPartVisualCommand>(OnApplyPartVisual);
+        _eventBus.Subscribe<PartTransformChangedEvent>(OnPartTransformChanged);
 
 
         _undoRedo = new UndoRedoService(
@@ -79,7 +80,29 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         Debug.Log($"---------Application.persistentDataPath {Application.persistentDataPath}");
     }
 
-   
+    private void OnPartTransformChanged(PartTransformChangedEvent @event)  /// todo по несколько раз сохраняется. Нужно разделить события чтобы не дублировалось сохранение.
+    {
+        //var view = _viewRegistry.Get(@event.instanceId);
+
+        //if (view == null)
+        //    return;
+
+        bool changed =
+            Vector3.Distance(@event.StartPosition, @event.position) > 0.01f ||
+            Quaternion.Angle(@event.StartRotation, @event.rotation) > 0.1f;
+
+        if (!changed)
+            return;
+
+        var part = _parts[@event.instanceId];
+
+        if (part.LifecycleState == PartLifecycleState.Installed)
+            return;
+
+        _undoRedo.Record();
+    }
+
+
 
     /// <summary>
     /// Подписки на события при которых состояние сборки сохраняется для истории отмены
@@ -174,7 +197,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
         _eventBus.Publish(new PartSocketDetachedEvent() { Timestamp = DateTime.Now });
 
-        _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
+        //_eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
     }
 
 

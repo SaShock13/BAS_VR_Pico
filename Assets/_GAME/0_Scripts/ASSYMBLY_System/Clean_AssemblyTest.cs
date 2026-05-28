@@ -100,8 +100,7 @@ public class Clean_AssemblyTest : MonoBehaviour
             new SelectionTarget(SelectionType.Part, dronePartView.InstanceId));
 
             //_selectionService.Select(dronePartView.InstanceId , selectedDroneId);
-
-            _eventBus.Publish(new PartSocketDetachRequest { PartInstanceId = domain.InstanceId, Timestamp = DateTime.UtcNow });
+            if(domain.LifecycleState == PartLifecycleState.Installed) _eventBus.Publish(new PartSocketDetachRequest { PartInstanceId = domain.InstanceId, Timestamp = DateTime.UtcNow });
         }
     }
 

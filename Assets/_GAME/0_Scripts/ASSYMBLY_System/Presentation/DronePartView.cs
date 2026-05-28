@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.XR.PXR.Debugger;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using Zenject;
 
 public class DronePartView : MonoBehaviour
@@ -11,6 +14,7 @@ public class DronePartView : MonoBehaviour
     public string InstanceId { get; private set; }
 
     [SerializeField] private Renderer _renderer;
+    private XRGrabInteractable _interactable;
 
     private MaterialPropertyBlock _mpb;
     private Rigidbody _rigidBody;
@@ -18,6 +22,9 @@ public class DronePartView : MonoBehaviour
     private Color highlightedColor;
     private bool highlighted = false;
     private bool selected = false;
+
+    private Vector3 _startPosition;
+    private Quaternion _startRotation;
 
     private Dictionary<string, SocketView> _sockets;
     private IEventBus _eventBus;
@@ -33,6 +40,49 @@ public class DronePartView : MonoBehaviour
         _assembly = assembly;
         _assets = assets;
     }
+    private void Awake()
+    {
+        XRGrabInteractable grab = GetComponent<XRGrabInteractable>();
+
+        if (grab != null)
+        {
+            grab.retainTransformParent = false;
+        }
+
+        _mpb = new MaterialPropertyBlock();
+        _rigidBody = GetComponent<Rigidbody>();
+        _interactable = GetComponent<XRGrabInteractable>();
+    }
+
+    private void OnEnable()
+    {
+        _interactable.selectExited.AddListener(OnReleased);
+        _interactable.selectEntered.AddListener(OnGrab);
+    }
+
+    private void OnGrab(SelectEnterEventArgs arg0)
+    {
+        _startPosition = transform.position;
+        _startRotation = transform.rotation;
+    }
+
+    private void OnReleased(SelectExitEventArgs arg0)
+    {
+
+
+        Debug.Log($"position {transform.position} rotation {transform.rotation} StartPosition {_startPosition} _startRotation {_startRotation} message {this}");
+
+        _eventBus.Publish(new PartTransformChangedEvent
+        {
+            instanceId = InstanceId,
+            position = transform.position,
+            rotation = transform.rotation,
+            StartPosition = _startPosition,
+            StartRotation = _startRotation,
+            
+        });
+    }
+
 
     public SocketView GetSocket(string socketId)
     {
@@ -56,18 +106,6 @@ public class DronePartView : MonoBehaviour
         transform.SetParent(null);
     }
 
-    private void Awake()
-    {
-        XRGrabInteractable grab = GetComponent<XRGrabInteractable>();
-
-        if (grab != null)
-        {
-            grab.retainTransformParent = false;
-        }
-
-        _mpb = new MaterialPropertyBlock();
-        _rigidBody = GetComponent<Rigidbody>();
-    }
 
     private void InitializeSockets()
     {
