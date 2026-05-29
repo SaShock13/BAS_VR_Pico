@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-using Zenject;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
-using System.Collections;
+using Zenject;
+using static UnityEngine.GraphicsBuffer;
 
 public class Clean_AssemblyTest : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Clean_AssemblyTest : MonoBehaviour
     private SelectionService _selectionService;  // todo избавиться
     public ISelectionService Selection;   
     private PartHighlightService _highlightService;
+    private IGarageService _garage;
 
     private Clean_AssemblySystem _assemblySystem;
 
@@ -31,6 +33,7 @@ public class Clean_AssemblyTest : MonoBehaviour
         ISelectionService selection,
         PartHighlightService highlightService,
         AddressablesPrefabService prefabs, 
+        IGarageService garage,
         Clean_AssemblySystem assemblySystem
         )
     {
@@ -41,6 +44,7 @@ public class Clean_AssemblyTest : MonoBehaviour
         _eventBus.Subscribe<Clean_PartCreatedEvent>(OnPartCreated);
         _highlightService = highlightService;
         _prefabs = prefabs;
+        _garage = garage;
         _assemblySystem = assemblySystem;
     }
 
@@ -181,9 +185,59 @@ public class Clean_AssemblyTest : MonoBehaviour
           
         }
 
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            PutSelectedDroneToGarage();
+
+        }
 
 
     }
+
+    public void PutSelectedDroneToGarage()
+    {
+        //var drone = Selection.Current.Value.PartId ;
+
+
+        PartDomainState part =
+            _assemblySystem.GetPartDomainState(
+                Selection.Current.Value.PartId);
+
+        Debug.Log($"gggggSelectPart  {part.PartId}");
+        Debug.Log($"gggggggSelectDrone  {part.DroneId}");
+
+        DroneDomainState drone = null;
+
+        if (!string.IsNullOrEmpty(part.DroneId))
+        {
+            drone =
+                _assemblySystem.GetDroneDomainState(
+                    part.DroneId);
+        }
+
+
+        _garage.SaveDrone(drone.InstanceId);
+
+
+
+
+        //_assemblySystem.RemoveDrone(drone.Id);
+
+
+
+        //string droneId =
+        //    _selection.SelectedDroneId;
+
+        //if (string.IsNullOrEmpty(droneId))
+        //    return;
+
+        //_garage.SaveDrone(droneId);
+
+        //_assembly.RemoveDrone(droneId);
+    }
+
+
+
 
     private IEnumerator CreateTestPartsCoroutine()
     {

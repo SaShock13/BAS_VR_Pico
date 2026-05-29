@@ -18,6 +18,8 @@ public class AssemblyInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<PartHighlightService>().AsSingle();
 
         Container.Bind<ISaveService>().To<JsonSaveService>().AsSingle();
+        Container.Bind<IGarageService>().To<GarageService>().AsSingle();
+        Container.Bind<IGarageSaveService>().To<JsonGarageSaveService>().AsSingle();
 
 
         // Selection Install

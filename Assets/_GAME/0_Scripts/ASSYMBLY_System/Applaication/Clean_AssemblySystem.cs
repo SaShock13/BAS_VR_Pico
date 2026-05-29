@@ -817,6 +817,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         var saveData = BuildSaveData();
         _saveService.Save(saveData);
     }
+
     public void Load()
     {
         var saveData = _saveService.Load();
@@ -853,6 +854,32 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
             else Debug.Log($"View with ID {state.InstanceId} NOT found ");
 
             var data = PartMapper.ToSaveData(state, view.transform);
+
+            result.Parts.Add(data);
+        }
+
+        return result;
+    }
+
+    public AssemblySaveData BuildSaveDataForDrone(string droneId)
+    {
+        var result = new AssemblySaveData();
+
+        DroneDomainState drone = _drones[droneId];
+
+        foreach (string partId in drone.partInstanseIds)
+        {
+            PartDomainState state = _parts[partId];
+
+            if (!state.isLoaded)
+                continue;
+
+            if (!_viewRegistry.TryGet(state.InstanceId, out DronePartView view))
+                continue;
+
+            var data = PartMapper.ToSaveData(
+                state,
+                view.transform);
 
             result.Parts.Add(data);
         }
