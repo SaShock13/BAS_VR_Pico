@@ -139,4 +139,10 @@ public class GarageService : IGarageService
     {
         _saveService.Save(_garage);
     }
+
+    public void Clear()
+    {
+        _garage.Drones.Clear();
+        Save();
+    }
 }

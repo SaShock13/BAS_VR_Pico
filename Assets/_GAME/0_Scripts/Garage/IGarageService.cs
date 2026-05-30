@@ -15,4 +15,6 @@ public interface IGarageService
     void Delete(string garageId);
 
     bool Contains(string garageId);
+
+    void Clear();
 }

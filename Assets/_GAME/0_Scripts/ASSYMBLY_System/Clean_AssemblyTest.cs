@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using Zenject;
@@ -191,6 +192,12 @@ public class Clean_AssemblyTest : MonoBehaviour
 
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SceneManager.LoadScene(1);  // для теста переход в Гараж
+        }
+
+
 
     }
 
@@ -221,8 +228,8 @@ public class Clean_AssemblyTest : MonoBehaviour
 
 
 
-        //_assemblySystem.RemoveDrone(drone.Id);
-
+        _assemblySystem.RemoveDrone(drone.InstanceId);
+        
 
 
         //string droneId =

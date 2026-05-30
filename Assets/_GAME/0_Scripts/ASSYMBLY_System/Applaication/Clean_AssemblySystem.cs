@@ -328,6 +328,15 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
 
 
+    internal void RemoveDrone(string instanceId)
+    {
+        _drones.Remove(instanceId);
+
+        DeletePart(instanceId);
+
+        RebuildDrones();
+    }
+
 
     #region DroneRebuild
 
@@ -888,32 +897,169 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
     }
 
 
-    public async void LoadSaveData(AssemblySaveData saveData)
+    public void LoadSaveData(AssemblySaveData saveData)
     {
+        LoadSaveData(saveData, true);
+    }
 
-        if (saveData == null)
-            throw new ArgumentNullException(nameof(saveData));
 
-        // 0
-        ClearCurrentAssembly();
+    //public async void LoadSaveData(AssemblySaveData saveData, bool clearBeforeLoad = true)
+    //{
 
-        // 1
-        var domains = BuildDomain(saveData);
+    //    if (saveData == null)
+    //        throw new ArgumentNullException(nameof(saveData));
 
-        // 2
-        var views = await CreateViews(domains);
+    //    // 0  -  если нужно очищаем
+    //    if (clearBeforeLoad) ClearCurrentAssembly(); 
 
-        // 3
-        BindDomain(domains);
+    //    // 1
+    //    var domains = BuildDomain(saveData);
 
-        // 4
-        ApplyState(saveData, views);
+    //    // 2
+    //    var views = await CreateViews(domains);
 
-        // 5
+    //    // 3
+    //    BindDomain(domains);
+
+    //    // 4
+    //    ApplyState(saveData, views);
+
+    //    // 5
+    //    PostInitialize();
+    //}
+
+    /// <summary>
+    /// Метод загрузки для конструктора - с очищением сцены
+    /// </summary>
+    /// <param name="saveData"></param>
+    /// <param name="clearBeforeLoad"></param>
+    public async void LoadSaveData(
+    AssemblySaveData saveData,
+    bool clearBeforeLoad = true)
+    {
+        await InternalLoad(
+            saveData,
+            clearBeforeLoad,
+            postInitialize: true);
+    }
+
+    /// <summary>
+    /// Метод загрузки для Гаража, Аддитивно
+    /// </summary>
+    /// <param name="saveData"></param>
+    /// <param name="spawnPosition"></param>
+    /// <param name="postInitialize"></param>
+    /// <returns></returns>
+    public async Awaitable SpawnAssembly(
+    AssemblySaveData saveData,
+    Vector3 spawnPosition,
+    bool postInitialize = false)
+    {
+        AssemblySaveData clone =
+            CloneSave(saveData);
+
+        MoveAssembly(
+            clone,
+            spawnPosition);
+
+        await InternalLoad(
+            clone,
+            clearBeforeLoad: false,
+            postInitialize: postInitialize);
+    }
+
+    /// <summary>
+    /// Вызывать после создания пачки дронов. Чтобы не пересчитывать каждый раз
+    /// </summary>
+    public void FinishBatchLoad()
+    {
         PostInitialize();
     }
 
-    private void ClearCurrentAssembly()
+
+    /// <summary>
+    /// Внутренний метод загрузки деталей из сохранения
+    /// </summary>
+    /// <param name="saveData"></param>
+    /// <param name="clearBeforeLoad"></param>
+    /// <param name="postInitialize"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    private async Awaitable InternalLoad(
+    AssemblySaveData saveData,
+    bool clearBeforeLoad,
+    bool postInitialize)
+    {
+        if (saveData == null)
+            throw new ArgumentNullException(nameof(saveData));
+
+        if (clearBeforeLoad)
+        {
+            ClearCurrentAssembly();
+        }
+
+        var domains = BuildDomain(saveData);
+
+        var views = await CreateViews(domains);
+
+        BindDomain(domains);
+
+        ApplyState(saveData, views);
+
+        if (postInitialize)
+        {
+            PostInitialize();
+        }
+    }
+
+    private AssemblySaveData CloneSave(
+    AssemblySaveData source)
+    {
+        string json =
+            JsonUtility.ToJson(source);
+
+        return JsonUtility
+            .FromJson<AssemblySaveData>(json);
+    }
+
+    private void MoveAssembly(
+    AssemblySaveData saveData,
+    Vector3 targetPosition)
+    {
+        if (saveData.Parts.Count == 0)
+            return;
+
+        PartSaveData root =
+            FindRootPart(saveData);
+
+        Vector3 delta =
+            targetPosition - root.Transform.Position;
+
+        foreach (var part in saveData.Parts)
+        {
+            part.Transform.Position += delta;
+        }
+    }
+
+    private PartSaveData FindRootPart(
+    AssemblySaveData saveData)
+    {
+        foreach (var part in saveData.Parts)
+        {
+            if (part.Type != PartType.Body)
+                continue;
+
+            if (!string.IsNullOrEmpty(
+                    part.AttachedPartId))
+                continue;
+
+            return part;
+        }
+
+        return saveData.Parts[0];
+    }
+
+    public void ClearCurrentAssembly()
     {
         foreach (var view in _viewRegistry.GetAllGOs())
         {
@@ -1008,7 +1154,8 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         //});
     }
 
-   
+    
+
 
     #endregion
 
