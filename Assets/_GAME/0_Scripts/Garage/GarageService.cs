@@ -12,6 +12,7 @@ public class GarageService : IGarageService
 
     private GarageSaveData _garage;
 
+    private const int MaxSlots = 5;
 
 
     public GarageService(
@@ -24,6 +25,12 @@ public class GarageService : IGarageService
         _garage = _saveService.Load() ?? new GarageSaveData();
     }
 
+
+
+    public bool HasFreeSlot()
+    {
+        return _garage.Drones.Count < MaxSlots;
+    }
 
 
     public IReadOnlyList<GarageDroneData> GetAll()

@@ -2,6 +2,9 @@ using System.Collections.Generic;
 
 public interface IGarageService
 {
+
+    bool HasFreeSlot();
+
     IReadOnlyList<GarageDroneData> GetAll();
 
     GarageDroneData Get(string garageId);

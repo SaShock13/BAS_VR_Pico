@@ -226,15 +226,19 @@ public class Clean_AssemblyTest : MonoBehaviour
                     part.DroneId);
         }
 
+        if (!_garage.HasFreeSlot())
+        {
 
-        _garage.SaveDrone(drone.InstanceId);
+            Debug.Log($" Гараж заполнен. Удалите один из дронов. {this}");
 
+            // SHOW WARNING TO USER           
 
-
-
-        _assemblySystem.RemoveDrone(drone.InstanceId);
-        
-
+        }
+        else
+        {
+            _garage.SaveDrone(drone.InstanceId);
+            _assemblySystem.RemoveDrone(drone.InstanceId);
+        }
 
         //string droneId =
         //    _selection.SelectedDroneId;

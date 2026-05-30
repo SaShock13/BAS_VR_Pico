@@ -129,6 +129,19 @@ public class GarageSceneBootstrap : MonoBehaviour
             SceneManager.LoadScene(0);  // для теста переход в конструктор
         }
 
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+
+            var selectedPartId = Selection.Current.Value.PartId;
+            var selectedDroneDomain = _assembly.GetDroneDomainState(selectedPartId) ;
+            var garageDrone = _garage.GetByDroneId(selectedPartId); // ID корпуса равен ID дрона
+
+
+            Debug.Log($"ggggggggggarageDrone {garageDrone.GarageId}");
+            _garage.Delete(garageDrone.GarageId); /// todo Не удаляется из Дика
+            _assembly.RemoveDrone (selectedDroneDomain.InstanceId);
+        }
+
 
 
     }
