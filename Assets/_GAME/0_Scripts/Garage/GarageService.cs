@@ -39,6 +39,12 @@ public class GarageService : IGarageService
             .FirstOrDefault(x => x.GarageId == garageId);
     }
 
+    public GarageDroneData GetByDroneId(string droneId)
+    {
+        return _garage.Drones
+            .FirstOrDefault(x => x.DroneId == droneId);
+    }
+
 
 
     public void SaveDrone(string droneId)
@@ -60,7 +66,7 @@ public class GarageService : IGarageService
 
             DroneId = droneId,
 
-            DroneName = droneName,
+            metaData = new DroneMetadata { Name = droneName},
 
             CreatedAtTicks = DateTime.UtcNow.Ticks,
 
@@ -70,7 +76,7 @@ public class GarageService : IGarageService
         _garage.Drones.Add(garageDrone);
 
 
-        Debug.Log($"gggggggg Drone GarageId {garageDrone.GarageId} DroneId {garageDrone.DroneId} DroneName {garageDrone.DroneName} CreatedAtTicks {garageDrone.CreatedAtTicks} ");
+        Debug.Log($"gggggggg Drone GarageId {garageDrone.GarageId} DroneId {garageDrone.DroneId} DroneName {garageDrone.metaData.Name} CreatedAtTicks {garageDrone.CreatedAtTicks} ");
 
         Save();
     }
@@ -103,7 +109,7 @@ public class GarageService : IGarageService
 
         existing.DroneId = droneId;
 
-        existing.DroneName = droneName;
+        existing.metaData.Name = droneName;
 
         existing.Assembly = assembly;
 

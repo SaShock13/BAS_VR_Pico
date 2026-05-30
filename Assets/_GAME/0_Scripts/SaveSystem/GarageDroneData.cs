@@ -7,7 +7,9 @@ public class GarageDroneData
 
     public string DroneId;
 
-    public string DroneName;
+    public DroneMetadata metaData;
+
+    //public string DroneName;
 
     public long CreatedAtTicks;
 

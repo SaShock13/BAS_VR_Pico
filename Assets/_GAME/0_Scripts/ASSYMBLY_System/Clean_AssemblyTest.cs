@@ -12,7 +12,7 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     [SerializeField] private string[] partIds;
 
-    IEventBus _eventBus;
+    private IEventBus _eventBus;
     private SelectionService _selectionService;  // todo избавиться
     public ISelectionService Selection;   
     private PartHighlightService _highlightService;
@@ -54,7 +54,7 @@ public class Clean_AssemblyTest : MonoBehaviour
         //_interactors = FindObjectsByType<XRBaseInteractor>(FindObjectsSortMode.None);
 
         Debug.Log($"!!!!!!!!!!!!!!!!_interactors {_interactors.Length}");
-
+        _assemblySystem.Load();
     }
 
 
@@ -194,10 +194,14 @@ public class Clean_AssemblyTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            _assemblySystem.Save();
             SceneManager.LoadScene(1);  // для теста переход в Гараж
         }
 
-
+        if (Input.GetKeyDown(KeyCode.F11))
+        {
+            _assemblySystem.ClearCurrentAssembly();
+        }
 
     }
 

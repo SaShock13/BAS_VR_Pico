@@ -353,6 +353,9 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
         foreach (var part in _parts.Values)
         {
+
+
+            Debug.Log($"00000000 Check part.InstanceId {part.InstanceId}");
             // ROOT = BODY без родителя
             if (part.Type != PartType.Body)
                 continue;
@@ -966,6 +969,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
             clone,
             clearBeforeLoad: false,
             postInitialize: postInitialize);
+        
     }
 
     /// <summary>

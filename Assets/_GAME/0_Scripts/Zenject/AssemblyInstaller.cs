@@ -12,14 +12,15 @@ public class AssemblyInstaller : MonoInstaller
         Container.Bind<IPartFactory>().To<PartFactory>().AsSingle();
         Container.Bind<ISocketResolver>().To<SocketRegistry>().AsSingle();
 
+        Container.Bind<ISaveService>().To<JsonSaveService>().AsSingle();
+        Container.Bind<IGarageService>().To<GarageService>().AsSingle();
+        Container.Bind<IGarageSaveService>().To<JsonGarageSaveService>().AsSingle();
+
         Container.BindInterfacesAndSelfTo<PartViewRegistry>().AsSingle();
         Container.BindInterfacesAndSelfTo<Clean_AssemblySystem>().AsSingle();
         Container.BindInterfacesAndSelfTo<SelectionService>().AsSingle();
         Container.BindInterfacesAndSelfTo<PartHighlightService>().AsSingle();
 
-        Container.Bind<ISaveService>().To<JsonSaveService>().AsSingle();
-        Container.Bind<IGarageService>().To<GarageService>().AsSingle();
-        Container.Bind<IGarageSaveService>().To<JsonGarageSaveService>().AsSingle();
 
 
         // Selection Install

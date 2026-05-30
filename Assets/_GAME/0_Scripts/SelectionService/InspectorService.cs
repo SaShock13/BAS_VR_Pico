@@ -1,12 +1,15 @@
-using System;
+﻿using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using Zenject;
 
 public class InspectorService
 {
     private readonly ISelectionService _selection;
     private readonly Clean_AssemblySystem _assembly;
     private readonly IPartConfigRegistry _partConfigs;
+    [Inject] private readonly IGarageService _garage;
+
 
     public event Action<InspectionContext> Updated;
     public event Action Cleared;
@@ -46,14 +49,27 @@ public class InspectorService
                     part.DroneId);
         }
 
+        var garageDrone = _garage.GetByDroneId(part.DroneId);
+
         var config = _partConfigs.Get(part.PartId);
-        
+
+
+        Debug.Log($"xxxxxxxxxxSlected Drone name {drone}");
+
+        string droneName = "";
+
+        if (drone != null)
+        {
+            droneName =
+                garageDrone?.metaData.Name
+                ?? _assembly.GetDroneName(drone.InstanceId);
+        }
 
         var context = new InspectionContext
         {
-            Part = MapPart(part,config),
-            Drone = drone != null
-                ? MapDrone(drone, config)
+            Part = MapPart(part,config), 
+            Drone = drone != null    /// todo Имя брать из garageDrone
+                ? MapDrone(drone, droneName) 
                 : null,
 
             IsRootPart =
@@ -78,14 +94,16 @@ public class InspectorService
         };
     }
 
-    private DroneViewModel MapDrone(DroneDomainState domain, PartConfig config)
+    private DroneViewModel MapDrone(DroneDomainState domain, string name)  
     {
         var droneName = _assembly.GetDroneName(domain.InstanceId);
+
+        Debug.Log($"zzzzzzzzzzdroneName from Ass {droneName}");
         var weight = _assembly.GetComputed(domain.InstanceId).TotalMass;
         return new DroneViewModel
         {
             Id = domain.InstanceId,
-            Name = droneName,
+            Name = name,
             //MotorCount = domain.MotorCount,
             TotalWeight = weight
         };

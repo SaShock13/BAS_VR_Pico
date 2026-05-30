@@ -5,7 +5,7 @@ public interface IGarageService
     IReadOnlyList<GarageDroneData> GetAll();
 
     GarageDroneData Get(string garageId);
-
+    public GarageDroneData GetByDroneId(string droneId);
     void SaveDrone(string droneId);
 
     void OverwriteDrone(
