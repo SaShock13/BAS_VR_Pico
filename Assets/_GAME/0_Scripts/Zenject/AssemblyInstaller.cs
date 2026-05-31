@@ -28,6 +28,9 @@ public class AssemblyInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<InspectorService>().AsSingle();
 
 
+        Container.Bind<INotificationService>().To<NotificationService>().AsSingle();
+
+
 
     }
 }

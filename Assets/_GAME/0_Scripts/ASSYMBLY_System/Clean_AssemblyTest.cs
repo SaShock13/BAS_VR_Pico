@@ -17,6 +17,8 @@ public class Clean_AssemblyTest : MonoBehaviour
     public ISelectionService Selection;   
     private PartHighlightService _highlightService;
     private IGarageService _garage;
+    private INotificationService _notifications;
+
 
     private Clean_AssemblySystem _assemblySystem;
 
@@ -30,6 +32,7 @@ public class Clean_AssemblyTest : MonoBehaviour
     [Inject]
     public void Construct(
         IEventBus eventBus,
+        INotificationService notifications,
         SelectionService selectionService,
         ISelectionService selection,
         PartHighlightService highlightService,
@@ -40,6 +43,7 @@ public class Clean_AssemblyTest : MonoBehaviour
     {
 
         _eventBus = eventBus;
+        _notifications = notifications;
         _selectionService = selectionService;
         Selection = selection;
         _eventBus.Subscribe<Clean_PartCreatedEvent>(OnPartCreated);
@@ -219,6 +223,8 @@ public class Clean_AssemblyTest : MonoBehaviour
 
         DroneDomainState drone = null;
 
+        var droneView = _assemblySystem.GetViewById(part.InstanceId);
+
         if (!string.IsNullOrEmpty(part.DroneId))
         {
             drone =
@@ -231,13 +237,18 @@ public class Clean_AssemblyTest : MonoBehaviour
 
             Debug.Log($" Гараж заполнен. Удалите один из дронов. {this}");
 
+            _notifications.ShowWorld("Гараж заполнен. Удалите один из дронов", droneView.transform, NotificationType.Warning);
+
             // SHOW WARNING TO USER           
 
         }
         else
         {
+            
             _garage.SaveDrone(drone.InstanceId);
             _assemblySystem.RemoveDrone(drone.InstanceId);
+
+            _notifications.Info($"Дрон {_assemblySystem.GetDroneName(drone.InstanceId)} помещен в гараж");
         }
 
         //string droneId =

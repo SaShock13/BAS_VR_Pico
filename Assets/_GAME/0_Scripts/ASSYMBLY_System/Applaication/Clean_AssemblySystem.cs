@@ -315,6 +315,9 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
        // _eventBus.Unsubscribe<Clean_CreatePartRequestEvent>(OnCreateRequested);
     }
 
+
+
+
     // доступа к состоянию
     public PartDomainState GetPartDomainState(string instanceId)
     {
@@ -326,6 +329,11 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         return _drones[instanceId];
     }
 
+    public DronePartView GetViewById(string id)
+    {
+        _viewRegistry.TryGet(id, out var view);
+        return view;
+    }
 
 
     internal void RemoveDrone(string instanceId)
