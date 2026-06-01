@@ -15,4 +15,5 @@ public class DroneDomainState
         InstanceId = instanceId;
         partInstanseIds = new();
     }
+
 }

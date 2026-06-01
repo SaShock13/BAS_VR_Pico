@@ -7,6 +7,7 @@ public class DronePanelUI : MonoBehaviour
 {
 
     InspectorService _inspector;
+    Clean_AssemblySystem _assembly;
 
 
 
@@ -14,9 +15,10 @@ public class DronePanelUI : MonoBehaviour
     [SerializeField] private TMP_Text name ;
 
     [Inject]
-    public void Construct(InspectorService inspector)
+    public void Construct(InspectorService inspector, Clean_AssemblySystem assembly)
     {
         _inspector = inspector;
+        _assembly = assembly;
         _inspector.Updated += OnUpdated;
 
         _inspector.Cleared += Hide;

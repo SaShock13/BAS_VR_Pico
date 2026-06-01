@@ -29,6 +29,7 @@ public class AssemblyInstaller : MonoInstaller
 
 
         Container.Bind<INotificationService>().To<NotificationService>().AsSingle();
+        Container.Bind<IDroneAnalyzer>().To<DroneAnalyzer>().AsSingle();
 
 
 

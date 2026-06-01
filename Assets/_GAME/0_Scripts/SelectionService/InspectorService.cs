@@ -9,6 +9,8 @@ public class InspectorService
     private readonly Clean_AssemblySystem _assembly;
     private readonly IPartConfigRegistry _partConfigs;
     [Inject] private readonly IGarageService _garage;
+    [Inject] private readonly AddressablesAssetService _assets;
+
 
 
     public event Action<InspectionContext> Updated;
@@ -87,6 +89,7 @@ public class InspectorService
         return new PartViewModel
         {
             Id = domain.InstanceId,
+            Name = config.PartId,
             Color = domain.VisualProperties.Color,
             Material = domain.VisualProperties.MaterialAddress,
             Weight = config.Mass

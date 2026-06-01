@@ -149,22 +149,22 @@ public class Clean_AssemblyTest : MonoBehaviour
                 //_eventBus.Publish(new Clean_DeletePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
 
 
-                // Тест изменения визуала
-                //var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
-                //var newVisual = new PartVisualProperties() { Smoothness = 1 , MaterialAddress = "PlasticAddressablesMAt" };
-                //_eventBus.Publish(new ApplyPartVisualCommand (_selectionService.SelectedPartId, newVisual) {Timestamp = DateTime.UtcNow });
+               // Тест изменения визуала
+               var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+                var newVisual = new PartVisualProperties() { Smoothness = 1, MaterialAddress = "PlasticAddressablesMAt" };
+                _eventBus.Publish(new ApplyPartVisualCommand(Selection.Current.Value.PartId, newVisual) { Timestamp = DateTime.UtcNow });
 
                 //if(_selectionService.SelectedPartId == _mainPartId) return;
 
                 //_eventBus.Publish(new PartSocketAttachRequest() { PartInstanceId = _selectionService.SelectedPartId, AttachedPartId = _mainPartId , AttachedSocketId = "engineSocket" ,Timestamp = DateTime.UtcNow });
 
-                _assemblySystem.RenameDrone(
-                                Selection.Current.Value.PartId,
-                                "Interceptor");
+                //_assemblySystem.RenameDrone(
+                //                Selection.Current.Value.PartId,
+                //                "Interceptor");
 
-                Debug.Log("====== SECOND REBUILD ======");
+                //Debug.Log("====== SECOND REBUILD ======");
 
-                _assemblySystem.RebuildDrones();
+                //_assemblySystem.RebuildDrones();
 
 
             }

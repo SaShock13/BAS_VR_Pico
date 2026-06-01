@@ -5,5 +5,6 @@
     Motor,
     Propeller,
     Legs,
+    FlyController,
     Battery
 }
