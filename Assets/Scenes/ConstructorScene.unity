@@ -2371,6 +2371,7 @@ MonoBehaviour:
   - "\u0432\u0438\u043D\u04421"
   - "\u0432\u0438\u043D\u04421"
   - "\u0432\u0438\u043D\u04421"
+  - "\u043A\u043E\u043D\u0442\u0440\u043E\u043B\u043B\u0435\u04401"
   _interactors:
   - {fileID: 645077902}
   - {fileID: 178807446}
@@ -2403,6 +2404,7 @@ GameObject:
   - component: {fileID: 1225735309}
   - component: {fileID: 1225735308}
   - component: {fileID: 1225735306}
+  - component: {fileID: 1225735311}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -2442,6 +2444,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b73ce8181bd5abd43af371a46b53b194, type: 2}
   - {fileID: 11400000, guid: 6b6b6cca5948a2947bd7ebb5527f490e, type: 2}
   - {fileID: 11400000, guid: 9c9f5f20d02b40446b8ae3e1824ff741, type: 2}
+  - {fileID: 11400000, guid: ea5bec241c2a4df4681a366a10499b11, type: 2}
 --- !u!114 &1225735307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2460,6 +2463,7 @@ MonoBehaviour:
   - {fileID: 1225735308}
   - {fileID: 1225735310}
   - {fileID: 1225735306}
+  - {fileID: 1225735311}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -2513,6 +2517,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d6d429cfdb32c4980f1c1d3f155f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AddressablesLoaderInstaller
+--- !u!114 &1225735311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225735304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0abfddae018308f4186cf5e0ef1bb6de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DroneValidationInstaller
 --- !u!1 &1248592773
 GameObject:
   m_ObjectHideFlags: 0

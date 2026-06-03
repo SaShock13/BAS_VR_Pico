@@ -5,13 +5,13 @@ using Zenject;
 
 public class DronePhysicsBuilder
 {
-    private readonly IPartConfigRegistry _configRegistry;
+    private readonly IPartConfigRepository _configRegistry;
     private readonly PartViewRegistry _viewRegistry;
 
 
     //[Inject]   // Синглтон или ?? И может при создании просто прокидывать зависимости без Зенджекта??
     public DronePhysicsBuilder(
-        IPartConfigRegistry configRegistry,
+        IPartConfigRepository configRegistry,
         PartViewRegistry viewRegistry)
     {
         _configRegistry = configRegistry;

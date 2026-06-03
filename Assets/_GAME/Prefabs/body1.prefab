@@ -1302,7 +1302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7644bec2d2f076348b035207c30e90bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SocketView
-  AllowedTypes: 05000000
+  AllowedTypes: 06000000
   AttachPoint: {fileID: 6300538966854658595}
   _socketInteractor: {fileID: 9025414421564839035}
   _socketId: batterySocket1
@@ -1503,7 +1503,7 @@ GameObject:
   - component: {fileID: 3539571794119457215}
   - component: {fileID: 4532891729527234873}
   m_Layer: 0
-  m_Name: MotorSocket1 (9)
+  m_Name: ControllerSocket1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1518,7 +1518,7 @@ Transform:
   m_GameObject: {fileID: 7634108698754471159}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.118, y: 0.359, z: 0.036}
+  m_LocalPosition: {x: 0.072, y: 0.359, z: -0.177}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1537,10 +1537,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7644bec2d2f076348b035207c30e90bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SocketView
-  AllowedTypes: 02000000
+  AllowedTypes: 05000000
   AttachPoint: {fileID: 8298028607437259389}
   _socketInteractor: {fileID: 4532891729527234873}
-  _socketId: engineSocketCenter
+  _socketId: controllerSocket
   _previewAnchor: {fileID: 493229600304774014}
   _validPreviewMaterial: {fileID: 2100000, guid: 7137a611f6071b642a86fc2a13182008, type: 2}
   _invalidPreviewMaterial: {fileID: 2100000, guid: 462de0da64d39c646b696d3e2add291b, type: 2}

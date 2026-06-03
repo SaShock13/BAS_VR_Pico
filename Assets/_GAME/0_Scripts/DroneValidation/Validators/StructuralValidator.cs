@@ -1,14 +1,17 @@
 ﻿using System.Linq;
+using UnityEngine;
 using Zenject;
 
 public sealed class StructuralValidator
 {
 
     [Inject] private IDroneAnalyzer _analyzer;
+    [Inject] private IAppLogger _logger;
 
     public ValidationGroupResult Validate(
         DroneValidationContext context)
     {
+
         ValidationGroupResult result =
             new()
             {
@@ -26,18 +29,18 @@ public sealed class StructuralValidator
 
         //ValidateFrame(drone, result);
 
-        ValidateBattery(drone, result);
+        ValidateBattery(context, result);
 
         ValidateFlightController(
-            drone,
+            context,
             result);
 
         ValidateMotors(
-            drone,
+            context,
             result);
 
         ValidatePropellers(
-            drone,
+            context,
             result);
 
         //ValidateAttachment(
@@ -65,10 +68,10 @@ public sealed class StructuralValidator
     //}
 
     private void ValidateBattery(
-    DroneDomainState drone,
+    DroneValidationContext context,
     ValidationGroupResult result)
     {
-        if (!_analyzer.HasPart(drone, PartType.Battery))
+        if (!_analyzer.HasPart(context, PartType.Battery))
         {
             result.Messages.Add(
                 new ValidationMessage(
@@ -78,10 +81,10 @@ public sealed class StructuralValidator
     }
 
     private void ValidateFlightController(
-    DroneDomainState drone,
+    DroneValidationContext context,
     ValidationGroupResult result)
     {
-        if (!_analyzer.HasPart(drone, PartType.FlyController))
+        if (!_analyzer.HasPart(context, PartType.FlyController))
         {
             result.Messages.Add(
                 new ValidationMessage(
@@ -91,10 +94,10 @@ public sealed class StructuralValidator
     }
 
     private void ValidateMotors(
-    DroneDomainState drone,
+    DroneValidationContext context,
     ValidationGroupResult result)
     {
-        if (_analyzer.CountParts(drone, PartType.Motor) == 0)
+        if (_analyzer.CountParts(context, PartType.Motor) == 0)
         {
             result.Messages.Add(
                 new ValidationMessage(
@@ -104,17 +107,17 @@ public sealed class StructuralValidator
     }
 
     private void ValidatePropellers(
-    DroneDomainState drone,
+    DroneValidationContext context,
     ValidationGroupResult result)
     {
         foreach (PartDomainState motor
-                 in _analyzer.GetParts(drone, PartType.Motor))
+                 in _analyzer.GetParts(context, PartType.Motor))
         {
             bool hasPropeller =
-                _analyzer.GetParts(drone, PartType.Propeller).Any(
+                _analyzer.GetParts(context, PartType.Propeller).Any(
                     p =>
                     p.AttachedPartInstanceId ==
-                    motor.PartId);
+                    motor.InstanceId);
 
             if (!hasPropeller)
             {

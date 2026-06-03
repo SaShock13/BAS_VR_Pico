@@ -8,7 +8,7 @@ public class AssemblyInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.Bind<IPartConfigRegistry>().To<PartConfigRepository>().AsSingle().WithArguments(partConfigs);
+        Container.Bind<IPartConfigRepository>().To<PartConfigRepository>().AsSingle().WithArguments(partConfigs);
         Container.Bind<IPartFactory>().To<PartFactory>().AsSingle();
         Container.Bind<ISocketResolver>().To<SocketRegistry>().AsSingle();
 
@@ -26,10 +26,12 @@ public class AssemblyInstaller : MonoInstaller
         // Selection Install
         Container.Bind<ISelectionService>().To<NewSelectionService>().AsSingle();
         Container.BindInterfacesAndSelfTo<InspectorService>().AsSingle();
+        var configsRepository = Container.Resolve<IPartConfigRepository>();
+        var viewsRepository = Container.Resolve<PartViewRegistry>();
+        Container.BindInterfacesAndSelfTo<DronePhysicsBuilder>().AsSingle().WithArguments( configsRepository, viewsRepository);
 
 
         Container.Bind<INotificationService>().To<NotificationService>().AsSingle();
-        Container.Bind<IDroneAnalyzer>().To<DroneAnalyzer>().AsSingle();
 
 
 

@@ -5,6 +5,7 @@ public sealed class DroneRequirements
 
     public bool RequireBattery;
     public bool RequireFrame;
+    public bool RequireCamera;
 
     public float MinFlightTimeMinutes;
 
@@ -13,4 +14,5 @@ public sealed class DroneRequirements
     public float MaxCenterOfMassOffset;
 
     public bool CheckCollisions = true;
+
 }

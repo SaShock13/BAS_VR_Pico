@@ -11,16 +11,16 @@ public class PhysicsBuilderTester : MonoBehaviour
     [SerializeField] private Transform _droneRoot;
     [SerializeField] private Rigidbody _droneRb;
 
-    private DronePhysicsBuilder _physicsBuilder;
+    [Inject] private DronePhysicsBuilder _physicsBuilder;
     [Inject] private Clean_AssemblySystem _domainRegistry;
     [Inject] private PartViewRegistry _viewRegistry;
-    [Inject] private IPartConfigRegistry _configRegistry;
+    [Inject] private IPartConfigRepository _configRegistry;
     DronePhysicsApplier _applier;
     DronePhysicsSimulation physicsSimulation;
 
     private void Awake()
     {
-        _physicsBuilder = new DronePhysicsBuilder(_configRegistry, _viewRegistry);
+        //_physicsBuilder = new DronePhysicsBuilder(_configRegistry, _viewRegistry);
         //_droneRb = _droneRoot.GetComponent<Rigidbody>();
 
     }

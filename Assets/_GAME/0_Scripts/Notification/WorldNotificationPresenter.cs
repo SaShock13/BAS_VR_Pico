@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public sealed class WorldNotificationPresenter
@@ -11,7 +11,7 @@ public sealed class WorldNotificationPresenter
 
     public void Start()
     {
-        _service.WorldRequested += OnWorldRequested;
+        //_service.WorldRequested += OnWorldRequested;// todo ВКЛЮЧИТЬ И РАЗОбРАТЬСЯ
     }
 
     private void OnWorldRequested(

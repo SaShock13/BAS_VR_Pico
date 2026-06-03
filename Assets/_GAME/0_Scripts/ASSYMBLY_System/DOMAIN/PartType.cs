@@ -6,5 +6,6 @@
     Propeller,
     Legs,
     FlyController,
-    Battery
+    Battery,
+    Camera
 }

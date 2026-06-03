@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using Zenject;
 using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.Rendering.STP;
 
 public class Clean_AssemblyTest : MonoBehaviour
 {
@@ -18,7 +21,8 @@ public class Clean_AssemblyTest : MonoBehaviour
     private PartHighlightService _highlightService;
     private IGarageService _garage;
     private INotificationService _notifications;
-
+    private DroneReadinessService _readinessService ;
+    private IPartConfigRepository _configs;
 
     private Clean_AssemblySystem _assemblySystem;
 
@@ -28,6 +32,7 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     private string _mainPartId = null;
 
+    [Inject] IAppLogger _logger;
 
     [Inject]
     public void Construct(
@@ -38,6 +43,8 @@ public class Clean_AssemblyTest : MonoBehaviour
         PartHighlightService highlightService,
         AddressablesPrefabService prefabs, 
         IGarageService garage,
+        DroneReadinessService readinessService,
+        IPartConfigRepository configs,
         Clean_AssemblySystem assemblySystem
         )
     {
@@ -50,6 +57,8 @@ public class Clean_AssemblyTest : MonoBehaviour
         _highlightService = highlightService;
         _prefabs = prefabs;
         _garage = garage;
+        _readinessService = readinessService;
+        _configs = configs;
         _assemblySystem = assemblySystem;
     }
 
@@ -149,10 +158,10 @@ public class Clean_AssemblyTest : MonoBehaviour
                 //_eventBus.Publish(new Clean_DeletePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
 
 
-               // Тест изменения визуала
-               var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
-                var newVisual = new PartVisualProperties() { Smoothness = 1, MaterialAddress = "PlasticAddressablesMAt" };
-                _eventBus.Publish(new ApplyPartVisualCommand(Selection.Current.Value.PartId, newVisual) { Timestamp = DateTime.UtcNow });
+                // Тест изменения визуала
+                //var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+                // var newVisual = new PartVisualProperties() { Smoothness = 1, MaterialAddress = "PlasticAddressablesMAt" };
+                // _eventBus.Publish(new ApplyPartVisualCommand(Selection.Current.Value.PartId, newVisual) { Timestamp = DateTime.UtcNow });
 
                 //if(_selectionService.SelectedPartId == _mainPartId) return;
 
@@ -167,6 +176,15 @@ public class Clean_AssemblyTest : MonoBehaviour
                 //_assemblySystem.RebuildDrones();
 
 
+
+
+                // Тестирование системы Проверки готовности
+
+                var partDomain = _assemblySystem.GetPartDomainState(Selection.Current.Value.PartId);
+                if (!string.IsNullOrEmpty(partDomain.DroneId))
+                {
+                    ValidateDrone(partDomain.DroneId);
+                }
             }
 
 
@@ -208,6 +226,96 @@ public class Clean_AssemblyTest : MonoBehaviour
         }
 
     }
+
+    #region Validation Test
+
+    public void ValidateDrone(string droneId)
+    {
+
+        //_logger.Log($"*****Validate {droneId} ");
+        DroneDomainState drone =
+            _assemblySystem.GetDroneDomainState(droneId);
+
+
+        _logger.Log($"********DroneDomain {drone!=null} ");
+
+        DroneRequirements requirements =
+            CreateMissionRequirements();
+
+        DroneValidationContext context =
+            BuildContext(
+                drone,
+                requirements);
+
+        DroneReadinessResult result =
+            _readinessService.Validate(context);
+
+        ShowResult(result);
+    }
+
+    private void ShowResult(DroneReadinessResult result)
+    {
+        Debug.Log(
+        $"******Готовность: {result.TotalScore:F0}%");
+
+        foreach (var group in result.Groups)
+        {
+            Debug.Log(
+                $"**********=== {group.GroupName} ===");
+
+            foreach (var message in group.Messages)
+            {
+                Debug.Log(
+                    $"***********{message.Severity}: {message.Message}");
+            }
+        }
+    }
+
+    private DroneValidationContext BuildContext(DroneDomainState drone, DroneRequirements requirements)
+    {
+        List<PartDomainState> parts =
+        drone.partInstanseIds
+            .Select(id =>
+                _assemblySystem.GetPartDomainState(id))
+            .ToList();
+
+
+        var partsByType = parts
+            .GroupBy(x =>
+                _configs.Get(x.PartId).PartType)
+            .ToDictionary(
+        g => g.Key,
+        g => g.ToList());
+
+
+
+        return new DroneValidationContext
+        {
+            Drone = drone,
+            Parts = parts,
+            Requirements = requirements,
+            PartsByType = partsByType
+        };
+    }
+
+    private DroneRequirements CreateMissionRequirements()
+    {
+        return new DroneRequirements
+        {
+           
+
+            MinFlightTimeMinutes = 5f,
+
+            MinThrustToWeightRatio = 1.8f,
+
+            MaxCenterOfMassOffset = 0.1f,
+
+            CheckCollisions = true
+        };
+    }
+
+    #endregion
+
 
     public void PutSelectedDroneToGarage()
     {

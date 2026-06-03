@@ -12,7 +12,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 {
     private readonly IEventBus _eventBus;
     private readonly IAppLogger _logger;
-    private readonly IPartConfigRegistry _configs;
+    private readonly IPartConfigRepository _configs;
     private readonly IPartFactory _factory;
     private readonly PartViewRegistry _viewRegistry;
     private readonly Transform _spawnPoint;
@@ -38,7 +38,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
     public Clean_AssemblySystem(
         IEventBus eventBus,
         IAppLogger logger,
-        IPartConfigRegistry configs,
+        IPartConfigRepository configs,
         IPartFactory factory,
         PartViewRegistry viewRegistry,
         DiContainer container,

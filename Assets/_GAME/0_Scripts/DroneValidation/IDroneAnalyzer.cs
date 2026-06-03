@@ -3,14 +3,17 @@ using System.Collections.Generic;
 public interface IDroneAnalyzer
 {
     bool HasPart(
-        DroneDomainState drone,
+        DroneValidationContext context,
         PartType type);
 
     int CountParts(
-        DroneDomainState drone,
+        DroneValidationContext context,
         PartType type);
 
     IReadOnlyList<PartDomainState> GetParts(
-        DroneDomainState drone,
+        DroneValidationContext context,
         PartType type);
+
+    IReadOnlyList<string> FindCollisions(
+        DroneDomainState drone);
 }

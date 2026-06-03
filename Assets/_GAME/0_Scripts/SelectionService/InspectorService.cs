@@ -7,7 +7,7 @@ public class InspectorService
 {
     private readonly ISelectionService _selection;
     private readonly Clean_AssemblySystem _assembly;
-    private readonly IPartConfigRegistry _partConfigs;
+    private readonly IPartConfigRepository _partConfigs;
     [Inject] private readonly IGarageService _garage;
     [Inject] private readonly AddressablesAssetService _assets;
 
@@ -16,7 +16,7 @@ public class InspectorService
     public event Action<InspectionContext> Updated;
     public event Action Cleared;
 
-    public InspectorService(ISelectionService selection, Clean_AssemblySystem assembly, IPartConfigRegistry partConfigs )
+    public InspectorService(ISelectionService selection, Clean_AssemblySystem assembly, IPartConfigRepository partConfigs )
     {
         _selection = selection;
         _assembly = assembly;
