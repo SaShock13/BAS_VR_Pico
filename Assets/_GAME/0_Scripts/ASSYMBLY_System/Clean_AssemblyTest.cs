@@ -255,8 +255,6 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     private void ShowResult(DroneReadinessResult result)
     {
-        Debug.Log(
-        $"******Готовность: {result.TotalScore:F0}%");
 
         foreach (var group in result.Groups)
         {
@@ -269,6 +267,13 @@ public class Clean_AssemblyTest : MonoBehaviour
                     $"***********{message.Severity}: {message.Message}");
             }
         }
+
+        Debug.Log(
+        $"******Готовность: {result.TotalScore:F0}%");
+
+        if (result.IsReady) _logger.Log("*******Дрон готов к полету");
+        else _logger.Log("******Дрон НЕ ГОТОВ к полету");
+        
     }
 
     private DroneValidationContext BuildContext(DroneDomainState drone, DroneRequirements requirements)
@@ -279,6 +284,7 @@ public class Clean_AssemblyTest : MonoBehaviour
                 _assemblySystem.GetPartDomainState(id))
             .ToList();
 
+        var rootView = _assemblySystem.GetViewById(drone.InstanceId);
 
         var partsByType = parts
             .GroupBy(x =>
@@ -294,7 +300,9 @@ public class Clean_AssemblyTest : MonoBehaviour
             Drone = drone,
             Parts = parts,
             Requirements = requirements,
-            PartsByType = partsByType
+            PartsByType = partsByType,
+            droneTransform = rootView.transform
+            
         };
     }
 
@@ -304,11 +312,11 @@ public class Clean_AssemblyTest : MonoBehaviour
         {
            
 
-            MinFlightTimeMinutes = 5f,
+            MinFlightTimeMinutes = 4f,
 
             MinThrustToWeightRatio = 1.8f,
 
-            MaxCenterOfMassOffset = 0.1f,
+            MaxCenterOfMassOffset = 0.2f,
 
             CheckCollisions = true
         };

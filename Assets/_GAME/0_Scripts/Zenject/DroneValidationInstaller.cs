@@ -9,10 +9,6 @@ public class DroneValidationInstaller : MonoInstaller
             .To<DroneAnalyzer>()
             .AsSingle();
 
-        Container.Bind<IDroneStatsCalculator>()
-            .To<DroneStatsCalculator>()
-            .AsSingle();
-
         Container.Bind<IDroneValidator>()
             .To<ThrustValidator>()
             .AsSingle();

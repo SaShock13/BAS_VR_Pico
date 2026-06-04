@@ -28,7 +28,7 @@ public class AssemblyInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<InspectorService>().AsSingle();
         var configsRepository = Container.Resolve<IPartConfigRepository>();
         var viewsRepository = Container.Resolve<PartViewRegistry>();
-        Container.BindInterfacesAndSelfTo<DronePhysicsBuilder>().AsSingle().WithArguments( configsRepository, viewsRepository);
+        Container.BindInterfacesAndSelfTo<DronePhysicsStatsBuilder>().AsSingle().WithArguments( configsRepository, viewsRepository);
 
 
         Container.Bind<INotificationService>().To<NotificationService>().AsSingle();

@@ -11,6 +11,8 @@ public class DronePhysicsData
 
     public BatteryPhysicsData Battery;
 
+    public float EstimatedFlightTimeMinutes;
+
     public float MaxAvailableThrust;
 
     public float HoverThrottle;

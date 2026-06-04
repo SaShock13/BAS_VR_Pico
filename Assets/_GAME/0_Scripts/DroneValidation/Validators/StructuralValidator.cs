@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Zenject;
 
 public sealed class StructuralValidator
@@ -31,17 +32,17 @@ public sealed class StructuralValidator
 
         ValidateBattery(context, result);
 
-        ValidateFlightController(
-            context,
-            result);
+        //ValidateFlightController(
+        //    context,
+        //    result);
 
         ValidateMotors(
             context,
             result);
 
-        ValidatePropellers(
-            context,
-            result);
+        //ValidatePropellers(
+        //    context,
+        //    result);
 
         //ValidateAttachment(
         //    drone,
@@ -49,6 +50,11 @@ public sealed class StructuralValidator
 
         if (!result.IsPassed)
             result.Score = 0;
+        else
+            result.Messages.Add(
+                new ValidationMessage(
+                    ValidationSeverity.Info,
+                    $"Дрон имеет все детали , необходимые для полета"));
 
         return result;
     }

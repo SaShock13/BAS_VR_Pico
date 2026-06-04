@@ -18,7 +18,7 @@ MonoBehaviour:
   PrefabAddress: MotorExample1
   Mass: 1
   LocalCenterOfMass: {x: 0, y: -0.0651, z: 0}
-  MaxThrust: 50
+  MaxThrust: 10
   ResponseSpeed: 4
   RotationDirection: 0
   MaxRPM: 7000

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using Zenject;
 
 public sealed class CollisionValidator
@@ -47,6 +48,13 @@ public sealed class CollisionValidator
 
         if (collisions.Count > 0)
             result.Score = 0;
+        else
+        {
+            result.Messages.Add(
+                new ValidationMessage(
+                    ValidationSeverity.Info,
+                    $"Пересечения деталей НЕ обнаружены"));
+        }             
 
         return result;
     }

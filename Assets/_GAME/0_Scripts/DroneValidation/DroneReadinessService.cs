@@ -4,11 +4,15 @@ public sealed class DroneReadinessService
 
     private readonly DroneValidationService _flight;
 
+    private readonly DronePhysicsStatsBuilder _statsBuilder;
+
     public DroneReadinessService(
         StructuralValidator structural,
+        DronePhysicsStatsBuilder statsBuilder,
         DroneValidationService flight)
     {
         _structural = structural;
+        _statsBuilder = statsBuilder;
         _flight = flight;
     }
 
@@ -29,7 +33,9 @@ public sealed class DroneReadinessService
             result.TotalScore = 0;
 
             return result;
-        }
+        }              
+
+        context.physicsData = _statsBuilder.Build(context.Parts, context.droneTransform);
 
         DroneValidationResult flightResult =
             _flight.Validate(context);

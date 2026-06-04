@@ -11,7 +11,7 @@ public class PhysicsBuilderTester : MonoBehaviour
     [SerializeField] private Transform _droneRoot;
     [SerializeField] private Rigidbody _droneRb;
 
-    [Inject] private DronePhysicsBuilder _physicsBuilder;
+    [Inject] private DronePhysicsStatsBuilder _physicsBuilder;
     [Inject] private Clean_AssemblySystem _domainRegistry;
     [Inject] private PartViewRegistry _viewRegistry;
     [Inject] private IPartConfigRepository _configRegistry;

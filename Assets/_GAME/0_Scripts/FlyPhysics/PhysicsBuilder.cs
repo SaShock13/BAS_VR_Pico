@@ -3,14 +3,14 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class DronePhysicsBuilder
+public class DronePhysicsStatsBuilder
 {
     private readonly IPartConfigRepository _configRegistry;
     private readonly PartViewRegistry _viewRegistry;
 
 
     //[Inject]   // Синглтон или ?? И может при создании просто прокидывать зависимости без Зенджекта??
-    public DronePhysicsBuilder(
+    public DronePhysicsStatsBuilder(
         IPartConfigRepository configRegistry,
         PartViewRegistry viewRegistry)
     {
@@ -163,6 +163,7 @@ public class DronePhysicsBuilder
         }
 
 
+
         CalculateMotorFactors(motors , centerOfMass);
         var yawAttachmentResult = CalculateYawFactors(motors , centerOfMass);
 
@@ -177,6 +178,12 @@ public class DronePhysicsBuilder
         physicsData.Motors = motors;
 
         physicsData.Battery = batteryData;
+
+        physicsData.EstimatedFlightTimeMinutes =
+                    CalculateFlightTime(
+                        batteryData,
+                        totalMass,
+                        totalMaxThrust);
 
         physicsData.MaxAvailableThrust =
             totalMaxThrust;
@@ -248,6 +255,15 @@ public class DronePhysicsBuilder
         }
     }
 
+    /// <summary>
+    /// Рассчет времени полета в минутах . todo Написать рассчет. Пока возвращает тестовое значение.
+    /// </summary>
+    /// <param name="drone"></param>
+    /// <returns></returns>
+    public float CalculateFlightTime(BatteryPhysicsData batteryData, float totalMass, float totalMaxThrust)
+    {
+        return 5;
+    }
 
 
     /// <summary>
