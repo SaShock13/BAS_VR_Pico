@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PartViewModel
 {
-    public string Id;
+    public string InstanceId;
     public string Name;
     public Color Color;
     public string Material;

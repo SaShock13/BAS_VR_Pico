@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
@@ -16,7 +17,6 @@ public class Clean_AssemblyTest : MonoBehaviour
     [SerializeField] private string[] partIds;
 
     private IEventBus _eventBus;
-    private SelectionService _selectionService;  // todo избавиться
     public ISelectionService Selection;   
     private PartHighlightService _highlightService;
     private IGarageService _garage;
@@ -27,7 +27,7 @@ public class Clean_AssemblyTest : MonoBehaviour
     private Clean_AssemblySystem _assemblySystem;
 
     private AddressablesPrefabService _prefabs;
-    [SerializeField] private XRBaseInteractor[] _interactors;
+    [SerializeField] private NearFarInteractor[] _interactors;
 
 
     private string _mainPartId = null;
@@ -38,7 +38,6 @@ public class Clean_AssemblyTest : MonoBehaviour
     public void Construct(
         IEventBus eventBus,
         INotificationService notifications,
-        SelectionService selectionService,
         ISelectionService selection,
         PartHighlightService highlightService,
         AddressablesPrefabService prefabs, 
@@ -51,7 +50,6 @@ public class Clean_AssemblyTest : MonoBehaviour
 
         _eventBus = eventBus;
         _notifications = notifications;
-        _selectionService = selectionService;
         Selection = selection;
         _eventBus.Subscribe<Clean_PartCreatedEvent>(OnPartCreated);
         _highlightService = highlightService;
@@ -74,7 +72,7 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     private void OnEnable()
     {
-        foreach (var interactor in _interactors)
+        foreach (XRBaseInteractor interactor in _interactors)
         {
 
             Debug.Log($"!!!!!!!!!!!!!interactor {interactor.name} Subscribed");
@@ -84,11 +82,67 @@ public class Clean_AssemblyTest : MonoBehaviour
             interactor.hoverExited.AddListener(OnHoverExit);
             
         }
+        triggerAction.action.performed += OnTriggerPressed;
     }
 
+
+
+
+    [SerializeField]
+    private InputActionReference triggerAction;
+
+    private void OnDisable()
+    {
+        triggerAction.action.performed -= OnTriggerPressed;
+    }
     private void OnHoverExit(HoverExitEventArgs arg0)
     {
         _highlightService.Exit();
+    }
+
+    private void OnTriggerPressed(InputAction.CallbackContext ctx)
+    {
+
+        foreach (var interactor in _interactors)
+        {
+            if (interactor.interactablesHovered.Count == 0)
+                continue;
+
+            var interactable = interactor.interactablesHovered[0];
+
+            var part =
+                interactable.transform.GetComponentInParent<DronePartView>();
+
+            if (part == null)
+                continue;
+
+            Selection.Select(
+                new SelectionTarget(
+                    SelectionType.Part,
+                    part.InstanceId));
+
+            break;
+        }
+
+
+        //foreach (XRRayInteractor interactor  in _interactors)
+        //{
+
+        //    if (interactor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
+        //    {
+        //        var part =
+        //            hit.collider.GetComponentInParent<DronePartView>();
+
+        //        if (part == null)
+        //            return;
+
+
+        //        Debug.Log($"message {this}");
+        //        Selection.Select(new SelectionTarget ( SelectionType.Part , part.InstanceId));
+        //    }
+            
+
+        //}
     }
 
     private void OnHoverEnter(HoverEnterEventArgs arg0)
@@ -122,7 +176,7 @@ public class Clean_AssemblyTest : MonoBehaviour
         }
     }
 
-
+   
 
 
 

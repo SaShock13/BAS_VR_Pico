@@ -18,7 +18,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
     private readonly Transform _spawnPoint;
     private readonly ISocketResolver _socketResolver;
     private readonly ISaveService _saveService;
-    private SelectionService _selectionService;
+    private ISelectionService _selectionService;
 
     // ХРАНИЛИЩЕ СОСТОЯНИЙ
     private readonly Dictionary<string, PartDomainState> _parts = new Dictionary<string, PartDomainState>();
@@ -43,7 +43,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         PartViewRegistry viewRegistry,
         DiContainer container,
         ISocketResolver socketResolver,
-        SelectionService selectionService,
+        ISelectionService selectionService,
         ISaveService saveService)
     {
         _eventBus = eventBus;
@@ -1045,11 +1045,11 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
             FindRootPart(saveData);
 
         Vector3 delta =
-            targetPosition - root.Transform.Position;
+            targetPosition - root.Transform.LocalPosition;
 
         foreach (var part in saveData.Parts)
         {
-            part.Transform.Position += delta;
+            part.Transform.LocalPosition += delta;
         }
     }
 

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class NewSelectionService : ISelectionService
+public class SelectionService : ISelectionService
 {
     public SelectionTarget? Current { get; set; }
 

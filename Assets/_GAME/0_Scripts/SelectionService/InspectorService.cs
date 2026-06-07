@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Zenject;
@@ -11,17 +12,17 @@ public class InspectorService
     [Inject] private readonly IGarageService _garage;
     [Inject] private readonly AddressablesAssetService _assets;
 
-
+    IEventBus _eventBus;
 
     public event Action<InspectionContext> Updated;
     public event Action Cleared;
 
-    public InspectorService(ISelectionService selection, Clean_AssemblySystem assembly, IPartConfigRepository partConfigs )
+    public InspectorService(ISelectionService selection, Clean_AssemblySystem assembly, IEventBus eventBus, IPartConfigRepository partConfigs )
     {
         _selection = selection;
+        _eventBus = eventBus;
         _assembly = assembly;
         _partConfigs = partConfigs;
-
         _selection.Changed += OnSelectionChanged;
     }
 
@@ -79,8 +80,7 @@ public class InspectorService
         };
 
 
-
-
+        _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now }); // todo дорабьотать! Момент когда сохраняет снапшот сейчас дублируется
         Updated?.Invoke(context);
     }
 
@@ -88,7 +88,7 @@ public class InspectorService
     {
         return new PartViewModel
         {
-            Id = domain.InstanceId,
+            InstanceId = domain.InstanceId,
             Name = config.PartId,
             Color = domain.VisualProperties.Color,
             Material = domain.VisualProperties.MaterialAddress,

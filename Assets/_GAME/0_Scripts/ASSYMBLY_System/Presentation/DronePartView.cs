@@ -14,6 +14,9 @@ public class DronePartView : MonoBehaviour
     public string InstanceId { get; private set; }
 
     [SerializeField] private Renderer _renderer;
+    [SerializeField] private bool _isSnapToSocketPosition = false;
+
+
     private XRGrabInteractable _interactable;
 
     private MaterialPropertyBlock _mpb;
@@ -95,8 +98,12 @@ public class DronePartView : MonoBehaviour
 
         transform.SetParent(parent);
         _rigidBody.isKinematic = true;
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
+
+        if (_isSnapToSocketPosition)
+        {
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity; 
+        }
 
         Debug.Log($"{gameObject.name} AttachTo {parent.name}");
     }

@@ -22,15 +22,12 @@ public static class PartMapper
             VisualProperties = state.VisualProperties 
         };
 
-        // Transform ????????? ?????? ???? ?????? ?????????
-        if (state.LifecycleState == PartLifecycleState.Free && transform != null)
-        {
+        
             data.Transform = new TransformSaveData
             {
-                Position = transform.position,
-                Rotation = transform.rotation
+                LocalPosition = transform.localPosition,
+                LocalRotation = transform.localRotation
             };
-        }
 
         return data;
     }
@@ -85,13 +82,15 @@ public static class PartMapper
                 throw new Exception($"Socket not found: {data.AttachedSocketId}");
 
             view.AttachTo(socket.transform);
+            view.transform.localPosition = data.Transform.LocalPosition;
+            view.transform.localRotation = data.Transform.LocalRotation;
         }
         else
         {
             if (data.Transform != null)
             {
-                view.transform.position = data.Transform.Position;
-                view.transform.rotation = data.Transform.Rotation;
+                view.transform.position = data.Transform.LocalPosition;
+                view.transform.rotation = data.Transform.LocalRotation;
             }
 
             //view.Detach(); // ???? ???? ??????
