@@ -21,4 +21,8 @@ public sealed class MotorPhysicsData
     public float MaxRPM;
 
     public MotorMixData MixData;
+
+    public float IdleCurrent;
+
+    public float MaxCurrent;
 }

@@ -14,4 +14,8 @@ public class MotorConfig : PartConfig
     public float MaxRPM;
 
     public MotorMixData MixData;
+
+    public float IdleCurrent;
+
+    public float MaxCurrent;
 }

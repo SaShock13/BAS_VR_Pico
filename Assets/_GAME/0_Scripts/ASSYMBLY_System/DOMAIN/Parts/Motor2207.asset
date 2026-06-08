@@ -10,19 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16f6ff99ba2a43f4295bfe1a15924934, type: 3}
-  m_Name: MotorFL
+  m_Name: Motor2207
   m_EditorClassIdentifier: Assembly-CSharp::MotorConfig
-  PartId: MotorExample1
+  PartId: Motor2207
   PartType: 2
   Prefab: {fileID: 8777026559667588407, guid: fab15cc9bab7eaf41accd0da2254473b, type: 3}
-  PrefabAddress: MotorExample1
+  PrefabAddress: Motor2207
   Mass: 1
   LocalCenterOfMass: {x: 0, y: -0.0651, z: 0}
-  MaxThrust: 5
-  ResponseSpeed: 4
+  MaxThrust: 12
+  ResponseSpeed: 15
   RotationDirection: 0
-  MaxRPM: 7000
+  MaxRPM: 36000
   MixData:
     PitchFactor: -1
     RollFactor: -1
     YawFactor: 1
+  IdleCurrent: 1
+  MaxCurrent: 25

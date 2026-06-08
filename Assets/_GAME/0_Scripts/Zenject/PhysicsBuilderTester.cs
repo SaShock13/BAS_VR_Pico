@@ -15,8 +15,10 @@ public class PhysicsBuilderTester : MonoBehaviour
     [Inject] private Clean_AssemblySystem _domainRegistry;
     [Inject] private PartViewRegistry _viewRegistry;
     [Inject] private IPartConfigRepository _configRegistry;
+    [Inject] private ISelectionService _selectionService;
     DronePhysicsApplier _applier;
     DronePhysicsSimulation physicsSimulation;
+
 
     private void Awake()
     {
@@ -53,7 +55,16 @@ public class PhysicsBuilderTester : MonoBehaviour
 
     private void FindDrone()
     {
-        physicsSimulation = FindAnyObjectByType<DronePhysicsSimulation>();
+        _viewRegistry.TryGet(_selectionService.Current.Value.PartId, out DronePartView view);
+        if (view != null)
+        {
+            physicsSimulation = view.GetComponent<DronePhysicsSimulation>();
+
+            Debug.Log($"sssssssssssview selected {view.gameObject.name}");
+        }
+
+
+        //physicsSimulation = FindAnyObjectByType<DronePhysicsSimulation>();
         _droneRoot = physicsSimulation.transform;
         _droneRb = _droneRoot.GetComponent<Rigidbody>();
     }
@@ -82,10 +93,13 @@ public class PhysicsBuilderTester : MonoBehaviour
         DronePhysicsSimulation simulation =
             _droneRoot.GetComponent<DronePhysicsSimulation>();
 
+
         simulation.Initialize(
             physicsData
             ,motorViews
             );
+
+        simulation.enabled = true;
     }
 
     private void RunTest()
@@ -163,6 +177,7 @@ public class PhysicsBuilderTester : MonoBehaviour
         Debug.Log($"Motors: {data.Motors?.Count ?? 0}");
         Debug.Log($"HoverThrottle: {data.HoverThrottle}");
         Debug.Log($"YAw BIAS : {data.YawBias}");
+        Debug.Log($"bbbbbbbBattery : {data.Battery != null }");
         foreach (var motor in data.Motors)
         {
 

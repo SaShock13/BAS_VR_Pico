@@ -4,5 +4,15 @@ public class BatteryPhysicsData
 
     public float CurrentChargeMah;
 
-    public float Voltage;
+    public float NominalBatteryVoltage;
+
+    public float FullVoltage;
+
+    public float EmptyVoltage;
+
+    public float InternalResistance;
+
+    public float ActualVoltage;
+
+    public float CurrentDraw;
 }

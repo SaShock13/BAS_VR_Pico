@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 using static UnityEngine.InputSystem.HID.HID;
 
 public class FlightController : MonoBehaviour
@@ -30,7 +31,8 @@ public class FlightController : MonoBehaviour
     private PIDController _yawPID;
 
     private bool _enabled = false;
-
+    [Inject] private ISelectionService _selectionService;
+    [Inject] private PartViewRegistry _viewRegistry;
 
     [Header("Max Corrections")]
     [SerializeField]
@@ -49,7 +51,14 @@ public class FlightController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.O))
         {
-            _simulation = FindAnyObjectByType<DronePhysicsSimulation>();
+            _viewRegistry.TryGet(_selectionService.Current.Value.PartId, out DronePartView view);
+            if (view != null)
+            {
+                _simulation = view.GetComponent<DronePhysicsSimulation>();
+
+                Debug.Log($"sssssssssssview selected {view.gameObject.name}");
+            }
+
             _rb = _simulation.GetComponent<Rigidbody>();
             _input = FindAnyObjectByType<DroneDebugInput>();
             if(_input != null && _simulation !=null)  _enabled = true;

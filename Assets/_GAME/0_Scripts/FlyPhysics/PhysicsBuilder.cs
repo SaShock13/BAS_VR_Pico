@@ -39,6 +39,10 @@ public class DronePhysicsStatsBuilder
             PartConfig config =
                 _configRegistry.Get(part.PartId);
 
+
+
+            Debug.Log($"bbbbbbbPArt Type {config.PartType}");
+
             _viewRegistry.TryGet(part.InstanceId,out DronePartView view);
 
             Transform transform = view.transform;
@@ -68,6 +72,9 @@ public class DronePhysicsStatsBuilder
 
             if (config is MotorConfig motorConfig)
             {
+
+                Debug.Log($"bbbbbbbconfig is  MotorConfig");
+
                 Vector3 localMotorPosition =
                     droneRoot.InverseTransformPoint(
                         transform.position);
@@ -103,7 +110,11 @@ public class DronePhysicsStatsBuilder
                         RotationDirection =
                             motorConfig.RotationDirection,
 
-                        MixData = motorMixData
+                        MixData = motorMixData,
+
+                        IdleCurrent = motorConfig.IdleCurrent,
+
+                        MaxCurrent = motorConfig.MaxCurrent
 
                     };
 
@@ -119,6 +130,7 @@ public class DronePhysicsStatsBuilder
 
             if (config is BatteryConfig batteryConfig)
             {
+                Debug.Log($"bbbbbbbconfig is  BatteryConfig");
                 batteryData =
                     new BatteryPhysicsData()
                     {
@@ -128,8 +140,20 @@ public class DronePhysicsStatsBuilder
                         CurrentChargeMah =
                             batteryConfig.CapacityMah,
 
-                        Voltage =
-                            batteryConfig.Voltage
+                        NominalBatteryVoltage =
+                            batteryConfig.NominalVoltage,
+
+                        FullVoltage =
+                            batteryConfig.FullVoltage,
+
+                        EmptyVoltage =
+                            batteryConfig.EmptyVoltage,
+                        
+                        InternalResistance = batteryConfig.InternalResistance,
+
+
+
+
                     };
             }
         }

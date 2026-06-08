@@ -18,6 +18,12 @@ public class DronePhysicsSimulation : MonoBehaviour
     => _motors;
 
 
+    private float _totalCurrent;  // Общее потребление тока
+
+    private BatteryPhysicsData _battery;
+
+    [SerializeField] private bool isVoltageAffects = false ; // Учитывать ли текущий напряжение для рассчета тяги моторов
+
     public void Initialize(
         DronePhysicsData physicsData
         ,IReadOnlyList<DronePartView> motorViews
@@ -26,6 +32,13 @@ public class DronePhysicsSimulation : MonoBehaviour
         _motors.Clear();
 
         ApplyRigidbodyData(physicsData);
+
+
+
+        _battery = physicsData.Battery;
+
+
+        Debug.Log($"777777777777Init_battery {_battery!= null}");
 
         foreach (MotorPhysicsData motorData
                  in physicsData.Motors)
@@ -58,7 +71,71 @@ public class DronePhysicsSimulation : MonoBehaviour
     private void FixedUpdate()
     {
         SimulateMotors();
+
+        SimulateBattery();
+
     }
+
+    private void SimulateBattery()
+    {
+        _totalCurrent =
+            CalculateCurrentDraw();
+
+        _battery.CurrentDraw =
+            _totalCurrent;
+
+        float consumedMah =
+            _totalCurrent *
+            Time.fixedDeltaTime /
+            3600f *
+            1000f;
+
+        _battery.CurrentChargeMah -=
+            consumedMah;
+
+        _battery.CurrentChargeMah =
+            Mathf.Max(
+                0,
+                _battery.CurrentChargeMah);
+
+        float chargePercent =
+            _battery.CurrentChargeMah /
+            _battery.CapacityMah;
+
+        float batteryVoltage =
+            Mathf.Lerp(
+                _battery.EmptyVoltage,
+                _battery.FullVoltage,
+                chargePercent);
+
+        float sag =
+            _totalCurrent *
+            _battery.InternalResistance;
+
+        _battery.ActualVoltage =
+            Mathf.Max(
+                0,
+                batteryVoltage - sag);
+
+
+        Debug.Log($"bbbbbbb   CurrentDraw {_battery.CurrentDraw} _battery.CurrentChargeMa {_battery.CurrentChargeMah} chargePercent {chargePercent} batteryVoltage {batteryVoltage} sag {sag} _battery.ActualVoltage {_battery.ActualVoltage}  ");
+    }
+
+    private float CalculateCurrentDraw()
+    {
+        float total = 0f;
+
+        foreach (DroneMotorRuntime motor in _motors)
+        {
+            Debug.Log(
+            $"bbbbbbbbMotorCurrent={motor.CurrentDraw}");
+            total += motor.CurrentDraw;  
+        }
+        Debug.Log(
+        $"bbbbbbbbbbTOTAL CURRENT={total}");
+        return total;
+    }
+
 
     private void SimulateMotors()
     {
@@ -83,9 +160,39 @@ public class DronePhysicsSimulation : MonoBehaviour
                 motor.Data.ResponseSpeed *
                 Time.fixedDeltaTime);
 
+        Debug.Log(
+                    $"bbbbbbbTarget={motor.TargetThrottle} Current={motor.CurrentThrottle}");
+        Debug.Log(
+    $"bbbbbbbMotorData={motor.Data != null}");
+
+        Debug.Log(
+        $"bbbbbbbbIdle={motor.Data.IdleCurrent} " +
+        $"Max={motor.Data.MaxCurrent}");
+
+
+        motor.CurrentDraw =          // todo Сделать зависимость от CurrentThrust
+        Mathf.Lerp(
+            motor.Data.IdleCurrent,
+            motor.Data.MaxCurrent,
+            motor.CurrentThrottle);
+
+
+        Debug.Log(
+            $"bbbbbbbbThrottle={motor.CurrentThrottle} Current={motor.CurrentDraw}");
+
+
+        float voltageFactor = isVoltageAffects ? _battery.ActualVoltage / _battery.NominalBatteryVoltage : 1; // влияние  вольтажа на тягу 
+
+        Debug.Log(
+            $"bbbbbbbbvoltageFactor={voltageFactor} ");
+
         motor.CurrentThrust =
             motor.Data.MaxThrust *
-            motor.CurrentThrottle;
+            motor.CurrentThrottle *
+            voltageFactor;
+
+
+
 
         Vector3 force =
             motor.Transform.up *

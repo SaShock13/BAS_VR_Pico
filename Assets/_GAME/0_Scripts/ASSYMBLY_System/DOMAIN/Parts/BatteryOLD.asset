@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f72395b583f915c49944d5b51431d3e5, type: 3}
+  m_Name: BatteryOLD
+  m_EditorClassIdentifier: Assembly-CSharp::BatteryConfig
+  PartId: BatteryOLD
+  PartType: 6
+  Prefab: {fileID: 8777026559667588407, guid: b7d1f80a85c794745ac6beb12481b035, type: 3}
+  PrefabAddress: BatteryOLD
+  Mass: 0.35
+  LocalCenterOfMass: {x: 0, y: 0, z: 0}
+  CellCount: 6
+  CapacityMah: 2200
+  NominalVoltage: 22.2
+  FullVoltage: 25.2
+  EmptyVoltage: 19.2
+  InternalResistance: 0.08
+  MaxDischargeCurrent: 180

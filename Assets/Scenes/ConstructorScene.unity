@@ -4896,10 +4896,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partIds:
-  - MotorExample1
-  - MotorExample1
-  - MotorExample1
-  - MotorExample1
+  - Motor2207
+  - Motor2207
+  - Motor2306
+  - Motor2306
   - "\u043A\u043E\u0440\u043F\u0443\u04411"
   - "\u0431\u0430\u0442\u0430\u0440\u0435\u044F1"
   - "\u0432\u0438\u043D\u04421"
@@ -4907,6 +4907,9 @@ MonoBehaviour:
   - "\u0432\u0438\u043D\u04421"
   - "\u0432\u0438\u043D\u04421"
   - "\u043A\u043E\u043D\u0442\u0440\u043E\u043B\u043B\u0435\u04401"
+  - battery2
+  - BatteryOLD
+  - battery2
   _interactors:
   - {fileID: 645077902}
   - {fileID: 178807446}
@@ -5520,11 +5523,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partConfigs:
-  - {fileID: 11400000, guid: 3d6fd042c6709994bb1acdc93d668b9b, type: 2}
+  - {fileID: 11400000, guid: b33c535633ee7114daf9271869a56caf, type: 2}
   - {fileID: 11400000, guid: b73ce8181bd5abd43af371a46b53b194, type: 2}
   - {fileID: 11400000, guid: 6b6b6cca5948a2947bd7ebb5527f490e, type: 2}
   - {fileID: 11400000, guid: 9c9f5f20d02b40446b8ae3e1824ff741, type: 2}
   - {fileID: 11400000, guid: ea5bec241c2a4df4681a366a10499b11, type: 2}
+  - {fileID: 11400000, guid: b14151734fb03d641bf473f3340b770b, type: 2}
+  - {fileID: 11400000, guid: f1c6145726bb358439fb2a0a9289c4c1, type: 2}
+  - {fileID: 11400000, guid: 056b3d73dd653bf4e93b9fbe7d08acc5, type: 2}
 --- !u!114 &1225735307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6542,7 +6548,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1381545774}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.309}
+  m_LocalPosition: {x: 0, y: 0, z: 0.868}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children:

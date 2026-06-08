@@ -234,7 +234,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 99685157b02e4d446bbecb015645e5e8, type: 2}
+  - {fileID: 2100000, guid: e7b0fb88a62eaa9448910723398ffd62, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 6494140227431048552}
   - component: {fileID: 8357380763205776872}
   m_Layer: 0
-  m_Name: battery
+  m_Name: batteryOLD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,4 +515,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 904721feee35f3f429aeb1f10afad18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
-  Config: {fileID: 11400000, guid: b33c535633ee7114daf9271869a56caf, type: 2}
+  Config: {fileID: 11400000, guid: b14151734fb03d641bf473f3340b770b, type: 2}

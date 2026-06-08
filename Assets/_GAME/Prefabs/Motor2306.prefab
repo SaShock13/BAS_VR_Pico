@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 4170141742279519247}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.24, z: -0.771}
+  m_LocalPosition: {x: 0, y: -0.0651, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -57,12 +57,12 @@ GameObject:
   - component: {fileID: 4092129233370612425}
   - component: {fileID: 2828930676560574456}
   m_Layer: 0
-  m_Name: Socket1
+  m_Name: PropellerSocket1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4150625569396921801
 Transform:
   m_ObjectHideFlags: 0
@@ -72,7 +72,7 @@ Transform:
   m_GameObject: {fileID: 6508802944501029694}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.674, z: 0.015}
+  m_LocalPosition: {x: 0, y: 0.1072, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7644bec2d2f076348b035207c30e90bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SocketView
-  AllowedTypes: 01000000
+  AllowedTypes: 03000000
   AttachPoint: {fileID: 4150625569396921801}
   _socketInteractor: {fileID: 2828930676560574456}
   _socketId: engineSocket
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!1 &7610842520883542152
+--- !u!1 &7170012061266432032
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,47 +175,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5875125265741878987}
-  - component: {fileID: 4278313971625691128}
-  - component: {fileID: 5823513808152777707}
-  - component: {fileID: 27158484754944844}
+  - component: {fileID: 6881228009037337795}
+  - component: {fileID: 2141676284414332156}
+  - component: {fileID: 7781781734661453170}
+  - component: {fileID: 6189298913049193021}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5875125265741878987
+--- !u!4 &6881228009037337795
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7610842520883542152}
+  m_GameObject: {fileID: 7170012061266432032}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.31983897, y: 0.43958092, z: 1.43}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.28, y: 0.1036, z: 0.28}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1849187271226038944}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4278313971625691128
+--- !u!33 &2141676284414332156
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7610842520883542152}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &5823513808152777707
+  m_GameObject: {fileID: 7170012061266432032}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &7781781734661453170
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7610842520883542152}
+  m_GameObject: {fileID: 7170012061266432032}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -234,7 +234,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 99685157b02e4d446bbecb015645e5e8, type: 2}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -258,13 +258,13 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &27158484754944844
-BoxCollider:
+--- !u!136 &6189298913049193021
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7610842520883542152}
+  m_GameObject: {fileID: 7170012061266432032}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -276,9 +276,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &8180691133690216045
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,7 +325,7 @@ GameObject:
   - component: {fileID: 6494140227431048552}
   - component: {fileID: 8357380763205776872}
   m_Layer: 0
-  m_Name: battery
+  m_Name: Motor2306
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -342,9 +344,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5875125265741878987}
   - {fileID: 4150625569396921801}
   - {fileID: 107728777619163977}
+  - {fileID: 6881228009037337795}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &7865895251465963167
@@ -357,7 +359,7 @@ Rigidbody:
   serializedVersion: 5
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -515,4 +517,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 904721feee35f3f429aeb1f10afad18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
-  Config: {fileID: 11400000, guid: b33c535633ee7114daf9271869a56caf, type: 2}
+  Config: {fileID: 11400000, guid: 6b6b6cca5948a2947bd7ebb5527f490e, type: 2}

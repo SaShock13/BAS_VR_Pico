@@ -234,7 +234,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 16750562604e04a49b84796f5c9d308b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 6494140227431048552}
   - component: {fileID: 8357380763205776872}
   m_Layer: 0
-  m_Name: MotorFL
+  m_Name: Motor2207
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -517,4 +517,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 904721feee35f3f429aeb1f10afad18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
-  Config: {fileID: 11400000, guid: 6b6b6cca5948a2947bd7ebb5527f490e, type: 2}
+  Config: {fileID: 11400000, guid: 056b3d73dd653bf4e93b9fbe7d08acc5, type: 2}

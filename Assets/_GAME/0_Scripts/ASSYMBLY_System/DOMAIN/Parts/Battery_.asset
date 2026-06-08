@@ -9,12 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70ed0de78d734a3408861cd23a1dfe4f, type: 3}
-  m_Name: Battery
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 11500000, guid: f72395b583f915c49944d5b51431d3e5, type: 3}
+  m_Name: Battery_
+  m_EditorClassIdentifier: Assembly-CSharp::BatteryConfig
   PartId: "\u0431\u0430\u0442\u0430\u0440\u0435\u044F1"
   PartType: 6
   Prefab: {fileID: 8777026559667588407, guid: 4cb0aba9c1f381745ad11e3674efaa14, type: 3}
   PrefabAddress: BatteryExample1
-  Mass: 2
-  LocalCenterOfMass: {x: 0, y: -0.24, z: -0.771}
+  Mass: 0.18
+  LocalCenterOfMass: {x: 0, y: 0, z: 0}
+  CellCount: 4
+  CapacityMah: 1500
+  NominalVoltage: 14.8
+  FullVoltage: 16.8
+  EmptyVoltage: 12.8
+  InternalResistance: 0.025
+  MaxDischargeCurrent: 120

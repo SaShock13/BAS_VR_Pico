@@ -13,4 +13,6 @@ public class DroneMotorRuntime
     public float CurrentThrust;
 
     public float CurrentRPM;
+
+    public float CurrentDraw;
 }
