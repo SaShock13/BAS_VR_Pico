@@ -15,7 +15,8 @@ public class PartPanelUI : MonoBehaviour
     [SerializeField] private TMP_Text color;
     [SerializeField] private TMP_Text name;
     [SerializeField] private Image colorImage;
-    
+    [SerializeField] private GameObject panel;
+
 
 
 
@@ -76,7 +77,7 @@ public class PartPanelUI : MonoBehaviour
 
     private void OnUpdated(InspectionContext context)
     {
-        gameObject.SetActive(true);
+        panel.SetActive(true);
 
 
         Render(context.Part);

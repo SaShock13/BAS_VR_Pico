@@ -13,6 +13,7 @@ public class DronePanelUI : MonoBehaviour
 
     [SerializeField] private TMP_Text weight ;
     [SerializeField] private TMP_Text name ;
+    [SerializeField] private GameObject panel ;
 
     [Inject]
     public void Construct(InspectorService inspector, Clean_AssemblySystem assembly)
@@ -25,6 +26,8 @@ public class DronePanelUI : MonoBehaviour
 
     }
 
+
+
     //???
     public void Bind(InspectorService inspector)
     {
@@ -35,7 +38,7 @@ public class DronePanelUI : MonoBehaviour
     private void OnUpdated(InspectionContext ctx)
     {
 
-        gameObject.SetActive(true);
+        panel.SetActive(true);
 
         if(ctx.Drone == null) RenderEmpty();
         else Render(ctx.Drone);
