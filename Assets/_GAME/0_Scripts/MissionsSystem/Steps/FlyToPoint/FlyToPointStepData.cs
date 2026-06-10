@@ -1,10 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(
     menuName = "Mission System/Steps/Fly To Point")]
 public class FlyToPointStepData : MissionStepData
 {
-    public string PointId;
+    public MissionPointId PointId; /// todo типобезопасность хорошо бы сделать
 
     public float Radius = 3f;
 

@@ -24,7 +24,7 @@ public sealed class ToastNotificationPresenter : MonoBehaviour
 
     public void Start()
     {
-        //_service.ToastRequested += OnNotificationRequested; // todo ВКЛЮЧИТЬ И РАЗОбРАТЬСЯ
+        _service.ToastRequested += OnNotificationRequested; // todo ВКЛЮЧИТЬ И РАЗОбРАТЬСЯ
     }
 
     private void OnNotificationRequested(

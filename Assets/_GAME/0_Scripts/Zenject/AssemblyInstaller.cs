@@ -32,7 +32,7 @@ public class AssemblyInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<DronePhysicsStatsBuilder>().AsSingle().WithArguments( configsRepository, viewsRepository);
 
 
-        Container.Bind<INotificationService>().To<NotificationService>().AsSingle();
+        
 
 
 

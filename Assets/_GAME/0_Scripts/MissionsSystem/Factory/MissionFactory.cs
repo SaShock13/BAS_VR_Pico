@@ -15,6 +15,7 @@ public static class MissionFactory
 
         return new MissionRuntime(
             steps,
-            new List<MissionCondition>());
+            new List<MissionCondition>(),
+            definition);
     }
 }

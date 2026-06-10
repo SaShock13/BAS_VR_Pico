@@ -8,6 +8,8 @@ public class MissionRuntime
 
     private MissionContext _context;
 
+    private readonly MissionDefinition _definition;
+
     private int _currentStepIndex;
 
     public MissionState State { get; private set; }
@@ -19,9 +21,11 @@ public class MissionRuntime
 
     public MissionRuntime(
         List<MissionStep> steps,
-        List<MissionCondition> failConditions)
+        List<MissionCondition> failConditions,
+        MissionDefinition definition)
     {
         _steps = steps;
+        _definition = definition;
         _failConditions = failConditions;
     }
 
@@ -37,10 +41,21 @@ public class MissionRuntime
 
         State = MissionState.Running;
 
-        MissionEvents.MissionStarted?.Invoke();
+        MissionEvents.MissionStarted?.Invoke(_definition.MissionName);
+
 
         if (_steps.Count > 0)
+        {
+
+            var info = new MissionObjectiveInfo();
+            MissionEvents.ObjectiveChanged?.Invoke(
+                GetObjectiveInfo());
+
+            MissionEvents.TargetChanged?.Invoke(
+                _steps[0].Target);
+
             _steps[0].Enter();
+        }
     }
 
     public void Tick()
@@ -80,6 +95,11 @@ public class MissionRuntime
             return;
         }
 
+        MissionEvents.ObjectiveChanged?.Invoke(GetObjectiveInfo());
+
+        MissionEvents.TargetChanged?.Invoke(
+             CurrentStep.Target);
+
         CurrentStep.Enter();
     }
 
@@ -102,14 +122,24 @@ public class MissionRuntime
     private void Complete()
     {
         State = MissionState.Completed;
-        Debug.Log("MISSION COMPLETED");
-        MissionEvents.MissionCompleted?.Invoke();
+        MissionEvents.MissionCompleted?.Invoke(_definition.MissionName);
     }
 
     private void Fail(string reason)
     {
         State = MissionState.Failed;
-        Debug.LogError($"MISSION FAILED: {reason}");
-        MissionEvents.MissionFailed?.Invoke(reason);
+        MissionEvents.MissionFailed?.Invoke(_definition.MissionName,reason);
+    }
+
+    public MissionObjectiveInfo GetObjectiveInfo()
+    {
+        return new MissionObjectiveInfo
+        (
+            _definition.MissionName,
+            _definition.Briefing,
+            CurrentStep.Description,
+            _currentStepIndex,
+            _steps.Count
+        );
     }
 }

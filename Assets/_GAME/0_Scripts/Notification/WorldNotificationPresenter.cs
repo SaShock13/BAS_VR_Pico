@@ -11,7 +11,7 @@ public sealed class WorldNotificationPresenter
 
     public void Start()
     {
-        //_service.WorldRequested += OnWorldRequested;// todo ВКЛЮЧИТЬ И РАЗОбРАТЬСЯ
+        _service.WorldRequested += OnWorldRequested;// todo ВКЛЮЧИТЬ И РАЗОбРАТЬСЯ
     }
 
     private void OnWorldRequested(

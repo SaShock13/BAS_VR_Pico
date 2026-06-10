@@ -5,6 +5,7 @@ public abstract class MissionStep
     protected MissionContext Context;
     public abstract string Description { get; }
 
+    public virtual Transform Target => null;
 
     public bool IsCompleted { get; private set; }
 
@@ -15,8 +16,6 @@ public abstract class MissionStep
 
     public virtual void Enter()
     {
-        Debug.Log($"Mission Step Started: {Description}");
-       // Debug.Log($"mmmmmmmmEnter step {this}");
     }
 
     public virtual void Tick()
@@ -25,8 +24,6 @@ public abstract class MissionStep
 
     public virtual void Exit()
     {
-        Debug.Log($"Mission Step Completed: {Description}");
-        //Debug.Log($"mmmmmmmmmExit step {this}");
     }
 
     protected void Complete()

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34192c793fbf924e8256e3cb670dcc0, type: 3}
+  m_Name: AssTutorMission
+  m_EditorClassIdentifier: Assembly-CSharp::MissionDefinition
+  MissionId: 777
+  MissionName: "\u0422\u0435\u0441\u0442\u043E\u0432\u0430\u044F \u043C\u0438\u0441\u0441\u0438\u044F"
+  Briefing: "\u0414\u043E\u0431\u0435\u0440\u0438\u0441\u044C \u0434\u043E \u0442\u043E\u0447\u043A\u0438"
+  Steps:
+  - {fileID: 11400000, guid: 3ea9649091b0f314ebf7678c4cf61d48, type: 2}
+  - {fileID: 11400000, guid: 12eea79dcc103c7419a556cc234e4344, type: 2}
+  - {fileID: 11400000, guid: 9a8e8010b7a75ed418aa6b4b60e11a2f, type: 2}

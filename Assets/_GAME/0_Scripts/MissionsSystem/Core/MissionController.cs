@@ -1,8 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MissionController : MonoBehaviour
+public class MissionController : MonoBehaviour  /// todo UI сделать или использовать сервис уведомлений INotificationService?
 {
     [SerializeField] private Transform player;
+    [SerializeField] private MissionWorldMarker worldMarker;
 
     private MissionRuntime _runtime;
     private MissionContext _context;
@@ -22,6 +23,8 @@ public class MissionController : MonoBehaviour
 
     public void StartMission(MissionRuntime runtime)
     {
+        worldMarker.Initialize(player);
+
         _runtime = runtime;
 
         _context = new MissionContext

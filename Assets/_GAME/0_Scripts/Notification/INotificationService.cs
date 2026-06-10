@@ -7,11 +7,11 @@ public interface INotificationService
 
     event Action<WorldNotification> WorldRequested;
 
-    void Info(string text);
+    void Info(string text, float duration = 3f);
 
-    void Warning(string text);
+    void Warning(string text, float duration = 4f);
 
-    void Error(string text);
+    void Error(string text, float duration = 5f);
 
     void ShowWorld(
         string text,

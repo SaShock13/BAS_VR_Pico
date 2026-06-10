@@ -165,7 +165,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
             // Пересчитываем дроны
            RebuildDrones();
 
-            _eventBus.Publish(new PartSocketAttachedEvent() { Timestamp = DateTime.Now });
+            _eventBus.Publish(new PartSocketAttachedEvent() { Timestamp = DateTime.Now , PartInstanceId = request.PartInstanceId, AttachedPartId = request.AttachedPartId, AttachedSocketId = request.AttachedSocketId});
 
             _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
         }

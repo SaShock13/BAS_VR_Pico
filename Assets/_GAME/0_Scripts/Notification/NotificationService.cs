@@ -8,31 +8,32 @@ public sealed class NotificationService
 
     public event Action<WorldNotification> WorldRequested;
 
-    public void Info(string text)
+    public void Info(string text,float duration = 3f)
     {
         ToastRequested?.Invoke(
             new ToastNotification(
                 text,
                 NotificationType.Info,
-                3f));
+                duration));
     }
 
-    public void Warning(string text)
+
+    public void Warning(string text, float duration = 4f)
     {
         ToastRequested?.Invoke(
             new ToastNotification(
                 text,
                 NotificationType.Warning,
-                4f));
+                duration));
     }
 
-    public void Error(string text)
+    public void Error(string text, float duration = 5f)
     {
         ToastRequested?.Invoke(
             new ToastNotification(
                 text,
                 NotificationType.Error,
-                5f));
+                duration));
     }
 
     public void ShowWorld(

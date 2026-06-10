@@ -11,13 +11,13 @@ public class NotificationTEST : MonoBehaviour
     {
 
 
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             _notifications.Info("Информационное сообщение тестовое");
         }
 
 
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.Alpha9))
         {
             _notifications.ShowWorld("Батарея разряжена", transform, NotificationType.Warning);
         }

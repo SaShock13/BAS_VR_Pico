@@ -6,6 +6,8 @@ public class FlyToPointStep : MissionStep
     private readonly float _radius;
     public override string Description => $"Fly To {_target.name}";
 
+    public override Transform Target => _target;
+
 
     public FlyToPointStep(
         Transform target,
