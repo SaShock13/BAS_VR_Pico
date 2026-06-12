@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29122f2118ef8094da47c8c03b54c8ee, type: 3}
-  m_Name: InstallMotor
-  m_EditorClassIdentifier: Assembly-CSharp::InstallPartToSocketStepData
-  RequiredPartType: 2
-  RequiredSocketType: 2
+  m_Script: {fileID: 11500000, guid: 84d90d4cb26750b49ab6572ff0d5b6d1, type: 3}
+  m_Name: RegularHintScenarion
+  m_EditorClassIdentifier: Assembly-CSharp::HintScenarioDefinition
+  ScreenHintDelay: 5
+  WorldHintDelay: 10
+  HighlightDelay: 15
+  ArrowDelay: 20

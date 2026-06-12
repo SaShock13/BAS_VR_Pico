@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: InstallController
   m_EditorClassIdentifier: Assembly-CSharp::InstallPartToSocketStepData
   RequiredPartType: 5
-  RequiredSocketId: 
+  RequiredSocketType: 5

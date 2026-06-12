@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using Unity.XR.PXR.Debugger;
 using UnityEngine;
@@ -8,15 +10,12 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using Zenject;
 
-public class DronePartView : MonoBehaviour
+public class DronePartView : MonoBehaviour,IHighlightable
 {
     [field: SerializeField]
     public string InstanceId { get; private set; }
 
-    [SerializeField] private Renderer _renderer;
-    [SerializeField] private bool _isSnapToSocketPosition = false;
-
-
+    PartType type;
     private XRGrabInteractable _interactable;
 
     private MaterialPropertyBlock _mpb;
@@ -30,10 +29,87 @@ public class DronePartView : MonoBehaviour
     private Quaternion _startRotation;
 
     private Dictionary<string, SocketView> _sockets;
+    private Dictionary<PartType, SocketView> _socketsByType;
     private IEventBus _eventBus;
     private Clean_AssemblySystem _assembly;
     private SelectionService _selectionService;
     private AddressablesAssetService _assets;
+
+
+    [SerializeField] private Renderer _renderer;
+    [SerializeField] private bool _isSnapToSocketPosition = false;
+    [SerializeField] private GameObject highlighter ;  // todo Хайлайт скрвис написать для подсветки. Через Дубликам меша или шейдер
+                                                       
+    private Material _outlineMaterial;
+    private string _outlineMaterialAddress = "DefaultOutlineMat";
+    private Outline _outline;
+
+    [SerializeField]
+    private Renderer[] _renderers;
+
+    private static readonly int EmissionColor =
+        Shader.PropertyToID("_EmissionColor");
+
+
+
+    private Coroutine _highlightRoutine;
+
+    public void SetHintHighlighted(bool value)
+    {
+        if (_highlightRoutine != null)
+        {
+            StopCoroutine(_highlightRoutine);
+            _highlightRoutine = null;
+        }
+
+        if (value)
+        {
+            _highlightRoutine = StartCoroutine(BlinkRoutine());
+        }
+        else
+        {
+            StopAllCoroutines();
+            Highlight(false);
+        }
+    }
+
+    private IEnumerator BlinkRoutine()
+    {
+        const float blinkInterval = 0.5f;
+        //const float duration = 5f;
+
+        float timer = 0f;
+        bool state = false;
+
+        while (true)
+        {
+            state = !state;
+
+            Highlight(state);
+
+            yield return new WaitForSeconds(blinkInterval);
+
+            timer += blinkInterval;
+        }
+
+        Highlight(false);
+
+        _highlightRoutine = null;
+    }
+
+
+    private async void Start()
+    {
+        _outline = gameObject.AddComponent<Outline>();
+        _outlineMaterial = await _assets.Load<Material>(_outlineMaterialAddress);
+        _outline.SetOutlineMaterial(_outlineMaterial);
+        _outline.Initialize();
+        
+    }
+    
+
+
+    
 
     [Inject]
     public void Construct(Clean_AssemblySystem assembly, AddressablesAssetService assets)
@@ -55,6 +131,9 @@ public class DronePartView : MonoBehaviour
         _mpb = new MaterialPropertyBlock();
         _rigidBody = GetComponent<Rigidbody>();
         _interactable = GetComponent<XRGrabInteractable>();
+
+
+
     }
 
     private void OnEnable()
@@ -128,6 +207,25 @@ public class DronePartView : MonoBehaviour
             _sockets.Add(socket.SocketId, socket);
             socket.Init(_eventBus,_assembly);
         }
+
+        _socketsByType = new Dictionary<PartType, SocketView>();
+
+
+
+        foreach (var socket in _sockets.Values)
+        {
+            foreach (var allowedtype in socket.AllowedTypes)
+            {
+                _socketsByType[allowedtype] = socket;
+            }
+        }
+    }
+
+    public SocketView GetSocketByType(PartType type)
+    {
+        return _socketsByType.TryGetValue(type, out var socket)
+            ? socket
+            : null;
     }
 
     public void Init(string instanceId,IEventBus eventBus)
@@ -204,5 +302,4 @@ public class DronePartView : MonoBehaviour
         
     }
 
-   
 }

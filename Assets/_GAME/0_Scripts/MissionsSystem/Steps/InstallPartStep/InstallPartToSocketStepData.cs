@@ -1,3 +1,4 @@
+using System.Net.Sockets;
 using UnityEngine;
 
 [CreateAssetMenu(
@@ -5,15 +6,16 @@ using UnityEngine;
 public class InstallPartToSocketStepData : MissionStepData
 {
     public PartType RequiredPartType;
-    public string RequiredSocketId;
+    public PartType RequiredSocketType;
 
     public override MissionStep CreateStep(
         SceneMissionBinder binder)
     {
         return new InstallPartToSocketStep(
             RequiredPartType,
-            RequiredSocketId,
+            RequiredSocketType,
             binder._AssemblySystem,
-            binder.EventBus);
+            binder.EventBus,
+            binder._hintScenario);
     }
 }

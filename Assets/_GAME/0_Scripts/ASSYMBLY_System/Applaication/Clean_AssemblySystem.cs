@@ -19,6 +19,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
     private readonly ISocketResolver _socketResolver;
     private readonly ISaveService _saveService;
     private ISelectionService _selectionService;
+    [Inject] IUserActivityService _userActivity;
 
     // ХРАНИЛИЩЕ СОСТОЯНИЙ
     private readonly Dictionary<string, PartDomainState> _parts = new Dictionary<string, PartDomainState>();
@@ -99,6 +100,8 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         if (part.LifecycleState == PartLifecycleState.Installed)
             return;
 
+        _userActivity.NotifyActivity();
+
         _undoRedo.Record();
     }
 
@@ -168,6 +171,8 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
             _eventBus.Publish(new PartSocketAttachedEvent() { Timestamp = DateTime.Now , PartInstanceId = request.PartInstanceId, AttachedPartId = request.AttachedPartId, AttachedSocketId = request.AttachedSocketId});
 
             _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
+
+            _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
         }
         else Debug.Log($"!!!!!! {partView.transform.name} Can NOT be Attached {this}");
 
@@ -196,6 +201,8 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         RebuildDrones();
 
         _eventBus.Publish(new PartSocketDetachedEvent() { Timestamp = DateTime.Now });
+
+        _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
 
         //_eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
     }
@@ -281,6 +288,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
             command.InstanceId,
             command.Visual
         ));
+        _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
     }
 
     private void OnDeleteRequested(Clean_DeletePartRequest @event)
@@ -296,6 +304,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
             Debug.Log($"DDDDDDDDDDDOnDeleteRequested {name}  - Domain found == {domainState != null} ");
             DeletePart(@event.InstanceId);
+            _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
         }
         else Debug.Log($"domainState == null {this}");
 
@@ -324,10 +333,25 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         return _parts[instanceId];
     }
 
+    public PartDomainState GetUninstalledPartByType(PartType type)
+    {
+        foreach (var part in _parts.Values)
+        {
+            if (part.Type == type &&
+                !(part.LifecycleState == PartLifecycleState.Installed))
+            {
+                return part;
+            }
+        }
+
+        return null;
+    }
+
     public DroneDomainState GetDroneDomainState(string instanceId)
     {
         return _drones[instanceId];
     }
+
 
     public DronePartView GetViewById(string id)
     {
@@ -341,7 +365,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         _drones.Remove(instanceId);
 
         DeletePart(instanceId);
-
+        _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
         RebuildDrones();
     }
 
@@ -700,7 +724,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         domainState.isLoaded = true;
 
         _eventBus.Publish(new Clean_PartCreatedEvent { InstanceId = instanceId, GameObject = go, Timestamp = DateTime.Now });  /// TOdo не успевает видимо создать GO или что то не так и уже снапшот делает.
-
+        _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
     }
 
     // todo оптимизировать евенты для сохранений
@@ -762,7 +786,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
         _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
 
-
+        _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
     }
 
     private async void DublicatePart(string instanceId)
@@ -825,6 +849,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
         // 6. Уведомление
         _eventBus.Publish(new Clean_PartCreatedEvent { InstanceId = dublicateInstanceId, GameObject = go, Timestamp = DateTime.Now });
+        _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
     }
 
     #endregion

@@ -21,6 +21,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - materials
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0578254acf8dfe74ca22696a659f605b
+    m_Address: DefaultOutlineMat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2cb62876af3e7e842bea4d3ce58058aa
     m_Address: Motor2207
     m_ReadOnly: 0

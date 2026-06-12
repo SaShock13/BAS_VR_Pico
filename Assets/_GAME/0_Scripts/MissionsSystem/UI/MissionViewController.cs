@@ -7,6 +7,7 @@ public class MissionViewController : MonoBehaviour
 {
     [Inject] private ITabletService _tablet;
     [Inject] private INotificationService _notification;
+    [Inject] private IUserActivityService _userActivity;
 
     private void OnEnable()
     {
@@ -49,6 +50,7 @@ public class MissionViewController : MonoBehaviour
         Debug.Log($"++++++++++Objective: {info.Objective}  MissionName {info.MissionName}");
 
         _tablet.SetMission(info);
+        _userActivity.NotifyActivity();
         _notification.Info(info.Objective);
     }
 }

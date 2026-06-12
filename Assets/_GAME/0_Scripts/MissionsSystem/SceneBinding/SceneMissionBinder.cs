@@ -15,6 +15,7 @@ public class SceneMissionBinder : MonoBehaviour
 
     [Inject] public IEventBus EventBus;
     [Inject] public Clean_AssemblySystem _AssemblySystem;
+    [Inject] public IHintScenarioController _hintScenario;
 
     [SerializeField]
     private List<MissionPoint> missionPoints;

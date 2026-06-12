@@ -24,6 +24,7 @@ public class AssemblyInstaller : MonoInstaller
 
         Container.BindInterfacesAndSelfTo<PartTransformAdjustmentService>().AsSingle();
 
+        Container.BindInterfacesAndSelfTo<UserActivityService>().AsSingle();
 
         // Selection Install
         Container.BindInterfacesAndSelfTo<InspectorService>().AsSingle();

@@ -1,6 +1,8 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -62,6 +64,10 @@ public class PartViewRegistry : IInitializable
     }
 
 
+    public IEnumerable<GameObject> GetAllViews()
+    {
+        return _views.Values;
+    }
 
 
     public bool TryGet(string partId, out DronePartView view)

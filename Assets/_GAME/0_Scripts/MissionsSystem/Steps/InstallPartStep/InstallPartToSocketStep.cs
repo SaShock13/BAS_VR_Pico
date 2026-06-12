@@ -3,26 +3,30 @@
 public class InstallPartToSocketStep : MissionStep
 {
     private readonly PartType _requiredPartType;
-    private readonly string _requiredSocketId;
+    private readonly PartType _requiredSocketType;
 
     private readonly Clean_AssemblySystem _assemblySystem;
     private IEventBus _eventBus;
 
+    private readonly IHintScenarioController _hintScenario;
+
     public override string Description =>
-        $"Install {_requiredPartType} into {_requiredSocketId}";
+        $"Install {_requiredPartType} into {_requiredSocketType}";
 
 
     public InstallPartToSocketStep(
         PartType requiredPartType,
-        string requiredSocketId,
+        PartType requiredSocketType,
         Clean_AssemblySystem assemblySystem,
-        IEventBus eventBus
+        IEventBus eventBus,
+        IHintScenarioController hintScenario
         )
     {
         _requiredPartType = requiredPartType;
-        _requiredSocketId = requiredSocketId;
+        _requiredSocketType = requiredSocketType;
         _assemblySystem = assemblySystem;
         _eventBus = eventBus;
+        _hintScenario = hintScenario;
     }
 
     public override void Enter()
@@ -30,11 +34,16 @@ public class InstallPartToSocketStep : MissionStep
 
         Debug.Log($"eeeeeeeeeeee_eventBus {_eventBus != null}");
         _eventBus.Subscribe<PartSocketAttachedEvent>(OnPartAttached);
+        _hintScenario.StartScenario(
+           new HintContext(
+               $"Install {_requiredPartType} into {_requiredSocketType}", null, _requiredPartType, _requiredSocketType));
     }
 
     public override void Exit()
     {
         //_eventBus.<PartSocketAttachedEvent>(OnPartAttached);
+
+        _hintScenario.StopScenario();
     }
 
     private void OnPartAttached(PartSocketAttachedEvent @event)
