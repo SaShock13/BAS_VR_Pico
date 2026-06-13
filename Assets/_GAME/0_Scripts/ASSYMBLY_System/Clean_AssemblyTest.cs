@@ -23,6 +23,8 @@ public class Clean_AssemblyTest : MonoBehaviour
     private INotificationService _notifications;
     private DroneReadinessService _readinessService ;
     private IPartConfigRepository _configs;
+    private IVisualPresetRepository _visualPresets;
+    private IMaterialRegistry _materialDefs;
 
     private Clean_AssemblySystem _assemblySystem;
 
@@ -44,6 +46,8 @@ public class Clean_AssemblyTest : MonoBehaviour
         IGarageService garage,
         DroneReadinessService readinessService,
         IPartConfigRepository configs,
+        IVisualPresetRepository visualPresets,
+        IMaterialRegistry materialDefs,
         Clean_AssemblySystem assemblySystem
         )
     {
@@ -57,6 +61,8 @@ public class Clean_AssemblyTest : MonoBehaviour
         _garage = garage;
         _readinessService = readinessService;
         _configs = configs;
+        _visualPresets = visualPresets;
+        _materialDefs = materialDefs;
         _assemblySystem = assemblySystem;
     }
 
@@ -200,22 +206,32 @@ public class Clean_AssemblyTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
 
-            Debug.Log($"SelectedPartId {Selection.Current.Value.PartId}");
             if (Selection.Current != null)
             {
+                Debug.Log($"SelectedPartId {Selection.Current.Value.PartId}");
                 // Тестирование удаления
 
 
+                var allMaterials = _materialDefs.GetAll();
+                int randIndex = UnityEngine.Random.Range(0, allMaterials.Count);
 
 
                 //Debug.Log($"DDDDDD .Publish(new Clean_DeletePartRequest {this}");
                 //_eventBus.Publish(new Clean_DeletePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
 
 
-                // Тест изменения визуала
-                //var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
-                // var newVisual = new PartVisualProperties() { Smoothness = 1, MaterialAddress = "PlasticAddressablesMAt" };
-                // _eventBus.Publish(new ApplyPartVisualCommand(Selection.Current.Value.PartId, newVisual) { Timestamp = DateTime.UtcNow });
+                //Тест изменения визуала
+                var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+
+                string matId = "DefaultPlasticMaterial";
+
+                //var newVisual = new PartVisualProperties() { Smoothness = 1, MaterialAddress = "PlasticAddressablesMAt" };
+                var newVisual = new PartVisualProperties() { Smoothness = 1, MaterialId = allMaterials[randIndex].Id , Color = randColor};
+
+
+                _eventBus.Publish(new ApplyPartVisualCommand(Selection.Current.Value.PartId, newVisual) { Timestamp = DateTime.UtcNow });
+
+
 
                 //if(_selectionService.SelectedPartId == _mainPartId) return;
 
@@ -234,11 +250,11 @@ public class Clean_AssemblyTest : MonoBehaviour
 
                 // Тестирование системы Проверки готовности
 
-                var partDomain = _assemblySystem.GetPartDomainState(Selection.Current.Value.PartId);
-                if (!string.IsNullOrEmpty(partDomain.DroneId))
-                {
-                    ValidateDrone(partDomain.DroneId);
-                }
+                //var partDomain = _assemblySystem.GetPartDomainState(Selection.Current.Value.PartId);
+                //if (!string.IsNullOrEmpty(partDomain.DroneId))
+                //{
+                //    ValidateDrone(partDomain.DroneId);
+                //}
             }
 
 
@@ -249,14 +265,22 @@ public class Clean_AssemblyTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.U))
         {
 
+                foreach (var material in _materialDefs.GetAll())
+                {
+
+                    Debug.Log($"mmmmmmmДоступен Материал с ID {material.Id} и именем {material.DisplayName}");
+                }
+                
             if (Selection.Current != null)
 
             {
+
+
+
+
                 //Debug.Log($"SelectedPartId {_selectionService.SelectedPartId}");
-                _eventBus.Publish(new Clean_DuiblicatePartRequest { InstanceId = Selection.Current.Value.PartId, Timestamp = DateTime.UtcNow });
+                //_eventBus.Publish(new Clean_DuiblicatePartRequest { InstanceId = Selection.Current.Value.PartId, Timestamp = DateTime.UtcNow });
 
-
-                
                
             }
           

@@ -99,9 +99,11 @@ public class PartPanelUI : MonoBehaviour
 
         weight.text = vm.Weight.ToString();
         name.text = vm.Name;
-        var mat = await _assets.Load<Material>(vm.Material) ;  
-        colorImage.color = mat.color;
-        material.text = mat.name ;  
+
+        //var mat = await _assets.Load<Material>(vm.Material) ;  
+        
+        colorImage.color = vm.Color;
+        material.text = vm.Material ;  
     }
 
     private void Hide()
@@ -119,6 +121,8 @@ public class PartPanelUI : MonoBehaviour
         AdjustmentAxis axis,
         bool positive)
     {
+
+        Debug.Log($"uuuuuuuuuuMove {this}");
         if(string.IsNullOrEmpty( _selectedPartInstanceId )) return;
         Vector3 direction = GetAxis(axis);
 
@@ -135,6 +139,7 @@ public class PartPanelUI : MonoBehaviour
         bool positive)
     {
 
+        Debug.Log($"uuuuuuuuuRotate {this}");
         if(string.IsNullOrEmpty( _selectedPartInstanceId )) return;
         Vector3 euler = GetAxis(axis);
 

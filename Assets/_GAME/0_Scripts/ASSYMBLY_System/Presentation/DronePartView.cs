@@ -18,6 +18,8 @@ public class DronePartView : MonoBehaviour,IHighlightable
     PartType type;
     private XRGrabInteractable _interactable;
 
+    [Inject] IMaterialRegistry _materialRegistry;
+
     private MaterialPropertyBlock _mpb;
     private Rigidbody _rigidBody;
     private Color _color;
@@ -242,19 +244,39 @@ public class DronePartView : MonoBehaviour,IHighlightable
     // PREVIEW — вызывается каждый кадр
     public async Task ApplyVisualPreview(PartVisualProperties visual)
     {
-        Material mat = await _assets.Load<Material>(visual.MaterialAddress);
 
-        Debug.Log($"!!!!!!!visual.MatAddress{visual.MaterialAddress}");
+        Debug.Log($"mmmmmmmTry get visual.MaterialId {visual.MaterialId}");
+
+        MaterialDefinition def = _materialRegistry.Get(visual.MaterialId);  // Сначала получаем Definition материала
+
+        Debug.Log($"mmmmmmmmmmMaterialDefinition name {def.DisplayName}");
+
+
+        Material mat = await _assets.Load<Material>(def.MaterialReference);   //  Загружаем по ссылке
+
+
+
+        //Material mat = await _assets.Load<Material>(visual.MaterialAddress); // Загружаем по адресу
+
+        Debug.Log($"mmmmmmm!!!!!!!material Loaded {mat!= null}");
+
+
+
 
         _renderer.sharedMaterial = mat;
-        _color = _renderer.sharedMaterial.color;
+        _color = visual.Color == null ? _renderer.sharedMaterial.color : visual.Color;
 
+        Debug.Log($"mmmmmmmmmmvisual.Color is {visual.Color}");
+
+        Debug.Log($"mmmmmmmmmm_color is {_color}");
         _renderer.GetPropertyBlock(_mpb);
 
         _mpb.SetColor(ShaderIds.BaseColor, _color);
         _mpb.SetFloat(ShaderIds.Smoothness, visual.Smoothness);
 
         _renderer.SetPropertyBlock(_mpb);
+
+
     }
 
     // COMMIT — когда состояние подтверждено

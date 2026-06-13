@@ -29,6 +29,6 @@ public class UserActivityService : IUserActivityService, ITickable
     {
         IdleTime += Time.deltaTime;
 
-        Debug.Log($"000000IdleTime {IdleTime}");
+        //Debug.Log($"000000IdleTime {IdleTime}");
     }
 }

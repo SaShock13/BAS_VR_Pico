@@ -1,6 +1,4 @@
 ﻿using System;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Zenject;
 
@@ -11,6 +9,7 @@ public class InspectorService
     private readonly IPartConfigRepository _partConfigs;
     [Inject] private readonly IGarageService _garage;
     [Inject] private readonly AddressablesAssetService _assets;
+    [Inject] private readonly IMaterialRegistry _materials;
 
     IEventBus _eventBus;
 
@@ -24,24 +23,35 @@ public class InspectorService
         _assembly = assembly;
         _partConfigs = partConfigs;
         _selection.Changed += OnSelectionChanged;
+        _eventBus.Subscribe<PartVisualChangedEvent>(OnPartChanged);
     }
 
-    private void OnSelectionChanged(SelectionTarget? target)
+    private void OnPartChanged(PartVisualChangedEvent @event)
     {
+        var selected = _selection.Current;
+
+        if (selected == null)
+            return;
+
+        if (selected.Value.PartId != @event.InstanceId)
+            return;
+
+        RefreshSelectedPart();
+    }
+
+    private void RefreshSelectedPart()
+    {
+        var target = _selection.Current;
+
         if (target == null)
         {
             Cleared?.Invoke();
             return;
         }
 
-
-
         PartDomainState part =
             _assembly.GetPartDomainState(
                 target.Value.PartId);
-
-        Debug.Log($"ssssssssssSelectTarget  {part.PartId}");
-        Debug.Log($"ssssssssssSelectTarget  {part.DroneId}");
 
         DroneDomainState drone = null;
 
@@ -52,12 +62,11 @@ public class InspectorService
                     part.DroneId);
         }
 
-        var garageDrone = _garage.GetByDroneId(part.DroneId);
+        var garageDrone =
+            _garage.GetByDroneId(part.DroneId);
 
-        var config = _partConfigs.Get(part.PartId);
-
-
-        Debug.Log($"xxxxxxxxxxSlected Drone name {drone}");
+        var config =
+            _partConfigs.Get(part.PartId);
 
         string droneName = "";
 
@@ -70,28 +79,94 @@ public class InspectorService
 
         var context = new InspectionContext
         {
-            Part = MapPart(part,config), 
-            Drone = drone != null    /// todo Имя брать из garageDrone
-                ? MapDrone(drone, droneName) 
+            Part = MapPart(part, config),
+
+            Drone = drone != null
+                ? MapDrone(drone, droneName)
                 : null,
 
             IsRootPart =
                 part.Type == PartType.Body
         };
 
-
-        _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now }); // todo дорабьотать! Момент когда сохраняет снапшот сейчас дублируется
         Updated?.Invoke(context);
     }
 
+
+    private void OnSelectionChanged(SelectionTarget? target)
+    {
+
+        RefreshSelectedPart();
+
+        //if (target == null)
+        //{
+        //    Cleared?.Invoke();
+        //    return;
+        //}
+
+
+
+        //PartDomainState part =
+        //    _assembly.GetPartDomainState(
+        //        target.Value.PartId);
+
+        //Debug.Log($"ssssssssssSelectTarget  {part.PartId}");
+        //Debug.Log($"ssssssssssSelectTarget  {part.DroneId}");
+
+        //DroneDomainState drone = null;
+
+        //if (!string.IsNullOrEmpty(part.DroneId))
+        //{
+        //    drone =
+        //        _assembly.GetDroneDomainState(
+        //            part.DroneId);
+        //}
+
+        //var garageDrone = _garage.GetByDroneId(part.DroneId);
+
+        //var config = _partConfigs.Get(part.PartId);
+
+
+        //Debug.Log($"xxxxxxxxxxSlected Drone name {drone}");
+
+        //string droneName = "";
+
+        //if (drone != null)
+        //{
+        //    droneName =
+        //        garageDrone?.metaData.Name
+        //        ?? _assembly.GetDroneName(drone.InstanceId);
+        //}
+
+        //var context = new InspectionContext
+        //{
+        //    Part = MapPart(part,config), 
+        //    Drone = drone != null    /// todo Имя брать из garageDrone
+        //        ? MapDrone(drone, droneName) 
+        //        : null,
+
+        //    IsRootPart =
+        //        part.Type == PartType.Body
+        //};
+
+
+        //_eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now }); // todo дорабьотать! Момент когда сохраняет снапшот сейчас дублируется
+        //Updated?.Invoke(context);
+    }
+
+
+
+
     private PartViewModel MapPart(PartDomainState domain , PartConfig config)
     {
+        var materialDefinition = _materials.Get(domain.VisualProperties.MaterialId);
+
         return new PartViewModel
         {
             InstanceId = domain.InstanceId,
             Name = config.PartId,
             Color = domain.VisualProperties.Color,
-            Material = domain.VisualProperties.MaterialAddress,
+            Material = materialDefinition.DisplayName,
             Weight = config.Mass
 
         };

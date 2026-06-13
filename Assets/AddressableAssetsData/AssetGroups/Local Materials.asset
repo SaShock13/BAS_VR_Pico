@@ -37,6 +37,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - materials
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c679769bc15e2143baf26495ec94832
+    m_Address: WhitePlasticMat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 91eeefb56726a2b44806ee8b5172a092
     m_Address: ControllerExample1
     m_ReadOnly: 0

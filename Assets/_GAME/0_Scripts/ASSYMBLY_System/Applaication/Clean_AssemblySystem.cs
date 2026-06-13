@@ -33,7 +33,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
     private UndoRedoService _undoRedo;
     private DiContainer _container;
-
+    private string DEFAULT_MATERIAL_ID = "PlasticMAt";
     private const string DEFAULT_PART_MATERIAL = "DefaultBlackMat";
 
     public Clean_AssemblySystem(
@@ -282,12 +282,15 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
     private void OnApplyPartVisual(ApplyPartVisualCommand command)
     {
         var partState = GetPartDomainState(command.InstanceId);
+
+
         partState.SetVisual(command.Visual);
 
         _eventBus.Publish(new PartVisualChangedEvent(
             command.InstanceId,
             command.Visual
         ));
+
         _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
     }
 
@@ -681,7 +684,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
         // 2. Создание доменного состояния
 
-        var defaultVisual = new PartVisualProperties() {MaterialAddress = DEFAULT_PART_MATERIAL, Smoothness = 0.5f  };
+        var defaultVisual = new PartVisualProperties() {MaterialId = DEFAULT_MATERIAL_ID, Smoothness = 0.5f , Color = Color.white };
 
         PartDomainState domainState = new PartDomainState(instanceId, partId, config.PartType , defaultVisual);
         _parts.Add(instanceId, domainState);
@@ -711,6 +714,9 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
 
         view.Init(instanceId,_eventBus);
+
+
+        Debug.Log($"mmmmmmmmmDomainColor {domainState.VisualProperties.Color}");
 
         view.ApplyVisualCommitted(domainState.VisualProperties);
 

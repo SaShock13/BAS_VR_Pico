@@ -1288,7 +1288,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: MoveXMinus
         m_Mode: 1
@@ -1815,7 +1815,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: RotateZMinus
         m_Mode: 1
@@ -1956,13 +1956,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.07769344, y: 0.9771001, z: -0.1818234, w: 0.07860923}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.06474327, y: 0.980207, z: -0.18682991, w: 0.009856326}
+  m_LocalPosition: {x: 0, y: 27.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 21.564, y: 172.253, z: 7.615}
+  m_LocalEulerAnglesHint: {x: 21.564, y: 180.3, z: 7.615}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2212,7 +2212,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: MoveZPlus
         m_Mode: 1
@@ -4311,7 +4311,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: MoveYMinus
         m_Mode: 1
@@ -5314,7 +5314,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: RotateYPlus
         m_Mode: 1
@@ -5447,7 +5447,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: RotateZPlus
         m_Mode: 1
@@ -6439,7 +6439,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: MoveYPlus
         m_Mode: 1
@@ -6773,6 +6773,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1225735305}
   - component: {fileID: 1225735307}
+  - component: {fileID: 1225735313}
   - component: {fileID: 1225735310}
   - component: {fileID: 1225735309}
   - component: {fileID: 1225735308}
@@ -6842,6 +6843,7 @@ MonoBehaviour:
   - {fileID: 1225735306}
   - {fileID: 1225735311}
   - {fileID: 1225735312}
+  - {fileID: 1225735313}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -6920,6 +6922,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIInstaller
   _hintScenarioDefinition: {fileID: 11400000, guid: 719b7e3c0af8fbd42819c066cf54ae62, type: 2}
+--- !u!114 &1225735313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225735304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ea19d0f820477419e8fc90f7087a30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VisualPropInstaller
+  materials:
+  - {fileID: 11400000, guid: c51beb603d76c344492ba005591e8bbb, type: 2}
+  - {fileID: 11400000, guid: 656dd21c1abd1ef4589421e174a8df81, type: 2}
 --- !u!1 &1241705674
 GameObject:
   m_ObjectHideFlags: 0
@@ -7003,7 +7020,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: RotateXPlus
         m_Mode: 1
@@ -7517,7 +7534,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: RotateXMinus
         m_Mode: 1
@@ -7787,7 +7804,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: ResetRotation
         m_Mode: 1
@@ -9413,7 +9430,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: ResetPosition
         m_Mode: 1
@@ -9546,7 +9563,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: RotateYMinus
         m_Mode: 1
@@ -10648,7 +10665,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: MoveXPlus
         m_Mode: 1
@@ -11817,7 +11834,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1381545780}
         m_TargetAssemblyTypeName: PartPanelUI, Assembly-CSharp
         m_MethodName: MoveZMinus
         m_Mode: 1
