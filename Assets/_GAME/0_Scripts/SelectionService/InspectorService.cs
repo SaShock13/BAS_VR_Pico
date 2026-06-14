@@ -95,63 +95,7 @@ public class InspectorService
 
     private void OnSelectionChanged(SelectionTarget? target)
     {
-
-        RefreshSelectedPart();
-
-        //if (target == null)
-        //{
-        //    Cleared?.Invoke();
-        //    return;
-        //}
-
-
-
-        //PartDomainState part =
-        //    _assembly.GetPartDomainState(
-        //        target.Value.PartId);
-
-        //Debug.Log($"ssssssssssSelectTarget  {part.PartId}");
-        //Debug.Log($"ssssssssssSelectTarget  {part.DroneId}");
-
-        //DroneDomainState drone = null;
-
-        //if (!string.IsNullOrEmpty(part.DroneId))
-        //{
-        //    drone =
-        //        _assembly.GetDroneDomainState(
-        //            part.DroneId);
-        //}
-
-        //var garageDrone = _garage.GetByDroneId(part.DroneId);
-
-        //var config = _partConfigs.Get(part.PartId);
-
-
-        //Debug.Log($"xxxxxxxxxxSlected Drone name {drone}");
-
-        //string droneName = "";
-
-        //if (drone != null)
-        //{
-        //    droneName =
-        //        garageDrone?.metaData.Name
-        //        ?? _assembly.GetDroneName(drone.InstanceId);
-        //}
-
-        //var context = new InspectionContext
-        //{
-        //    Part = MapPart(part,config), 
-        //    Drone = drone != null    /// todo Имя брать из garageDrone
-        //        ? MapDrone(drone, droneName) 
-        //        : null,
-
-        //    IsRootPart =
-        //        part.Type == PartType.Body
-        //};
-
-
-        //_eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now }); // todo дорабьотать! Момент когда сохраняет снапшот сейчас дублируется
-        //Updated?.Invoke(context);
+        RefreshSelectedPart();      
     }
 
 

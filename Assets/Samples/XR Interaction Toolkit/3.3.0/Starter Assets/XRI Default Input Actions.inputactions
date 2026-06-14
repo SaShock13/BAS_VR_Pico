@@ -978,7 +978,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Trigger",
+                    "name": "LeftTrigger",
                     "type": "Button",
                     "id": "8d165459-2fd7-4384-846f-7a05fd3358fe",
                     "expectedControlType": "",
@@ -1303,18 +1303,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Trigger",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "50223df6-ca07-4e6b-a567-107ba1b5b5fe",
-                    "path": "<Keyboard>/t",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Trigger",
+                    "action": "LeftTrigger",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -2003,7 +1992,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Trigger",
+                    "name": "RightTrigger",
                     "type": "Button",
                     "id": "cc8e849e-80ab-4c6b-9410-0267bae00137",
                     "expectedControlType": "",
@@ -2185,18 +2174,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Trigger",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "731a3526-1612-481c-af0a-1caab3dcd53d",
-                    "path": "<Keyboard>/t",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Trigger",
+                    "action": "RightTrigger",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

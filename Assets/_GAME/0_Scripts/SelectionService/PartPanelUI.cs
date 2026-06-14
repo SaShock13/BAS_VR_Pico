@@ -1,4 +1,8 @@
-﻿using TMPro;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -8,17 +12,19 @@ public class PartPanelUI : MonoBehaviour
     InspectorService _inspector;
     AddressablesAssetService _assets;
     PartTransformAdjustmentService _partAdjustment;
-
+    IVisualPresetRepository _presetRepository;
+    IEventBus _eventBus;
 
     [SerializeField] private TMP_Text weight;
     [SerializeField] private TMP_Text material;
     [SerializeField] private TMP_Text color;
     [SerializeField] private TMP_Text name;
+    [SerializeField] private TMP_Dropdown _presetDropdown;
     [SerializeField] private Image colorImage;
     [SerializeField] private GameObject panel;
 
 
-
+    private List<VisualPreset> _presets;
 
     [SerializeField]
     private float _moveStep = 0.05f; // 50 мм
@@ -55,25 +61,68 @@ public class PartPanelUI : MonoBehaviour
     public void Construct(
         InspectorService inspector,
         PartTransformAdjustmentService partAdjustment,
+        IVisualPresetRepository presetRepository,
+        IEventBus eventBus,
         AddressablesAssetService assetService)
     {
         _inspector = inspector;
         _partAdjustment = partAdjustment;
         _assets = assetService;
+        _eventBus = eventBus;
+        _presetRepository = presetRepository;
         _inspector.Updated += OnUpdated;
         _inspector.Cleared += Hide;
+        _presetDropdown.captionText.text = "Пресеты";
+        _presetDropdown.onValueChanged.AddListener(
+        OnPresetSelected);
+
     }
 
-    //??
-    public void Bind(InspectorService inspector)
+    
+
+    private void RefreshPresets()
     {
-        inspector.Updated += OnUpdated;
-        inspector.Cleared += Hide;
+        _presets = _presetRepository.GetAll().ToList();
+
+        _presetDropdown.ClearOptions();
+
+
+
+        var options = _presets
+            .Select(x => x.Name)
+            .ToList();
+
+
+        options.Insert(0, "Пресеты");
+        _presetDropdown.AddOptions(options);
+
+        
     }
 
+    private void Start()
+    {
+        RefreshPresets();
+        
+    }
 
+    private void OnPresetSelected(int index)
+    {
 
+        if (index == 0) return;
+        Debug.Log($"ppppppppindex {index}");
+        VisualPreset preset =
+            _presets[index-1];
 
+        Debug.Log(
+            $"pppppppppSelected preset: {preset.Name}");
+
+        ApplyPreset(preset);
+    }
+
+    private void ApplyPreset(VisualPreset preset)
+    {
+        _eventBus.Publish(new ApplyPartVisualCommand(_selectedPartInstanceId, preset.Visual) );
+    }
 
     private void OnUpdated(InspectionContext context)
     {
@@ -90,18 +139,21 @@ public class PartPanelUI : MonoBehaviour
 
     private async void Render(PartViewModel vm)
     {
+        SetPart(vm.InstanceId);
         // цвет, материал, вес
         Debug.Log($"RRRRRRRRRRRender  PartPanelUI {this}");
 
         Debug.Log($"Part  {vm.InstanceId} HAS Material {vm.Material} Color {vm.Color} Weight {vm.Weight}");
 
-        SetPart(vm.InstanceId);
-
         weight.text = vm.Weight.ToString();
         name.text = vm.Name;
 
+
+        _presetDropdown.value = 0;
+
+
         //var mat = await _assets.Load<Material>(vm.Material) ;  
-        
+
         colorImage.color = vm.Color;
         material.text = vm.Material ;  
     }

@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class ApplyPartVisualCommand : IAppEvent
 {
@@ -15,5 +14,6 @@ public class ApplyPartVisualCommand : IAppEvent
     {
         InstanceId = instanceId;
         Visual = visual;
+        Timestamp = DateTime.UtcNow;
     }
 }

@@ -31,6 +31,8 @@ public class Clean_AssemblyTest : MonoBehaviour
     private AddressablesPrefabService _prefabs;
     [SerializeField] private NearFarInteractor[] _interactors;
 
+    [SerializeField] private NearFarInteractor _leftInteractor;
+    [SerializeField] private NearFarInteractor _rightInteractor;
 
     private string _mainPartId = null;
 
@@ -72,6 +74,8 @@ public class Clean_AssemblyTest : MonoBehaviour
 
         Debug.Log($"!!!!!!!!!!!!!!!!_interactors {_interactors.Length}");
         _assemblySystem.Load();
+        CreateTestPresets();
+
     }
 
 
@@ -88,68 +92,111 @@ public class Clean_AssemblyTest : MonoBehaviour
             interactor.hoverExited.AddListener(OnHoverExit);
             
         }
-        triggerAction.action.performed += OnTriggerPressed;
+        //triggerAction.action.performed += OnTriggerPressed;
+        leftTriggerAction.action.performed += OnLeftTrigger;
+        rightTriggerAction.action.performed += OnRightTrigger;
+
+
+
     }
 
 
 
 
     [SerializeField]
-    private InputActionReference triggerAction;
+    private InputActionReference leftTriggerAction;
+    [SerializeField]
+    private InputActionReference rightTriggerAction;
+
 
     private void OnDisable()
     {
-        triggerAction.action.performed -= OnTriggerPressed;
+        leftTriggerAction.action.performed -= OnLeftTrigger;
+        rightTriggerAction.action.performed -= OnRightTrigger;
     }
+
+
+
+
+    private void CreateTestPresets()
+    {
+        _visualPresets.Save(new VisualPreset
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = "Racing Red",
+            Visual = new PartVisualProperties
+            {
+                MaterialId = "carbon",
+                Color = Color.red,
+                Smoothness = 0.8f,
+                Metallic = 0.2f
+            }
+        });
+
+        _visualPresets.Save(new VisualPreset
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = "Military Green",
+            Visual = new PartVisualProperties
+            {
+                MaterialId = "metal",
+                Color = new Color(0.3f, 0.5f, 0.2f),
+                Smoothness = 0.3f,
+                Metallic = 0.8f
+            }
+        });
+
+        _visualPresets.Save(new VisualPreset
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = "Chrome Black",
+            Visual = new PartVisualProperties
+            {
+                MaterialId = "metal",
+                Color = Color.black,
+                Smoothness = 1f,
+                Metallic = 1f
+            }
+        });
+
+        Debug.Log("Test presets created");
+    }
+
     private void OnHoverExit(HoverExitEventArgs arg0)
     {
         _highlightService.Exit();
     }
 
-    private void OnTriggerPressed(InputAction.CallbackContext ctx)
+
+    private void OnLeftTrigger(InputAction.CallbackContext ctx)
     {
-
-        foreach (var interactor in _interactors)
-        {
-            if (interactor.interactablesHovered.Count == 0)
-                continue;
-
-            var interactable = interactor.interactablesHovered[0];
-
-            var part =
-                interactable.transform.GetComponentInParent<DronePartView>();
-
-            if (part == null)
-                continue;
-
-            Selection.Select(
-                new SelectionTarget(
-                    SelectionType.Part,
-                    part.InstanceId));
-
-            break;
-        }
-
-
-        //foreach (XRRayInteractor interactor  in _interactors)
-        //{
-
-        //    if (interactor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
-        //    {
-        //        var part =
-        //            hit.collider.GetComponentInParent<DronePartView>();
-
-        //        if (part == null)
-        //            return;
-
-
-        //        Debug.Log($"message {this}");
-        //        Selection.Select(new SelectionTarget ( SelectionType.Part , part.InstanceId));
-        //    }
-            
-
-        //}
+        TrySelect(_leftInteractor);
     }
+    
+
+    private void OnRightTrigger(InputAction.CallbackContext ctx)
+    {
+        TrySelect(_rightInteractor);
+    }
+
+    private void TrySelect(NearFarInteractor interactor)
+    {
+        if (interactor.interactablesHovered.Count == 0)
+            return;
+
+        var hovered = interactor.interactablesHovered[0];
+
+        var part =
+            hovered.transform.GetComponentInParent<DronePartView>();
+
+        if (part == null)
+            return;
+
+        Selection.Select(new SelectionTarget(
+            SelectionType.Part,
+            part.InstanceId));
+    }
+
 
     private void OnHoverEnter(HoverEnterEventArgs arg0)
     {

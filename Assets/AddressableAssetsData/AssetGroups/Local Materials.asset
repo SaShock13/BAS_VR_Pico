@@ -47,6 +47,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ac3f06e00bf275147ae13c5d3974fc92
+    m_Address: CarbonMAT
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af1316d60cfaacc4cbf2ce77938e93c5
+    m_Address: MetalMAT
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f20538fdb6cf49d408150c6e96e49d7c
+    m_Address: Assets/_GAME/0_Scripts/VisualCustomization/MaterialDefinitions/StartMaterial3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3daf47dbdd5cf6444908ef9f0b1ae700, type: 2}
   m_SchemaSet:
