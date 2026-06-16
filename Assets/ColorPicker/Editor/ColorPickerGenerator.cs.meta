@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 981120d19c7af9b46893bb4209e865b4
+AssetOrigin:
+  serializedVersion: 1
+  productId: 320147
+  packageName: Color picker
+  packageVersion: 1.0.3
+  assetPath: Assets/ColorPicker/Editor/ColorPickerGenerator.cs
+  uploadId: 760440

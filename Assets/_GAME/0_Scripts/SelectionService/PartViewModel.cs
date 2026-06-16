@@ -8,4 +8,6 @@ public class PartViewModel
     public string Material;
     public float Weight;
     public bool IsBody;
+    public float Smoothness;
+    public float Metallness;
 }

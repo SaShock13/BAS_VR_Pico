@@ -241,6 +241,24 @@ public class DronePartView : MonoBehaviour,IHighlightable
         InitializeSockets();
     }
 
+    public void ApplyPreviewSmoothness(float value)
+    {
+        _renderer.GetPropertyBlock(_mpb);
+
+        _mpb.SetFloat(ShaderIds.Smoothness, value);
+
+        _renderer.SetPropertyBlock(_mpb);
+    }
+
+    public void ApplyPreviewMetallness(float value)
+    {
+        _renderer.GetPropertyBlock(_mpb);
+
+        _mpb.SetFloat(ShaderIds.Metallic, value);
+
+        _renderer.SetPropertyBlock(_mpb);
+    }
+
     // PREVIEW — вызывается каждый кадр
     public async Task ApplyVisualPreview(PartVisualProperties visual)
     {

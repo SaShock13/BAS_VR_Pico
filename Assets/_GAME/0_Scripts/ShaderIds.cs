@@ -7,4 +7,7 @@ public static class ShaderIds
 
     public static readonly int Smoothness =
         Shader.PropertyToID("_Smoothness");
+
+    public static readonly int Metallic =
+        Shader.PropertyToID("_Metallic");
 }

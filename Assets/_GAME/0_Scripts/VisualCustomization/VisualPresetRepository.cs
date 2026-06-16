@@ -11,6 +11,11 @@ public class VisualPresetRepository
     {
         _presets[preset.Id] = preset;
     }
+    public void Remove(string id)
+    {
+        _presets.Remove(id);
+    }
+
 
     public VisualPreset Get(string id)
     {

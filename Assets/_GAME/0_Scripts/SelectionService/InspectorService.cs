@@ -111,6 +111,8 @@ public class InspectorService
             Name = config.PartId,
             Color = domain.VisualProperties.Color,
             Material = materialDefinition.DisplayName,
+            Smoothness = domain.VisualProperties.Smoothness,
+            Metallness = domain.VisualProperties.Metallic,
             Weight = config.Mass
 
         };
