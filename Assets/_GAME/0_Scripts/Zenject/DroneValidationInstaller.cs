@@ -36,5 +36,13 @@ public class DroneValidationInstaller : MonoInstaller
 
         Container.Bind<DroneReadinessService>()
             .AsSingle();
+
+
+
+        Container.Bind<DroneFocusEffect>().FromComponentInHierarchy().AsSingle();
+
+        Container.Bind<BackgroundFadeEffect>().FromComponentInHierarchy().AsSingle();
+
+        Container.Bind<ValidateEffectsSystem>().AsSingle();
     }
 }

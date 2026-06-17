@@ -23,11 +23,14 @@ public class Clean_AssemblyTest : MonoBehaviour
     private INotificationService _notifications;
     private DroneReadinessService _readinessService ;
     private IPartConfigRepository _configs;
+    
     private IVisualPresetRepository _visualPresets;
     private IMaterialRegistry _materialDefs;
+    private ValidateEffectsSystem _validateEffects;
 
     private Clean_AssemblySystem _assemblySystem;
-
+    private PartViewRegistry _views;
+    private DroneFocusEffect _focusEffect;
     private AddressablesPrefabService _prefabs;
     [SerializeField] private NearFarInteractor[] _interactors;
 
@@ -35,6 +38,8 @@ public class Clean_AssemblyTest : MonoBehaviour
     [SerializeField] private NearFarInteractor _rightInteractor;
 
     private string _mainPartId = null;
+
+    private bool inValidationMode = false;
 
     [Inject] IAppLogger _logger;
 
@@ -50,6 +55,9 @@ public class Clean_AssemblyTest : MonoBehaviour
         IPartConfigRepository configs,
         IVisualPresetRepository visualPresets,
         IMaterialRegistry materialDefs,
+        ValidateEffectsSystem validateEffects,
+        DroneFocusEffect focusEffect,
+        PartViewRegistry views,
         Clean_AssemblySystem assemblySystem
         )
     {
@@ -65,6 +73,9 @@ public class Clean_AssemblyTest : MonoBehaviour
         _configs = configs;
         _visualPresets = visualPresets;
         _materialDefs = materialDefs;
+        _validateEffects = validateEffects;
+        _focusEffect = focusEffect;
+        _views = views;
         _assemblySystem = assemblySystem;
     }
 
@@ -256,27 +267,29 @@ public class Clean_AssemblyTest : MonoBehaviour
             if (Selection.Current != null)
             {
                 Debug.Log($"SelectedPartId {Selection.Current.Value.PartId}");
+
+
                 // Тестирование удаления
 
 
-                var allMaterials = _materialDefs.GetAll();
-                int randIndex = UnityEngine.Random.Range(0, allMaterials.Count);
-
-
-                //Debug.Log($"DDDDDD .Publish(new Clean_DeletePartRequest {this}");
-                //_eventBus.Publish(new Clean_DeletePartRequest { InstanceId = _selectionService.SelectedPartId, Timestamp = DateTime.UtcNow });
+                Debug.Log($"DDDDDD .Publish(new Clean_DeletePartRequest {this}");
+                _eventBus.Publish(new Clean_DeletePartRequest { InstanceId = Selection.Current.Value.PartId, Timestamp = DateTime.UtcNow });
 
 
                 //Тест изменения визуала
-                var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
 
-                string matId = "DefaultPlasticMaterial";
+                //var allMaterials = _materialDefs.GetAll();
+                //int randIndex = UnityEngine.Random.Range(0, allMaterials.Count);
 
-                //var newVisual = new PartVisualProperties() { Smoothness = 1, MaterialAddress = "PlasticAddressablesMAt" };
-                var newVisual = new PartVisualProperties() { Smoothness = 1, MaterialId = allMaterials[randIndex].Id , Color = randColor};
+                //var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+
+                //string matId = "DefaultPlasticMaterial";
+
+                ////var newVisual = new PartVisualProperties() { Smoothness = 1, MaterialAddress = "PlasticAddressablesMAt" };
+                //var newVisual = new PartVisualProperties() { Smoothness = 1, MaterialId = allMaterials[randIndex].Id , Color = randColor};
 
 
-                _eventBus.Publish(new ApplyPartVisualCommand(Selection.Current.Value.PartId, newVisual) { Timestamp = DateTime.UtcNow });
+                //_eventBus.Publish(new ApplyPartVisualCommand(Selection.Current.Value.PartId, newVisual) { Timestamp = DateTime.UtcNow });
 
 
 
@@ -297,7 +310,10 @@ public class Clean_AssemblyTest : MonoBehaviour
 
                 // Тестирование системы Проверки готовности
 
-                //var partDomain = _assemblySystem.GetPartDomainState(Selection.Current.Value.PartId);
+                //var selectedId = Selection.Current.Value.PartId;
+                //if (selectedId == null) return;
+
+                //var partDomain = _assemblySystem.GetPartDomainState(selectedId);
                 //if (!string.IsNullOrEmpty(partDomain.DroneId))
                 //{
                 //    ValidateDrone(partDomain.DroneId);
@@ -356,29 +372,58 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     public void ValidateDrone(string droneId)
     {
+        if (!inValidationMode)
+        {
 
-        //_logger.Log($"*****Validate {droneId} ");
-        DroneDomainState drone =
-            _assemblySystem.GetDroneDomainState(droneId);
+            _views.TryGet(droneId, out var view);
 
+            if (view != null)
+            {
+                _focusEffect.Initialize(view.transform);
 
-        _logger.Log($"********DroneDomain {drone!=null} ");
+                Debug.Log($"_validateEffectsSystem.Enter(); {this}");
 
-        DroneRequirements requirements =
-            CreateMissionRequirements();
+                _validateEffects.Enter();
+            }
 
-        DroneValidationContext context =
-            BuildContext(
-                drone,
-                requirements);
+            //_logger.Log($"*****Validate {droneId} ");
+            DroneDomainState drone =
+                _assemblySystem.GetDroneDomainState(droneId);
 
-        DroneReadinessResult result =
-            _readinessService.Validate(context);
+            _logger.Log($"********DroneDomain {drone != null} ");
 
-        ShowResult(result);
+            DroneRequirements requirements =
+                CreateMissionRequirements();
+
+            DroneValidationContext context =
+                BuildContext(
+                    drone,
+                    requirements);
+
+            DroneReadinessResult result =
+                _readinessService.Validate(context);
+
+            ShowValidationResult(result);
+            inValidationMode = true;
+        }else
+        {
+            _validateEffects.Exit();
+            HideValidationResult();
+            inValidationMode=false;
+        }
+
     }
 
-    private void ShowResult(DroneReadinessResult result)
+    private void HideValidationResult()
+    {
+        /// СКРЫТЬ UI ВАЛИДАЦИИ
+    }
+
+    /// <summary>
+    /// Показать UI валидации
+    /// </summary>
+    /// <param name="result"></param>
+    private void ShowValidationResult(DroneReadinessResult result)
     {
 
         foreach (var group in result.Groups)
