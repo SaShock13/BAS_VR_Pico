@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
@@ -11,6 +8,11 @@ public class GarageSceneBootstrap : MonoBehaviour
 {
     [SerializeField]
     private Transform[] _slots;
+    [SerializeField]
+    private float _rotationSpeed = 2;
+     [SerializeField]
+    private bool isDronesRotating = true;
+
 
     [Inject]
     private IGarageService _garage;
@@ -24,15 +26,19 @@ public class GarageSceneBootstrap : MonoBehaviour
     public ISelectionService Selection;
 
     [Inject]
+    public INotificationService _notificationService;
+
+    [Inject]
     private PartHighlightService _highlightService;
 
     [Inject]
     private IEventBus _eventBus;
-
+    
     private void Start()
     {
         
         LoadGarage();
+
     }
 
     private void OnEnable()
@@ -55,20 +61,26 @@ public class GarageSceneBootstrap : MonoBehaviour
         int count = Mathf.Min(
             drones.Count,
             _slots.Length);
+        Transform droneTransform;
 
         for (int i = 0; i < count; i++)
         {
 
 
             Debug.Log($"xxxxxxmetaData.Name {drones[i].metaData.Name}");
-            await _assembly.SpawnAssembly(
+            droneTransform =  await _assembly.SpawnAssembly(
                 drones[i].Assembly,
                 _slots[i].position);
+
+            droneTransform.SetParent(_slots[i]);
 
             Debug.Log($"xxxxxxmetaData.Name {drones[i].metaData.Name}");
             _assembly.RenameDrone(
             drones[i].DroneId,
             drones[i].metaData.Name);
+
+            // todo ОТКЛЮЧИТЬ ВОЗМОЖНОСТЬ ХВАТАНИЯ ДРОНОВ (может Interactable.trackPosition = false или как то еще). НО ХОВЕР И ТРИГГЕР ОСТАВИТЬ ДЛЯ инспектора
+
         }
         _assembly.FinishBatchLoad();
 
@@ -124,7 +136,7 @@ public class GarageSceneBootstrap : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             SceneManager.LoadScene(0);  // для теста переход в конструктор
         }
@@ -142,9 +154,18 @@ public class GarageSceneBootstrap : MonoBehaviour
             _assembly.RemoveDrone (selectedDroneDomain.InstanceId);
         }
 
-
-
+        if(isDronesRotating) RotateSlots();
     }
+
+    private void RotateSlots()
+    {
+        foreach (var slot in _slots)
+        {
+            
+            slot.Rotate(Vector3.up * _rotationSpeed * Time.deltaTime);
+        }
+    }
+
 
     private void ClearGarage()
     {
@@ -154,8 +175,12 @@ public class GarageSceneBootstrap : MonoBehaviour
 
     private async void LoadGarage()
     {
+
+        Debug.Log($"_assembly {_assembly!=null}");
         _assembly.ClearCurrentAssembly();
         await RestoreGarage();
+
+        _notificationService.Info("Гараж Загружен!",5);
     }
 
     

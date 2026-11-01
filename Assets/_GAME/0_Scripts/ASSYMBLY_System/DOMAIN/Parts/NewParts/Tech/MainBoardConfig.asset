@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d3a5822baa4a64389729995d1d4c62, type: 3}
+  m_Name: MainBoardConfig
+  m_EditorClassIdentifier: Assembly-CSharp::FlightControllerConfig
+  PartId: newparts/Tech/MainBoard
+  LegacyPartIds:
+  - newparts/8b13d86a0f8d07e4397a67b14ed214bf
+  PartType: 5
+  Prefab: {fileID: 6619732759129261848, guid: 8b13d86a0f8d07e4397a67b14ed214bf, type: 3}
+  PrefabAddress: Parts/Tech/MainBoard
+  Mass: 1
+  LocalCenterOfMass: {x: -0.0010735899, y: -0.00462555, z: 0.0005163133}
+  HasGyro: 1
+  HasAccelerometer: 1

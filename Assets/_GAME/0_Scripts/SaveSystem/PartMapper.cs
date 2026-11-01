@@ -26,7 +26,9 @@ public static class PartMapper
             data.Transform = new TransformSaveData
             {
                 LocalPosition = transform.localPosition,
-                LocalRotation = transform.localRotation
+                LocalRotation = transform.localRotation,
+                HasLocalScale = true,
+                LocalScale = PartSpawnAnimator.GetStableLocalScale(transform)
             };
 
         return data;
@@ -96,10 +98,17 @@ public static class PartMapper
             //view.Detach(); // ???? ???? ??????
         }
 
+        ApplySavedScale(data.Transform, view.transform);
+
         // Применяем визуал
         if (data.VisualProperties is PartVisualProperties visual)
         {
             view.ApplyVisualCommitted(visual);
         }
+    }
+
+    public static void ApplySavedScale(TransformSaveData data, Transform target)
+    {
+        if (data != null && data.HasLocalScale) target.localScale = data.LocalScale;
     }
 }

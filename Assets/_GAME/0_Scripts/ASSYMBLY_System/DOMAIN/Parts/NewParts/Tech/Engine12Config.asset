@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16f6ff99ba2a43f4295bfe1a15924934, type: 3}
+  m_Name: Engine12Config
+  m_EditorClassIdentifier: Assembly-CSharp::MotorConfig
+  PartId: newparts/Tech/Engine12
+  LegacyPartIds:
+  - newparts/71388192e34bf8c4fbad73fb162825ba
+  PartType: 2
+  Prefab: {fileID: 6097006028024842861, guid: 71388192e34bf8c4fbad73fb162825ba, type: 3}
+  PrefabAddress: Parts/Tech/Engine12
+  Mass: 1
+  LocalCenterOfMass: {x: -0.0000000029802323, y: 0.040500786, z: -0.0000000014901161}
+  MaxThrust: 18
+  ResponseSpeed: 18
+  RotationDirection: 0
+  MaxRPM: 42000
+  MixData:
+    PitchFactor: -1
+    RollFactor: -1
+    YawFactor: 1
+  IdleCurrent: 1.2
+  MaxCurrent: 40

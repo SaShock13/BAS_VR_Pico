@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ed0de78d734a3408861cd23a1dfe4f, type: 3}
+  m_Name: D7Rays 1Config
+  m_EditorClassIdentifier: Assembly-CSharp::PartConfig
+  PartId: newparts/D7Rays 1
+  LegacyPartIds:
+  - newparts/c81383c1071faad4a99be20ba3eb1374
+  PartType: 1
+  Prefab: {fileID: 718388234339361932, guid: c81383c1071faad4a99be20ba3eb1374, type: 3}
+  PrefabAddress: Parts/D7Rays 1
+  Mass: 3
+  LocalCenterOfMass: {x: 0.00058000087, y: -0.011220003, z: -0.00052000285}

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ed0de78d734a3408861cd23a1dfe4f, type: 3}
+  m_Name: D11PropellerConfig
+  m_EditorClassIdentifier: Assembly-CSharp::PartConfig
+  PartId: newparts/Propellers/D11Propeller
+  LegacyPartIds:
+  - newparts/41b2abb6eacca74418b869e75c991102
+  PartType: 3
+  Prefab: {fileID: 5903265013995925789, guid: 41b2abb6eacca74418b869e75c991102, type: 3}
+  PrefabAddress: Parts/Propellers/D11Propeller
+  Mass: 1
+  LocalCenterOfMass: {x: -0.005621429, y: 0.013392152, z: 0.00003197693}

@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GarageScene.unity
     guid: c7b0bd8083da13840aed0f51603aebad
+  - enabled: 1
+    path: Assets/Scenes/FlightScene.unity
+    guid: 95895471f93cf724f914fc5de3061421
   m_configObjects:
     Unity.XR.PICO.LivePreview.Settings: {fileID: 11400000, guid: 80f16fc1990323745b120e5a5fcc0302, type: 2}
     Unity.XR.PXR.Settings: {fileID: 11400000, guid: 6f85be4d50f292642b8bd01a1554423d, type: 2}

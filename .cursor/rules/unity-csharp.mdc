@@ -1,0 +1,16 @@
+---
+description: C# / Unity conventions for BAS_VR gameplay scripts
+globs: Assets/_GAME/**/*.cs
+alwaysApply: false
+---
+
+# C# в `_GAME`
+
+- Без `namespace`, пока в файле вокруг нет namespace.
+- `MonoBehaviour` тонкий: ввод, анимация, XR-коллбеки. Логика — сервисы + EventBus.
+- Не использовать `FindObjectOfType`, `GameObject.Find`, `Update` для опроса «появилось ли событие». Нет `GetComponent`/`Camera.main` в тике — Pico 4 Ultra, 90 Hz.
+- Подписки: в `Initialize`/`OnEnable`, отписка в `Dispose`/`OnDisable` (`IDisposable` от `IEventBus.Subscribe`).
+- Не тащить `UnityEditor.*` в runtime-скрипты (в `Clean_AssemblySystem` это уже ошибка — не копировать).
+- `[SerializeField]` private поля; публичные поля только для данных/DTO.
+- Новые типы рядом с существующей системой, не в корень `0_Scripts/`.
+- Не переименовывать файлы с историческими опечатками (`ASSYMBLY`, `Applaication`) без отдельной задачи.

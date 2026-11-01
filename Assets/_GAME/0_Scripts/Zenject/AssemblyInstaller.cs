@@ -6,6 +6,8 @@ public class AssemblyInstaller : MonoInstaller
 {
     [SerializeField] private List<PartConfig> partConfigs;
 
+    [SerializeField] private PartSpawnAnimator spawnAnimator;
+
     public override void InstallBindings()
     {
         Container.Bind<IPartConfigRepository>().To<PartConfigRepository>().AsSingle().WithArguments(partConfigs);
@@ -33,8 +35,12 @@ public class AssemblyInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<DronePhysicsStatsBuilder>().AsSingle().WithArguments( configsRepository, viewsRepository);
 
 
-        
 
+
+        Container
+        .Bind<PartSpawnAnimator>()
+        .FromInstance(spawnAnimator)
+        .AsSingle();
 
 
     }

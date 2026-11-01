@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ed0de78d734a3408861cd23a1dfe4f, type: 3}
+  m_Name: Legs5Config
+  m_EditorClassIdentifier: Assembly-CSharp::PartConfig
+  PartId: newparts/Legs/Legs5
+  LegacyPartIds:
+  - newparts/249ef46956b3e174995e5f43df35742b
+  PartType: 4
+  Prefab: {fileID: 697410259377139577, guid: 249ef46956b3e174995e5f43df35742b, type: 3}
+  PrefabAddress: Parts/Legs/Legs5
+  Mass: 1
+  LocalCenterOfMass: {x: 0.00009351373, y: -0.01401206, z: 0.00019369721}

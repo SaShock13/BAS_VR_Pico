@@ -1,0 +1,12 @@
+---
+description: Pico 4 Ultra standalone VR performance budget for every feature
+alwaysApply: true
+---
+
+# Pico 4 Ultra — автономный шлем
+
+Целевой девайс: **PICO 4 Ultra** (Snapdragon XR2 Gen 2, stereo, ~90 Hz). Нет PC-привязки: CPU/GPU/термобюджет общие. Кадр ≈ **11.1 ms**. URP mobile уже: `Mobile_RPAsset` render scale **0.8**, MSAA off, additional light shadows **off**, SRP Batcher **on**.
+
+Новая фича не имеет права: второй camera stack, полноэкранный grab/blur каждый кадр, `new Material` / `Instantiate` в `Update`, GC в горячем пути, `FindObjectOfType`/`Camera.main` в тике, realtime additional shadows, мягкие тени, extra opaque texture/depth «на всякий случай».
+
+После кода с GPU/тика/VFX/UI/частей дрона — субагент **pico-perf-reviewer**. Скил `pico-standalone-perf`.

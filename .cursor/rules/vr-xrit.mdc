@@ -1,0 +1,15 @@
+---
+description: XR Interaction Toolkit 3 and PICO VR interaction rules
+globs: Assets/_GAME/**/*.{cs,prefab}
+alwaysApply: false
+---
+
+# VR / XRIT 3.3 / PICO
+
+- Захват и сокеты: `XRGrabInteractable` + существующие `SocketView` / hover-select, не свой raycast «с нуля».
+- Камеру рига не телепортировать резко; не крутить `Camera.main` вручную.
+- UI в мире: XRUI / poke / near-far interactor проекта, не `OnMouseDown`.
+- Ввод: Input System + XRIT actions. Не добавлять оси старого Input Manager.
+- Комфорт: никаких постоянных `transform` камеры в `Update` без сглаживания.
+- Нагрузка GPU/тика — правило `pico-standalone-perf` и ревьюер `pico-perf-reviewer`, не смешивать с XRIT API.
+- Документацию XRIT 3.x проверять в Context7 (`com.unity.xr.interaction.toolkit`).

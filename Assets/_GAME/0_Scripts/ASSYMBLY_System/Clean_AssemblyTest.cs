@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using Zenject;
@@ -15,6 +16,12 @@ public class Clean_AssemblyTest : MonoBehaviour
 {
 
     [SerializeField] private string[] partIds;
+
+
+    [SerializeField] private Button[] buttons;
+
+
+
 
     private IEventBus _eventBus;
     public ISelectionService Selection;   
@@ -29,6 +36,7 @@ public class Clean_AssemblyTest : MonoBehaviour
     private ValidateEffectsSystem _validateEffects;
 
     private Clean_AssemblySystem _assemblySystem;
+    [Inject] private InspectorService _inspector;
     private PartViewRegistry _views;
     private DroneFocusEffect _focusEffect;
     private AddressablesPrefabService _prefabs;
@@ -87,9 +95,37 @@ public class Clean_AssemblyTest : MonoBehaviour
         _assemblySystem.Load();
         CreateTestPresets();
 
+
     }
 
 
+    private void Start()
+    {
+        InitializeButtons();
+        
+    }
+    private void InitializeButtons()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            int index = i;
+
+            buttons[index].onClick.AddListener(() =>
+            {
+                _eventBus.Publish(new Clean_CreatePartRequestEvent
+                {
+                    PartId = partIds[index],
+                    WorldPosition = buttons[index].transform.position,
+                    Timestamp = DateTime.UtcNow
+                });
+            });
+        }
+    }
+
+    private void OnButtonClick(string id)
+    {
+        throw new NotImplementedException();
+    }
 
     private void OnEnable()
     {
@@ -211,7 +247,15 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     private void OnHoverEnter(HoverEnterEventArgs arg0)
     {
-        var view = arg0.interactableObject.transform.GetComponent<DronePartView>();
+        var hoveredTransform = arg0.interactableObject.transform;
+
+        var view = hoveredTransform.GetComponent<DronePartView>();
+        if (view == null)
+        {
+            Debug.LogWarning($"Hovered object does not have a DronePartView component: {hoveredTransform.name}");
+            return;
+        }
+
         _highlightService.Enter(view);
     }
 
@@ -259,6 +303,9 @@ public class Clean_AssemblyTest : MonoBehaviour
         {
             StartCoroutine( CreateTestPartsCoroutine());   /// Костыль - друг за другом создавать Не получается из Addressables , Нужно либо с  паузами либо механизм ожидания окончания создания
 
+            //string rndId = partIds[UnityEngine.Random.Range(0, partIds.Length)];
+
+            //_eventBus.Publish(new Clean_CreatePartRequestEvent { PartId = rndId, Timestamp = DateTime.UtcNow });
         }
 
         if (Input.GetKeyDown(KeyCode.I))
@@ -326,36 +373,41 @@ public class Clean_AssemblyTest : MonoBehaviour
 
 
         if (Input.GetKeyDown(KeyCode.U))
-        {
-
-                foreach (var material in _materialDefs.GetAll())
-                {
-
-                    Debug.Log($"mmmmmmmДоступен Материал с ID {material.Id} и именем {material.DisplayName}");
-                }
+        {                       
                 
             if (Selection.Current != null)
 
             {
 
+                var selectedId = Selection.Current.Value.PartId;
+                if (selectedId == null) return;
 
+                var partDomain = _assemblySystem.GetPartDomainState(selectedId);
+                if (!string.IsNullOrEmpty(partDomain.DroneId))
+                {                    
+                    FlightSession.Drone = _assemblySystem.BuildSaveDataForDrone(selectedId);
+                    _assemblySystem.Save();
+
+                    SceneManager.LoadScene(2); // Переход в сцену полета
+                }
 
 
                 //Debug.Log($"SelectedPartId {_selectionService.SelectedPartId}");
                 //_eventBus.Publish(new Clean_DuiblicatePartRequest { InstanceId = Selection.Current.Value.PartId, Timestamp = DateTime.UtcNow });
 
-               
+
             }
-          
+
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
             PutSelectedDroneToGarage();
+            
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             _assemblySystem.Save();
             SceneManager.LoadScene(1);  // для теста переход в Гараж
@@ -497,33 +549,21 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     public void PutSelectedDroneToGarage()
     {
-        //var drone = Selection.Current.Value.PartId ;
+        // Resolve from the same current selection used by the drone panel.
+        if (!_inspector.TryGetSelectedDrone(out var drone))
+            return;
 
-
-        PartDomainState part =
-            _assemblySystem.GetPartDomainState(
-                Selection.Current.Value.PartId);
-
-        Debug.Log($"gggggSelectPart  {part.PartId}");
-        Debug.Log($"gggggggSelectDrone  {part.DroneId}");
-
-        DroneDomainState drone = null;
-
-        var droneView = _assemblySystem.GetViewById(part.InstanceId);
-
-        if (!string.IsNullOrEmpty(part.DroneId))
-        {
-            drone =
-                _assemblySystem.GetDroneDomainState(
-                    part.DroneId);
-        }
+        var droneView = _assemblySystem.GetViewById(drone.InstanceId);
 
         if (!_garage.HasFreeSlot())
         {
 
             Debug.Log($" Гараж заполнен. Удалите один из дронов. {this}");
 
-            _notifications.ShowWorld("Гараж заполнен. Удалите один из дронов", droneView.transform, NotificationType.Warning);
+            if (droneView != null)
+                _notifications.ShowWorld("Гараж заполнен. Удалите один из дронов", droneView.transform, NotificationType.Warning);
+            else
+                _notifications.Info("Гараж заполнен. Удалите один из дронов");
 
             // SHOW WARNING TO USER           
 
@@ -531,10 +571,12 @@ public class Clean_AssemblyTest : MonoBehaviour
         else
         {
             
+            var droneName = _assemblySystem.GetDroneName(drone.InstanceId);
             _garage.SaveDrone(drone.InstanceId);
+            Selection.Clear();
             _assemblySystem.RemoveDrone(drone.InstanceId);
 
-            _notifications.Info($"Дрон {_assemblySystem.GetDroneName(drone.InstanceId)} помещен в гараж");
+            _notifications.Info($"Дрон {droneName} помещен в гараж");
         }
 
         //string droneId =

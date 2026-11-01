@@ -48,6 +48,7 @@ public class DronePartView : MonoBehaviour,IHighlightable
 
     [SerializeField]
     private Renderer[] _renderers;
+    private Material[][] _materialSlots;
 
     private static readonly int EmissionColor =
         Shader.PropertyToID("_EmissionColor");
@@ -104,6 +105,7 @@ public class DronePartView : MonoBehaviour,IHighlightable
     {
         _outline = gameObject.AddComponent<Outline>();
         _outlineMaterial = await _assets.Load<Material>(_outlineMaterialAddress);
+        if (this == null || _outline == null || _outlineMaterial == null) return;
         _outline.SetOutlineMaterial(_outlineMaterial);
         _outline.Initialize();
         
@@ -142,6 +144,13 @@ public class DronePartView : MonoBehaviour,IHighlightable
     {
         _interactable.selectExited.AddListener(OnReleased);
         _interactable.selectEntered.AddListener(OnGrab);
+    }
+
+    private void OnDisable()
+    {
+        if (_interactable == null) return;
+        _interactable.selectExited.RemoveListener(OnReleased);
+        _interactable.selectEntered.RemoveListener(OnGrab);
     }
 
     private void OnGrab(SelectEnterEventArgs arg0)
@@ -235,28 +244,34 @@ public class DronePartView : MonoBehaviour,IHighlightable
 
         Debug.Log($"!!!!PArt Initialized with ID  {instanceId}");
         InstanceId = instanceId;
-        _renderer = GetComponentInChildren<Renderer>();
-        _color = _renderer.material.color;
+        _renderers = GetComponentsInChildren<Renderer>(true);
+        _materialSlots = new Material[_renderers.Length][];
+        for (int i = 0; i < _renderers.Length; i++)
+            _materialSlots[i] = _renderers[i].sharedMaterials;
+        _renderer = _renderers[0];
+        _color = _renderer.sharedMaterial != null ? _renderer.sharedMaterial.color : Color.white;
         _eventBus = eventBus;
         InitializeSockets();
     }
 
     public void ApplyPreviewSmoothness(float value)
     {
-        _renderer.GetPropertyBlock(_mpb);
-
-        _mpb.SetFloat(ShaderIds.Smoothness, value);
-
-        _renderer.SetPropertyBlock(_mpb);
+        foreach (var renderer in _renderers)
+        {
+            renderer.GetPropertyBlock(_mpb);
+            _mpb.SetFloat(ShaderIds.Smoothness, value);
+            renderer.SetPropertyBlock(_mpb);
+        }
     }
 
     public void ApplyPreviewMetallness(float value)
     {
-        _renderer.GetPropertyBlock(_mpb);
-
-        _mpb.SetFloat(ShaderIds.Metallic, value);
-
-        _renderer.SetPropertyBlock(_mpb);
+        foreach (var renderer in _renderers)
+        {
+            renderer.GetPropertyBlock(_mpb);
+            _mpb.SetFloat(ShaderIds.Metallic, value);
+            renderer.SetPropertyBlock(_mpb);
+        }
     }
 
     // PREVIEW — вызывается каждый кадр
@@ -271,6 +286,7 @@ public class DronePartView : MonoBehaviour,IHighlightable
 
 
         Material mat = await _assets.Load<Material>(def.MaterialReference);   //  Загружаем по ссылке
+        if (this == null || mat == null) return;
 
 
 
@@ -281,18 +297,24 @@ public class DronePartView : MonoBehaviour,IHighlightable
 
 
 
-        _renderer.sharedMaterial = mat;
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            for (int j = 0; j < _materialSlots[i].Length; j++) _materialSlots[i][j] = mat;
+            _renderers[i].sharedMaterials = _materialSlots[i];
+        }
         _color = visual.Color == null ? _renderer.sharedMaterial.color : visual.Color;
 
         Debug.Log($"mmmmmmmmmmvisual.Color is {visual.Color}");
 
         Debug.Log($"mmmmmmmmmm_color is {_color}");
-        _renderer.GetPropertyBlock(_mpb);
-
-        _mpb.SetColor(ShaderIds.BaseColor, _color);
-        _mpb.SetFloat(ShaderIds.Smoothness, visual.Smoothness);
-
-        _renderer.SetPropertyBlock(_mpb);
+        foreach (var renderer in _renderers)
+        {
+            renderer.GetPropertyBlock(_mpb);
+            _mpb.SetColor(ShaderIds.BaseColor, _color);
+            _mpb.SetFloat(ShaderIds.Smoothness, visual.Smoothness);
+            _mpb.SetFloat(ShaderIds.Metallic, visual.Metallic);
+            renderer.SetPropertyBlock(_mpb);
+        }
 
 
     }
@@ -306,7 +328,6 @@ public class DronePartView : MonoBehaviour,IHighlightable
     public void Highlight(bool on)
     {
 
-        _renderer.GetPropertyBlock(_mpb);
         //_color = _mpb.GetColor("_BaseColor");
 
         if (on&& !highlighted )
@@ -322,7 +343,12 @@ public class DronePartView : MonoBehaviour,IHighlightable
 
         }
        
-        _renderer.SetPropertyBlock(_mpb);
+        foreach (var renderer in _renderers)
+        {
+            renderer.GetPropertyBlock(_mpb);
+            _mpb.SetColor(ShaderIds.BaseColor, highlighted ? highlightedColor : _color);
+            renderer.SetPropertyBlock(_mpb);
+        }
     }
 
     public void VisualSelection(bool on)

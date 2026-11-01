@@ -1,0 +1,12 @@
+---
+description: Контекст BAS_VR — Unity 6 VR конструктор дронов (PICO, XRIT, Zenject)
+alwaysApply: true
+---
+
+# BAS_VR
+
+Игровой код: `Assets/_GAME/0_Scripts/`. Стек: Unity 6000.3, URP, XRIT 3.3, PICO XR, Zenject, Addressables, `IEventBus`. Девайс: **Pico 4 Ultra**, standalone ~90 Hz.
+
+Перед фичей прочитай `AGENTS.md`. Новые C# типы — **без namespace**. Bindings — в существующий `*Installer` в `Zenject/`. Межсистемно — события `IAppEvent`, не прямые ссылки Domain ↔ View.
+
+Не редактируй `Library/`, `Temp/`, `Logs/`. Сцены и префабы — через Unity MCP, если редактор доступен. Документацию API — Context7, не выдумывать XRIT 3 API.

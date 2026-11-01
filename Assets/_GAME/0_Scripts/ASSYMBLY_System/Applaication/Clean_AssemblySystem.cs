@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -34,6 +35,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
     private UndoRedoService _undoRedo;
     private DiContainer _container;
     private string DEFAULT_MATERIAL_ID = "PlasticMAt";
+     private PartSpawnAnimator _spawnAnimator;
     private const string DEFAULT_PART_MATERIAL = "DefaultBlackMat";
 
     public Clean_AssemblySystem(
@@ -45,6 +47,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         DiContainer container,
         ISocketResolver socketResolver,
         ISelectionService selectionService,
+        PartSpawnAnimator partSpawnAnimator,
         ISaveService saveService)
     {
         _eventBus = eventBus;
@@ -55,6 +58,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         _container = container;
         _socketResolver = socketResolver;
         _selectionService = selectionService;
+        _spawnAnimator = partSpawnAnimator;
         _saveService = saveService;
     }
 
@@ -317,7 +321,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
     {
         Debug.Log($"_repository {_configs!=null}");
         Debug.Log($"@event PartId {@event.PartId != null}");
-        CreatePartAsync(@event.PartId);
+        CreatePartAsync(@event.PartId, @event.WorldPosition, @event.WorldScale, @event.MenuCellHeight);
 
         Debug.Log($"000000  Возврат в OnCreateRequested {this}");
     }
@@ -355,6 +359,21 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         return _drones[instanceId];
     }
 
+    public bool TryGetPartDomainState(string instanceId, out PartDomainState part)
+    {
+        part = null;
+        return !string.IsNullOrEmpty(instanceId) && _parts.TryGetValue(instanceId, out part);
+    }
+
+    public bool TryGetDroneForPart(string partInstanceId, out DroneDomainState drone)
+    {
+        drone = null;
+        return TryGetPartDomainState(partInstanceId, out var part)
+            && !string.IsNullOrEmpty(part.DroneId)
+            && _drones.TryGetValue(part.DroneId, out drone)
+            && drone.partInstanseIds.Contains(partInstanceId);
+    }
+
 
     public DronePartView GetViewById(string id)
     {
@@ -381,6 +400,9 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
         _drones.Clear();
         _droneComputed.Clear();
+
+        foreach (var part in _parts.Values)
+            part.DroneId = null;
 
         HashSet<string> visited = new();
 
@@ -432,6 +454,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         }
 
         Debug.Log($"0000000=== FOUND {_drones.Count} DRONES ===");
+        _eventBus.Publish(new DronesRebuiltEvent());
     }
 
     public void RenameDrone(
@@ -672,7 +695,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
 
     #region CRUD
-    private async Task CreatePartAsync(string partId)
+    private async Task CreatePartAsync(string partId, Vector3 spawnPosition, Vector3? worldScale = null, float? menuCellHeight = null)
     {
         // 1. Генерация ID экземпляра
         string instanceId = System.Guid.NewGuid().ToString();
@@ -689,12 +712,15 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         PartDomainState domainState = new PartDomainState(instanceId, partId, config.PartType , defaultVisual);
         _parts.Add(instanceId, domainState);
 
+        // Дефолтные пока. todo
+        Vector3 defaultSpawnPos = Vector3.zero;
+        var defaultSpawnRot = Quaternion.identity;
 
         //4.Создание Unity - объекта
         GameObject go = await _factory.CreateFromAddressables(
             config,
-            Vector3.zero,
-            Quaternion.identity
+            spawnPosition,
+            defaultSpawnRot
         );
 
         //GameObject go = _factory.Create(
@@ -705,6 +731,9 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
 
 
+
+        // The factory creates an unparented instance: local scale is its world scale.
+        if (worldScale.HasValue) go.transform.localScale = worldScale.Value;
 
         // 5. Инициализация и связь Unity ↔ Domain
         var view = go.AddComponent<DronePartView>();
@@ -728,6 +757,13 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         _viewRegistry.Register(instanceId, go);
 
         domainState.isLoaded = true;
+
+
+        _spawnAnimator.Play( go.transform, spawnPosition, () =>
+            {
+                Debug.Log($"Анимация появления завершена: {instanceId}");
+            }, menuCellHeight);
+
 
         _eventBus.Publish(new Clean_PartCreatedEvent { InstanceId = instanceId, GameObject = go, Timestamp = DateTime.Now });  /// TOdo не успевает видимо создать GO или что то не так и уже снапшот делает.
         _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
@@ -803,6 +839,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
         Vector3 spawnPos = sourceView.transform.position + Vector3.up * 0.2f;
         Quaternion spawnRot = sourceView.transform.rotation;
+        Vector3 spawnScale = PartSpawnAnimator.GetStableWorldScale(sourceView.transform);
 
         // 1. Генерация ID экземпляра
         string dublicateInstanceId = Guid.NewGuid().ToString();
@@ -831,6 +868,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         );
 
         go.name = sourceView.transform.name + "_Clone";
+        go.transform.localScale = spawnScale;
 
 
 
@@ -992,7 +1030,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
     /// <param name="spawnPosition"></param>
     /// <param name="postInitialize"></param>
     /// <returns></returns>
-    public async Awaitable SpawnAssembly(
+    public async Awaitable<Transform> SpawnAssembly(
     AssemblySaveData saveData,
     Vector3 spawnPosition,
     bool postInitialize = false)
@@ -1000,15 +1038,33 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         AssemblySaveData clone =
             CloneSave(saveData);
 
-        MoveAssembly(
-            clone,
-            spawnPosition);
+        //MoveAssembly(
+        //    clone,
+        //    spawnPosition);        
 
         await InternalLoad(
             clone,
             clearBeforeLoad: false,
             postInitialize: postInitialize);
-        
+
+        var rootPart =
+       FindRootPart(clone);
+
+        _viewRegistry.TryGet(
+            rootPart.InstanceId,
+            out DronePartView rootView);
+
+        rootView.transform.position =
+            spawnPosition;
+        rootView.transform.localRotation = Quaternion.identity;
+
+        return rootView.transform;
+    }
+
+    private Transform GetDroneRootTransform(string droneId)
+    {
+        var view = GetViewById(droneId);
+        return view.transform;
     }
 
     /// <summary>
@@ -1065,24 +1121,6 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
             .FromJson<AssemblySaveData>(json);
     }
 
-    private void MoveAssembly(
-    AssemblySaveData saveData,
-    Vector3 targetPosition)
-    {
-        if (saveData.Parts.Count == 0)
-            return;
-
-        PartSaveData root =
-            FindRootPart(saveData);
-
-        Vector3 delta =
-            targetPosition - root.Transform.LocalPosition;
-
-        foreach (var part in saveData.Parts)
-        {
-            part.Transform.LocalPosition += delta;
-        }
-    }
 
     private PartSaveData FindRootPart(
     AssemblySaveData saveData)

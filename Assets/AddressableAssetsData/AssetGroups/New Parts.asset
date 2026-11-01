@@ -1,0 +1,313 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: New Parts
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: New Parts
+  m_GUID: c8f9240a7fc600d4e896f23818d5fd96
+  m_SerializeEntries:
+  - m_GUID: 0261c9defb68d3446a61718c3af8d531
+    m_Address: Parts/Propellers/Drone2Propeller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 029613e9589438144b957e344d064903
+    m_Address: Parts/Tech/Engine3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e8a133dc54fa614bbaad563ebec7d92
+    m_Address: Parts/Legs/Drone3Legs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 13ab735fcf602944d825d5493cee8ed2
+    m_Address: Parts/Rays/D7Rays2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c381d958fe1c1743afa7cfdf06da8d9
+    m_Address: Parts/Legs/D10Legs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d40920227dcafc498cf62e667645e45
+    m_Address: Parts/NonOriginal/Propeller3 4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 249ef46956b3e174995e5f43df35742b
+    m_Address: Parts/Legs/Legs5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 265e0dbc959e0f04cb1ef96fdd4e473b
+    m_Address: Parts/Tech/Engine4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 291d92fc1b4d7a04fa7b215c5152b03b
+    m_Address: Parts/Rays/D6Rays
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2986abbdda2b82848aa9cc7928ea3eb9
+    m_Address: Parts/Bodies/D10Body
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2bf1d21b2d1db464282832a141c82c59
+    m_Address: Parts/Legs/D7Legs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c4ab2daf8f58b7409af1383611ebe1d
+    m_Address: Parts/Legs/D6Legs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3632035f72af4c745bf0bb2f2ffd2177
+    m_Address: Parts/Bodies/D6Body
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37bfd298616e9c44bb9062d50a68bbe6
+    m_Address: Parts/NonOriginal/Propeller2 4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37f13887ae6cabb46aa66154c57e3351
+    m_Address: Parts/Propellers/D6Propeller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e40a883c133c9149ac011f66e4590af
+    m_Address: Parts/Propellers/Drone3Propeller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ff5b8a0712b70c4aa5ac1b8821cf200
+    m_Address: Parts/Tech/Engine2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 41b2abb6eacca74418b869e75c991102
+    m_Address: Parts/Propellers/D11Propeller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d071807e1e361b4ab88e4583156f4a3
+    m_Address: Parts/Propellers/D8PropellerL
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d8d1b28e32c5024eae5ae68b77e99be
+    m_Address: Parts/Legs/Drone2Legs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 535c84e567d987a4abf1f292a7750c3c
+    m_Address: Parts/Bodies/D7Body
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58af538c928c4b142ac0ca59337c7a8f
+    m_Address: Parts/Propellers/Drone1Propeller (1)
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59c1d371087156342ad400c15cfdfd3f
+    m_Address: Parts/Bodies/Body0_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c889f8313102c743b45349172f43574
+    m_Address: Parts/Rays/DRONE3_Rays
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5de892331cc63a146b7546d4ad6e6655
+    m_Address: Parts/Bodies/Drone3Body
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6dffebbf78e383544a2b1f2eadab08d2
+    m_Address: Parts/Tech/Engine11
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71388192e34bf8c4fbad73fb162825ba
+    m_Address: Parts/Tech/Engine12
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 771014e4be8094a4793b440c5fd11e06
+    m_Address: Parts/Bodies/Body0_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 776e1b1e82ed480479ce6f05ab3b4b33
+    m_Address: Parts/NonOriginal/Gears1 4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a7e3c47f9187c54e9bdc410d8e5ce52
+    m_Address: Parts/Rays/D7Rays
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b01c72793c3b1e4bac78079abdb4b2e
+    m_Address: Parts/Bodies/Drone1Body
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7da98bb0cd06ded4bb5be20a39a60fb4
+    m_Address: Parts/Bodies/DRONE1_Body
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7f6bb58a5eb87b945a8d6bc5cd36c14f
+    m_Address: Parts/Bodies/Body1Framed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b13d86a0f8d07e4397a67b14ed214bf
+    m_Address: Parts/Tech/MainBoard
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8da7fb6fdf39e2f418def9019686ea11
+    m_Address: Parts/Rays/DRONE2_Rays
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9374d8dd24f01484d99cc705e3995500
+    m_Address: Parts/NonOriginal/Gears3 4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f6020ded7d5f274cb25afcb562da426
+    m_Address: Parts/Propellers/Drone4Propeller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a193dda11e39011478b7a33b4c65e431
+    m_Address: Parts/Propellers/D8PropellerH
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a308436c2f1b1f24fb65cc05872bf009
+    m_Address: Parts/NonOriginal/Propeller1 4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a504ebec5ed8369449ca58a3708598eb
+    m_Address: Parts/Rays/D9Rays
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a90d5723d64c7e0439bdd68b0fe2236b
+    m_Address: Parts/Legs/D8Legs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b419a145895f0d54693dd9ace0179f33
+    m_Address: Parts/NonOriginal/Propeller5 4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b61984cf680b34c44a9df38e31c05540
+    m_Address: Parts/Rays/D10Rays
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b886674df651f334a83eab36902996cb
+    m_Address: Parts/Rays/DRONE1_Rays
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc672a13b18d0de48804c60980b93c9a
+    m_Address: Parts/Rays/DRONE5_Rays
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c679341da585e9a4380098af60219489
+    m_Address: Parts/Bodies/Drone2Body
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c81383c1071faad4a99be20ba3eb1374
+    m_Address: Parts/D7Rays 1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c83e608cda3a0414d8b64b2918a37e0f
+    m_Address: Parts/NonOriginal/Gears4 4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8d1ca04fa97f7f42b3bda6807fdd66b
+    m_Address: Parts/NonOriginal/Gears2 4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5d1cd843e2621746be425869a137f5e
+    m_Address: Parts/Bodies/D8Body
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d75e5cce893fdc640a77c3a3a6469141
+    m_Address: Parts/Legs/Drone1Legs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d86c9742213e17c49ad9d8fd68dc0ccf
+    m_Address: Parts/Rays/D8Rays
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db8a7e800839b424995d03acb9ec4404
+    m_Address: Parts/Bodies/Body3Framed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd1a9ce66af7f034596ba742bf98f333
+    m_Address: Parts/Bodies/Body0_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd3e7fc8445db39499a8e3a50df07269
+    m_Address: Parts/Bodies/Body5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1175181171d4aa45b3ad640c89d7c7c
+    m_Address: Parts/Propellers/D7Propeller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e41295a81e043e04cbffae8241a2e93a
+    m_Address: Parts/Bodies/D9Body
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb235b6973fcdcb42aeca74ea7dc7ec0
+    m_Address: Parts/Legs/D11Legs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3daf47dbdd5cf6444908ef9f0b1ae700, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 2ae60c623a45a95419a258648973c3dc, type: 2}
+    - {fileID: 11400000, guid: aa206f0b46a03a54c8a49061e036c0ed, type: 2}

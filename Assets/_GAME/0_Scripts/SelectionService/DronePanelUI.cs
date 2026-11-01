@@ -46,7 +46,9 @@ public class DronePanelUI : MonoBehaviour
 
     private void RenderEmpty()
     {
-        Debug.Log($"RRRRRRRR Render EMPTY DRONE UI {this}");        
+        weight.text = string.Empty;
+        name.text = string.Empty;
+        panel.SetActive(false);
     }
 
     private void Render(DroneViewModel vm)
@@ -60,6 +62,13 @@ public class DronePanelUI : MonoBehaviour
 
     private void Hide()
     {
-        gameObject.SetActive(false);
+        RenderEmpty();
+    }
+
+    private void OnDestroy()
+    {
+        if (_inspector == null) return;
+        _inspector.Updated -= OnUpdated;
+        _inspector.Cleared -= Hide;
     }
 }

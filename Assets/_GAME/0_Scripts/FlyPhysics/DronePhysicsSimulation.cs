@@ -118,7 +118,7 @@ public class DronePhysicsSimulation : MonoBehaviour
                 batteryVoltage - sag);
 
 
-        Debug.Log($"bbbbbbb   CurrentDraw {_battery.CurrentDraw} _battery.CurrentChargeMa {_battery.CurrentChargeMah} chargePercent {chargePercent} batteryVoltage {batteryVoltage} sag {sag} _battery.ActualVoltage {_battery.ActualVoltage}  ");
+        //Debug.Log($"bbbbbbb   CurrentDraw {_battery.CurrentDraw} _battery.CurrentChargeMa {_battery.CurrentChargeMah} chargePercent {chargePercent} batteryVoltage {batteryVoltage} sag {sag} _battery.ActualVoltage {_battery.ActualVoltage}  ");
     }
 
     private float CalculateCurrentDraw()
@@ -127,12 +127,10 @@ public class DronePhysicsSimulation : MonoBehaviour
 
         foreach (DroneMotorRuntime motor in _motors)
         {
-            Debug.Log(
-            $"bbbbbbbbMotorCurrent={motor.CurrentDraw}");
+            //Debug.Log( $"bbbbbbbbMotorCurrent={motor.CurrentDraw}");
             total += motor.CurrentDraw;  
         }
-        Debug.Log(
-        $"bbbbbbbbbbTOTAL CURRENT={total}");
+        //Debug.Log( $"bbbbbbbbbbTOTAL CURRENT={total}");
         return total;
     }
 
@@ -160,14 +158,10 @@ public class DronePhysicsSimulation : MonoBehaviour
                 motor.Data.ResponseSpeed *
                 Time.fixedDeltaTime);
 
-        Debug.Log(
-                    $"bbbbbbbTarget={motor.TargetThrottle} Current={motor.CurrentThrottle}");
-        Debug.Log(
-    $"bbbbbbbMotorData={motor.Data != null}");
+       // Debug.Log($"bbbbbbbTarget={motor.TargetThrottle} Current={motor.CurrentThrottle}");
+       // Debug.Log($"bbbbbbbMotorData={motor.Data != null}");
 
-        Debug.Log(
-        $"bbbbbbbbIdle={motor.Data.IdleCurrent} " +
-        $"Max={motor.Data.MaxCurrent}");
+       // Debug.Log($"bbbbbbbbIdle={motor.Data.IdleCurrent} " + $"Max={motor.Data.MaxCurrent}");
 
 
         motor.CurrentDraw =          // todo Сделать зависимость от CurrentThrust
@@ -177,14 +171,12 @@ public class DronePhysicsSimulation : MonoBehaviour
             motor.CurrentThrottle);
 
 
-        Debug.Log(
-            $"bbbbbbbbThrottle={motor.CurrentThrottle} Current={motor.CurrentDraw}");
+        //Debug.Log( $"bbbbbbbbThrottle={motor.CurrentThrottle} Current={motor.CurrentDraw}");
 
 
         float voltageFactor = isVoltageAffects ? _battery.ActualVoltage / _battery.NominalBatteryVoltage : 1; // влияние  вольтажа на тягу 
 
-        Debug.Log(
-            $"bbbbbbbbvoltageFactor={voltageFactor} ");
+       // Debug.Log($"bbbbbbbbvoltageFactor={voltageFactor} ");
 
         motor.CurrentThrust =
             motor.Data.MaxThrust *

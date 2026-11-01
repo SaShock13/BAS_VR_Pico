@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ed0de78d734a3408861cd23a1dfe4f, type: 3}
+  m_Name: D7BodyConfig
+  m_EditorClassIdentifier: Assembly-CSharp::PartConfig
+  PartId: newparts/Bodies/D7Body
+  LegacyPartIds:
+  - newparts/535c84e567d987a4abf1f292a7750c3c
+  PartType: 0
+  Prefab: {fileID: 8688032138629813979, guid: 535c84e567d987a4abf1f292a7750c3c, type: 3}
+  PrefabAddress: Parts/Bodies/D7Body
+  Mass: 1
+  LocalCenterOfMass: {x: 0, y: 0.0042958977, z: -0.0000000059604646}

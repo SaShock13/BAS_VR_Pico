@@ -47,6 +47,15 @@ public class FlightController : MonoBehaviour
         _mixer = new();
     }
 
+    public void Initialize(DroneDebugInput input, DronePhysicsSimulation simulation, Rigidbody rb )
+    {
+        _enabled = true;
+        _input = input;
+        _simulation = simulation;
+        _rb = rb;
+    }
+
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.O))

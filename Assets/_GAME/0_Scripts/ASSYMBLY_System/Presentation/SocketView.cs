@@ -164,6 +164,7 @@ public class SocketView : MonoBehaviour
     private SocketPreviewSystem _previewSystem;
 
     private Clean_AssemblySystem _assemblySystem;
+    private IDisposable _attachedSubscription;
     
 
 
@@ -172,7 +173,8 @@ public class SocketView : MonoBehaviour
 
         _eventBus = eventBus;
         _assemblySystem = assemblySystem;
-        _eventBus.Subscribe<PartSocketAttachedEvent>(OnPartAttached);
+        _attachedSubscription?.Dispose();
+        _attachedSubscription = _eventBus.Subscribe<PartSocketAttachedEvent>(OnPartAttached);
     }
 
 
@@ -193,10 +195,16 @@ public class SocketView : MonoBehaviour
     
     private void OnDestroy()
     {
-        _socketInteractor.hoverEntered.RemoveListener(OnHoverEntered);
-        _socketInteractor.hoverExited.RemoveListener(OnHoverExited);
+        _attachedSubscription?.Dispose();
+        if (_socketInteractor != null)
+        {
+            _socketInteractor.hoverEntered.RemoveListener(OnHoverEntered);
+            _socketInteractor.hoverExited.RemoveListener(OnHoverExited);
+        }
+        if (_hoveredPart != null && _hoveredPart.TryGetComponent<XRGrabInteractable>(out var grab))
+            grab.selectExited.RemoveListener(OnPartReleased);
 
-        _previewSystem.HidePreview();
+        _previewSystem?.HidePreview();
     }
 
     private void OnHoverEntered(  /// todo должно быть в сокетИнтерактор скорее всего. 

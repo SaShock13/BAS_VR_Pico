@@ -5,6 +5,8 @@ public class PartConfig : ScriptableObject
 {
     [Header("Identity")]
     public string PartId;
+    [Tooltip("Previous IDs accepted when loading older assemblies and garage saves.")]
+    public string[] LegacyPartIds = System.Array.Empty<string>();
     public PartType PartType;
 
     [Header("Visual")]

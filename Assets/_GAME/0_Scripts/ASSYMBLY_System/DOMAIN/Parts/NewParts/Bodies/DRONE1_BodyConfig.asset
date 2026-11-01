@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ed0de78d734a3408861cd23a1dfe4f, type: 3}
+  m_Name: DRONE1_BodyConfig
+  m_EditorClassIdentifier: Assembly-CSharp::PartConfig
+  PartId: newparts/Bodies/DRONE1_Body
+  LegacyPartIds:
+  - newparts/7da98bb0cd06ded4bb5be20a39a60fb4
+  PartType: 0
+  Prefab: {fileID: 6032232478579123506, guid: 7da98bb0cd06ded4bb5be20a39a60fb4, type: 3}
+  PrefabAddress: Parts/Bodies/DRONE1_Body
+  Mass: 3
+  LocalCenterOfMass: {x: -0.00032000543, y: 0.0010200024, z: 0.0077000023}

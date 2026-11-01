@@ -1,0 +1,14 @@
+---
+description: Zenject bindings and IEventBus usage
+globs: Assets/_GAME/0_Scripts/{Zenject,EventBus,ASSYMBLY_System}/**/*.cs
+alwaysApply: false
+---
+
+# Zenject + EventBus
+
+- Новый сервис: интерфейс + реализация + `Bind` в подходящем installer (`AssemblyInstaller`, `UIInstaller`, `EventBusInstaller`, …).
+- `AsSingle()` для application-сервисов. Ссылки со сцены — `FromInstance` / `FromComponentInHierarchy`.
+- Не резолвить из `Container` внутри `InstallBindings` кроме уже принятых исключений; предпочитать `[Inject]` и конструктор.
+- Событие = класс/`record` с `IAppEvent`. Publish из UI/XR/view, handle в application.
+- Имена: `*Request` / `*Command` — намерение; `*Event` — факт, который уже случился.
+- Не подписываться на EventBus из Domain-моделей; Domain — данные и инварианты.

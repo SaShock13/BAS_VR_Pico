@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ed0de78d734a3408861cd23a1dfe4f, type: 3}
+  m_Name: Propeller2 4Config
+  m_EditorClassIdentifier: Assembly-CSharp::PartConfig
+  PartId: newparts/NonOriginal/Propeller2 4
+  LegacyPartIds:
+  - newparts/37bfd298616e9c44bb9062d50a68bbe6
+  PartType: 3
+  Prefab: {fileID: 1105354933758500389, guid: 37bfd298616e9c44bb9062d50a68bbe6, type: 3}
+  PrefabAddress: Parts/NonOriginal/Propeller2 4
+  Mass: 1
+  LocalCenterOfMass: {x: -0.0021540464, y: -0.007515058, z: 0.000016388298}

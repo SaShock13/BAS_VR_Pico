@@ -39,10 +39,10 @@ public sealed class TabletMissionPresenter : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            _content.SetActive(!_content.activeInHierarchy);
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    _content.SetActive(!_content.activeInHierarchy);
+        //}
 
     }
 }

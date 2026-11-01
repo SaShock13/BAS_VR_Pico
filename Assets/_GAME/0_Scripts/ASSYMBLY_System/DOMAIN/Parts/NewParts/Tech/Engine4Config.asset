@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16f6ff99ba2a43f4295bfe1a15924934, type: 3}
+  m_Name: Engine4Config
+  m_EditorClassIdentifier: Assembly-CSharp::MotorConfig
+  PartId: newparts/Tech/Engine4
+  LegacyPartIds:
+  - newparts/265e0dbc959e0f04cb1ef96fdd4e473b
+  PartType: 2
+  Prefab: {fileID: 3729203194209094895, guid: 265e0dbc959e0f04cb1ef96fdd4e473b, type: 3}
+  PrefabAddress: Parts/Tech/Engine4
+  Mass: 1
+  LocalCenterOfMass: {x: -0.0005413205, y: -0.0061921566, z: 0.0001438886}
+  MaxThrust: 18
+  ResponseSpeed: 18
+  RotationDirection: 0
+  MaxRPM: 42000
+  MixData:
+    PitchFactor: -1
+    RollFactor: -1
+    YawFactor: 1
+  IdleCurrent: 1.2
+  MaxCurrent: 40

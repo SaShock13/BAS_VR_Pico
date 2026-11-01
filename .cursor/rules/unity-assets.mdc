@@ -1,0 +1,13 @@
+---
+description: Prefabs, scenes, meta and Addressables — do not hand-edit Unity YAML
+globs: Assets/**/*.{unity,prefab,asset,meta,uss,uxml}
+alwaysApply: false
+---
+
+# Ассеты Unity
+
+- `.unity` / `.prefab` / SerializedObject: менять через Unity MCP при живом редакторе. Ручной YAML — только точечный GUID/ссылка, если MCP недоступен.
+- Каждый новый файл в `Assets/` должен получить `.meta` от Unity. Не выдумывать GUID.
+- Не удалять `.meta` «лишние»: это идентификаторы ассетов.
+- Runtime-загрузка префабов/материалов — Addressables (`AseetLoader`), не `Resources.Load` для нового кода.
+- Игровые префабы класть в `Assets/_GAME/Prefabs/`, не в Samples XRIT.

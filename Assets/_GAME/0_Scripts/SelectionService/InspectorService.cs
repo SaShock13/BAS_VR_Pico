@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-public class InspectorService
+public class InspectorService : IDisposable
 {
     private readonly ISelectionService _selection;
     private readonly Clean_AssemblySystem _assembly;
@@ -12,6 +12,8 @@ public class InspectorService
     [Inject] private readonly IMaterialRegistry _materials;
 
     IEventBus _eventBus;
+    private readonly IDisposable _visualSubscription;
+    private readonly IDisposable _rebuildSubscription;
 
     public event Action<InspectionContext> Updated;
     public event Action Cleared;
@@ -23,7 +25,22 @@ public class InspectorService
         _assembly = assembly;
         _partConfigs = partConfigs;
         _selection.Changed += OnSelectionChanged;
-        _eventBus.Subscribe<PartVisualChangedEvent>(OnPartChanged);
+        _visualSubscription = _eventBus.Subscribe<PartVisualChangedEvent>(OnPartChanged);
+        _rebuildSubscription = _eventBus.Subscribe<DronesRebuiltEvent>(_ => RefreshSelectedPart());
+    }
+
+    public bool TryGetSelectedDrone(out DroneDomainState drone)
+    {
+        drone = null;
+        var target = _selection.Current;
+        return target.HasValue && _assembly.TryGetDroneForPart(target.Value.PartId, out drone);
+    }
+
+    public void Dispose()
+    {
+        _selection.Changed -= OnSelectionChanged;
+        _visualSubscription.Dispose();
+        _rebuildSubscription.Dispose();
     }
 
     private void OnPartChanged(PartVisualChangedEvent @event)
@@ -49,21 +66,16 @@ public class InspectorService
             return;
         }
 
-        PartDomainState part =
-            _assembly.GetPartDomainState(
-                target.Value.PartId);
-
-        DroneDomainState drone = null;
-
-        if (!string.IsNullOrEmpty(part.DroneId))
+        if (!_assembly.TryGetPartDomainState(target.Value.PartId, out var part))
         {
-            drone =
-                _assembly.GetDroneDomainState(
-                    part.DroneId);
+            Cleared?.Invoke();
+            return;
         }
 
+        TryGetSelectedDrone(out var drone);
+
         var garageDrone =
-            _garage.GetByDroneId(part.DroneId);
+            drone != null ? _garage.GetByDroneId(drone.InstanceId) : null;
 
         var config =
             _partConfigs.Get(part.PartId);

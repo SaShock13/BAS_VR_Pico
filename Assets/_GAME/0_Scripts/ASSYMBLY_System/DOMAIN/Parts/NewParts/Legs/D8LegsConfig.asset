@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ed0de78d734a3408861cd23a1dfe4f, type: 3}
+  m_Name: D8LegsConfig
+  m_EditorClassIdentifier: Assembly-CSharp::PartConfig
+  PartId: newparts/Legs/D8Legs
+  LegacyPartIds:
+  - newparts/a90d5723d64c7e0439bdd68b0fe2236b
+  PartType: 4
+  Prefab: {fileID: 8323608107689262397, guid: a90d5723d64c7e0439bdd68b0fe2236b, type: 3}
+  PrefabAddress: Parts/Legs/D8Legs
+  Mass: 1
+  LocalCenterOfMass: {x: 0, y: -0.030162862, z: 0.0000000014901161}
