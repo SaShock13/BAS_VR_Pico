@@ -69,7 +69,7 @@ public static class NewPartsVerification
 
                 var parentConfig = configs.FirstOrDefault(c => c.Prefab.GetComponentsInChildren<SocketView>(true)
                     .Any(s => s.AllowedTypes.Contains(config.PartType)));
-                if (parentConfig != null && config.PartType != PartType.Body)
+                if (parentConfig != null && config.PartType != DroneAssemblyRules.RootPartType)
                 {
                     var parent = Create(parentConfig, scene, bus);
                     registry.Register(parent.InstanceId, parent.gameObject);

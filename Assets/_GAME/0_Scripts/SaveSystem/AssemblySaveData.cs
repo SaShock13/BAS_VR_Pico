@@ -4,6 +4,6 @@ using System.Collections.Generic;
 [Serializable]
 public class AssemblySaveData
 {
-    public int Version = 1;
+    public int Version = 2;
     public List<PartSaveData> Parts = new();
 }

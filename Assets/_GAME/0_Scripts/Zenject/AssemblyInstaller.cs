@@ -22,6 +22,7 @@ public class AssemblyInstaller : MonoInstaller
         Container.Bind<ISelectionService>().To<SelectionService>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<Clean_AssemblySystem>().AsSingle();
+        Container.BindInterfacesAndSelfTo<AssemblyGrabModeService>().AsSingle();
         Container.BindInterfacesAndSelfTo<PartHighlightService>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<PartTransformAdjustmentService>().AsSingle();
@@ -30,9 +31,7 @@ public class AssemblyInstaller : MonoInstaller
 
         // Selection Install
         Container.BindInterfacesAndSelfTo<InspectorService>().AsSingle();
-        var configsRepository = Container.Resolve<IPartConfigRepository>();
-        var viewsRepository = Container.Resolve<PartViewRegistry>();
-        Container.BindInterfacesAndSelfTo<DronePhysicsStatsBuilder>().AsSingle().WithArguments( configsRepository, viewsRepository);
+        Container.BindInterfacesAndSelfTo<DronePhysicsStatsBuilder>().AsSingle();
 
 
 

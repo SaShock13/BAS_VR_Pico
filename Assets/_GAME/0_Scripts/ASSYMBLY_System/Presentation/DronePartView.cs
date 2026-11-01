@@ -8,10 +8,46 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Filtering;
 using Zenject;
 
-public class DronePartView : MonoBehaviour,IHighlightable
+public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSelectFilter
 {
+    private bool _partInteractionAllowed = true;
+    public bool canProcess => isActiveAndEnabled;
+    public bool IsGrabbed => _interactable != null && _interactable.isSelected;
+    public DroneGrabEnvelope GrabEnvelope { get; private set; }
+
+    public bool Process(IXRHoverInteractor interactor, IXRHoverInteractable interactable) => _partInteractionAllowed;
+
+    public bool Process(IXRSelectInteractor interactor, IXRSelectInteractable interactable)
+    {
+        // A mode change must never cancel an existing hand selection.
+        var selected = interactor.interactablesSelected;
+        for (int i = 0; i < selected.Count; i++)
+            if (ReferenceEquals(selected[i], interactable)) return true;
+        return _partInteractionAllowed;
+    }
+
+    public void SetPartInteractionAllowed(bool allowed) => _partInteractionAllowed = allowed;
+
+    public void EncapsulateOwnGeometry(Transform reference, ref Bounds bounds, ref bool found)
+    {
+        if (_renderers == null) return;
+        foreach (var renderer in _renderers)
+        {
+            if (renderer == null || !renderer.enabled || !renderer.gameObject.activeInHierarchy) continue;
+            var world = renderer.bounds;
+            for (int i = 0; i < 8; i++)
+            {
+                var corner = world.center + Vector3.Scale(world.extents,
+                    new Vector3((i & 1) == 0 ? -1 : 1, (i & 2) == 0 ? -1 : 1, (i & 4) == 0 ? -1 : 1));
+                var point = reference.InverseTransformPoint(corner);
+                if (!found) { bounds = new Bounds(point, Vector3.zero); found = true; }
+                else bounds.Encapsulate(point);
+            }
+        }
+    }
     [field: SerializeField]
     public string InstanceId { get; private set; }
 
@@ -135,6 +171,7 @@ public class DronePartView : MonoBehaviour,IHighlightable
         _mpb = new MaterialPropertyBlock();
         _rigidBody = GetComponent<Rigidbody>();
         _interactable = GetComponent<XRGrabInteractable>();
+        GrabEnvelope = GetComponent<DroneGrabEnvelope>();
 
 
 
@@ -142,6 +179,8 @@ public class DronePartView : MonoBehaviour,IHighlightable
 
     private void OnEnable()
     {
+        _interactable.hoverFilters.Add(this);
+        _interactable.selectFilters.Add(this);
         _interactable.selectExited.AddListener(OnReleased);
         _interactable.selectEntered.AddListener(OnGrab);
     }
@@ -149,6 +188,8 @@ public class DronePartView : MonoBehaviour,IHighlightable
     private void OnDisable()
     {
         if (_interactable == null) return;
+        _interactable.hoverFilters.Remove(this);
+        _interactable.selectFilters.Remove(this);
         _interactable.selectExited.RemoveListener(OnReleased);
         _interactable.selectEntered.RemoveListener(OnGrab);
     }
@@ -157,6 +198,7 @@ public class DronePartView : MonoBehaviour,IHighlightable
     {
         _startPosition = transform.position;
         _startRotation = transform.rotation;
+        _eventBus?.Publish(new PartGrabStartedEvent { InstanceId = InstanceId });
     }
 
     private void OnReleased(SelectExitEventArgs arg0)

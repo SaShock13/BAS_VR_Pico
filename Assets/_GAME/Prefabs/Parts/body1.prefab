@@ -1933,8 +1933,6 @@ GameObject:
   - component: {fileID: 7865895251465963167}
   - component: {fileID: 6494140227431048552}
   - component: {fileID: 3998834229193527679}
-  - component: {fileID: 4281848695628876745}
-  - component: {fileID: 7468837464945875126}
   m_Layer: 0
   m_Name: body1
   m_TagString: Untagged
@@ -2140,35 +2138,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: b73ce8181bd5abd43af371a46b53b194, type: 2}
---- !u!114 &4281848695628876745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8777026559667588407}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6e497503ab24a04c8c868472f6d780d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DronePhysicsSimulation
-  _rigidbody: {fileID: 7865895251465963167}
-  _maxAngularVelocity: 3
-  yawTorqueMultiplier: 0.2
---- !u!114 &7468837464945875126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8777026559667588407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d9009a8763cbc840bad79d505cb6b51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DroneView
-  mainTrigger: {fileID: 0}
-  mainTriggerGO: {fileID: 7164150914522395288}
 --- !u!1 &8917475222001711492
 GameObject:
   m_ObjectHideFlags: 0

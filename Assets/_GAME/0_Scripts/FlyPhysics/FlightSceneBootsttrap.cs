@@ -51,7 +51,7 @@ public class FlightSceneBootsttrap : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("ConstructorScene");
         }
 
 
@@ -173,6 +173,7 @@ public class FlightSceneBootsttrap : MonoBehaviour
 
     private void DeactivateChildRBs()
     {
+        _droneTransform.GetComponent<DroneGrabEnvelope>()?.PrepareForFlight();
         var xrInteractables = _droneTransform.GetComponentsInChildren<XRGrabInteractable>();
         var rigidBodies = _droneTransform.GetComponentsInChildren<Rigidbody>();
         var mainRb = _droneTransform.GetComponent<Rigidbody>();

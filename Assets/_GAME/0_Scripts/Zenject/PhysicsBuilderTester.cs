@@ -74,6 +74,7 @@ public class PhysicsBuilderTester : MonoBehaviour
         //,GameObject dronePrefab
         )
     {
+        _droneRoot.GetComponent<DroneGrabEnvelope>()?.PrepareForFlight();
         //GameObject drone =
         //    Object.Instantiate(dronePrefab);
 

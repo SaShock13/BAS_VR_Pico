@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using Zenject;
@@ -266,6 +265,15 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
     /// <returns></returns>
     private  bool IsCanAttach(PartDomainState partDomain, SocketView attachedSocket) 
     {
+        if (partDomain.Type == DroneAssemblyRules.RootPartType) return false;
+        var parentId = attachedSocket.ParentView.InstanceId;
+        for (int depth = 0; !string.IsNullOrEmpty(parentId) && depth < _parts.Count; depth++)
+        {
+            if (parentId == partDomain.InstanceId) return false;
+            if (!_parts.TryGetValue(parentId, out var parent)) return false;
+            parentId = parent.AttachedPartInstanceId;
+        }
+        if (!string.IsNullOrEmpty(parentId)) return false;
 
         var childConfig =
         _configs.Get(partDomain.PartId);        
@@ -413,8 +421,8 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
 
             Debug.Log($"00000000 Check part.InstanceId {part.InstanceId}");
-            // ROOT = BODY без родителя
-            if (part.Type != PartType.Body)
+            // A detached rays/frame part is the stable drone root.
+            if (part.Type != DroneAssemblyRules.RootPartType)
                 continue;
 
             if (part.AttachedPartInstanceId != null)
@@ -759,8 +767,10 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         domainState.isLoaded = true;
 
 
+        RebuildDrones();
         _spawnAnimator.Play( go.transform, spawnPosition, () =>
             {
+                if (go != null) _eventBus.Publish(new AssemblyGeometryChangedEvent());
                 Debug.Log($"Анимация появления завершена: {instanceId}");
             }, menuCellHeight);
 
@@ -1104,6 +1114,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         BindDomain(domains);
 
         ApplyState(saveData, views);
+        RerootLegacyAssemblies(domains, views);
 
         if (postInitialize)
         {
@@ -1127,11 +1138,12 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
     {
         foreach (var part in saveData.Parts)
         {
-            if (part.Type != PartType.Body)
+            if (part.Type != DroneAssemblyRules.RootPartType)
                 continue;
 
-            if (!string.IsNullOrEmpty(
-                    part.AttachedPartId))
+            if (_parts.TryGetValue(part.InstanceId, out var runtimePart)
+                ? !string.IsNullOrEmpty(runtimePart.AttachedPartInstanceId)
+                : !string.IsNullOrEmpty(part.AttachedPartId))
                 continue;
 
             return part;
@@ -1233,6 +1245,37 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         //{
         //    Timestamp = DateTime.Now
         //});
+    }
+
+    private void RerootLegacyAssemblies(
+        Dictionary<string, PartDomainState> domains,
+        Dictionary<string, DronePartView> views)
+    {
+        foreach (var body in domains.Values)
+        {
+            if (body.Type != PartType.Body || !string.IsNullOrEmpty(body.AttachedPartInstanceId)) continue;
+            var rays = domains.Values.FirstOrDefault(p => p.Type == DroneAssemblyRules.RootPartType &&
+                p.AttachedPartInstanceId == body.InstanceId);
+            if (rays == null) continue;
+            var raysView = views[rays.InstanceId];
+            var bodyView = views[body.InstanceId];
+            var socket = raysView.GetSocketByType(PartType.Body);
+            if (socket == null) throw new InvalidOperationException("Rays prefab has no Body mount: " + rays.PartId);
+
+            // Existing world poses and scales survive the graph reversal, including descendants.
+            var bodyPosition = bodyView.transform.position;
+            var bodyRotation = bodyView.transform.rotation;
+            rays.Detach();
+            raysView.Detach();
+            body.AttachToPartSocket(rays.InstanceId, socket.SocketId);
+            bodyView.AttachTo(socket.transform);
+            bodyView.transform.SetPositionAndRotation(bodyPosition, bodyRotation);
+            if (_dronesMetadata.TryGetValue(body.InstanceId, out var metadata))
+            {
+                metadata.DroneId = rays.InstanceId;
+                _dronesMetadata[rays.InstanceId] = metadata;
+            }
+        }
     }
 
     

@@ -594,7 +594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7644bec2d2f076348b035207c30e90bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SocketView
-  AllowedTypes: 01000000
+  AllowedTypes: 
   AttachPoint: {fileID: 8541567855898110615}
   _socketInteractor: {fileID: 6931514080471356237}
   _socketId: mount/Rays/3
@@ -608,7 +608,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6559590526727777547}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b6fe736eef8d9b4eb9486ab194b0bc2, type: 3}
   m_Name: 
@@ -666,7 +666,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
@@ -681,7 +681,6 @@ GameObject:
   - component: {fileID: 8447705327550868330}
   - component: {fileID: 7204209070611863956}
   - component: {fileID: 5613816156231300610}
-  - component: {fileID: 1467466134074932163}
   - component: {fileID: 4139039885167335688}
   m_Layer: 0
   m_Name: Body5
@@ -746,22 +745,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: d46863938820040418419519abeefeda, type: 2}
---- !u!114 &1467466134074932163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6592788952004374221}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6e497503ab24a04c8c868472f6d780d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DronePhysicsSimulation
-  _rigidbody: {fileID: 7204209070611863956}
-  _maxAngularVelocity: 3
-  yawTorqueMultiplier: 0.01
-  isVoltageAffects: 0
 --- !u!114 &4139039885167335688
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using Zenject;
 public class PartTransformAdjustmentService /// Подумать, возможно сделать округление до шага
 {
     [Inject] private readonly PartViewRegistry _viewRegistry;
+    [Inject] private readonly IEventBus _eventBus;
 
 
     public void Move(
@@ -14,6 +15,7 @@ public class PartTransformAdjustmentService /// Подумать, возможн
             return;
 
         view.transform.localPosition += localDelta;
+        _eventBus.Publish(new AssemblyGeometryChangedEvent());
     }
 
     public void Rotate(
@@ -25,6 +27,7 @@ public class PartTransformAdjustmentService /// Подумать, возможн
 
         view.transform.localRotation *=
             Quaternion.Euler(eulerDelta);
+        _eventBus.Publish(new AssemblyGeometryChangedEvent());
     }
 
     public void ResetRotation(string instanceId)
@@ -33,6 +36,7 @@ public class PartTransformAdjustmentService /// Подумать, возможн
             return;
 
         view.transform.localRotation = Quaternion.identity;
+        _eventBus.Publish(new AssemblyGeometryChangedEvent());
     }
 
     public void ResetPosition(string instanceId)
@@ -41,5 +45,6 @@ public class PartTransformAdjustmentService /// Подумать, возможн
             return;
 
         view.transform.localPosition = Vector3.zero;
+        _eventBus.Publish(new AssemblyGeometryChangedEvent());
     }
 }

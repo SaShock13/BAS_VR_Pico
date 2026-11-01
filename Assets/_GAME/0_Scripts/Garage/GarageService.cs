@@ -23,6 +23,20 @@ public class GarageService : IGarageService
         _saveService = saveService;
 
         _garage = _saveService.Load() ?? new GarageSaveData();
+        foreach (var drone in _garage.Drones)
+        {
+            var parts = drone.Assembly?.Parts;
+            if (parts == null) continue;
+            var root = parts.FirstOrDefault(p => p.Type == DroneAssemblyRules.RootPartType && string.IsNullOrEmpty(p.AttachedPartId));
+            if (root == null)
+            {
+                root = parts.FirstOrDefault(p => p.Type == DroneAssemblyRules.RootPartType &&
+                    parts.Any(parent => parent.InstanceId == p.AttachedPartId && parent.Type == PartType.Body && string.IsNullOrEmpty(parent.AttachedPartId)));
+            }
+            if (root == null) continue;
+            drone.DroneId = root.InstanceId;
+            if (drone.metaData != null) drone.metaData.DroneId = root.InstanceId;
+        }
     }
 
 
@@ -49,7 +63,8 @@ public class GarageService : IGarageService
     public GarageDroneData GetByDroneId(string droneId)
     {
         return _garage.Drones
-            .FirstOrDefault(x => x.DroneId == droneId);
+            .FirstOrDefault(x => x.DroneId == droneId ||
+                (_assembly.TryGetDroneForPart(x.DroneId, out var loadedDrone) && loadedDrone.InstanceId == droneId));
     }
 
 

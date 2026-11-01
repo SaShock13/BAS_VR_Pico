@@ -14,6 +14,7 @@ public class SceneLoader : ISceneLoader
     private AsyncOperation _pendingLoadOperation;
     private string _pendingSceneName;
     private bool _isDisposed;
+    private IDisposable _preloadSubscription;
 
     [Inject]
     public SceneLoader(IAppLogger logger, IEventBus eventBus)
@@ -34,7 +35,7 @@ public class SceneLoader : ISceneLoader
         //);
 
 
-        _eventBus.Subscribe<RequestPreloadSceneEvent>(
+        _preloadSubscription = _eventBus.Subscribe<RequestPreloadSceneEvent>(
            handler: PreloadScene,
            filter: e =>
                e.TargetSceneName == "MainScene",
@@ -71,23 +72,28 @@ public class SceneLoader : ISceneLoader
     /// <returns>Задача, представляющая асинхронную операцию предзагрузки.</returns>
     public async Task PreloadSceneAsync(string sceneName, Action callback, LoadSceneMode mode = LoadSceneMode.Single)
     {
+        if (_isDisposed) throw new ObjectDisposedException(nameof(SceneLoader));
+        if (string.IsNullOrWhiteSpace(sceneName) || !Application.CanStreamedLevelBeLoaded(sceneName))
+            throw new ArgumentException($"Scene is not enabled in Build Settings: {sceneName}", nameof(sceneName));
         if (_pendingLoadOperation != null && !_pendingLoadOperation.isDone)
         {
-            _logger.LogWarning($"Already preloading: {_pendingSceneName}");
-            return;
+            throw new InvalidOperationException($"Already preloading: {_pendingSceneName}");
         }
 
         _logger.Log($"Starting preload of: {sceneName}");
 
         _pendingSceneName = sceneName;
-        _pendingLoadOperation = SceneManager.LoadSceneAsync(sceneName, mode);
-        _pendingLoadOperation.allowSceneActivation = false;
+        var operation = SceneManager.LoadSceneAsync(sceneName, mode);
+        if (operation == null) throw new InvalidOperationException($"Could not load scene: {sceneName}");
+        _pendingLoadOperation = operation;
+        operation.allowSceneActivation = false;
         //_pendingLoadOperation.completed += callback;
         // Мониторим прогресс
         float lastProgress = 0f;
-        while (_pendingLoadOperation.progress < 0.9f)
+        while (operation.progress < 0.9f)
         {
-            float currentProgress = _pendingLoadOperation.progress;
+            if (_isDisposed) return;
+            float currentProgress = operation.progress;
             if (currentProgress > lastProgress + 0.1f)
             {
                 _logger.Log($"Preload: {currentProgress * 100:F0}%");
@@ -95,7 +101,8 @@ public class SceneLoader : ISceneLoader
             }
             await Task.Yield();
         }
-        callback.Invoke();
+        if (_isDisposed) return;
+        callback?.Invoke();
 
         _logger.Log($"Scene '{sceneName}' preloaded (ready to activate)"); 
         //var scene = SceneManager.GetSceneByName(sceneName);
@@ -129,6 +136,7 @@ public class SceneLoader : ISceneLoader
     /// </summary>
     public async Task ActivatePreloadedScene()
     {
+        if (_isDisposed) throw new ObjectDisposedException(nameof(SceneLoader));
         if (_pendingLoadOperation == null)
         {
             _logger.LogError("No scene to activate");
@@ -142,18 +150,21 @@ public class SceneLoader : ISceneLoader
         }
 
         _logger.Log($"Activating: {_pendingSceneName}");
+        var operation = _pendingLoadOperation;
+        var sceneName = _pendingSceneName;
 
         // 1. Разрешаем активацию
-        _pendingLoadOperation.allowSceneActivation = true;
+        operation.allowSceneActivation = true;
 
         // 2. Ждем завершения
-        while (!_pendingLoadOperation.isDone)
+        while (!operation.isDone)
         {
             await Task.Yield();
         }
 
         // 3. Получаем и активируем сцену
-        var scene = SceneManager.GetSceneByName(_pendingSceneName);
+        if (_isDisposed) return;
+        var scene = SceneManager.GetSceneByName(sceneName);
         if (scene.IsValid())
         {
             SceneManager.SetActiveScene(scene);
@@ -169,6 +180,10 @@ public class SceneLoader : ISceneLoader
     {
         if (_isDisposed) return;
         _logger.Log("[SceneLoader] Disposing...");
+        _preloadSubscription?.Dispose();
+        // A preload must not leave Unity's async operation queue blocked at 0.9.
+        if (_pendingLoadOperation != null && !_pendingLoadOperation.isDone)
+            _pendingLoadOperation.allowSceneActivation = true;
         _pendingLoadOperation = null;
         _pendingSceneName = null;
         _isDisposed = true;

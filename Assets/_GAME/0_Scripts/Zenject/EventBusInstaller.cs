@@ -3,6 +3,8 @@ using Zenject;
 
 public class EventBusInstaller : MonoInstaller
 {
+    [SerializeField] private bool installMenuNavigation;
+
     public override void InstallBindings()
     {
         Container.Bind<IEventBus>()
@@ -11,6 +13,11 @@ public class EventBusInstaller : MonoInstaller
             .NonLazy();
 
         Container.BindInitializableExecutionOrder<IEventBus>(-100); 
+        if (installMenuNavigation)
+        {
+            Container.BindInterfacesTo<SceneLoader>().AsSingle();
+            Container.BindInterfacesTo<MenuNavigationService>().AsSingle();
+        }
         Debug.Log("[EventBusInstaller] EventBus installed");
     }
 }

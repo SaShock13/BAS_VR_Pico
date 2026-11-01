@@ -99,28 +99,7 @@ public class Clean_AssemblyTest : MonoBehaviour
     }
 
 
-    private void Start()
-    {
-        InitializeButtons();
-        
-    }
-    private void InitializeButtons()
-    {
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            int index = i;
-
-            buttons[index].onClick.AddListener(() =>
-            {
-                _eventBus.Publish(new Clean_CreatePartRequestEvent
-                {
-                    PartId = partIds[index],
-                    WorldPosition = buttons[index].transform.position,
-                    Timestamp = DateTime.UtcNow
-                });
-            });
-        }
-    }
+   
 
     private void OnButtonClick(string id)
     {
@@ -280,7 +259,7 @@ public class Clean_AssemblyTest : MonoBehaviour
             new SelectionTarget(SelectionType.Part, dronePartView.InstanceId));
 
             //_selectionService.Select(dronePartView.InstanceId , selectedDroneId);
-            if(domain.LifecycleState == PartLifecycleState.Installed) _eventBus.Publish(new PartSocketDetachRequest { PartInstanceId = domain.InstanceId, Timestamp = DateTime.UtcNow });
+            // Detachment is handled by AssemblyGrabModeService through PartGrabStartedEvent.
         }
     }
 
@@ -385,10 +364,10 @@ public class Clean_AssemblyTest : MonoBehaviour
                 var partDomain = _assemblySystem.GetPartDomainState(selectedId);
                 if (!string.IsNullOrEmpty(partDomain.DroneId))
                 {                    
-                    FlightSession.Drone = _assemblySystem.BuildSaveDataForDrone(selectedId);
+                    FlightSession.Drone = _assemblySystem.BuildSaveDataForDrone(partDomain.DroneId);
                     _assemblySystem.Save();
 
-                    SceneManager.LoadScene(2); // Переход в сцену полета
+                    SceneManager.LoadScene("FlightScene");
                 }
 
 
@@ -410,7 +389,7 @@ public class Clean_AssemblyTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             _assemblySystem.Save();
-            SceneManager.LoadScene(1);  // для теста переход в Гараж
+            SceneManager.LoadScene("GarageScene");
         }
 
         if (Input.GetKeyDown(KeyCode.F11))

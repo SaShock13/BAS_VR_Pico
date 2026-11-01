@@ -98,7 +98,7 @@ public class InspectorService : IDisposable
                 : null,
 
             IsRootPart =
-                part.Type == PartType.Body
+                DroneAssemblyRules.IsRoot(part)
         };
 
         Updated?.Invoke(context);

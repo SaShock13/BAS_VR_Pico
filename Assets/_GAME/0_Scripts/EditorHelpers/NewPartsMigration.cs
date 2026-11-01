@@ -199,7 +199,7 @@ public static class NewPartsMigration
         interactable.throwOnDetach = false;
         interactable.trackScale = false;
 
-        if (config.PartType == PartType.Body)
+        if (config.PartType == DroneAssemblyRules.RootPartType)
         {
             var simulation = root.GetComponent<DronePhysicsSimulation>() ?? root.AddComponent<DronePhysicsSimulation>();
             var data = new SerializedObject(simulation);
@@ -207,6 +207,7 @@ public static class NewPartsMigration
             data.ApplyModifiedPropertiesWithoutUndo();
             simulation.enabled = false; // FlightController enables it after initialization.
         }
+        RaysRootMigration.ConfigurePrefab(root, config.PartType);
     }
 
     private static Bounds GetVisualBounds(GameObject root)
@@ -239,7 +240,7 @@ public static class NewPartsMigration
         if (name.StartsWith("SocketElectronicPlate") || name.StartsWith("ControllerSocket")) return PartType.FlyController;
         if (name.StartsWith("BatterySocket")) return PartType.Battery;
         if (name.StartsWith("LegsSocket") || name.StartsWith("GearSocket")) return PartType.Legs;
-        if (name.StartsWith("ShellSocket") && owner == PartType.Body) return PartType.Rays;
+        if (name.StartsWith("ShellSocket") && owner == PartType.Rays) return PartType.Body;
         return null;
     }
 
@@ -260,7 +261,7 @@ public static class NewPartsMigration
             AddFallback(anchors, root.transform, PartType.Battery, bounds.center + Vector3.up * bounds.extents.y);
             AddFallback(anchors, root.transform, PartType.Legs, bounds.center - Vector3.up * bounds.extents.y);
             AddFallback(anchors, root.transform, PartType.FlyController, bounds.center);
-            if (owner == PartType.Body) AddFallback(anchors, root.transform, PartType.Rays, bounds.center);
+            if (owner == PartType.Rays) AddFallback(anchors, root.transform, PartType.Body, bounds.center);
         }
         if (owner == PartType.Motor)
             AddFallback(anchors, root.transform, PartType.Propeller, bounds.center + Vector3.up * bounds.extents.y);
@@ -375,10 +376,15 @@ public static class NewPartsMigration
             var socketIds = new HashSet<string>();
             foreach (var socket in root.GetComponentsInChildren<SocketView>(true))
             {
+                var interactor = socket.GetComponent<HoverOnlySocketInteractor>();
+                var trigger = socket.GetComponent<SphereCollider>();
+                bool legacyRootMount = link.Config.PartType == PartType.Body &&
+                    socket.SocketId.StartsWith("mount/Rays/", StringComparison.Ordinal) &&
+                    socket.AllowedTypes != null && socket.AllowedTypes.Length == 0 &&
+                    interactor != null && !interactor.enabled && trigger != null && !trigger.enabled;
                 if (!socketIds.Add(socket.SocketId) || socket.AttachPoint == null ||
-                    socket.AllowedTypes == null || socket.AllowedTypes.Length == 0 ||
-                    socket.GetComponent<HoverOnlySocketInteractor>() == null ||
-                    socket.GetComponent<SphereCollider>()?.isTrigger != true)
+                    socket.AllowedTypes == null || (socket.AllowedTypes.Length == 0 && !legacyRootMount) ||
+                    interactor == null || trigger?.isTrigger != true)
                     throw new InvalidOperationException("Invalid socket: " + path + "/" + socket.name);
                 sockets++;
             }

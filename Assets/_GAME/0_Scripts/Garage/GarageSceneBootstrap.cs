@@ -62,6 +62,7 @@ public class GarageSceneBootstrap : MonoBehaviour
             drones.Count,
             _slots.Length);
         Transform droneTransform;
+        var loadedNames = new System.Collections.Generic.List<(string id, string name)>();
 
         for (int i = 0; i < count; i++)
         {
@@ -75,14 +76,13 @@ public class GarageSceneBootstrap : MonoBehaviour
             droneTransform.SetParent(_slots[i]);
 
             Debug.Log($"xxxxxxmetaData.Name {drones[i].metaData.Name}");
-            _assembly.RenameDrone(
-            drones[i].DroneId,
-            drones[i].metaData.Name);
+            loadedNames.Add((droneTransform.GetComponent<DronePartView>().InstanceId, drones[i].metaData.Name));
 
             // todo ОТКЛЮЧИТЬ ВОЗМОЖНОСТЬ ХВАТАНИЯ ДРОНОВ (может Interactable.trackPosition = false или как то еще). НО ХОВЕР И ТРИГГЕР ОСТАВИТЬ ДЛЯ инспектора
 
         }
         _assembly.FinishBatchLoad();
+        foreach (var item in loadedNames) _assembly.RenameDrone(item.id, item.name);
 
 
 
@@ -138,7 +138,7 @@ public class GarageSceneBootstrap : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            SceneManager.LoadScene(0);  // для теста переход в конструктор
+            SceneManager.LoadScene("ConstructorScene");
         }
 
         if (Input.GetKeyDown(KeyCode.F4))
@@ -146,7 +146,7 @@ public class GarageSceneBootstrap : MonoBehaviour
 
             var selectedPartId = Selection.Current.Value.PartId;
             var selectedDroneDomain = _assembly.GetDroneDomainState(selectedPartId) ;
-            var garageDrone = _garage.GetByDroneId(selectedPartId); // ID корпуса равен ID дрона
+            var garageDrone = _garage.GetByDroneId(selectedPartId); // ID рамы Rays равен ID дрона.
 
 
             Debug.Log($"ggggggggggarageDrone {garageDrone.GarageId}");
