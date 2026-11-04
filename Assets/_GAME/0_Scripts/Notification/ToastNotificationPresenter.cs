@@ -1,112 +1,97 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
-using Pico.Platform;
 using UnityEngine;
 using Zenject;
 
 public sealed class ToastNotificationPresenter : MonoBehaviour
 {
-    [SerializeField]
-    private ToastNotificationView _view;
-
-    [SerializeField]
-    private float _fadeDuration = 0.25f;
-
+    [SerializeField] private ToastNotificationView _view;
+    [SerializeField, Min(0f)] private float _fadeDuration = 0.25f;
     private readonly Queue<ToastNotification> _queue = new();
-
-    private ToastNotification? _lastMessage;
-
-    [Inject] private INotificationService _service;
-
+    private INotificationService _service;
+    private bool _subscribed;
     private bool _isShowing;
 
-    private bool repeatAllowed = true; // можно ли повторять одно и тоже сообщение подряд
-
-    public void Start()
+    [Inject]
+    public void Construct(INotificationService service)
     {
-        _service.ToastRequested += OnNotificationRequested; // todo ВКЛЮЧИТЬ И РАЗОбРАТЬСЯ
+        Unsubscribe();
+        _service = service;
+        _view.SetAlpha(0f);
+        _view.gameObject.SetActive(false);
+        if (isActiveAndEnabled) Subscribe();
     }
 
-    private void OnNotificationRequested(
-        ToastNotification message)
+    private void OnEnable() => Subscribe();
+
+    private void Subscribe()
     {
-        if (!repeatAllowed &&_lastMessage.HasValue &&
-        _lastMessage.Value.Text == message.Text)
-        {
-            return;
-        }
+        if (_service == null || _subscribed) return;
+        _service.ToastRequested += OnNotificationRequested;
+        _subscribed = true;
+    }
 
-        _lastMessage = message;
+    private void Unsubscribe()
+    {
+        if (!_subscribed) return;
+        _service.ToastRequested -= OnNotificationRequested;
+        _subscribed = false;
+    }
 
+    private void OnNotificationRequested(ToastNotification message)
+    {
         _queue.Enqueue(message);
-
-        if (!_isShowing)
-            StartCoroutine(ProcessQueue());
+        if (!_isShowing) StartCoroutine(ProcessQueue());
     }
 
     private IEnumerator ProcessQueue()
     {
         _isShowing = true;
-
         while (_queue.Count > 0)
-        {
-            ToastNotification message =
-                _queue.Dequeue();
-
-            yield return ShowMessage(message);
-        }
-
+            yield return ShowMessage(_queue.Dequeue());
         _isShowing = false;
     }
 
-    private IEnumerator ShowMessage(
-        ToastNotification message)
+    private IEnumerator ShowMessage(ToastNotification message)
     {
-        _view.gameObject.SetActive(true);
+        if (!_view.AttachToViewer())
+        {
+            Debug.LogWarning("Toast notification has no player camera assigned.", this);
+            yield break;
+        }
+        _view.SetAlpha(0f);
         _view.SetMessage(message);
-
-        // fade in
-
-        float t = 0;
-
-        while (t < _fadeDuration)
-        {
-            t += Time.deltaTime;
-
-            _view.SetAlpha(
-                Mathf.Clamp01(t / _fadeDuration));
-
-            yield return null;
-        }
-
-        _view.SetAlpha(1);
-
-        yield return new WaitForSeconds(
-            message.Duration);
-
-        // fade out
-
-        t = 0;
-
-        while (t < _fadeDuration)
-        {
-            t += Time.deltaTime;
-
-            _view.SetAlpha(
-                1f - Mathf.Clamp01(
-                    t / _fadeDuration));
-
-            yield return null;
-        }
-
-        _view.SetAlpha(0);
+        _view.gameObject.SetActive(true);
+        yield return Fade(0f, 1f);
+        yield return new WaitForSecondsRealtime(Mathf.Max(0f, message.Duration));
+        yield return Fade(1f, 0f);
         _view.gameObject.SetActive(false);
     }
 
-    private void OnDestroy()
+    private IEnumerator Fade(float from, float to)
     {
-        if (_service != null)
-            _service.ToastRequested -=
-                OnNotificationRequested;
+        float elapsed = 0f;
+        while (elapsed < _fadeDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            _view.SetAlpha(Mathf.Lerp(from, to, Mathf.Clamp01(elapsed / _fadeDuration)));
+            yield return null;
+        }
+        _view.SetAlpha(to);
     }
+
+    private void OnDisable()
+    {
+        Unsubscribe();
+        StopAllCoroutines();
+        _queue.Clear();
+        _isShowing = false;
+        if (_view != null)
+        {
+            _view.SetAlpha(0f);
+            _view.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnDestroy() => Unsubscribe();
 }

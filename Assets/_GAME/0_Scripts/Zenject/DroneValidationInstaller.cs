@@ -5,6 +5,7 @@ public class DroneValidationInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
+        Container.BindInterfacesAndSelfTo<DroneValidationStateService>().AsSingle();
         Container.Bind<IDroneAnalyzer>()
             .To<DroneAnalyzer>()
             .AsSingle();
@@ -23,6 +24,9 @@ public class DroneValidationInstaller : MonoInstaller
 
         Container.Bind<IDroneValidator>()
             .To<CollisionValidator>()
+            .AsSingle();
+        Container.Bind<IDroneValidator>()
+            .To<CompletenessValidator>()
             .AsSingle();
 
 

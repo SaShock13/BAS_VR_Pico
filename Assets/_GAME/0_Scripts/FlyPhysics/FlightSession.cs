@@ -5,4 +5,5 @@ public static class FlightSession
 {
     public static AssemblySaveData Drone;
     public static DronePhysicsData Physics;
+    public static FlightMode Mode = FlightMode.Arcade;
 }

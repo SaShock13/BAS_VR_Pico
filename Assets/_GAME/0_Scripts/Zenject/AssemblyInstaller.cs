@@ -22,6 +22,7 @@ public class AssemblyInstaller : MonoInstaller
         Container.Bind<ISelectionService>().To<SelectionService>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<Clean_AssemblySystem>().AsSingle();
+        Container.BindInterfacesTo<FlightLaunchService>().AsSingle();
         Container.BindInterfacesAndSelfTo<AssemblyGrabModeService>().AsSingle();
         Container.BindInterfacesAndSelfTo<PartHighlightService>().AsSingle();
 

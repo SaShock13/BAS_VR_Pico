@@ -17,6 +17,7 @@ public class EventBusInstaller : MonoInstaller
         {
             Container.BindInterfacesTo<SceneLoader>().AsSingle();
             Container.BindInterfacesTo<MenuNavigationService>().AsSingle();
+            Container.BindInterfacesTo<AssemblyProjectMenuService>().AsSingle();
         }
         Debug.Log("[EventBusInstaller] EventBus installed");
     }

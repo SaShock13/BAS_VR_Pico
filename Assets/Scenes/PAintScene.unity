@@ -1262,6 +1262,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: df1d757416f9ed241830f1c782416511, type: 2}
   - {fileID: 11400000, guid: 6f1653c4c307979478c12fe3ce84f558, type: 2}
   - {fileID: 11400000, guid: 6b95fcb95c32d1d49ba6dff101529465, type: 2}
+  - {fileID: 11400000, guid: 99feddf28a4605647ba094e47f12f38f, type: 2}
   spawnAnimator: {fileID: 0}
 --- !u!114 &1225735307
 MonoBehaviour:
@@ -1312,6 +1313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20bfe1265335d4a46a87c1379c6b25ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  installMenuNavigation: 0
 --- !u!114 &1225735309
 MonoBehaviour:
   m_ObjectHideFlags: 0

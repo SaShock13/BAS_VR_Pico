@@ -252,7 +252,7 @@ public static class AssemblyMenuBuilder
         samples.SetParent(canvasRect, false);
         var buttons = new Button[6];
         var groups = new GameObject[6];
-        string[] labels = { "РАМА", "КОРПУС", "ВИНТ", "ШАССИ", "ДВИЖКИ", "РАЗНОЕ" };
+        string[] labels = { "РАМА", "КОРПУС", "ВИНТ", "ШАССИ", "ДВИЖКИ", "ЭЛЕКТРОНИКА" };
         string[] names = { "Frame", "Body", "Propeller", "Chassis", "Motors", "Other" };
         Button previous = MakeButton(canvasRect, "Previous", "<", -630, 125);
         for (int i = 0; i < labels.Length; i++)

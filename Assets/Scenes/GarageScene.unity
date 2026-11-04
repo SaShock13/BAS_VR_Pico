@@ -1357,7 +1357,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bac75bf2c59f4f4c8196380f7973e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DroneDebugInput
-  _simulation: {fileID: 0}
 --- !u!4 &800227179
 Transform:
   m_ObjectHideFlags: 0
@@ -1872,6 +1871,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: df1d757416f9ed241830f1c782416511, type: 2}
   - {fileID: 11400000, guid: 6f1653c4c307979478c12fe3ce84f558, type: 2}
   - {fileID: 11400000, guid: 6b95fcb95c32d1d49ba6dff101529465, type: 2}
+  - {fileID: 11400000, guid: 99feddf28a4605647ba094e47f12f38f, type: 2}
   spawnAnimator: {fileID: 0}
 --- !u!114 &1225735307
 MonoBehaviour:

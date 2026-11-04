@@ -140,6 +140,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f2505b110785c341b8a9279cee34ab8
+    m_Address: Parts/Tech/battery1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6dffebbf78e383544a2b1f2eadab08d2
     m_Address: Parts/Tech/Engine11
     m_ReadOnly: 0

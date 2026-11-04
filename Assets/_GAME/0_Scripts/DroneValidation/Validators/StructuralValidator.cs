@@ -40,9 +40,9 @@ public sealed class StructuralValidator
             context,
             result);
 
-        //ValidatePropellers(
-        //    context,
-        //    result);
+        ValidatePropellers(
+            context,
+            result);
 
         //ValidateAttachment(
         //    drone,

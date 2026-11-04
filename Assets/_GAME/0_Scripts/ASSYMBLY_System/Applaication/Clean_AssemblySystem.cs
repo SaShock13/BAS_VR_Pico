@@ -921,7 +921,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
     {
         var saveData = _saveService.Load();
 
-        if (saveData == null || saveData.Parts.Count == 0)
+        if (saveData == null)
         {
             Debug.LogWarning("Nothing to load");
             return;
@@ -1031,6 +1031,11 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
             saveData,
             clearBeforeLoad,
             postInitialize: true);
+    }
+
+    public async System.Threading.Tasks.Task RestoreProjectAsync(AssemblySaveData data)
+    {
+        await InternalLoad(data, true, true);
     }
 
     /// <summary>
@@ -1154,6 +1159,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
     public void ClearCurrentAssembly()
     {
+        _eventBus.Publish(new AssemblyGeometryChangedEvent());
         foreach (var view in _viewRegistry.GetAllGOs())
         {
             UnityEngine.Object.Destroy(view);

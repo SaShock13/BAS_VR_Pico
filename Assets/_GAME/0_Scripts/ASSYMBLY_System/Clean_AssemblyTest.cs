@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,7 +92,6 @@ public class Clean_AssemblyTest : MonoBehaviour
         //_interactors = FindObjectsByType<XRBaseInteractor>(FindObjectsSortMode.None);
 
         Debug.Log($"!!!!!!!!!!!!!!!!_interactors {_interactors.Length}");
-        _assemblySystem.Load();
         CreateTestPresets();
 
 
@@ -351,33 +350,8 @@ public class Clean_AssemblyTest : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown(KeyCode.U))
-        {                       
-                
-            if (Selection.Current != null)
-
-            {
-
-                var selectedId = Selection.Current.Value.PartId;
-                if (selectedId == null) return;
-
-                var partDomain = _assemblySystem.GetPartDomainState(selectedId);
-                if (!string.IsNullOrEmpty(partDomain.DroneId))
-                {                    
-                    FlightSession.Drone = _assemblySystem.BuildSaveDataForDrone(partDomain.DroneId);
-                    _assemblySystem.Save();
-
-                    SceneManager.LoadScene("FlightScene");
-                }
-
-
-                //Debug.Log($"SelectedPartId {_selectionService.SelectedPartId}");
-                //_eventBus.Publish(new Clean_DuiblicatePartRequest { InstanceId = Selection.Current.Value.PartId, Timestamp = DateTime.UtcNow });
-
-
-            }
-
-        }
+        if (Keyboard.current != null && Keyboard.current.uKey.wasPressedThisFrame)
+            _eventBus.Publish(new LaunchFlightRequest());
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
@@ -582,3 +556,4 @@ public class Clean_AssemblyTest : MonoBehaviour
         _assemblySystem.RebuildDrones();
     }
 }
+

@@ -1,6 +1,5 @@
 using UnityEngine;
 using Zenject;
-using static UnityEngine.InputSystem.HID.HID;
 
 public class FlightController : MonoBehaviour
 {
@@ -31,8 +30,6 @@ public class FlightController : MonoBehaviour
     private PIDController _yawPID;
 
     private bool _enabled = false;
-    [Inject] private ISelectionService _selectionService;
-    [Inject] private PartViewRegistry _viewRegistry;
 
     [Header("Max Corrections")]
     [SerializeField]
@@ -49,31 +46,15 @@ public class FlightController : MonoBehaviour
 
     public void Initialize(DroneDebugInput input, DronePhysicsSimulation simulation, Rigidbody rb )
     {
+        _pitchPID.Reset();
+        _rollPID.Reset();
+        _yawPID.Reset();
         _enabled = true;
         _input = input;
         _simulation = simulation;
         _rb = rb;
     }
 
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            _viewRegistry.TryGet(_selectionService.Current.Value.PartId, out DronePartView view);
-            if (view != null)
-            {
-                _simulation = view.GetComponent<DronePhysicsSimulation>();
-
-                Debug.Log($"sssssssssssview selected {view.gameObject.name}");
-            }
-
-            _rb = _simulation.GetComponent<Rigidbody>();
-            _input = FindAnyObjectByType<DroneDebugInput>();
-            if(_input != null && _simulation !=null)  _enabled = true;
-        }
-
-    }
 
     private void FixedUpdate()
     {
@@ -82,7 +63,7 @@ public class FlightController : MonoBehaviour
         FlightInput input = _input.CurrentInput;
 
         Vector3 localAngularVelocity =
-            transform.InverseTransformDirection(_rb.angularVelocity);
+            _rb.transform.InverseTransformDirection(_rb.angularVelocity);
 
         float desiredPitchRate =
             input.Pitch * _maxPitchRate;
@@ -126,10 +107,6 @@ public class FlightController : MonoBehaviour
                                         mixerInput.YawCorrection  ,
                                         -_maxYawCorrection,
                                         _maxYawCorrection);
-
-        Debug.Log( $"________FlightController Angular Velocity: {localAngularVelocity} " +
-                    $"PitchErr: {pitchError} " +
-                    $"PitchCorr: {mixerInput.PitchCorrection}");
 
         _mixer.Mix(_simulation.Motors,mixerInput);
     }
