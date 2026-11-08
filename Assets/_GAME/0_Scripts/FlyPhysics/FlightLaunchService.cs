@@ -24,6 +24,7 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
     private readonly DroneValidationStateService _validation;
     private IDisposable _modeSubscription, _launchSubscription;
     private bool _launching;
+    private FlightLaunchApprovedEvent _pendingLaunch;
 
     public FlightLaunchService(IEventBus bus, ISelectionService selection,
         Clean_AssemblySystem assembly, INotificationService notifications,
@@ -60,11 +61,18 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
         FlightSession.Physics = null;
         _assembly.Save();
         _launching = true;
-        SceneManager.LoadScene("FlightScene");
+        var approved = new FlightLaunchApprovedEvent(
+            () => SceneManager.LoadScene("FlightScene"),
+            () => _launching = false);
+        _pendingLaunch = approved;
+        _bus.Publish(approved);
+        if (!approved.IsDeferred)
+            SceneManager.LoadScene("FlightScene");
     }
 
     public void Dispose()
     {
+        _pendingLaunch?.Cancel();
         _modeSubscription?.Dispose();
         _launchSubscription?.Dispose();
     }

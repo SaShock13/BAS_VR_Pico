@@ -11,7 +11,9 @@ public class UIInstaller : MonoInstaller
     {
         Container.Bind<INotificationService>().To<NotificationService>().AsSingle();
         Container.Bind<ITabletService>().To<TabletService>().AsSingle();
+        Container.BindInterfacesTo<MissionFeedbackService>().AsSingle();
         Container.Bind<IHintService>().To<HintService>().AsSingle();
+        Container.BindInterfacesTo<ControllerButtonHintService>().AsSingle();
 
         Container.BindInterfacesTo<HintScenarioController>()
         .AsSingle();

@@ -50,6 +50,10 @@ public sealed class HintPresenter : MonoBehaviour
     private void OnHintShown(
         HintInfo hint)
     {
+        if ((hint.VisualType == HintVisualType.Arrow && hint.SoketTransform == null)
+            || (hint.VisualType == HintVisualType.Highlight && hint.PartTransform == null)
+            || (hint.VisualType == HintVisualType.WorldText && hint.PartTransform == null && hint.SoketTransform == null))
+            return;
         HideAll();
         
         switch (hint.VisualType)
@@ -65,7 +69,8 @@ public sealed class HintPresenter : MonoBehaviour
 
                 if (_worldViewPrefab != null)
                 {
-                    _worldView = Instantiate( _worldViewPrefab);
+                    if (_worldView == null)
+                        _worldView = Instantiate(_worldViewPrefab, transform, true);
                     _worldView.Show(hint);
                 }
                 break;
@@ -92,7 +97,8 @@ public sealed class HintPresenter : MonoBehaviour
 
     private void ShowArrow(HintInfo hint)
     {
-        _arrowView = Instantiate(_arrowViewPrefab);
+        if (_arrowView == null)
+            _arrowView = Instantiate(_arrowViewPrefab, transform, true);
         _arrowView.Show(hint);
     }
 

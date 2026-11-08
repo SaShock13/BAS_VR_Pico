@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class SocketPreviewSystem
 {
@@ -49,6 +50,7 @@ public class SocketPreviewSystem
     {
         if (_previewRoot != null)
         {
+            _previewRoot.SetActive(false);
             Object.Destroy(_previewRoot);
 
             _previewRoot = null;
@@ -119,7 +121,9 @@ public class SocketPreviewSystem
             previewAnchor.rotation);
 
         _previewRoot.transform.localScale =
-            previewAnchor.lossyScale;
+            sourcePart.transform.lossyScale;
+
+        var previewTransforms = new Dictionary<Transform, Transform> { { sourcePart.transform, _previewRoot.transform } };
 
         MeshFilter[] meshFilters =
             sourcePart.GetComponentsInChildren<MeshFilter>(true);
@@ -129,46 +133,30 @@ public class SocketPreviewSystem
             if (sourceMeshFilter.sharedMesh == null)
                 continue;
 
+            // Hidden helper meshes must not become visible ghost geometry.
+            if (!sourceMeshFilter.gameObject.activeInHierarchy ||
+                !sourceMeshFilter.TryGetComponent<MeshRenderer>(out var sourceRenderer) ||
+                !sourceRenderer.enabled || sourceRenderer.forceRenderingOff)
+                continue;
+
             CreateGhostMesh(
-                sourcePart.transform,
+                previewTransforms,
                 sourceMeshFilter,
                 isValid);
         }
     }
 
     private void CreateGhostMesh(
-    Transform sourceRoot,
+    Dictionary<Transform, Transform> previewTransforms,
     MeshFilter sourceMeshFilter,
     bool isValid)
     {
         GameObject ghostObject =
             new GameObject(sourceMeshFilter.name + "_Preview");
 
+        // Preserve nested scales and rotations without cloning gameplay components.
         ghostObject.transform.SetParent(
-            _previewRoot.transform,
-            false);
-
-        // ВЫЧИСЛЯЕМ ПОЗИЦИЮ ОТНОСИТЕЛЬНО ROOT
-        Vector3 localPosition =
-            sourceRoot.InverseTransformPoint(
-                sourceMeshFilter.transform.position);
-
-        Quaternion localRotation =
-            Quaternion.Inverse(sourceRoot.rotation) *
-            sourceMeshFilter.transform.rotation;
-
-        // scale
-        Vector3 localScale =
-            sourceMeshFilter.transform.localScale;
-
-        ghostObject.transform.localPosition =
-            localPosition;
-
-        ghostObject.transform.localRotation =
-            localRotation;
-
-        ghostObject.transform.localScale =
-            localScale;
+            GetPreviewTransform(sourceMeshFilter.transform, previewTransforms), false);
 
         // MeshFilter
         MeshFilter meshFilter =
@@ -181,7 +169,7 @@ public class SocketPreviewSystem
         MeshRenderer meshRenderer =
             ghostObject.AddComponent<MeshRenderer>();
 
-        meshRenderer.material =
+        meshRenderer.sharedMaterial =
             isValid
                 ? _validMaterial
                 : _invalidMaterial;
@@ -190,5 +178,20 @@ public class SocketPreviewSystem
             UnityEngine.Rendering.ShadowCastingMode.Off;
 
         meshRenderer.receiveShadows = false;
+    }
+    private Transform GetPreviewTransform(
+        Transform source, Dictionary<Transform, Transform> previewTransforms)
+    {
+        if (previewTransforms.TryGetValue(source, out var preview))
+            return preview;
+
+        var parent = GetPreviewTransform(source.parent, previewTransforms);
+        preview = new GameObject(source.name).transform;
+        preview.SetParent(parent, false);
+        preview.localPosition = source.localPosition;
+        preview.localRotation = source.localRotation;
+        preview.localScale = source.localScale;
+        previewTransforms.Add(source, preview);
+        return preview;
     }
 }

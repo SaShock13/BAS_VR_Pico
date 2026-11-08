@@ -171,7 +171,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
             // Пересчитываем дроны
            RebuildDrones();
 
-            _eventBus.Publish(new PartSocketAttachedEvent() { Timestamp = DateTime.Now , PartInstanceId = request.PartInstanceId, AttachedPartId = request.AttachedPartId, AttachedSocketId = request.AttachedSocketId});
+            _eventBus.Publish(new PartSocketAttachedEvent() { Timestamp = DateTime.Now, Position = partView.transform.position, PartInstanceId = request.PartInstanceId, AttachedPartId = request.AttachedPartId, AttachedSocketId = request.AttachedSocketId});
 
             _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
 
@@ -203,7 +203,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         // Пересчитываем дроны
         RebuildDrones();
 
-        _eventBus.Publish(new PartSocketDetachedEvent() { Timestamp = DateTime.Now });
+        _eventBus.Publish(new PartSocketDetachedEvent() { Timestamp = DateTime.Now, Position = partView.transform.position });
 
         _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
 
@@ -249,6 +249,11 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         return IsCanAttach(partDomain, socketView);
     }
 
+
+    public bool IsCompatibleWithSocket(string instanceId, SocketView socketView)
+    {
+        return IsCanAttach(GetPartDomainState(instanceId), socketView);
+    }
 
     public bool IsSocketOccupied(string AttachedPartInstanceId, string socketId) // todo   оптимизировать проверку
     {
@@ -360,6 +365,14 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         }
 
         return null;
+    }
+
+    public bool HasPartOfType(PartType type)
+    {
+        foreach (var part in _parts.Values)
+            if (part.Type == type)
+                return true;
+        return false;
     }
 
     public DroneDomainState GetDroneDomainState(string instanceId)
@@ -815,6 +828,8 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
                
                 
+                var deletedPosition = view.transform.position;
+                var deletedScale = view.transform.lossyScale;
                 _viewRegistry.Remove(childId);
                 Debug.Log($"DDDDDDDDDDD RealDeleted {name}  VIEW");
 
@@ -823,7 +838,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
                 Debug.Log($"message {this}");
                 // todo Обработка ошибок
-                _eventBus.Publish(new Clean_PartDeletedEvent { InstanceId = instanceId, Timestamp = DateTime.Now });
+                _eventBus.Publish(new Clean_PartDeletedEvent { InstanceId = childId, Position = deletedPosition, Scale = deletedScale, Timestamp = DateTime.Now });
             }
             else
             {
@@ -903,6 +918,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
         // 6. Уведомление
         _eventBus.Publish(new Clean_PartCreatedEvent { InstanceId = dublicateInstanceId, GameObject = go, Timestamp = DateTime.Now });
+        _eventBus.Publish(new PartDublicatedEvent { Position = go.transform.position, Timestamp = DateTime.Now });
         _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
     }
 

@@ -11,7 +11,6 @@ public class MissionViewController : MonoBehaviour
 
     private void OnEnable()
     {
-        MissionEvents.MissionStarted += OnMissionStarted;
         MissionEvents.MissionCompleted += OnMissionCompleted;
         MissionEvents.MissionFailed += OnMissionFailed;
         MissionEvents.ObjectiveChanged += OnObjectiveChanged;
@@ -20,24 +19,15 @@ public class MissionViewController : MonoBehaviour
 
     private void OnDisable()
     {
-        MissionEvents.MissionStarted -= OnMissionStarted;
         MissionEvents.MissionCompleted -= OnMissionCompleted;
         MissionEvents.MissionFailed -= OnMissionFailed;
         MissionEvents.ObjectiveChanged -= OnObjectiveChanged;
-    }
-
-    private void OnMissionStarted(string name)
-    {
-        Debug.Log("+++++++++Mission Started");
-        _notification.Info($"Миссия {name} начата.");
-
     }
 
     private void OnMissionCompleted(string name)
     {
         Debug.Log("+++++++++++Mission Completed");
         _tablet.ClearMission();
-        _notification.Info($"Миссия {name} завершена.");
     }
 
     private void OnMissionFailed(string name, string reason)
@@ -51,6 +41,6 @@ public class MissionViewController : MonoBehaviour
 
         _tablet.SetMission(info);
         _userActivity.NotifyActivity();
-        _notification.Info(info.Objective);
+        _notification.Info(info.Objective, info.NotificationDuration);
     }
 }

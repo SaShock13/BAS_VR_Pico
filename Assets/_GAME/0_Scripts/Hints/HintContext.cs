@@ -7,6 +7,7 @@ public readonly struct HintContext
 
 
     public readonly Transform Target;
+    public readonly bool PointAtTarget;
 
     public readonly PartType? RequiredPartType;
     public readonly PartType? RequiredSocketType;
@@ -14,13 +15,15 @@ public readonly struct HintContext
     public HintContext(
         string hintText,
         Transform target,
-        PartType reqPartType,
-        PartType reqSocketType
+        PartType? reqPartType = null,
+        PartType? reqSocketType = null,
+        bool pointAtTarget = false
         )
     {
         HintText = hintText;
         Target = target;
         RequiredPartType = reqPartType;
         RequiredSocketType = reqSocketType;
+        PointAtTarget = pointAtTarget;
     }
 }

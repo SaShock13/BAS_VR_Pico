@@ -12,5 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29122f2118ef8094da47c8c03b54c8ee, type: 3}
   m_Name: InstallController
   m_EditorClassIdentifier: Assembly-CSharp::InstallPartToSocketStepData
+  ControllerButtonHint: 0
+  ObjectiveNotificationDuration: 0
+  CompletionMessage: "\u041E\u0442\u043B\u0438\u0447\u043D\u043E! \u0412\u044B \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u043B\u0438
+    \u043F\u043E\u043B\u0451\u0442\u043D\u044B\u0439 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u043B\u0435\u0440."
+  PlayCompletionSound: 1
+  CompletionSound: 7
+  CompletionNotificationDuration: 0
+  Description: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043F\u043E\u043B\u0451\u0442\u043D\u044B\u0439
+    \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u043B\u0435\u0440 \u043D\u0430 \u0440\u0430\u043C\u0443."
   RequiredPartType: 5
   RequiredSocketType: 5

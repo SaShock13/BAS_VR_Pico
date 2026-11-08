@@ -36,6 +36,15 @@ public class InspectorService : IDisposable
         return target.HasValue && _assembly.TryGetDroneForPart(target.Value.PartId, out drone);
     }
 
+    public bool RenameSelectedDrone(string newName)
+    {
+        if (string.IsNullOrWhiteSpace(newName) || !TryGetSelectedDrone(out var drone))
+            return false;
+        _assembly.RenameDrone(drone.InstanceId, newName.Trim());
+        RefreshSelectedPart();
+        return true;
+    }
+
     public void Dispose()
     {
         _selection.Changed -= OnSelectionChanged;
@@ -56,7 +65,7 @@ public class InspectorService : IDisposable
         RefreshSelectedPart();
     }
 
-    private void RefreshSelectedPart()
+    public void RefreshSelectedPart()
     {
         var target = _selection.Current;
 
@@ -74,9 +83,6 @@ public class InspectorService : IDisposable
 
         TryGetSelectedDrone(out var drone);
 
-        var garageDrone =
-            drone != null ? _garage.GetByDroneId(drone.InstanceId) : null;
-
         var config =
             _partConfigs.Get(part.PartId);
 
@@ -84,9 +90,7 @@ public class InspectorService : IDisposable
 
         if (drone != null)
         {
-            droneName =
-                garageDrone?.metaData.Name
-                ?? _assembly.GetDroneName(drone.InstanceId);
+            droneName = _assembly.GetDroneName(drone.InstanceId);
         }
 
         var context = new InspectionContext

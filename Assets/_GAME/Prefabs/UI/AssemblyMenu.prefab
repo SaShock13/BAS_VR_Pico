@@ -792,6 +792,7 @@ GameObject:
   - component: {fileID: 5644083656027875771}
   - component: {fileID: 7905653229364930981}
   - component: {fileID: 3870007826837970017}
+  - component: {fileID: 1136757962434413063}
   m_Layer: 5
   m_Name: Drone3Body
   m_TagString: Untagged
@@ -914,6 +915,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1136757962434413063}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -926,6 +939,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1136757962434413063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498874903184679582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &503274444747150742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,6 +1298,7 @@ GameObject:
   - component: {fileID: 3105000939995416595}
   - component: {fileID: 5954716030720163001}
   - component: {fileID: 2813720517703855557}
+  - component: {fileID: 2753073028394125755}
   m_Layer: 5
   m_Name: D7Legs
   m_TagString: Untagged
@@ -1395,6 +1421,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2753073028394125755}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -1407,6 +1445,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2753073028394125755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673742756367354898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &691049944924883089
 GameObject:
   m_ObjectHideFlags: 0
@@ -1973,6 +2023,7 @@ GameObject:
   - component: {fileID: 8854601648500282468}
   - component: {fileID: 93528181120997007}
   - component: {fileID: 7515131006485029644}
+  - component: {fileID: 2861664801774681084}
   m_Layer: 5
   m_Name: DRONE1_Body
   m_TagString: Untagged
@@ -2095,6 +2146,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2861664801774681084}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -2107,6 +2170,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2861664801774681084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864571477279345390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &877765196854573381
 GameObject:
   m_ObjectHideFlags: 0
@@ -2186,6 +2261,7 @@ GameObject:
   - component: {fileID: 492731271479104055}
   - component: {fileID: 3308691758969083815}
   - component: {fileID: 6213434900384092741}
+  - component: {fileID: 3856928042908111438}
   m_Layer: 5
   m_Name: Body1Framed
   m_TagString: Untagged
@@ -2308,6 +2384,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 3856928042908111438}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -2320,6 +2408,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3856928042908111438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883313823313524822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &899685894150813893
 GameObject:
   m_ObjectHideFlags: 0
@@ -2428,6 +2528,7 @@ GameObject:
   - component: {fileID: 366924306466346999}
   - component: {fileID: 2840171559774089487}
   - component: {fileID: 6932116978594000372}
+  - component: {fileID: 16822030957507050}
   m_Layer: 5
   m_Name: Motors
   m_TagString: Untagged
@@ -2536,7 +2637,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2840171559774089487}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 16822030957507050}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &16822030957507050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910641391639838453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &912550105030207271
 GameObject:
   m_ObjectHideFlags: 0
@@ -3137,6 +3262,7 @@ GameObject:
   - component: {fileID: 6613952618870373024}
   - component: {fileID: 4428113587144201086}
   - component: {fileID: 4233396193717631978}
+  - component: {fileID: 2843310078406244163}
   m_Layer: 5
   m_Name: Drone3Propeller
   m_TagString: Untagged
@@ -3259,6 +3385,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2843310078406244163}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -3271,6 +3409,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2843310078406244163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110164050358808796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &1114394280979577858
 GameObject:
   m_ObjectHideFlags: 0
@@ -3790,6 +3940,7 @@ GameObject:
   - component: {fileID: 5228559481095134662}
   - component: {fileID: 2075936637902046657}
   - component: {fileID: 2484995873009434672}
+  - component: {fileID: 6816917644539290146}
   m_Layer: 5
   m_Name: Body3Framed
   m_TagString: Untagged
@@ -3912,6 +4063,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 6816917644539290146}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -3924,6 +4087,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6816917644539290146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382387666045468927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &1417943870005449933
 GameObject:
   m_ObjectHideFlags: 0
@@ -4059,6 +4234,7 @@ GameObject:
   - component: {fileID: 1535901201659870016}
   - component: {fileID: 3487429738432457127}
   - component: {fileID: 2546584912259687533}
+  - component: {fileID: 1153002800601481346}
   m_Layer: 5
   m_Name: D7Rays2
   m_TagString: Untagged
@@ -4181,6 +4357,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1153002800601481346}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -4193,6 +4381,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1153002800601481346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489794836922971342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &1521463883106396848
 GameObject:
   m_ObjectHideFlags: 0
@@ -4424,6 +4624,7 @@ GameObject:
   - component: {fileID: 7924109576369477945}
   - component: {fileID: 4476838839513605624}
   - component: {fileID: 2596692516958540927}
+  - component: {fileID: 5035481910220204010}
   m_Layer: 5
   m_Name: battery1
   m_TagString: Untagged
@@ -4546,6 +4747,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5035481910220204010}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -4558,6 +4771,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5035481910220204010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565326896656078163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &1569206444449759698
 GameObject:
   m_ObjectHideFlags: 0
@@ -4571,6 +4796,7 @@ GameObject:
   - component: {fileID: 756116938229527038}
   - component: {fileID: 3562672520882635503}
   - component: {fileID: 5973346997334413457}
+  - component: {fileID: 8522438133786528932}
   m_Layer: 5
   m_Name: Engine3
   m_TagString: Untagged
@@ -4693,6 +4919,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8522438133786528932}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -4705,6 +4943,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8522438133786528932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569206444449759698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &1592281647563409848
 GameObject:
   m_ObjectHideFlags: 0
@@ -4816,6 +5066,7 @@ GameObject:
   - component: {fileID: 7698121499350627112}
   - component: {fileID: 1880827476897946277}
   - component: {fileID: 5699387909555322851}
+  - component: {fileID: 5555717280037763698}
   m_Layer: 5
   m_Name: Drone2Legs
   m_TagString: Untagged
@@ -4938,6 +5189,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5555717280037763698}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -4950,6 +5213,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5555717280037763698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612062580512424256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &1637027560754236838
 GameObject:
   m_ObjectHideFlags: 0
@@ -5875,6 +6150,7 @@ GameObject:
   - component: {fileID: 3843690495867672186}
   - component: {fileID: 8832450614461034791}
   - component: {fileID: 1314730924415371252}
+  - component: {fileID: 1480285059832043213}
   m_Layer: 5
   m_Name: D9Body
   m_TagString: Untagged
@@ -5997,6 +6273,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1480285059832043213}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -6009,6 +6297,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1480285059832043213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862293771792013513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &1897123073646475278
 GameObject:
   m_ObjectHideFlags: 0
@@ -6262,6 +6562,7 @@ GameObject:
   - component: {fileID: 2012607698836543869}
   - component: {fileID: 2714621147810151879}
   - component: {fileID: 8374690218467318314}
+  - component: {fileID: 4696249916067899863}
   m_Layer: 5
   m_Name: Gears1 4
   m_TagString: Untagged
@@ -6384,6 +6685,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 4696249916067899863}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -6396,6 +6709,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4696249916067899863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990131132255120937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2002565164733444417
 GameObject:
   m_ObjectHideFlags: 0
@@ -6929,6 +7254,7 @@ GameObject:
   - component: {fileID: 4275360214016845659}
   - component: {fileID: 1015416265671359549}
   - component: {fileID: 2644287072638282727}
+  - component: {fileID: 4015505167570779122}
   m_Layer: 5
   m_Name: Drone3Legs
   m_TagString: Untagged
@@ -7051,6 +7377,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 4015505167570779122}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -7063,6 +7401,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4015505167570779122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101356396018257266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2112198145286921149
 GameObject:
   m_ObjectHideFlags: 0
@@ -7076,6 +7426,7 @@ GameObject:
   - component: {fileID: 4116104654899522849}
   - component: {fileID: 978535355984561014}
   - component: {fileID: 466449057638443577}
+  - component: {fileID: 7088213835860237514}
   m_Layer: 5
   m_Name: Propeller1 4
   m_TagString: Untagged
@@ -7198,6 +7549,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 7088213835860237514}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -7210,6 +7573,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7088213835860237514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112198145286921149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2115684792518073208
 GameObject:
   m_ObjectHideFlags: 0
@@ -7223,6 +7598,7 @@ GameObject:
   - component: {fileID: 6824347110075036057}
   - component: {fileID: 3887394660625580035}
   - component: {fileID: 110078846873886000}
+  - component: {fileID: 4504386282704879957}
   m_Layer: 5
   m_Name: DRONE2_Rays
   m_TagString: Untagged
@@ -7345,6 +7721,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 4504386282704879957}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -7357,6 +7745,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4504386282704879957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115684792518073208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2152944285628710243
 GameObject:
   m_ObjectHideFlags: 0
@@ -7524,6 +7924,7 @@ GameObject:
   - component: {fileID: 1723035473296986951}
   - component: {fileID: 1083885858271538793}
   - component: {fileID: 6588829215020040385}
+  - component: {fileID: 8723005498735635380}
   m_Layer: 5
   m_Name: D8Legs
   m_TagString: Untagged
@@ -7646,6 +8047,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8723005498735635380}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -7658,6 +8071,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8723005498735635380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2243379683685745644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2244454794383497684
 GameObject:
   m_ObjectHideFlags: 0
@@ -7985,6 +8410,7 @@ GameObject:
   - component: {fileID: 8657530019041683511}
   - component: {fileID: 5878733622608329464}
   - component: {fileID: 7857616458830103055}
+  - component: {fileID: 184218284830463720}
   m_Layer: 5
   m_Name: Body0_1
   m_TagString: Untagged
@@ -8107,6 +8533,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 184218284830463720}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -8119,6 +8557,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &184218284830463720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2492321274878761545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2493732435632115541
 GameObject:
   m_ObjectHideFlags: 0
@@ -8542,6 +8992,7 @@ GameObject:
   - component: {fileID: 6315621896315349569}
   - component: {fileID: 276946014262944235}
   - component: {fileID: 4143797295459942652}
+  - component: {fileID: 2119407365979708984}
   m_Layer: 5
   m_Name: D10Body
   m_TagString: Untagged
@@ -8664,6 +9115,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2119407365979708984}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -8676,6 +9139,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2119407365979708984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2700699237971369806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2770702952909045784
 GameObject:
   m_ObjectHideFlags: 0
@@ -8689,6 +9164,7 @@ GameObject:
   - component: {fileID: 7089585862083445622}
   - component: {fileID: 9114114494390879811}
   - component: {fileID: 7518053644290049466}
+  - component: {fileID: 2053052535469952084}
   m_Layer: 5
   m_Name: DRONE5_Rays
   m_TagString: Untagged
@@ -8811,6 +9287,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2053052535469952084}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -8823,6 +9311,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2053052535469952084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2770702952909045784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2795723917211323687
 GameObject:
   m_ObjectHideFlags: 0
@@ -8836,6 +9336,7 @@ GameObject:
   - component: {fileID: 8560655481590284640}
   - component: {fileID: 8729005526719034082}
   - component: {fileID: 2639997897637889644}
+  - component: {fileID: 7369178417795481957}
   m_Layer: 5
   m_Name: D10Legs
   m_TagString: Untagged
@@ -8958,6 +9459,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 7369178417795481957}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -8970,6 +9483,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7369178417795481957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2795723917211323687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2796909862193766004
 GameObject:
   m_ObjectHideFlags: 0
@@ -9113,6 +9638,7 @@ GameObject:
   - component: {fileID: 1913044812142392007}
   - component: {fileID: 4450162230217511412}
   - component: {fileID: 1300238495582607369}
+  - component: {fileID: 3368787495723195010}
   m_Layer: 5
   m_Name: Body
   m_TagString: Untagged
@@ -9221,7 +9747,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4450162230217511412}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3368787495723195010}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3368787495723195010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2918828220517491450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2945672850339040347
 GameObject:
   m_ObjectHideFlags: 0
@@ -9234,6 +9784,7 @@ GameObject:
   - component: {fileID: 1796139066200160228}
   - component: {fileID: 2608474857468291551}
   - component: {fileID: 8476980862322946217}
+  - component: {fileID: 543740801162408026}
   m_Layer: 5
   m_Name: Next
   m_TagString: Untagged
@@ -9342,7 +9893,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2608474857468291551}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 543740801162408026}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &543740801162408026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2945672850339040347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2972971546656747205
 GameObject:
   m_ObjectHideFlags: 0
@@ -9356,6 +9931,7 @@ GameObject:
   - component: {fileID: 3871681935757991255}
   - component: {fileID: 2761372914575793315}
   - component: {fileID: 8333321709494943927}
+  - component: {fileID: 3802616992027634910}
   m_Layer: 5
   m_Name: D7Rays 1
   m_TagString: Untagged
@@ -9478,6 +10054,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 3802616992027634910}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -9490,6 +10078,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3802616992027634910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2972971546656747205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2973121297494343173
 GameObject:
   m_ObjectHideFlags: 0
@@ -9503,6 +10103,7 @@ GameObject:
   - component: {fileID: 3719851649052788652}
   - component: {fileID: 9054170733489185669}
   - component: {fileID: 7928054477225913793}
+  - component: {fileID: 3787269328799408471}
   m_Layer: 5
   m_Name: Propeller5 4
   m_TagString: Untagged
@@ -9625,6 +10226,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 3787269328799408471}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -9637,6 +10250,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3787269328799408471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2973121297494343173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &2982283703820371197
 GameObject:
   m_ObjectHideFlags: 0
@@ -9804,6 +10429,7 @@ GameObject:
   - component: {fileID: 132374774358689921}
   - component: {fileID: 665979678877669658}
   - component: {fileID: 8688891924441919992}
+  - component: {fileID: 4650342684865877017}
   m_Layer: 5
   m_Name: D6Body
   m_TagString: Untagged
@@ -9926,6 +10552,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 4650342684865877017}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -9938,6 +10576,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4650342684865877017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3172802566673361897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &3173223303015675831
 GameObject:
   m_ObjectHideFlags: 0
@@ -10365,7 +11015,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -10524,6 +11174,7 @@ GameObject:
   - component: {fileID: 3464618019288195282}
   - component: {fileID: 4554638991154123658}
   - component: {fileID: 9024602731580979867}
+  - component: {fileID: 8962527123863021479}
   m_Layer: 5
   m_Name: Engine12
   m_TagString: Untagged
@@ -10646,6 +11297,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8962527123863021479}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -10658,6 +11321,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8962527123863021479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3531756178311320614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &3537695898947487789
 GameObject:
   m_ObjectHideFlags: 0
@@ -11351,6 +12026,7 @@ GameObject:
   - component: {fileID: 613835882567000472}
   - component: {fileID: 4965273261247393229}
   - component: {fileID: 8902684122593548610}
+  - component: {fileID: 2008860361261320255}
   m_Layer: 5
   m_Name: Gears4 4
   m_TagString: Untagged
@@ -11473,6 +12149,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2008860361261320255}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -11485,6 +12173,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2008860361261320255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025515025010561930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &4027034746622326704
 GameObject:
   m_ObjectHideFlags: 0
@@ -11572,7 +12272,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -12447,7 +13147,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -12542,6 +13242,7 @@ GameObject:
   - component: {fileID: 5081106717764781235}
   - component: {fileID: 1934796911322261065}
   - component: {fileID: 7532113392481107334}
+  - component: {fileID: 5694061487572568295}
   m_Layer: 5
   m_Name: Propeller3 4
   m_TagString: Untagged
@@ -12664,6 +13365,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5694061487572568295}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -12676,6 +13389,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5694061487572568295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4489172925300941943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &4600255500644225685
 GameObject:
   m_ObjectHideFlags: 0
@@ -12753,6 +13478,7 @@ GameObject:
   - component: {fileID: 758532548912777314}
   - component: {fileID: 3304731035706536675}
   - component: {fileID: 1841703314559092643}
+  - component: {fileID: 2987811292644557210}
   m_Layer: 5
   m_Name: Body0_3
   m_TagString: Untagged
@@ -12875,6 +13601,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2987811292644557210}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -12887,6 +13625,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2987811292644557210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655734591407288279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &4660299802312443377
 GameObject:
   m_ObjectHideFlags: 0
@@ -12900,6 +13650,7 @@ GameObject:
   - component: {fileID: 7469558846730796492}
   - component: {fileID: 8173677615827194701}
   - component: {fileID: 7050304013421349454}
+  - component: {fileID: 8200290227505029205}
   m_Layer: 5
   m_Name: D7Propeller
   m_TagString: Untagged
@@ -13022,6 +13773,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8200290227505029205}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -13034,6 +13797,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8200290227505029205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4660299802312443377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &4749311722791510622
 GameObject:
   m_ObjectHideFlags: 0
@@ -13437,6 +14212,7 @@ GameObject:
   - component: {fileID: 6161447436954307208}
   - component: {fileID: 4333789823842143086}
   - component: {fileID: 9139118330534841771}
+  - component: {fileID: 6476891021248173635}
   m_Layer: 5
   m_Name: Drone2Propeller
   m_TagString: Untagged
@@ -13559,6 +14335,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 6476891021248173635}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -13571,6 +14359,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6476891021248173635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4910402932521928418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &4915004770126552633
 GameObject:
   m_ObjectHideFlags: 0
@@ -13584,6 +14384,7 @@ GameObject:
   - component: {fileID: 1381618779808887838}
   - component: {fileID: 2525076837702601579}
   - component: {fileID: 1585138367978354903}
+  - component: {fileID: 2854365914990811194}
   m_Layer: 5
   m_Name: D7Rays
   m_TagString: Untagged
@@ -13706,6 +14507,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2854365914990811194}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -13718,6 +14531,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2854365914990811194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4915004770126552633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &4923614391098511012
 GameObject:
   m_ObjectHideFlags: 0
@@ -13827,6 +14652,7 @@ GameObject:
   - component: {fileID: 8106277292034651378}
   - component: {fileID: 6361997666645944114}
   - component: {fileID: 3242377829266747901}
+  - component: {fileID: 3052445812112798658}
   m_Layer: 5
   m_Name: D8Rays
   m_TagString: Untagged
@@ -13949,6 +14775,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 3052445812112798658}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -13961,6 +14799,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3052445812112798658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4998705214836876057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &5010459924037868704
 GameObject:
   m_ObjectHideFlags: 0
@@ -14006,6 +14856,7 @@ GameObject:
   - component: {fileID: 384041053231392587}
   - component: {fileID: 1069547168457740520}
   - component: {fileID: 7460599458615895}
+  - component: {fileID: 7227875422763767970}
   m_Layer: 5
   m_Name: Drone4Propeller
   m_TagString: Untagged
@@ -14128,6 +14979,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 7227875422763767970}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -14140,6 +15003,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7227875422763767970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5010547616424473955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &5067124150269414315
 GameObject:
   m_ObjectHideFlags: 0
@@ -14152,6 +15027,7 @@ GameObject:
   - component: {fileID: 3179691478937280369}
   - component: {fileID: 4707119988728097097}
   - component: {fileID: 1372465716293886027}
+  - component: {fileID: 1650355320273521392}
   m_Layer: 5
   m_Name: Previous
   m_TagString: Untagged
@@ -14260,7 +15136,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4707119988728097097}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1650355320273521392}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1650355320273521392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5067124150269414315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &5110791442138663556
 GameObject:
   m_ObjectHideFlags: 0
@@ -14502,7 +15402,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -14655,6 +15555,7 @@ GameObject:
   - component: {fileID: 4512979049556434149}
   - component: {fileID: 8005170905215234525}
   - component: {fileID: 6891733604427715670}
+  - component: {fileID: 673375532717196528}
   m_Layer: 5
   m_Name: DRONE3_Rays
   m_TagString: Untagged
@@ -14777,6 +15678,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 673375532717196528}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -14789,6 +15702,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &673375532717196528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5166223277632615171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &5189913373781670659
 GameObject:
   m_ObjectHideFlags: 0
@@ -15450,6 +16375,7 @@ GameObject:
   - component: {fileID: 5871890227887609029}
   - component: {fileID: 2725216586710541390}
   - component: {fileID: 4796161333553051130}
+  - component: {fileID: 5924550457454043373}
   m_Layer: 5
   m_Name: Propeller2 4
   m_TagString: Untagged
@@ -15572,6 +16498,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5924550457454043373}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -15584,6 +16522,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5924550457454043373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5458266145253990743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &5522077409834564127
 GameObject:
   m_ObjectHideFlags: 0
@@ -16065,6 +17015,7 @@ GameObject:
   - component: {fileID: 8924263494770863649}
   - component: {fileID: 6519842480350854782}
   - component: {fileID: 678566399171676961}
+  - component: {fileID: 3111152295549322094}
   m_Layer: 5
   m_Name: D6Legs
   m_TagString: Untagged
@@ -16187,6 +17138,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 3111152295549322094}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -16199,6 +17162,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3111152295549322094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5901329871645703532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &5902521496245862237
 GameObject:
   m_ObjectHideFlags: 0
@@ -16602,6 +17577,7 @@ GameObject:
   - component: {fileID: 7981035185501783247}
   - component: {fileID: 3465989859683028988}
   - component: {fileID: 1266871135918188119}
+  - component: {fileID: 8838045686691167336}
   m_Layer: 5
   m_Name: D8Body
   m_TagString: Untagged
@@ -16724,6 +17700,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8838045686691167336}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -16736,6 +17724,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8838045686691167336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5986456528705385973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &6000816227991967025
 GameObject:
   m_ObjectHideFlags: 0
@@ -17121,6 +18121,7 @@ GameObject:
   - component: {fileID: 8715719330438180455}
   - component: {fileID: 2807857959119181305}
   - component: {fileID: 3604573263352787640}
+  - component: {fileID: 5057294323721316007}
   m_Layer: 5
   m_Name: Gears3 4
   m_TagString: Untagged
@@ -17243,6 +18244,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5057294323721316007}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -17255,6 +18268,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5057294323721316007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6223607836462568723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &6258497091012823910
 GameObject:
   m_ObjectHideFlags: 0
@@ -17267,6 +18292,7 @@ GameObject:
   - component: {fileID: 6571085348982318836}
   - component: {fileID: 6610536175922400163}
   - component: {fileID: 7935413104562627034}
+  - component: {fileID: 6144876369788685937}
   m_Layer: 5
   m_Name: Other
   m_TagString: Untagged
@@ -17375,7 +18401,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6610536175922400163}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6144876369788685937}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6144876369788685937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6258497091012823910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &6293204621452893926
 GameObject:
   m_ObjectHideFlags: 0
@@ -17463,7 +18513,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -17751,6 +18801,7 @@ GameObject:
   - component: {fileID: 7889928095066430346}
   - component: {fileID: 9100050662899682814}
   - component: {fileID: 4064796577695486271}
+  - component: {fileID: 8623981250883214489}
   m_Layer: 5
   m_Name: Engine2
   m_TagString: Untagged
@@ -17873,6 +18924,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8623981250883214489}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -17885,6 +18948,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8623981250883214489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6581777080335431928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &6605737700232020114
 GameObject:
   m_ObjectHideFlags: 0
@@ -17898,6 +18973,7 @@ GameObject:
   - component: {fileID: 3284759349628605901}
   - component: {fileID: 7316693350839851698}
   - component: {fileID: 5236130441107760065}
+  - component: {fileID: 4627390023073260498}
   m_Layer: 5
   m_Name: DRONE1_Rays
   m_TagString: Untagged
@@ -18020,6 +19096,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 4627390023073260498}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -18032,6 +19120,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4627390023073260498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6605737700232020114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &6661551428527609776
 GameObject:
   m_ObjectHideFlags: 0
@@ -18110,6 +19210,7 @@ GameObject:
   - component: {fileID: 3131389201216207745}
   - component: {fileID: 5510294558352505482}
   - component: {fileID: 3659600585897137916}
+  - component: {fileID: 9016412000763349940}
   m_Layer: 5
   m_Name: MainBoard
   m_TagString: Untagged
@@ -18232,6 +19333,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 9016412000763349940}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -18244,6 +19357,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &9016412000763349940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6692903791878596653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &6699823746272595136
 GameObject:
   m_ObjectHideFlags: 0
@@ -18257,6 +19382,7 @@ GameObject:
   - component: {fileID: 3878590082152760792}
   - component: {fileID: 2438243091948091740}
   - component: {fileID: 5930890530139517271}
+  - component: {fileID: 5961349659578778624}
   m_Layer: 5
   m_Name: Legs5
   m_TagString: Untagged
@@ -18379,6 +19505,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5961349659578778624}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -18391,6 +19529,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5961349659578778624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6699823746272595136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &6707046019345156122
 GameObject:
   m_ObjectHideFlags: 0
@@ -18500,6 +19650,7 @@ GameObject:
   - component: {fileID: 7390210471345592406}
   - component: {fileID: 7358460874263606930}
   - component: {fileID: 3814034008458574554}
+  - component: {fileID: 3007717221513803823}
   m_Layer: 5
   m_Name: D11Propeller
   m_TagString: Untagged
@@ -18622,6 +19773,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 3007717221513803823}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -18634,6 +19797,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3007717221513803823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805761858507914119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &6825191782253478227
 GameObject:
   m_ObjectHideFlags: 0
@@ -18859,6 +20034,7 @@ GameObject:
   - component: {fileID: 3237276037114176149}
   - component: {fileID: 786202707261452068}
   - component: {fileID: 1983492171255269873}
+  - component: {fileID: 2792412639509219941}
   m_Layer: 5
   m_Name: D6Propeller
   m_TagString: Untagged
@@ -18981,6 +20157,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2792412639509219941}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -18993,6 +20181,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2792412639509219941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6885847033745719043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &6888421603569676803
 GameObject:
   m_ObjectHideFlags: 0
@@ -19103,6 +20303,7 @@ GameObject:
   - component: {fileID: 8846716032554269825}
   - component: {fileID: 2116379578691476833}
   - component: {fileID: 5841445507879421802}
+  - component: {fileID: 7539301721811058688}
   m_Layer: 5
   m_Name: Body5
   m_TagString: Untagged
@@ -19225,6 +20426,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 7539301721811058688}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -19237,6 +20450,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7539301721811058688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6930984667118091354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &6934554835500810226
 GameObject:
   m_ObjectHideFlags: 0
@@ -19301,7 +20526,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -19434,6 +20659,7 @@ GameObject:
   - component: {fileID: 3696743982846249696}
   - component: {fileID: 6561534396635101219}
   - component: {fileID: 3759478009203855163}
+  - component: {fileID: 3706936892290161813}
   m_Layer: 5
   m_Name: Engine4
   m_TagString: Untagged
@@ -19556,6 +20782,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 3706936892290161813}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -19568,6 +20806,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3706936892290161813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7058690495544645973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &7069133008547990749
 GameObject:
   m_ObjectHideFlags: 0
@@ -20043,6 +21293,7 @@ GameObject:
   - component: {fileID: 8491508642960725038}
   - component: {fileID: 744372074257633009}
   - component: {fileID: 6986554867158709942}
+  - component: {fileID: 2863835064322854430}
   m_Layer: 5
   m_Name: Body0_2
   m_TagString: Untagged
@@ -20165,6 +21416,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2863835064322854430}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -20177,6 +21440,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2863835064322854430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7248303750442051626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &7277325437050461579
 GameObject:
   m_ObjectHideFlags: 0
@@ -20254,6 +21529,7 @@ GameObject:
   - component: {fileID: 3913979626074246839}
   - component: {fileID: 1949049635953147733}
   - component: {fileID: 9152506432699905402}
+  - component: {fileID: 5081048848646974892}
   m_Layer: 5
   m_Name: Propeller
   m_TagString: Untagged
@@ -20362,7 +21638,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1949049635953147733}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5081048848646974892}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5081048848646974892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7297059492073454421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &7299842305166895853
 GameObject:
   m_ObjectHideFlags: 0
@@ -20562,6 +21862,7 @@ GameObject:
   - component: {fileID: 1900166131334102897}
   - component: {fileID: 6813219945470856050}
   - component: {fileID: 3291184366381108813}
+  - component: {fileID: 8236021868704372558}
   m_Layer: 5
   m_Name: D8PropellerH
   m_TagString: Untagged
@@ -20684,6 +21985,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8236021868704372558}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -20696,6 +22009,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8236021868704372558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7365773751811401677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &7378285017348070907
 GameObject:
   m_ObjectHideFlags: 0
@@ -21013,6 +22338,7 @@ GameObject:
   - component: {fileID: 8261479559766237528}
   - component: {fileID: 5686949408072979342}
   - component: {fileID: 6697022690377739968}
+  - component: {fileID: 6117331908884471360}
   m_Layer: 5
   m_Name: Drone1Propeller (1)
   m_TagString: Untagged
@@ -21135,6 +22461,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 6117331908884471360}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -21147,6 +22485,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6117331908884471360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7569052167828781703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &7589304745287257126
 GameObject:
   m_ObjectHideFlags: 0
@@ -21257,6 +22607,7 @@ GameObject:
   - component: {fileID: 651090788832360129}
   - component: {fileID: 1399436679764966126}
   - component: {fileID: 2837030596519515615}
+  - component: {fileID: 6148579866928338858}
   m_Layer: 5
   m_Name: Engine11
   m_TagString: Untagged
@@ -21379,6 +22730,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 6148579866928338858}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -21391,6 +22754,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6148579866928338858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743519722664647457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &7790339802668516761
 GameObject:
   m_ObjectHideFlags: 0
@@ -21404,6 +22779,7 @@ GameObject:
   - component: {fileID: 8543842989176587217}
   - component: {fileID: 9067294050088470756}
   - component: {fileID: 1837461607495432941}
+  - component: {fileID: 6191245260922938825}
   m_Layer: 5
   m_Name: D10Rays
   m_TagString: Untagged
@@ -21526,6 +22902,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 6191245260922938825}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -21538,6 +22926,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6191245260922938825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7790339802668516761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &7848370460245153336
 GameObject:
   m_ObjectHideFlags: 0
@@ -21763,6 +23163,7 @@ GameObject:
   - component: {fileID: 8672400774139590521}
   - component: {fileID: 440655933521087221}
   - component: {fileID: 987289644995981827}
+  - component: {fileID: 5722899881145820074}
   m_Layer: 5
   m_Name: Gears2 4
   m_TagString: Untagged
@@ -21885,6 +23286,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5722899881145820074}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -21897,6 +23310,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5722899881145820074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7885625637037462551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &7891784260354152095
 GameObject:
   m_ObjectHideFlags: 0
@@ -22071,6 +23496,7 @@ GameObject:
   - component: {fileID: 4173699782903141987}
   - component: {fileID: 5174087517836571441}
   - component: {fileID: 9173111776189403915}
+  - component: {fileID: 5150050602733610537}
   m_Layer: 5
   m_Name: D6Rays
   m_TagString: Untagged
@@ -22193,6 +23619,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5150050602733610537}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -22205,6 +23643,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5150050602733610537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7932377112200777945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &7975427251026223382
 GameObject:
   m_ObjectHideFlags: 0
@@ -22249,6 +23699,7 @@ GameObject:
   - component: {fileID: 1233794427714780426}
   - component: {fileID: 9199041459824956784}
   - component: {fileID: 9046080670745096999}
+  - component: {fileID: 2941720714922897218}
   m_Layer: 5
   m_Name: Frame
   m_TagString: Untagged
@@ -22357,7 +23808,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9199041459824956784}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2941720714922897218}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2941720714922897218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7990944729817587393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &7996623206377941350
 GameObject:
   m_ObjectHideFlags: 0
@@ -22563,6 +24038,7 @@ GameObject:
   - component: {fileID: 3928565453619058775}
   - component: {fileID: 5691454528096302236}
   - component: {fileID: 317310313805195191}
+  - component: {fileID: 8240904911588083801}
   m_Layer: 5
   m_Name: Chassis
   m_TagString: Untagged
@@ -22671,7 +24147,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5691454528096302236}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8240904911588083801}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8240904911588083801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8176124247757212266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &8217585269467650318
 GameObject:
   m_ObjectHideFlags: 0
@@ -22781,6 +24281,7 @@ GameObject:
   - component: {fileID: 259010718817599444}
   - component: {fileID: 5766879870818442853}
   - component: {fileID: 8081419235311336629}
+  - component: {fileID: 6689471717869774053}
   m_Layer: 5
   m_Name: Drone1Legs
   m_TagString: Untagged
@@ -22903,6 +24404,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 6689471717869774053}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -22915,6 +24428,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6689471717869774053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8249918665521809399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &8258475933535310772
 GameObject:
   m_ObjectHideFlags: 0
@@ -22960,6 +24485,7 @@ GameObject:
   - component: {fileID: 5078283405599514454}
   - component: {fileID: 8268062635718606536}
   - component: {fileID: 3829073035274444798}
+  - component: {fileID: 5614814810306284658}
   m_Layer: 5
   m_Name: D8PropellerL
   m_TagString: Untagged
@@ -23082,6 +24608,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5614814810306284658}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -23094,6 +24632,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5614814810306284658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8277413850903230426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &8351725225537232115
 GameObject:
   m_ObjectHideFlags: 0
@@ -23229,6 +24779,7 @@ GameObject:
   - component: {fileID: 837468462727394211}
   - component: {fileID: 3743199419010690260}
   - component: {fileID: 8949560685722318408}
+  - component: {fileID: 6292530031475567285}
   m_Layer: 5
   m_Name: D7Body
   m_TagString: Untagged
@@ -23351,6 +24902,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 6292530031475567285}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -23363,6 +24926,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6292530031475567285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8390572187293376577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &8409062715481295392
 GameObject:
   m_ObjectHideFlags: 0
@@ -23636,7 +25211,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -23927,7 +25502,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -24118,6 +25693,7 @@ GameObject:
   - component: {fileID: 101086062430354953}
   - component: {fileID: 4877252516842010701}
   - component: {fileID: 8856838805106188693}
+  - component: {fileID: 3837402336806306530}
   m_Layer: 5
   m_Name: D9Rays
   m_TagString: Untagged
@@ -24240,6 +25816,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 3837402336806306530}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -24252,6 +25840,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3837402336806306530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8747035514778195093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &8776427309863820613
 GameObject:
   m_ObjectHideFlags: 0
@@ -24419,6 +26019,7 @@ GameObject:
   - component: {fileID: 4457215041197107186}
   - component: {fileID: 5283720654909718568}
   - component: {fileID: 2043836890702112220}
+  - component: {fileID: 514368053283806900}
   m_Layer: 5
   m_Name: Drone1Body
   m_TagString: Untagged
@@ -24541,6 +26142,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 514368053283806900}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -24553,6 +26166,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &514368053283806900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8846238753284613995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &8853565869587732459
 GameObject:
   m_ObjectHideFlags: 0
@@ -24640,12 +26265,12 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29
+  m_fontSize: 19.85
   m_fontSizeBase: 29
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -24857,6 +26482,7 @@ GameObject:
   - component: {fileID: 6114702470382662923}
   - component: {fileID: 2237883962002017848}
   - component: {fileID: 4735013855947204563}
+  - component: {fileID: 2595182513920222581}
   m_Layer: 5
   m_Name: Drone2Body
   m_TagString: Untagged
@@ -24979,6 +26605,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2595182513920222581}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -24991,6 +26629,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2595182513920222581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8941736743595319552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &8961318144918506128
 GameObject:
   m_ObjectHideFlags: 0
@@ -25094,6 +26744,7 @@ GameObject:
   - component: {fileID: 3859198659000328629}
   - component: {fileID: 7132828270487518891}
   - component: {fileID: 760620294760522125}
+  - component: {fileID: 8918515871980105816}
   m_Layer: 5
   m_Name: D11Legs
   m_TagString: Untagged
@@ -25216,6 +26867,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8918515871980105816}
+        m_TargetAssemblyTypeName: SFXButtonSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 8352478566042822293}
         m_TargetAssemblyTypeName: MenuPartCreationView, Assembly-CSharp
         m_MethodName: RequestCreatePart
@@ -25228,6 +26891,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8918515871980105816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8963541790734042015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603326e8d8e88a5448d6c2da786352d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClickSound
 --- !u!1 &8990703826435804387
 GameObject:
   m_ObjectHideFlags: 0

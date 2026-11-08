@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MissionBootstrapTest : MonoBehaviour
 {
@@ -8,32 +9,45 @@ public class MissionBootstrapTest : MonoBehaviour
 
     [SerializeField] private SceneMissionBinder binder;
 
-    MissionRuntime runtime;
-    
+    [SerializeField] private InputActionReference startMissionAction;
 
-    private void Update()
+    private InputAction _startAction;
+    private bool _enabledAction;
+
+    private void OnEnable()
     {
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            StartTestMission();
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            MissionEvents.CargoPickedUp?.Invoke();
-        }
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            MissionEvents.CargoDelivered?.Invoke();
-        }
+        _startAction = startMissionAction != null ? startMissionAction.action : null;
+        if (_startAction == null)
+            return;
+        _startAction.performed += OnStartMission;
+        _enabledAction = !_startAction.enabled;
+        if (_enabledAction)
+            _startAction.Enable();
     }
 
-
-
-    private void StartTestMission()
+    private void OnDisable()
     {
-        runtime =
+        if (_startAction == null)
+            return;
+        _startAction.performed -= OnStartMission;
+        if (_enabledAction)
+            _startAction.Disable();
+        _startAction = null;
+    }
+
+    private void OnStartMission(InputAction.CallbackContext context) => StartTestMission();
+
+    public void StartTestMission()
+    {
+        if (controller == null || mission == null || binder == null)
+        {
+            Debug.LogError("Mission bootstrap references are not assigned.", this);
+            return;
+        }
+        if (controller.State == MissionState.Running || controller.State == MissionState.Paused)
+            return;
+
+        var runtime =
             MissionFactory.CreateRuntime(
                 mission,
                 binder);

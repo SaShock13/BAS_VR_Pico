@@ -7,4 +7,6 @@ public class MissionContext
     public MissionController Controller;
 
     public float ElapsedMissionTime;
+    public System.Action CompletionNotificationDismissed;
+    public System.Action CompletionNotificationCancelled;
 }

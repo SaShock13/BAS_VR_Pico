@@ -16,6 +16,7 @@ public static class MissionFactory
         return new MissionRuntime(
             steps,
             new List<MissionCondition>(),
-            definition);
+            definition,
+            binder.EventBus);
     }
 }

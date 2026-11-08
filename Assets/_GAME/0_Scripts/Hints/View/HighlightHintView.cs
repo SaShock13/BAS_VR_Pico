@@ -27,10 +27,11 @@ public class HighlightHintView:MonoBehaviour
 
     public void Hide()
     {
-        if (_currentHighlightable == null)
+        var previous = _currentHighlightable;
+        _currentHighlightable = null;
+        if (previous == null || (previous is Object obj && obj == null))
             return;
-
-        _currentHighlightable?.SetHintHighlighted(false);
+        previous.SetHintHighlighted(false);
 
     }
 }

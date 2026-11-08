@@ -9,6 +9,9 @@ public interface INotificationService
 
     void Info(string text, float duration = 3f);
 
+    void Success(string text, SFXId? sound = null, float duration = 3f,
+        Action onDismissed = null, Action onCancelled = null);
+
     void Warning(string text, float duration = 4f);
 
     void Error(string text, float duration = 5f);

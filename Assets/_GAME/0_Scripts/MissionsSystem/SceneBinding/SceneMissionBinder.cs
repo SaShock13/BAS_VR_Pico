@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using static UnityEngine.Rendering.GPUSort;
 
 public class SceneMissionBinder : MonoBehaviour
 {
@@ -18,9 +17,11 @@ public class SceneMissionBinder : MonoBehaviour
     [Inject] public IHintScenarioController _hintScenario;
 
     [SerializeField]
-    private List<MissionPoint> missionPoints;
+    private List<MissionPoint> missionPoints = new();
 
     public Cargo Cargo;
+    [SerializeField] private Transform flightLaunchTarget;
+    public Transform FlightLaunchTarget => flightLaunchTarget;
 
     private Dictionary<MissionPointId, MissionPoint> _points;
 
@@ -30,6 +31,8 @@ public class SceneMissionBinder : MonoBehaviour
 
         foreach (var point in missionPoints)
         {
+            if (point == null)
+                continue;
             _points[point.Id] = point;
         }
     }

@@ -15,6 +15,9 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private Button next;
     [SerializeField] private Button[] savedRows;
     [SerializeField] private TMP_Text statusText;
+    [SerializeField] private GameObject mainWindow, newWindow, loadWindow, settingsWindow, aboutWindow;
+    [SerializeField] private Button[] navigationButtons;
+    [SerializeField] private Button[] keyboardKeys;
     private IEventBus _eventBus;
     private IDisposable _subscription, _listSubscription;
     private List<AssemblyProjectData> _projects = new();
@@ -34,18 +37,49 @@ public class StartMenu : MonoBehaviour
             savedRows[i].onClick.AddListener(() => LoadRow(row));
         }
         SetButton(false);
-        Refresh();
+        ShowWindow(mainWindow);
     }
     public void StartConstructor()
     {
         if (_eventBus == null || _loading) return;
+        if (string.IsNullOrWhiteSpace(projectName.text))
+        {
+            statusText.text = "Введите имя сборки";
+            return;
+        }
         _eventBus.Publish(new AssemblyProjectRequest { Operation = "new", Name = projectName.text });
+    }
+    public void OpenNew()
+    {
+        if (_loading) return;
+        projectName.text = string.Empty;
+        ShowWindow(newWindow);
+    }
+    public void OpenSaves() { if (!_loading) { ShowWindow(loadWindow); Refresh(); } }
+    public void OpenSettings() { if (!_loading) ShowWindow(settingsWindow); }
+    public void OpenAbout() { if (!_loading) ShowWindow(aboutWindow); }
+    public void CloseWindow() { if (!_loading) ShowWindow(mainWindow); }
+    public void AcceptSettings() { CloseWindow(); } // Placeholder: there are no editable settings yet.
+    public void Quit() { if (!_loading) Application.Quit(); }
+    public void TypeCharacter(string value)
+    {
+        if (!_loading && projectName.text.Length < projectName.characterLimit) projectName.text += value;
+    }
+    public void Backspace()
+    {
+        if (!_loading && projectName.text.Length > 0) projectName.text = projectName.text.Substring(0, projectName.text.Length - 1);
+    }
+    private void ShowWindow(GameObject window)
+    {
+        foreach (var panel in new[] { mainWindow, newWindow, loadWindow, settingsWindow, aboutWindow })
+            panel.SetActive(panel == window);
+        statusText.text = string.Empty;
     }
     private void Refresh() { if (!_loading) _eventBus.Publish(new AssemblyProjectRequest { Operation = "list" }); }
     private void OnList(AssemblyProjectListEvent data)
     {
         if (!string.IsNullOrEmpty(data.Error)) { statusText.text = data.Error; SetButton(false); return; }
-        _projects = data.Projects;
+        _projects = data.Projects ?? new List<AssemblyProjectData>();
         _page = 0;
         statusText.text = _projects.Count == 0 ? "Сохранённых сборок пока нет" : "Выберите сборку для загрузки";
         Render();
@@ -83,7 +117,10 @@ public class StartMenu : MonoBehaviour
         startBtn.interactable = !loading;
         showSaves.interactable = !loading;
         projectName.interactable = !loading;
-        startBtnText.text = loading ? "ЗАГРУЗКА…" : "НОВАЯ СБОРКА";
+        foreach (var button in navigationButtons) button.interactable = !loading;
+        foreach (var button in keyboardKeys) button.interactable = !loading;
+        startBtnText.text = loading ? "ЗАГРУЗКА…" : "OK";
+        if (loading) statusText.text = "Загрузка сцены сборки…";
         Render();
     }
     private void OnDestroy() { _subscription?.Dispose(); _listSubscription?.Dispose(); }

@@ -17,6 +17,8 @@ public class DronePanelUI : MonoBehaviour
     [SerializeField] private Button validateButton;
     [SerializeField] private TMP_Text validationStatus;
     [SerializeField] private TMP_Text validationDetails;
+    [SerializeField] private TMP_InputField nameInputField;
+    [SerializeField] private Button renameButton;
 
     [Inject]
     public void Construct(InspectorService inspector, DroneValidationStateService validation, IEventBus bus)
@@ -26,6 +28,7 @@ public class DronePanelUI : MonoBehaviour
         _bus = bus;
         _validation.Changed += RenderValidation;
         validateButton.onClick.AddListener(ValidateSelectedDrone);
+        renameButton.onClick.AddListener(RenameSelectedDrone);
         Hide();
     }
 
@@ -44,7 +47,9 @@ public class DronePanelUI : MonoBehaviour
     private void OnUpdated(InspectionContext context)
     {
         if (context.Drone == null) { Hide(); return; }
+        bool changedDrone = _droneId != context.Drone.Id;
         _droneId = context.Drone.Id;
+        if (changedDrone) nameInputField.SetTextWithoutNotify(context.Drone.Name);
         weight.text = context.Drone.TotalWeight.ToString();
         name.text = context.Drone.Name;
         panel.SetActive(true);
@@ -55,6 +60,12 @@ public class DronePanelUI : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(_droneId))
             _bus.Publish(new ValidateDroneRequest { DroneId = _droneId });
+    }
+
+    private void RenameSelectedDrone()
+    {
+        if (_inspector.RenameSelectedDrone(nameInputField.text))
+            nameInputField.SetTextWithoutNotify(nameInputField.text.Trim());
     }
 
     private void RenderValidation()
@@ -85,5 +96,6 @@ public class DronePanelUI : MonoBehaviour
         }
         if (_validation != null) _validation.Changed -= RenderValidation;
         if (validateButton != null) validateButton.onClick.RemoveListener(ValidateSelectedDrone);
+        if (renameButton != null) renameButton.onClick.RemoveListener(RenameSelectedDrone);
     }
 }

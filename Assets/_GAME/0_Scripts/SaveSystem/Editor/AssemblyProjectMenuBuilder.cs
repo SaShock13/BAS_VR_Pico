@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
 using System;
 using TMPro;
 using UnityEditor;
@@ -50,6 +50,86 @@ public static class AssemblyProjectMenuBuilder
         field.characterLimit=80; field.lineType=TMP_InputField.LineType.SingleLine;
         return field;
     }
+    public static void BuildBootMenu(StartMenu menu)
+    {
+        _font=AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/_GAME/Art/MainMenu/AssemblyProjectFont.asset");
+        if(_font==null) throw new InvalidOperationException("AssemblyProjectFont is missing");
+        var existing=menu.transform.Find("AssemblyProjects");
+        if(existing!=null) UnityEngine.Object.DestroyImmediate(existing.gameObject);
+        var legacy=menu.transform.Find("MainPanel");
+        if(legacy!=null) legacy.gameObject.SetActive(false);
+        var panel=Rect("AssemblyProjects",menu.transform,Vector2.zero,new Vector2(800,850));
+        var canvasRect=(RectTransform)menu.transform;
+        panel.localScale=Vector3.one*Mathf.Min(canvasRect.rect.width/800f,canvasRect.rect.height/850f)*.94f;
+        panel.gameObject.AddComponent<Image>().color=new Color(.025f,.045f,.06f,1);
+        Label("Title",panel,"Конструктор дронов 2.0",new Vector2(0,365),new Vector2(750,70),36);
+        var main=Rect("MainWindow",panel,new Vector2(0,-15),new Vector2(760,620));
+        var create=Button("NewAssembly",main,"Новая сборка",new Vector2(0,220),new Vector2(680,72));
+        var saves=Button("LoadAssemblies",main,"Загрузить сборки",new Vector2(0,120),new Vector2(680,72));
+        var settings=Button("Settings",main,"Настройки",new Vector2(0,20),new Vector2(680,72));
+        var about=Button("About",main,"О разработчиках",new Vector2(0,-80),new Vector2(680,72));
+        var quit=Button("Quit",main,"Выход",new Vector2(0,-180),new Vector2(680,72));
+        var fresh=Rect("NewWindow",panel,Vector2.zero,new Vector2(760,620));
+        Label("Heading",fresh,"Новая сборка",new Vector2(0,265),new Vector2(720,60),30);
+        var input=Input(fresh,new Vector2(0,190));
+        ((TMP_Text)input.placeholder).text="Введите имя сборки";
+        input.shouldHideSoftKeyboard=true;
+        var keys=new System.Collections.Generic.List<Button>();
+        string[] letters={"1234567890", "ЙЦУКЕНГШЩЗХ", "ФЫВАПРОЛДЖЭ", "ЯЧСМИТЬБЮЁЪ"};
+        for(int row=0;row<letters.Length;row++)
+        for(int col=0;col<letters[row].Length;col++)
+        {
+            string letter=letters[row][col].ToString();
+            var key=Button("Key_"+letter,fresh,letter,new Vector2((col-(letters[row].Length-1)*.5f)*62,105-row*66),new Vector2(56,58));
+            UnityEventTools.AddStringPersistentListener(key.onClick,menu.TypeCharacter,letter);
+            keys.Add(key);
+        }
+        var space=Button("Space",fresh,"Пробел",new Vector2(-115,-165),new Vector2(420,55));
+        UnityEventTools.AddStringPersistentListener(space.onClick,menu.TypeCharacter," "); keys.Add(space);
+        var erase=Button("Backspace",fresh,"Стереть",new Vector2(230,-165),new Vector2(210,55));
+        UnityEventTools.AddPersistentListener(erase.onClick,menu.Backspace); keys.Add(erase);
+        var ok=Button("CreateOK",fresh,"OK",new Vector2(-180,-260),new Vector2(320,64));
+        var cancelNew=Button("Cancel",fresh,"Отмена",new Vector2(180,-260),new Vector2(320,64));
+        var load=Rect("LoadWindow",panel,Vector2.zero,new Vector2(760,620));
+        Label("Heading",load,"Загрузить сборки",new Vector2(0,265),new Vector2(720,60),30);
+        var rows=new Button[4];
+        for(int i=0;i<rows.Length;i++) rows[i]=Button("SavedRow"+i,load,"Сборка",new Vector2(0,175-i*83),new Vector2(720,72));
+        var prev=Button("Previous",load,"Назад",new Vector2(-185,-175),new Vector2(320,56));
+        var next=Button("Next",load,"Далее",new Vector2(185,-175),new Vector2(320,56));
+        var closeLoad=Button("Close",load,"Отмена",new Vector2(0,-260),new Vector2(680,64));
+        var prefs=Rect("SettingsWindow",panel,Vector2.zero,new Vector2(760,620));
+        Label("Heading",prefs,"Настройки",new Vector2(0,265),new Vector2(720,60),30);
+        Label("Info",prefs,"Настройки появятся в следующем обновлении.",new Vector2(0,70),new Vector2(660,180),28);
+        var savePrefs=Button("Save",prefs,"OK — сохранить",new Vector2(-180,-260),new Vector2(320,64));
+        var cancelPrefs=Button("Cancel",prefs,"Отмена",new Vector2(180,-260),new Vector2(320,64));
+        var credits=Rect("AboutWindow",panel,Vector2.zero,new Vector2(760,620));
+        Label("Heading",credits,"О разработчиках",new Vector2(0,265),new Vector2(720,60),30);
+        Label("Info",credits,"Конструктор дронов 2.0\n\nVR-приложение для сборки и испытания дронов.\n\nИнформация о команде появится здесь позже.",new Vector2(0,40),new Vector2(660,330),28);
+        var closeAbout=Button("Close",credits,"OK",new Vector2(0,-260),new Vector2(680,64));
+        var status=Label("Status",panel,"",new Vector2(0,-365),new Vector2(730,75),22);
+        UnityEventTools.AddPersistentListener(create.onClick,menu.OpenNew);
+        UnityEventTools.AddPersistentListener(saves.onClick,menu.OpenSaves);
+        UnityEventTools.AddPersistentListener(settings.onClick,menu.OpenSettings);
+        UnityEventTools.AddPersistentListener(about.onClick,menu.OpenAbout);
+        UnityEventTools.AddPersistentListener(quit.onClick,menu.Quit);
+        UnityEventTools.AddPersistentListener(ok.onClick,menu.StartConstructor);
+        UnityEventTools.AddPersistentListener(savePrefs.onClick,menu.AcceptSettings);
+        foreach(var close in new[]{cancelNew,closeLoad,cancelPrefs,closeAbout}) UnityEventTools.AddPersistentListener(close.onClick,menu.CloseWindow);
+        var so=new SerializedObject(menu);
+        string[] names={"mainWindow","newWindow","loadWindow","settingsWindow","aboutWindow","startBtn","startBtnText","projectName","showSaves","previous","next","statusText"};
+        UnityEngine.Object[] refs={main.gameObject,fresh.gameObject,load.gameObject,prefs.gameObject,credits.gameObject,ok,ok.GetComponentInChildren<TMP_Text>(),input,saves,prev,next,status};
+        for(int i=0;i<names.Length;i++) so.FindProperty(names[i]).objectReferenceValue=refs[i];
+        SetArray(so,"savedRows",rows);
+        SetArray(so,"navigationButtons",new[]{create,saves,settings,about,quit,cancelNew,closeLoad,savePrefs,cancelPrefs,closeAbout});
+        SetArray(so,"keyboardKeys",keys.ToArray());
+        so.ApplyModifiedPropertiesWithoutUndo();
+        foreach(var window in new[]{fresh,load,prefs,credits}) window.gameObject.SetActive(false);
+    }
+    private static void SetArray(SerializedObject so,string name,Button[] buttons)
+    {
+        var array=so.FindProperty(name); array.arraySize=buttons.Length;
+        for(int i=0;i<buttons.Length;i++) array.GetArrayElementAtIndex(i).objectReferenceValue=buttons[i];
+    }
     [MenuItem("Tools/BAS VR/Build project save menus")]
     public static void Build()
     {
@@ -63,41 +143,7 @@ public static class AssemblyProjectMenuBuilder
             StartMenu menu=null;
             foreach(var root in boot.GetRootGameObjects()) { menu=root.GetComponentInChildren<StartMenu>(true); if(menu!=null) break; }
             if(menu==null) throw new InvalidOperationException("Boot StartMenu missing");
-            var so=new SerializedObject(menu);
-            var old=(Button)so.FindProperty("startBtn").objectReferenceValue;
-            _font=AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/_GAME/Art/MainMenu/AssemblyProjectFont.asset");
-            if(_font==null) throw new InvalidOperationException("AssemblyProjectFont is missing");
-            var canvas=menu.GetComponent<Canvas>();
-            var existing=menu.transform.Find("AssemblyProjects");
-            if(existing!=null) UnityEngine.Object.DestroyImmediate(existing.gameObject);
-            // Work in existing world-space canvas units.
-            var panel=Rect("AssemblyProjects",menu.transform,Vector2.zero,new Vector2(800,850));
-            var canvasRect=(RectTransform)menu.transform;
-            float scale=Mathf.Min(canvasRect.rect.width/800f,canvasRect.rect.height/850f)*.94f;
-            panel.localScale=Vector3.one*scale;
-            panel.gameObject.AddComponent<Image>().color=new Color(.025f,.045f,.06f,.98f);
-            Label("Title",panel,"СБОРКИ ДРОНОВ",new Vector2(0,370),new Vector2(740,60),32);
-            var input=Input(panel,new Vector2(0,290));
-            var create=Button("Create",panel,"НОВАЯ СБОРКА",new Vector2(0,215),new Vector2(680,64));
-            UnityEventTools.AddPersistentListener(create.onClick,menu.StartConstructor);
-            var show=Button("ShowSaves",panel,"СОХРАНЁННЫЕ СБОРКИ",new Vector2(0,135),new Vector2(680,60));
-            var rows=new Button[4];
-            for(int i=0;i<rows.Length;i++) rows[i]=Button("SavedRow"+i,panel,"Сборка",new Vector2(0,50-i*76),new Vector2(720,64));
-            var prev=Button("Previous",panel,"НАЗАД",new Vector2(-185,-270),new Vector2(320,56));
-            var next=Button("Next",panel,"ДАЛЕЕ",new Vector2(185,-270),new Vector2(320,56));
-            var status=Label("Status",panel,"",new Vector2(0,-350),new Vector2(730,75),22);
-            so.FindProperty("startBtn").objectReferenceValue=create;
-            so.FindProperty("startBtnText").objectReferenceValue=create.GetComponentInChildren<TMP_Text>();
-            so.FindProperty("projectName").objectReferenceValue=input;
-            so.FindProperty("showSaves").objectReferenceValue=show;
-            so.FindProperty("previous").objectReferenceValue=prev;
-            so.FindProperty("next").objectReferenceValue=next;
-            so.FindProperty("statusText").objectReferenceValue=status;
-            var a=so.FindProperty("savedRows"); a.arraySize=rows.Length;
-            for(int i=0;i<rows.Length;i++) a.GetArrayElementAtIndex(i).objectReferenceValue=rows[i];
-            so.ApplyModifiedPropertiesWithoutUndo();
-            if(old != null) old.gameObject.SetActive(false);
-            var main=menu.transform.Find("MainPanel"); if(main!=null) main.gameObject.SetActive(false);
+            BuildBootMenu(menu);
             EditorSceneManager.MarkSceneDirty(boot); EditorSceneManager.SaveScene(boot);
         }
         finally { if(close) EditorSceneManager.CloseScene(boot,true); SceneManager.SetActiveScene(original); }

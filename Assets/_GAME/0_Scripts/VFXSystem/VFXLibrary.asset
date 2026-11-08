@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5655e293bf244dd4c822fcbcff8cfad2, type: 3}
+  m_Name: VFXLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::VFXLibrary
+  _entries:
+  - Id: 0
+    Prefab: {fileID: 4408202680585325802, guid: d3f1b31cc9e9033418f1a681e752026c, type: 3}
+    Lifetime: 1
+  - Id: 1
+    Prefab: {fileID: 145463665068374861, guid: 5a8acbe221dada345b82cc3a6c31af4e, type: 3}
+    Lifetime: 1
+  - Id: 3
+    Prefab: {fileID: 5633230623019413036, guid: f7d55af7222a1f5478e8e4b4fbda04ec, type: 3}
+    Lifetime: 1
+  _maxConcurrentEffects: 8

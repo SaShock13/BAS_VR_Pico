@@ -7,11 +7,12 @@ public class InstallPartToSocketStep : MissionStep
 
     private readonly Clean_AssemblySystem _assemblySystem;
     private IEventBus _eventBus;
+    private System.IDisposable _subscription;
 
     private readonly IHintScenarioController _hintScenario;
+    private readonly string _description;
 
-    public override string Description =>
-        $"Install {_requiredPartType} into {_requiredSocketType}";
+    public override string Description => _description;
 
 
     public InstallPartToSocketStep(
@@ -19,7 +20,8 @@ public class InstallPartToSocketStep : MissionStep
         PartType requiredSocketType,
         Clean_AssemblySystem assemblySystem,
         IEventBus eventBus,
-        IHintScenarioController hintScenario
+        IHintScenarioController hintScenario,
+        string description = "Установите деталь в подходящее крепление."
         )
     {
         _requiredPartType = requiredPartType;
@@ -27,21 +29,23 @@ public class InstallPartToSocketStep : MissionStep
         _assemblySystem = assemblySystem;
         _eventBus = eventBus;
         _hintScenario = hintScenario;
+        _description = string.IsNullOrWhiteSpace(description)
+            ? "Установите деталь в подходящее крепление." : description;
     }
 
     public override void Enter()
     {
 
-        Debug.Log($"eeeeeeeeeeee_eventBus {_eventBus != null}");
-        _eventBus.Subscribe<PartSocketAttachedEvent>(OnPartAttached);
+        _subscription = _eventBus.Subscribe<PartSocketAttachedEvent>(OnPartAttached);
         _hintScenario.StartScenario(
            new HintContext(
-               $"Install {_requiredPartType} into {_requiredSocketType}", null, _requiredPartType, _requiredSocketType));
+               Description, null, _requiredPartType, _requiredSocketType));
     }
 
     public override void Exit()
     {
-        //_eventBus.<PartSocketAttachedEvent>(OnPartAttached);
+        _subscription?.Dispose();
+        _subscription = null;
 
         _hintScenario.StopScenario();
     }
@@ -54,10 +58,10 @@ public class InstallPartToSocketStep : MissionStep
         var domain = _assemblySystem.GetPartDomainState(@event.PartInstanceId);       
 
 
-        Debug.Log($"++++domain {domain != null}");
+        if (domain == null)
+            return;
         var partType = domain.Type;
 
-        Debug.Log($"++++partType {partType}");
 
 
         if (partType != _requiredPartType)  //   Проверка по типу детали

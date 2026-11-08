@@ -8,7 +8,6 @@ public class PartSpawnAnimator : MonoBehaviour
 {
     [Header("Animation")]
     [SerializeField, Min(0.01f)] private float _duration = 0.4f;
-
     [SerializeField, Min(0f)] private float _heightMultiplier = 1f;
     [Tooltip("World-space height for requests without a menu cell.")]
     [SerializeField, Min(0f)] private float _fallbackFlyHeight = 0.1f;

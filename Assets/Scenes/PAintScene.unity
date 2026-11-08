@@ -1264,6 +1264,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6b95fcb95c32d1d49ba6dff101529465, type: 2}
   - {fileID: 11400000, guid: 99feddf28a4605647ba094e47f12f38f, type: 2}
   spawnAnimator: {fileID: 0}
+  vfxLibrary: {fileID: 0}
 --- !u!114 &1225735307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1314,6 +1315,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   installMenuNavigation: 0
+  installFlightMenu: 0
+  sfxLibrary: {fileID: 11400000, guid: 0760280f4f1c0f3499895674ae266c19, type: 2}
 --- !u!114 &1225735309
 MonoBehaviour:
   m_ObjectHideFlags: 0

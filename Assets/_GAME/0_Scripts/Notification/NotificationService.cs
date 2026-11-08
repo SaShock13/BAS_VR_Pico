@@ -8,6 +8,18 @@ public sealed class NotificationService
 
     public event Action<WorldNotification> WorldRequested;
 
+    public void Success(string text, SFXId? sound = null, float duration = 3f,
+        Action onDismissed = null, Action onCancelled = null)
+    {
+        if (ToastRequested == null)
+        {
+            onCancelled?.Invoke();
+            return;
+        }
+        ToastRequested.Invoke(new ToastNotification(text, NotificationType.Info, duration, sound,
+            onDismissed, onCancelled));
+    }
+
     public void Info(string text,float duration = 3f)
     {
         ToastRequested?.Invoke(

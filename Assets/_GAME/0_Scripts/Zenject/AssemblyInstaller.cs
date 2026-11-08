@@ -7,9 +7,13 @@ public class AssemblyInstaller : MonoInstaller
     [SerializeField] private List<PartConfig> partConfigs;
 
     [SerializeField] private PartSpawnAnimator spawnAnimator;
+    [SerializeField] private VFXLibrary vfxLibrary;
 
     public override void InstallBindings()
     {
+        Container.BindInstance(vfxLibrary);
+        Container.BindInterfacesTo<VFXPlayer>().AsSingle();
+        Container.BindInterfacesTo<VFXService>().AsSingle();
         Container.Bind<IPartConfigRepository>().To<PartConfigRepository>().AsSingle().WithArguments(partConfigs);
         Container.Bind<IPartFactory>().To<PartFactory>().AsSingle();
         Container.Bind<ISocketResolver>().To<SocketRegistry>().AsSingle();

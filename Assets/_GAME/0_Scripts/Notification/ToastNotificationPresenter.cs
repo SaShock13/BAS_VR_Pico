@@ -9,8 +9,10 @@ public sealed class ToastNotificationPresenter : MonoBehaviour
     [SerializeField, Min(0f)] private float _fadeDuration = 0.25f;
     private readonly Queue<ToastNotification> _queue = new();
     private INotificationService _service;
+    [Inject] private IEventBus _events;
     private bool _subscribed;
     private bool _isShowing;
+    private ToastNotification? _activeMessage;
 
     [Inject]
     public void Construct(INotificationService service)
@@ -54,18 +56,25 @@ public sealed class ToastNotificationPresenter : MonoBehaviour
 
     private IEnumerator ShowMessage(ToastNotification message)
     {
+        _activeMessage = message;
         if (!_view.AttachToViewer())
         {
+            _activeMessage = null;
+            message.OnCancelled?.Invoke();
             Debug.LogWarning("Toast notification has no player camera assigned.", this);
             yield break;
         }
         _view.SetAlpha(0f);
         _view.SetMessage(message);
         _view.gameObject.SetActive(true);
+        if (message.Sound.HasValue)
+            _events.Publish(new PlaySFXRequest { SFXId = message.Sound.Value });
         yield return Fade(0f, 1f);
         yield return new WaitForSecondsRealtime(Mathf.Max(0f, message.Duration));
         yield return Fade(1f, 0f);
         _view.gameObject.SetActive(false);
+        _activeMessage = null;
+        message.OnDismissed?.Invoke();
     }
 
     private IEnumerator Fade(float from, float to)
@@ -84,7 +93,11 @@ public sealed class ToastNotificationPresenter : MonoBehaviour
     {
         Unsubscribe();
         StopAllCoroutines();
-        _queue.Clear();
+        var active = _activeMessage;
+        _activeMessage = null;
+        active?.OnCancelled?.Invoke();
+        while (_queue.Count > 0)
+            _queue.Dequeue().OnCancelled?.Invoke();
         _isShowing = false;
         if (_view != null)
         {

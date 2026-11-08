@@ -13,7 +13,7 @@ public class MissionController : MonoBehaviour  /// todo UI сделать ил�
 
     private void Update()
     {
-        if (_runtime == null)
+        if (_runtime == null || _runtime.State != MissionState.Running)
             return;
 
         _context.ElapsedMissionTime += Time.deltaTime;
@@ -23,7 +23,9 @@ public class MissionController : MonoBehaviour  /// todo UI сделать ил�
 
     public void StartMission(MissionRuntime runtime)
     {
-        worldMarker.Initialize(player);
+        StopMission();
+        if (worldMarker != null)
+            worldMarker.Initialize(player);
 
         _runtime = runtime;
 
@@ -39,6 +41,9 @@ public class MissionController : MonoBehaviour  /// todo UI сделать ил�
 
     public void StopMission()
     {
+        _runtime?.Stop();
         _runtime = null;
     }
+
+    private void OnDisable() => StopMission();
 }

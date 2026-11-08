@@ -188,6 +188,8 @@ public class SocketView : MonoBehaviour
             _validPreviewMaterial,
             _invalidPreviewMaterial);
 
+        _socketInteractor.showInteractableHoverMeshes = false;
+
         _socketInteractor.hoverEntered.AddListener(OnHoverEntered);
         _socketInteractor.hoverExited.AddListener(OnHoverExited);
     }
@@ -225,12 +227,18 @@ public class SocketView : MonoBehaviour
             return;
 
         // ПРоверка если Обьект не в руке, не показывают превью. 
-        if (!(args.interactableObject as XRGrabInteractable).isSelected)
+        if (!(args.interactableObject is XRGrabInteractable heldGrab) || !heldGrab.isSelected)
         {
             return;
         }
 
 
+
+        if (!_assemblySystem.IsCompatibleWithSocket(part.InstanceId, this))
+            return;
+
+        if (_hoveredPart != null && _hoveredPart.TryGetComponent<XRGrabInteractable>(out var previousGrab))
+            previousGrab.selectExited.RemoveListener(OnPartReleased);
 
         _hoveredPart = part;
 
@@ -277,7 +285,8 @@ public class SocketView : MonoBehaviour
             _hoveredPart = null;
         }
 
-        _previewSystem.HidePreview();
+        if (_hoveredPart == null)
+            _previewSystem.HidePreview();
     }
 
     private void OnPartReleased(
@@ -286,7 +295,7 @@ public class SocketView : MonoBehaviour
         if (_hoveredPart == null)
             return;
 
-        if (!_isValidHover)
+        if (!_assemblySystem.CanAttach(_hoveredPart.InstanceId, this))
         {
             Debug.Log("INVALID ATTACH");
 

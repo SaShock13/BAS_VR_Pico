@@ -9,6 +9,7 @@ public class MissionRuntime
     private MissionContext _context;
 
     private readonly MissionDefinition _definition;
+    private readonly IEventBus _eventBus;
 
     private int _currentStepIndex;
 
@@ -22,11 +23,13 @@ public class MissionRuntime
     public MissionRuntime(
         List<MissionStep> steps,
         List<MissionCondition> failConditions,
-        MissionDefinition definition)
+        MissionDefinition definition,
+        IEventBus eventBus = null)
     {
         _steps = steps;
         _definition = definition;
         _failConditions = failConditions;
+        _eventBus = eventBus;
     }
 
     public void Start(MissionContext context)
@@ -42,6 +45,8 @@ public class MissionRuntime
         State = MissionState.Running;
 
         MissionEvents.MissionStarted?.Invoke(_definition.MissionName);
+        _eventBus?.Publish(new MissionBriefingEvent(_definition.Briefing,
+            _definition.BriefingNotificationDuration));
 
 
         if (_steps.Count > 0)
@@ -54,7 +59,7 @@ public class MissionRuntime
             MissionEvents.TargetChanged?.Invoke(
                 _steps[0].Target);
 
-            _steps[0].Enter();
+            EnterCurrentStep();
         }
     }
 
@@ -86,6 +91,16 @@ public class MissionRuntime
             return;
 
         currentStep.Exit();
+        HideControllerButtonHint();
+
+        var stepData = _currentStepIndex < _definition.Steps.Count
+            ? _definition.Steps[_currentStepIndex] : null;
+        _eventBus?.Publish(new MissionCompletionFeedbackEvent(
+            stepData != null ? stepData.CompletionMessage : "Отлично, вы сделали это!",
+            stepData == null || stepData.PlayCompletionSound
+                ? (SFXId?)(stepData != null ? stepData.CompletionSound : SFXId.MissionStepComplete) : null,
+            false,
+            stepData != null ? stepData.CompletionNotificationDuration : 0f));
 
         _currentStepIndex++;
 
@@ -100,8 +115,26 @@ public class MissionRuntime
         MissionEvents.TargetChanged?.Invoke(
              CurrentStep.Target);
 
-        CurrentStep.Enter();
+        EnterCurrentStep();
     }
+
+    private void EnterCurrentStep()
+    {
+        CurrentStep.Enter();
+        UpdateControllerButtonHint();
+    }
+
+    private void UpdateControllerButtonHint()
+    {
+        var data = _currentStepIndex < _definition.Steps.Count
+            ? _definition.Steps[_currentStepIndex] : null;
+        var action = data != null && CurrentStep != null && !CurrentStep.IsCompleted
+            && data.ControllerButtonAction != null ? data.ControllerButtonAction.action : null;
+        _eventBus?.Publish(new ControllerButtonHintRequest(action));
+    }
+
+    private void HideControllerButtonHint() =>
+        _eventBus?.Publish(new ControllerButtonHintRequest(null));
 
     public void Pause()
     {
@@ -109,6 +142,16 @@ public class MissionRuntime
             return;
 
         State = MissionState.Paused;
+        HideControllerButtonHint();
+    }
+
+    public void Stop()
+    {
+        if (State == MissionState.Running || State == MissionState.Paused)
+            CurrentStep?.Exit();
+        CancelPendingTransition();
+        HideControllerButtonHint();
+        State = MissionState.Inactive;
     }
 
     public void Resume()
@@ -117,29 +160,53 @@ public class MissionRuntime
             return;
 
         State = MissionState.Running;
+        UpdateControllerButtonHint();
     }
 
     private void Complete()
     {
         State = MissionState.Completed;
         MissionEvents.MissionCompleted?.Invoke(_definition.MissionName);
+        _eventBus?.Publish(new MissionCompletionFeedbackEvent(
+            _definition.CompletionMessage,
+            _definition.PlayCompletionSound ? (SFXId?)_definition.CompletionSound : null,
+            true,
+            _definition.CompletionNotificationDuration,
+            _context.CompletionNotificationDismissed,
+            _context.CompletionNotificationCancelled));
     }
 
     private void Fail(string reason)
     {
+        CurrentStep?.Exit();
+        CancelPendingTransition();
+        HideControllerButtonHint();
         State = MissionState.Failed;
         MissionEvents.MissionFailed?.Invoke(_definition.MissionName,reason);
     }
 
+    private void CancelPendingTransition()
+    {
+        _context?.CompletionNotificationCancelled?.Invoke();
+        if (_context != null)
+        {
+            _context.CompletionNotificationDismissed = null;
+            _context.CompletionNotificationCancelled = null;
+        }
+    }
+
     public MissionObjectiveInfo GetObjectiveInfo()
     {
+        var stepData = _currentStepIndex < _definition.Steps.Count
+            ? _definition.Steps[_currentStepIndex] : null;
         return new MissionObjectiveInfo
         (
             _definition.MissionName,
             _definition.Briefing,
             CurrentStep.Description,
             _currentStepIndex,
-            _steps.Count
+            _steps.Count,
+            stepData != null ? stepData.ObjectiveNotificationDuration : 0f
         );
     }
 }

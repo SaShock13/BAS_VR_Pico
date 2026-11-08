@@ -25,20 +25,25 @@ public sealed class ArrowHintView : MonoBehaviour
 
     public void Show(HintInfo hint)
     {
-        gameObject.SetActive(true);
-
         _target = hint.SoketTransform;
-
-
-        Debug.Log($"ArrowHintView _target {_target.transform.position}");
+        if (_target == null)
+        {
+            Hide();
+            return;
+        }
 
         _baseOffset = Vector3.up * _heightOffset;
+        transform.position = _target.position + _baseOffset;
+        gameObject.SetActive(true);
     }
 
     private void LateUpdate()
     {
         if (_target == null)
+        {
+            Hide();
             return;
+        }
 
         // позиция над объектом + "дыхание"
         float bob = Mathf.Sin(Time.time * _bobSpeed) * _bobAmplitude;

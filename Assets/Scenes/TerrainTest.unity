@@ -1962,6 +1962,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6b95fcb95c32d1d49ba6dff101529465, type: 2}
   - {fileID: 11400000, guid: 99feddf28a4605647ba094e47f12f38f, type: 2}
   spawnAnimator: {fileID: 0}
+  vfxLibrary: {fileID: 0}
 --- !u!114 &1225735307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2013,6 +2014,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   installMenuNavigation: 0
+  installFlightMenu: 0
+  sfxLibrary: {fileID: 11400000, guid: 0760280f4f1c0f3499895674ae266c19, type: 2}
 --- !u!114 &1225735309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2365,11 +2368,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LeftHandMenu
   menuPrefab: {fileID: 983362908682403097, guid: ccb807e76bc0a534c8f2aa5d40c53e7b, type: 3}
   sceneMenu: {fileID: 3080318056085040847}
+  systemMenu: {fileID: 0}
   menuTransform: {fileID: 1786876624}
   initMenuTransform: {fileID: 1448158242}
-  appearDuration: 0.3
-  duration: 0.5
   leftHandMenuAction: {fileID: -1999886352278334682, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  appearDuration: 0.3
+  longPressDuration: 1
 --- !u!1 &1591422277
 GameObject:
   m_ObjectHideFlags: 0
