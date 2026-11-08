@@ -23,6 +23,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FlightScene_Obstacles.unity
     guid: 82c5111d855c8b74aa6c149d727cd891
+  - enabled: 1
+    path: Assets/Scenes/AssemblyEnvironment_Garage.unity
+    guid: 7587515197da3e14fbd88fa592b154ff
+  - enabled: 1
+    path: Assets/Scenes/AssemblyEnvironment_Outdoor.unity
+    guid: c8da1532bae173843b6e2111ee2004c3
+  - enabled: 1
+    path: Assets/Scenes/AssemblyEnvironment_Angar.unity
+    guid: 0a33288d22730094d9fb700ccc669fd9
   m_configObjects:
     Unity.XR.PICO.LivePreview.Settings: {fileID: 11400000, guid: 80f16fc1990323745b120e5a5fcc0302, type: 2}
     Unity.XR.PXR.Settings: {fileID: 11400000, guid: 6f85be4d50f292642b8bd01a1554423d, type: 2}
