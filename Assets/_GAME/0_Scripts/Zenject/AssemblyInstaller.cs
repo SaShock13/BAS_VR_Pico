@@ -4,6 +4,7 @@ using Zenject;
 
 public class AssemblyInstaller : MonoInstaller
 {
+    [SerializeField] private FlightEnvironmentCatalog flightEnvironmentCatalog;
     [SerializeField] private List<PartConfig> partConfigs;
 
     [SerializeField] private PartSpawnAnimator spawnAnimator;
@@ -11,6 +12,8 @@ public class AssemblyInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        if (flightEnvironmentCatalog != null)
+            Container.BindInstance(flightEnvironmentCatalog).AsSingle();
         Container.BindInstance(vfxLibrary);
         Container.BindInterfacesTo<VFXPlayer>().AsSingle();
         Container.BindInterfacesTo<VFXService>().AsSingle();
