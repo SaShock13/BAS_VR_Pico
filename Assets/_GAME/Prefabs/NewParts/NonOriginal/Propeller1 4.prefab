@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 8745649657662757237}
   - component: {fileID: 8736111222478545976}
   - component: {fileID: 546579297074343149}
-  - component: {fileID: 5920038466810920843}
+  - component: {fileID: 8969219253533669739}
   m_Layer: 0
   m_Name: Propeller1 4
   m_TagString: Untagged
@@ -208,6 +208,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3349746729845915867}
+  - {fileID: 5359810692697976208}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &8736111222478545976
@@ -250,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 3fda9b41750b75547bafbde609d5aa2a, type: 2}
---- !u!114 &5920038466810920843
+--- !u!114 &8969219253533669739
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -411,7 +412,6 @@ Transform:
   m_Children:
   - {fileID: 8969549126538828559}
   - {fileID: 1273915558231642845}
-  - {fileID: 5359810692697976208}
   m_Father: {fileID: 8745649657662757237}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7175657519897658213
@@ -440,11 +440,11 @@ Transform:
   m_GameObject: {fileID: 7175657519897658213}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0042616427, y: 0.07077745, z: -0.00009161234}
+  m_LocalPosition: {x: -0.00085232855, y: 0.014155491, z: -0.000018322467}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3349746729845915867}
+  m_Father: {fileID: 8745649657662757237}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4194956968834453611
 MonoBehaviour:

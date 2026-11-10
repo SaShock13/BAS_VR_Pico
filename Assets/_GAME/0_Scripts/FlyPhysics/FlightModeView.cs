@@ -27,6 +27,7 @@ public sealed class FlightModeView : MonoBehaviour
     }
 
     private void Render(bool arcade) => modeLabel.text = arcade ? "Режим: Аркада" : "Режим: Симуляция";
+    public void SetLaunchAvailable(bool available) => launchButton.interactable = available;
     private void Launch() => _bus.Publish(new LaunchFlightRequest());
 
     private void OnDestroy()

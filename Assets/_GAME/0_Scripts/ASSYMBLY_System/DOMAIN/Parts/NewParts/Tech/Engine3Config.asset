@@ -16,6 +16,7 @@ MonoBehaviour:
   LegacyPartIds:
   - newparts/029613e9589438144b957e344d064903
   PartType: 2
+  HasConstantMaterial: 0
   Prefab: {fileID: 6000339651993790292, guid: 029613e9589438144b957e344d064903, type: 3}
   PrefabAddress: Parts/Tech/Engine3
   Mass: 1

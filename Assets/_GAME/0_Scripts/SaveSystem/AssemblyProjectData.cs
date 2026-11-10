@@ -9,4 +9,5 @@ public class AssemblyProjectData
     public long CreatedAtTicks;
     public long UpdatedAtTicks;
     public AssemblySaveData Assembly;
+    public GarageSaveData Garage = new();
 }

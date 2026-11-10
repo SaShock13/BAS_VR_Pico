@@ -16,6 +16,7 @@ MonoBehaviour:
   LegacyPartIds:
   - newparts/bc672a13b18d0de48804c60980b93c9a
   PartType: 1
+  HasConstantMaterial: 0
   Prefab: {fileID: 4659074588356092823, guid: bc672a13b18d0de48804c60980b93c9a, type: 3}
   PrefabAddress: Parts/Rays/DRONE5_Rays
   Mass: 3

@@ -16,6 +16,7 @@ public interface IGarageService
         string droneId);
 
     void Delete(string garageId);
+    bool MoveToAssembly(string garageId);
 
     bool Contains(string garageId);
 

@@ -16,6 +16,7 @@ MonoBehaviour:
   LegacyPartIds:
   - newparts/9f6020ded7d5f274cb25afcb562da426
   PartType: 3
+  HasConstantMaterial: 0
   Prefab: {fileID: 1046206180713016279, guid: 9f6020ded7d5f274cb25afcb562da426, type: 3}
   PrefabAddress: Parts/Propellers/Drone4Propeller
   Mass: 1

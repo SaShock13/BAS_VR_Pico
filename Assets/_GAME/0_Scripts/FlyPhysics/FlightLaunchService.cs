@@ -23,6 +23,8 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
     private readonly INotificationService _notifications;
     private readonly DroneValidationStateService _validation;
     private readonly FlightEnvironmentCatalog _catalog;
+    private readonly bool _launchStoredDrones;
+    private readonly IGarageService _garage;
     private IDisposable _environmentSubscription;
     private IDisposable _modeSubscription, _launchSubscription;
     private bool _launching;
@@ -31,7 +33,9 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
     public FlightLaunchService(IEventBus bus, ISelectionService selection,
         Clean_AssemblySystem assembly, INotificationService notifications,
         [InjectOptional] DroneValidationStateService validation = null,
-        [InjectOptional] FlightEnvironmentCatalog catalog = null)
+        [InjectOptional] FlightEnvironmentCatalog catalog = null,
+        [InjectOptional] bool launchStoredDrones = false,
+        [InjectOptional] IGarageService garage = null)
     {
         _bus = bus;
         _selection = selection;
@@ -39,6 +43,8 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
         _notifications = notifications;
         _validation = validation;
         _catalog = catalog;
+        _launchStoredDrones = launchStoredDrones;
+        _garage = garage;
     }
 
     public void Initialize()
@@ -57,7 +63,13 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
             _notifications.Warning("Выберите дрон для полёта");
             return;
         }
-        if (_validation == null || !_validation.IsValidated(drone.InstanceId))
+        var stored = _launchStoredDrones ? _garage?.GetByDroneId(drone.InstanceId)?.Assembly : null;
+        if (_launchStoredDrones && (stored?.Parts == null || stored.Parts.Count == 0))
+        {
+            _notifications.Warning("Выберите сохранённый дрон из гаража");
+            return;
+        }
+        if (!_launchStoredDrones && (_validation == null || !_validation.IsValidated(drone.InstanceId)))
         {
             _notifications.Warning("Валидация не пройдена. Нажмите «Пройти валидацию» в панели дрона.", 5f);
             return;
@@ -80,9 +92,9 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
             return;
         }
         FlightSession.EnvironmentId = environmentId;
-        FlightSession.Drone = _assembly.BuildSaveDataForDrone(drone.InstanceId);
+        FlightSession.Drone = stored ?? _assembly.BuildSaveDataForDrone(drone.InstanceId);
         FlightSession.Physics = null;
-        _assembly.Save();
+        if (!_launchStoredDrones) _assembly.Save();
         _launching = true;
         var approved = new FlightLaunchApprovedEvent(
             LoadCore,

@@ -72,11 +72,21 @@ public class Saver_TEST1 : MonoBehaviour
         catch (Exception e) { Debug.LogException(e); if (this != null) _notifications.Info("Не удалось загрузить сборку", 5); }
         finally { _busy = false; }
     }
-    public void SaveAndExit()
+    public void SaveAndExit() => SaveAndOpenScene("BootMenu");
+
+    public void SaveAndOpenGarage() => SaveAndOpenScene("GarageScene");
+
+    private void SaveAndOpenScene(string sceneName)
     {
         if (_busy) return;
-        try { _assembly.Save(); SceneManager.LoadScene("BootMenu"); }
-        catch (Exception e) { Debug.LogException(e); _notifications.Info("Ошибка сохранения. Выход отменён", 5); }
+        _busy = true;
+        try { _assembly.Save(); SceneManager.LoadScene(sceneName); }
+        catch (Exception e)
+        {
+            _busy = false;
+            Debug.LogException(e);
+            _notifications.Info("Не удалось сохранить сборку или открыть сцену", 5);
+        }
     }
     public void ExitWithoutSaving()
     {

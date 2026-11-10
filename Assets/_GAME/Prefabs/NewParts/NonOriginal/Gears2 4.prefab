@@ -26,11 +26,11 @@ Transform:
   m_GameObject: {fileID: 608949336317872803}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09313028, y: -0.19212693, z: 0.01416643}
+  m_LocalPosition: {x: -0.018626057, y: -0.038425386, z: 0.002833286}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 683587373394586252}
+  m_Father: {fileID: 323967489603905056}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &63212274571639639
 MonoBehaviour:
@@ -74,7 +74,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 947337495964575693}
-  - {fileID: 6764842034363721619}
   m_Father: {fileID: 323967489603905056}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2527516314586494563
@@ -88,7 +87,7 @@ GameObject:
   - component: {fileID: 323967489603905056}
   - component: {fileID: 2298241652421168810}
   - component: {fileID: 1391025799569130029}
-  - component: {fileID: 8299702008561608553}
+  - component: {fileID: 6957549942921310041}
   m_Layer: 0
   m_Name: Gears2 4
   m_TagString: Untagged
@@ -110,6 +109,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 683587373394586252}
+  - {fileID: 6764842034363721619}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2298241652421168810
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: e3005ad8296ece741a5b14228f500d00, type: 2}
---- !u!114 &8299702008561608553
+--- !u!114 &6957549942921310041
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

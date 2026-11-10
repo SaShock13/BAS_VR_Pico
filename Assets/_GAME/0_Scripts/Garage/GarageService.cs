@@ -5,172 +5,125 @@ using UnityEngine;
 
 public class GarageService : IGarageService
 {
-    private readonly Clean_AssemblySystem _assembly;
-
-
-    private readonly IGarageSaveService _saveService;
-
-    private GarageSaveData _garage;
-
     private const int MaxSlots = 5;
 
+    private readonly Clean_AssemblySystem _assembly;
+    private readonly IGarageSaveService _saveService;
+    private readonly JsonSaveService _projects;
+    private GarageSaveData _garage;
+    private string _projectId;
 
-    public GarageService(
-        Clean_AssemblySystem assembly,
-        IGarageSaveService saveService)
+    public GarageService(Clean_AssemblySystem assembly, IGarageSaveService saveService,
+        [Zenject.InjectOptional] JsonSaveService projects = null)
     {
         _assembly = assembly;
         _saveService = saveService;
+        _projects = projects;
+    }
 
-        _garage = _saveService.Load() ?? new GarageSaveData();
-        foreach (var drone in _garage.Drones)
+    private GarageSaveData CurrentGarage
+    {
+        get
         {
-            var parts = drone.Assembly?.Parts;
-            if (parts == null) continue;
-            var root = parts.FirstOrDefault(p => p.Type == DroneAssemblyRules.RootPartType && string.IsNullOrEmpty(p.AttachedPartId));
-            if (root == null)
+            var projectId = AssemblyProjectSession.ActiveId;
+            if (_garage != null && _projectId == projectId) return _garage;
+
+            var garage = _saveService.Load() ?? new GarageSaveData();
+            foreach (var drone in garage.Drones)
             {
-                root = parts.FirstOrDefault(p => p.Type == DroneAssemblyRules.RootPartType &&
-                    parts.Any(parent => parent.InstanceId == p.AttachedPartId && parent.Type == PartType.Body && string.IsNullOrEmpty(parent.AttachedPartId)));
+                var parts = drone.Assembly?.Parts;
+                if (parts == null) continue;
+                var root = parts.FirstOrDefault(p => p.Type == DroneAssemblyRules.RootPartType && string.IsNullOrEmpty(p.AttachedPartId));
+                if (root == null)
+                {
+                    root = parts.FirstOrDefault(p => p.Type == DroneAssemblyRules.RootPartType &&
+                        parts.Any(parent => parent.InstanceId == p.AttachedPartId &&
+                            parent.Type == PartType.Body && string.IsNullOrEmpty(parent.AttachedPartId)));
+                }
+                if (root == null) continue;
+                drone.DroneId = root.InstanceId;
+                if (drone.metaData != null) drone.metaData.DroneId = root.InstanceId;
             }
-            if (root == null) continue;
-            drone.DroneId = root.InstanceId;
-            if (drone.metaData != null) drone.metaData.DroneId = root.InstanceId;
+
+            _garage = garage;
+            _projectId = projectId;
+            return garage;
         }
     }
 
+    public bool HasFreeSlot() => CurrentGarage.Drones.Count < MaxSlots;
 
+    public IReadOnlyList<GarageDroneData> GetAll() => CurrentGarage.Drones;
 
-    public bool HasFreeSlot()
-    {
-        return _garage.Drones.Count < MaxSlots;
-    }
+    public GarageDroneData Get(string garageId) =>
+        CurrentGarage.Drones.FirstOrDefault(drone => drone.GarageId == garageId);
 
-
-    public IReadOnlyList<GarageDroneData> GetAll()
-    {
-        return _garage.Drones;
-    }
-
-
-
-    public GarageDroneData Get(string garageId)
-    {
-        return _garage.Drones
-            .FirstOrDefault(x => x.GarageId == garageId);
-    }
-
-    public GarageDroneData GetByDroneId(string droneId)
-    {
-        return _garage.Drones
-            .FirstOrDefault(x => x.DroneId == droneId ||
-                (_assembly.TryGetDroneForPart(x.DroneId, out var loadedDrone) && loadedDrone.InstanceId == droneId));
-    }
-
-
+    public GarageDroneData GetByDroneId(string droneId) =>
+        CurrentGarage.Drones.FirstOrDefault(drone => drone.DroneId == droneId ||
+            (_assembly.TryGetDroneForPart(drone.DroneId, out var loadedDrone) && loadedDrone.InstanceId == droneId));
 
     public void SaveDrone(string droneId)
     {
-        Debug.Log($"gggggggg[GARAGE] SaveDrone {droneId}");
-
-        AssemblySaveData assembly =
-            _assembly.BuildSaveDataForDrone(droneId);
-
-
-
-        string droneName = _assembly.GetDroneName(droneId);
-
-
-
-        GarageDroneData garageDrone = new()
+        var drones = new List<GarageDroneData>(CurrentGarage.Drones)
         {
-            GarageId = Guid.NewGuid().ToString(),
-
-            DroneId = droneId,
-
-            metaData = new DroneMetadata { Name = droneName},
-
-            CreatedAtTicks = DateTime.UtcNow.Ticks,
-
-            Assembly = assembly
+            BuildEntry(Guid.NewGuid().ToString(), droneId, DateTime.UtcNow.Ticks, Color.white)
         };
-
-        _garage.Drones.Add(garageDrone);
-
-
-        Debug.Log($"gggggggg Drone GarageId {garageDrone.GarageId} DroneId {garageDrone.DroneId} DroneName {garageDrone.metaData.Name} CreatedAtTicks {garageDrone.CreatedAtTicks} ");
-
-        Save();
+        Save(new GarageSaveData { Drones = drones });
     }
 
-
-
-    /// <summary>
-    /// ???????? ???????????? ???? ? ??????
-    /// ????? ??????????????
-    /// </summary>
-    public void OverwriteDrone(
-        string garageId,
-        string droneId)
+    public void OverwriteDrone(string garageId, string droneId)
     {
-        GarageDroneData existing =
-            Get(garageId);
-
-        if (existing == null)
+        var drones = new List<GarageDroneData>(CurrentGarage.Drones);
+        int index = drones.FindIndex(drone => drone.GarageId == garageId);
+        if (index < 0)
         {
-            Debug.LogError(
-                $"Garage drone not found {garageId}");
-
+            Debug.LogError($"Garage drone not found {garageId}");
             return;
         }
 
-        AssemblySaveData assembly =
-            _assembly.BuildSaveDataForDrone(droneId);
-
-        string droneName = _assembly.GetDroneName(droneId);
-
-        existing.DroneId = droneId;
-
-        existing.metaData.Name = droneName;
-
-        existing.Assembly = assembly;
-
-        Save();
+        var existing = drones[index];
+        drones[index] = BuildEntry(garageId, droneId, existing.CreatedAtTicks, existing.metaData?.Color ?? Color.white);
+        Save(new GarageSaveData { Drones = drones });
     }
 
-
+    private GarageDroneData BuildEntry(string garageId, string droneId, long createdAtTicks, Color color) =>
+        new()
+        {
+            GarageId = garageId,
+            DroneId = droneId,
+            metaData = new DroneMetadata { DroneId = droneId, Name = _assembly.GetDroneName(droneId), Color = color },
+            CreatedAtTicks = createdAtTicks,
+            Assembly = _assembly.BuildSaveDataForDrone(droneId)
+        };
 
     public void Delete(string garageId)
     {
-        GarageDroneData existing =
-            Get(garageId);
-
-        if (existing == null)
-            return;
-
-        _garage.Drones.Remove(existing);
-
-        Save();
+        var drones = new List<GarageDroneData>(CurrentGarage.Drones);
+        int index = drones.FindIndex(drone => drone.GarageId == garageId);
+        if (index < 0) return;
+        drones.RemoveAt(index);
+        Save(new GarageSaveData { Drones = drones });
     }
 
+    public bool Contains(string garageId) => Get(garageId) != null;
 
-
-    public bool Contains(string garageId)
+    public bool MoveToAssembly(string garageId)
     {
-        return _garage.Drones
-            .Any(x => x.GarageId == garageId);
-    }
-
-
-
-    private void Save()
-    {
-        _saveService.Save(_garage);
+        if (_projects == null || !_projects.MoveGarageDroneToAssembly(garageId)) return false;
+        _garage = null;
+        return true;
     }
 
     public void Clear()
     {
-        _garage.Drones.Clear();
-        Save();
+        if (CurrentGarage.Drones.Count > 0)
+            Save(new GarageSaveData());
+    }
+
+    private void Save(GarageSaveData garage)
+    {
+        _saveService.Save(garage);
+        _garage = garage;
+        _projectId = AssemblyProjectSession.ActiveId;
     }
 }

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f72395b583f915c49944d5b51431d3e5, type: 3}
+  m_Name: batteryt_Tattu_1300_Config 1
+  m_EditorClassIdentifier: Assembly-CSharp::BatteryConfig
+  PartId: newparts/Tech/battery_Tattu_1300
+  LegacyPartIds: []
+  PartType: 6
+  HasConstantMaterial: 1
+  Prefab: {fileID: 8777026559667588407, guid: 88eed3d23af221f44805dd8036877de2, type: 3}
+  PrefabAddress: Parts/Tech/battery_Tattu_1300
+  Mass: 0.18
+  LocalCenterOfMass: {x: 0, y: 0, z: 0}
+  CellCount: 4
+  CapacityMah: 1500
+  NominalVoltage: 14.8
+  FullVoltage: 16.8
+  EmptyVoltage: 12.8
+  InternalResistance: 0.025
+  MaxDischargeCurrent: 120

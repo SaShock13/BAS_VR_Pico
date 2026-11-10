@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
@@ -14,6 +13,9 @@ using static UnityEngine.Rendering.STP;
 
 public class Clean_AssemblyTest : MonoBehaviour
 {
+    [SerializeField] private ConfirmationView clearAssemblyConfirmation;
+    [SerializeField] private PartPanelUI partPanel;
+    [SerializeField] private Saver_TEST1 projectSaver;
 
     [SerializeField] private string[] partIds;
 
@@ -37,6 +39,7 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     private Clean_AssemblySystem _assemblySystem;
     [Inject] private InspectorService _inspector;
+    [Inject] private DroneValidationStateService _validationState;
     private PartViewRegistry _views;
     private DroneFocusEffect _focusEffect;
     private AddressablesPrefabService _prefabs;
@@ -287,69 +290,7 @@ public class Clean_AssemblyTest : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.I))
-        {
-
-            if (Selection.Current != null)
-            {
-                Debug.Log($"SelectedPartId {Selection.Current.Value.PartId}");
-
-
-                // Тестирование удаления
-
-
-                Debug.Log($"DDDDDD .Publish(new Clean_DeletePartRequest {this}");
-                _eventBus.Publish(new Clean_DeletePartRequest { InstanceId = Selection.Current.Value.PartId, Timestamp = DateTime.UtcNow });
-
-
-                //Тест изменения визуала
-
-                //var allMaterials = _materialDefs.GetAll();
-                //int randIndex = UnityEngine.Random.Range(0, allMaterials.Count);
-
-                //var randColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
-
-                //string matId = "DefaultPlasticMaterial";
-
-                ////var newVisual = new PartVisualProperties() { Smoothness = 1, MaterialAddress = "PlasticAddressablesMAt" };
-                //var newVisual = new PartVisualProperties() { Smoothness = 1, MaterialId = allMaterials[randIndex].Id , Color = randColor};
-
-
-                //_eventBus.Publish(new ApplyPartVisualCommand(Selection.Current.Value.PartId, newVisual) { Timestamp = DateTime.UtcNow });
-
-
-
-                //if(_selectionService.SelectedPartId == _mainPartId) return;
-
-                //_eventBus.Publish(new PartSocketAttachRequest() { PartInstanceId = _selectionService.SelectedPartId, AttachedPartId = _mainPartId , AttachedSocketId = "engineSocket" ,Timestamp = DateTime.UtcNow });
-
-                //_assemblySystem.RenameDrone(
-                //                Selection.Current.Value.PartId,
-                //                "Interceptor");
-
-                //Debug.Log("====== SECOND REBUILD ======");
-
-                //_assemblySystem.RebuildDrones();
-
-
-
-
-                // Тестирование системы Проверки готовности
-
-                //var selectedId = Selection.Current.Value.PartId;
-                //if (selectedId == null) return;
-
-                //var partDomain = _assemblySystem.GetPartDomainState(selectedId);
-                //if (!string.IsNullOrEmpty(partDomain.DroneId))
-                //{
-                //    ValidateDrone(partDomain.DroneId);
-                //}
-            }
-
-
-        }
-
-
-
+            partPanel?.DeleteSelectedPart();
         if (Keyboard.current != null && Keyboard.current.uKey.wasPressedThisFrame)
             _eventBus.Publish(new LaunchFlightRequest());
 
@@ -361,16 +302,23 @@ public class Clean_AssemblyTest : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            _assemblySystem.Save();
-            SceneManager.LoadScene("GarageScene");
-        }
+            projectSaver?.SaveAndOpenGarage();
 
         if (Input.GetKeyDown(KeyCode.F11))
         {
-            _assemblySystem.ClearCurrentAssembly();
+            RequestClearAssembly();
         }
 
+    }
+
+    public void RequestClearAssembly()
+    {
+        clearAssemblyConfirmation?.Show("Удалить все детали из текущей сборки?", () =>
+        {
+            Selection.Clear();
+            _assemblySystem.ClearCurrentAssembly();
+            _notifications.Info("Сборка очищена");
+        });
     }
 
     #region Validation Test
@@ -505,6 +453,12 @@ public class Clean_AssemblyTest : MonoBehaviour
         // Resolve from the same current selection used by the drone panel.
         if (!_inspector.TryGetSelectedDrone(out var drone))
             return;
+
+        if (!_validationState.IsValidated(drone.InstanceId))
+        {
+            _notifications.Warning("Валидация не пройдена. Нажмите «Пройти валидацию» в панели дрона.", 5f);
+            return;
+        }
 
         var droneView = _assemblySystem.GetViewById(drone.InstanceId);
 

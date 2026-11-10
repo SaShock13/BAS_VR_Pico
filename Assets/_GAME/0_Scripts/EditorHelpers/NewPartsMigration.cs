@@ -40,7 +40,6 @@ public static class NewPartsMigration
         foreach (string guid in guids)
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
-            PartType type = InferType(path);
             string relativePath = path.Substring(Root.Length + 1);
             string readableKey = relativePath.Substring(0, relativePath.Length - ".prefab".Length);
             string configPath = ConfigRoot + "/" + readableKey + "Config.asset";
@@ -49,11 +48,15 @@ public static class NewPartsMigration
                 AssetDatabase.Refresh();
             var config = AssetDatabase.LoadAssetAtPath<GameObject>(path).GetComponent<PartViewConfigLink>()?.Config
                 ?? AssetDatabase.LoadAssetAtPath<PartConfig>(configPath);
+            // Explicitly configured parts do not depend on folder/name conventions.
+            PartType type = config != null ? config.PartType : InferType(path);
             bool newConfig = config == null;
             if (newConfig)
             {
                 if (type == PartType.Motor)
                     config = UnityEngine.Object.Instantiate(LoadTemplateConfig("Motor2306.asset"));
+                else if (type == PartType.Battery)
+                    config = ScriptableObject.CreateInstance<BatteryConfig>();
                 else if (type == PartType.FlyController)
                 {
                     config = ScriptableObject.CreateInstance<FlightControllerConfig>();
@@ -99,6 +102,7 @@ public static class NewPartsMigration
         if (path.Contains("/Propellers/") || Path.GetFileName(path).StartsWith("Propeller")) return PartType.Propeller;
         if (Path.GetFileName(path).StartsWith("Engine")) return PartType.Motor;
         if (Path.GetFileName(path) == "MainBoard.prefab") return PartType.FlyController;
+        if (Path.GetFileName(path).StartsWith("battery", StringComparison.OrdinalIgnoreCase)) return PartType.Battery;
         throw new InvalidOperationException("Unknown part category: " + path);
     }
 

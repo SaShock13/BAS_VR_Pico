@@ -16,6 +16,7 @@ MonoBehaviour:
   LegacyPartIds:
   - newparts/c83e608cda3a0414d8b64b2918a37e0f
   PartType: 4
+  HasConstantMaterial: 0
   Prefab: {fileID: 6808467580173154459, guid: c83e608cda3a0414d8b64b2918a37e0f, type: 3}
   PrefabAddress: Parts/NonOriginal/Gears4 4
   Mass: 1

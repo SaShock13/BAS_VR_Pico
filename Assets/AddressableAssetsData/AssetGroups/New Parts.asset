@@ -105,6 +105,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b68a5d9453814b4e8b231372cf6f5a8
+    m_Address: Parts/Rays/RaysR1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4d071807e1e361b4ab88e4583156f4a3
     m_Address: Parts/Propellers/D8PropellerL
     m_ReadOnly: 0
@@ -182,6 +187,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7f6bb58a5eb87b945a8d6bc5cd36c14f
     m_Address: Parts/Bodies/Body1Framed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 88eed3d23af221f44805dd8036877de2
+    m_Address: Parts/Tech/battery_Tattu_1300
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

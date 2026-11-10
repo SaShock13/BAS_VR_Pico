@@ -10,6 +10,9 @@ public class PartConfig : ScriptableObject
     public PartType PartType;
 
     [Header("Visual")]
+    [Tooltip("Keep prefab materials and disable visual customization.")]
+    public bool HasConstantMaterial;
+
     public GameObject Prefab;
 
     public string PrefabAddress;

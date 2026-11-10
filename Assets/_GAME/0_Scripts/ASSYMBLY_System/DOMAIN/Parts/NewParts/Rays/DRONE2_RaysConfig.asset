@@ -16,6 +16,7 @@ MonoBehaviour:
   LegacyPartIds:
   - newparts/8da7fb6fdf39e2f418def9019686ea11
   PartType: 1
+  HasConstantMaterial: 0
   Prefab: {fileID: 4105592840910906408, guid: 8da7fb6fdf39e2f418def9019686ea11, type: 3}
   PrefabAddress: Parts/Rays/DRONE2_Rays
   Mass: 3

@@ -16,6 +16,7 @@ MonoBehaviour:
   LegacyPartIds:
   - newparts/7f6bb58a5eb87b945a8d6bc5cd36c14f
   PartType: 0
+  HasConstantMaterial: 0
   Prefab: {fileID: 7065066107008008814, guid: 7f6bb58a5eb87b945a8d6bc5cd36c14f, type: 3}
   PrefabAddress: Parts/Bodies/Body1Framed
   Mass: 3

@@ -2671,6 +2671,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6f1653c4c307979478c12fe3ce84f558, type: 2}
   - {fileID: 11400000, guid: 6b95fcb95c32d1d49ba6dff101529465, type: 2}
   - {fileID: 11400000, guid: 99feddf28a4605647ba094e47f12f38f, type: 2}
+  - {fileID: 11400000, guid: 5496d92fb668715439efbf0d8acddcfa, type: 2}
+  - {fileID: 11400000, guid: e0bef0a07a252b945b1e73cc7e4f39ec, type: 2}
   spawnAnimator: {fileID: 0}
   vfxLibrary: {fileID: 0}
 --- !u!114 &1225735307
@@ -2724,6 +2726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   installMenuNavigation: 0
+  assemblyEnvironmentCatalog: {fileID: 0}
   installFlightMenu: 1
   sfxLibrary: {fileID: 11400000, guid: 0760280f4f1c0f3499895674ae266c19, type: 2}
 --- !u!114 &1225735309

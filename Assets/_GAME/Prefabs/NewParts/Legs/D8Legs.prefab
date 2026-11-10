@@ -30,7 +30,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8042719155749083213}
-  - {fileID: 9122536595281997589}
   m_Father: {fileID: 3985344858798277685}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6994469244490122566
@@ -59,11 +58,11 @@ Transform:
   m_GameObject: {fileID: 6994469244490122566}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.15081431, z: 0.000000007450581}
+  m_LocalPosition: {x: 0, y: -0.030162862, z: 0.0000000014901161}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4000227227485535073}
+  m_Father: {fileID: 3985344858798277685}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6338716130945076145
 MonoBehaviour:
@@ -200,7 +199,7 @@ GameObject:
   - component: {fileID: 3985344858798277685}
   - component: {fileID: 4636971360460243201}
   - component: {fileID: 733778826503166585}
-  - component: {fileID: 3968645281342372060}
+  - component: {fileID: 3407034581866290521}
   m_Layer: 0
   m_Name: D8Legs
   m_TagString: Untagged
@@ -222,6 +221,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4000227227485535073}
+  - {fileID: 9122536595281997589}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4636971360460243201
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: b36240fb6e78c1d45838486ff496ce5d, type: 2}
---- !u!114 &3968645281342372060
+--- !u!114 &3407034581866290521
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

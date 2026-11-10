@@ -49,7 +49,7 @@ public sealed class SFXPlayer : ISFXPlayer, IInitializable, ITickable, IDisposab
         int free = -1, count = 0;
         for (int i = 0; i < _voices.Length; i++)
         {
-            if (!_voices[i].Handle.IsValid) { if (free < 0) free = i; }
+            if (!_voices[i].Handle.IsValid) { if (free < 0 && _voices[i].Source != null) free = i; }
             else if (_voices[i].Id == id) count++;
         }
         if (free < 0 || count >= Mathf.Clamp(entry.MaxConcurrent, 1, 32)) return default;
@@ -96,7 +96,7 @@ public sealed class SFXPlayer : ISFXPlayer, IInitializable, ITickable, IDisposab
         {
             ref var voice = ref _voices[i];
             if (!voice.Handle.IsValid || !voice.Following) continue;
-            if (voice.Target == null) Release(i);
+            if (voice.Source == null || voice.Target == null) Release(i);
             else voice.Source.transform.position = voice.Target.position;
         }
     }
@@ -105,17 +105,21 @@ public sealed class SFXPlayer : ISFXPlayer, IInitializable, ITickable, IDisposab
     {
         if (_voices == null || _activeCount == 0 || AudioListener.pause) return;
         for (int i = 0; i < _voices.Length; i++)
-            if (_voices[i].Handle.IsValid && !_voices[i].Source.isPlaying)
+            if (_voices[i].Handle.IsValid && (_voices[i].Source == null || !_voices[i].Source.isPlaying))
                 Release(i);
     }
 
     private void Release(int index)
     {
         ref var voice = ref _voices[index];
-        voice.Source.Stop();
-        voice.Source.clip = null;
-        voice.Source.outputAudioMixerGroup = null;
-        voice.Source.gameObject.SetActive(false);
+        var source = voice.Source;
+        if (source != null)
+        {
+            source.Stop();
+            source.clip = null;
+            source.outputAudioMixerGroup = null;
+            source.gameObject.SetActive(false);
+        }
         voice.Target = null;
         voice.Following = false;
         voice.Handle = default;
@@ -141,7 +145,7 @@ public sealed class SFXPlayer : ISFXPlayer, IInitializable, ITickable, IDisposab
     {
         if (_disposed || _voices == null || !handle.IsValid) return false;
         for (int i = 0; i < _voices.Length; i++)
-            if (_voices[i].Handle.Equals(handle))
+            if (_voices[i].Handle.Equals(handle) && _voices[i].Source != null)
             {
                 _voices[i].Source.volume = _voices[i].BaseVolume * Mathf.Clamp01(volume);
                 return true;

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 680320479527923013}
   - component: {fileID: 2989518636900770419}
   - component: {fileID: 159449298222435038}
-  - component: {fileID: 6987821564136732867}
+  - component: {fileID: 5885888864367659803}
   m_Layer: 0
   m_Name: D10Body
   m_TagString: Shell
@@ -33,6 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8220421105712225615}
+  - {fileID: 7780676284692544825}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!54 &2989518636900770419
@@ -75,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 084926dcb0ff7054283e894b3c6d87be, type: 2}
---- !u!114 &6987821564136732867
+--- !u!114 &5885888864367659803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,7 +281,7 @@ GameObject:
   - component: {fileID: 4995452936778557467}
   - component: {fileID: 7552397662618145446}
   - component: {fileID: 8622552149665971533}
-  - component: {fileID: 3789895160901388513}
+  - component: {fileID: 3176643896755747411}
   m_Layer: 0
   m_Name: LegsSockets
   m_TagString: Untagged
@@ -372,7 +373,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &3789895160901388513
+--- !u!135 &3176643896755747411
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -391,7 +392,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1799133886310454354
 GameObject:
@@ -404,7 +405,7 @@ GameObject:
   - component: {fileID: 1808135517412991462}
   - component: {fileID: 8290994770993895526}
   - component: {fileID: 2903601944455252587}
-  - component: {fileID: 1605862527290229149}
+  - component: {fileID: 4169023860385773334}
   m_Layer: 0
   m_Name: NewParts_FlyControllerSocket
   m_TagString: Untagged
@@ -495,7 +496,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &1605862527290229149
+--- !u!135 &4169023860385773334
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -514,7 +515,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2061948414555281437
 GameObject:
@@ -658,7 +659,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8220421105712225615}
+  m_Father: {fileID: 680320479527923013}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1142818816475841646
 MonoBehaviour:
@@ -683,7 +684,7 @@ GameObject:
   - component: {fileID: 2217956430893345693}
   - component: {fileID: 8979159237581255237}
   - component: {fileID: 7046245381436647792}
-  - component: {fileID: 2089327475320029752}
+  - component: {fileID: 181363819030319414}
   m_Layer: 0
   m_Name: NewParts_BatterySocket
   m_TagString: Untagged
@@ -774,7 +775,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &2089327475320029752
+--- !u!135 &181363819030319414
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -793,7 +794,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3533089988947809587
 GameObject:
@@ -837,7 +838,7 @@ GameObject:
   - component: {fileID: 3110015078537531058}
   - component: {fileID: 8954083124201162146}
   - component: {fileID: 5719930976758686378}
-  - component: {fileID: 3704366920835969409}
+  - component: {fileID: 8242967273941547211}
   m_Layer: 0
   m_Name: NewParts_RaysSocket
   m_TagString: Untagged
@@ -928,7 +929,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &3704366920835969409
+--- !u!135 &8242967273941547211
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -947,7 +948,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4628109231057359467
 GameObject:
@@ -1137,7 +1138,6 @@ Transform:
   - {fileID: 4917518468051720887}
   - {fileID: 3567363750695538077}
   - {fileID: 1457731043673943382}
-  - {fileID: 7780676284692544825}
   - {fileID: 2217956430893345693}
   - {fileID: 1808135517412991462}
   - {fileID: 3110015078537531058}

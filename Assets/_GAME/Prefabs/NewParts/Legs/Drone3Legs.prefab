@@ -79,11 +79,11 @@ Transform:
   m_GameObject: {fileID: 927035667564550578}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0028220788, y: -0.0722522, z: -0.000009387732}
+  m_LocalPosition: {x: -0.00056441576, y: -0.01445044, z: -0.0000018775463}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6938185301640057655}
+  m_Father: {fileID: 6237328951387550802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &980732184624962161
 MonoBehaviour:
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 6237328951387550802}
   - component: {fileID: 8018281700958332117}
   - component: {fileID: 7527619392478017839}
-  - component: {fileID: 4257469067294655983}
+  - component: {fileID: 588239385477403841}
   m_Layer: 0
   m_Name: Drone3Legs
   m_TagString: Untagged
@@ -130,6 +130,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6938185301640057655}
+  - {fileID: 372057348456723618}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &8018281700958332117
@@ -172,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 9a26c9ca77aacb042a663da41b6cfbaa, type: 2}
---- !u!114 &4257469067294655983
+--- !u!114 &588239385477403841
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -388,7 +389,6 @@ Transform:
   - {fileID: 1050060361321885648}
   - {fileID: 999408862532275827}
   - {fileID: 4378905678550787530}
-  - {fileID: 372057348456723618}
   m_Father: {fileID: 6237328951387550802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8903663787667603373

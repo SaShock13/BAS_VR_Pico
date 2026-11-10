@@ -16,6 +16,7 @@ MonoBehaviour:
   LegacyPartIds:
   - newparts/2c4ab2daf8f58b7409af1383611ebe1d
   PartType: 4
+  HasConstantMaterial: 0
   Prefab: {fileID: 5090115935447835255, guid: 2c4ab2daf8f58b7409af1383611ebe1d, type: 3}
   PrefabAddress: Parts/Legs/D6Legs
   Mass: 1

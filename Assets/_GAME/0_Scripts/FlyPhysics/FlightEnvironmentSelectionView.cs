@@ -71,7 +71,7 @@ public sealed class FlightEnvironmentSelectionView : MonoBehaviour
         _bus.Publish(new ConfirmFlightEnvironmentRequest { EnvironmentId = _catalog.Environments[_index].id });
         Close();
     }
-    private void Close() => panel.SetActive(false);
+    public void Close() => panel.SetActive(false);
     private void OnDestroy()
     {
         _subscription?.Dispose();

@@ -26,11 +26,11 @@ Transform:
   m_GameObject: {fileID: 826227208658267278}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.006550595, y: -0.07678574, z: 0.029815666}
+  m_LocalPosition: {x: -0.001310119, y: -0.015357149, z: 0.005963133}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6140131729259858767}
+  m_Father: {fileID: 8658922804438009646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1485623307512414791
 MonoBehaviour:
@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 8658922804438009646}
   - component: {fileID: 2816099255884644916}
   - component: {fileID: 761000422223383969}
-  - component: {fileID: 5533740087382450076}
+  - component: {fileID: 9099106164322187640}
   m_Layer: 0
   m_Name: Gears3 4
   m_TagString: Untagged
@@ -189,6 +189,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6140131729259858767}
+  - {fileID: 6619311304812342809}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2816099255884644916
@@ -231,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 31bd346ae879dc9429dc6d084d8a6884, type: 2}
---- !u!114 &5533740087382450076
+--- !u!114 &9099106164322187640
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -391,6 +392,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5618896438406694696}
-  - {fileID: 6619311304812342809}
   m_Father: {fileID: 8658922804438009646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

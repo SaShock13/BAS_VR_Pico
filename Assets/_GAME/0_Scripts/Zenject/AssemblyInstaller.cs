@@ -5,6 +5,8 @@ using Zenject;
 public class AssemblyInstaller : MonoInstaller
 {
     [SerializeField] private FlightEnvironmentCatalog flightEnvironmentCatalog;
+    [UnityEngine.Serialization.FormerlySerializedAs("skipAssemblySaveBeforeFlight")]
+    [SerializeField] private bool launchStoredDrones;
     [SerializeField] private List<PartConfig> partConfigs;
 
     [SerializeField] private PartSpawnAnimator spawnAnimator;
@@ -21,7 +23,7 @@ public class AssemblyInstaller : MonoInstaller
         Container.Bind<IPartFactory>().To<PartFactory>().AsSingle();
         Container.Bind<ISocketResolver>().To<SocketRegistry>().AsSingle();
 
-        Container.Bind<ISaveService>().To<JsonSaveService>().AsSingle();
+        Container.BindInterfacesAndSelfTo<JsonSaveService>().AsSingle();
         Container.Bind<IGarageService>().To<GarageService>().AsSingle();
         Container.Bind<IGarageSaveService>().To<JsonGarageSaveService>().AsSingle();
 
@@ -29,7 +31,8 @@ public class AssemblyInstaller : MonoInstaller
         Container.Bind<ISelectionService>().To<SelectionService>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<Clean_AssemblySystem>().AsSingle();
-        Container.BindInterfacesTo<FlightLaunchService>().AsSingle();
+        Container.BindInterfacesTo<FlightLaunchService>().AsSingle()
+            .WithArguments(launchStoredDrones);
         Container.BindInterfacesAndSelfTo<AssemblyGrabModeService>().AsSingle();
         Container.BindInterfacesAndSelfTo<PartHighlightService>().AsSingle();
 

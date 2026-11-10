@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.Samples.SpatialKeyboard;
 using Zenject;
 
 public class StartMenu : MonoBehaviour
@@ -17,7 +18,6 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private TMP_Text statusText;
     [SerializeField] private GameObject mainWindow, newWindow, loadWindow, settingsWindow, aboutWindow;
     [SerializeField] private Button[] navigationButtons;
-    [SerializeField] private Button[] keyboardKeys;
     private IEventBus _eventBus;
     private IDisposable _subscription, _listSubscription;
     private List<AssemblyProjectData> _projects = new();
@@ -47,6 +47,7 @@ public class StartMenu : MonoBehaviour
             statusText.text = "Введите имя сборки";
             return;
         }
+        GlobalNonNativeKeyboard.instance?.HideKeyboard();
         _eventBus.Publish(new AssemblyProjectRequest { Operation = "new", Name = projectName.text });
     }
     public void OpenNew()
@@ -61,14 +62,6 @@ public class StartMenu : MonoBehaviour
     public void CloseWindow() { if (!_loading) ShowWindow(mainWindow); }
     public void AcceptSettings() { CloseWindow(); } // Placeholder: there are no editable settings yet.
     public void Quit() { if (!_loading) Application.Quit(); }
-    public void TypeCharacter(string value)
-    {
-        if (!_loading && projectName.text.Length < projectName.characterLimit) projectName.text += value;
-    }
-    public void Backspace()
-    {
-        if (!_loading && projectName.text.Length > 0) projectName.text = projectName.text.Substring(0, projectName.text.Length - 1);
-    }
     private void ShowWindow(GameObject window)
     {
         foreach (var panel in new[] { mainWindow, newWindow, loadWindow, settingsWindow, aboutWindow })
@@ -118,7 +111,6 @@ public class StartMenu : MonoBehaviour
         showSaves.interactable = !loading;
         projectName.interactable = !loading;
         foreach (var button in navigationButtons) button.interactable = !loading;
-        foreach (var button in keyboardKeys) button.interactable = !loading;
         startBtnText.text = loading ? "ЗАГРУЗКА…" : "OK";
         if (loading) statusText.text = "Загрузка сцены сборки…";
         Render();

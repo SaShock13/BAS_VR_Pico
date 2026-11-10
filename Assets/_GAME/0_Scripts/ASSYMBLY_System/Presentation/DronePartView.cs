@@ -85,6 +85,8 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
     [SerializeField]
     private Renderer[] _renderers;
     private Material[][] _materialSlots;
+    private MaterialPropertyBlock[][] _prefabPropertyBlocks;
+    public bool HasConstantMaterial { get; private set; }
 
     private static readonly int EmissionColor =
         Shader.PropertyToID("_EmissionColor");
@@ -281,15 +283,31 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
             : null;
     }
 
-    public void Init(string instanceId,IEventBus eventBus)
+    public void Init(string instanceId,IEventBus eventBus, bool hasConstantMaterial = false)
     {
 
         Debug.Log($"!!!!PArt Initialized with ID  {instanceId}");
         InstanceId = instanceId;
+        _mpb ??= new MaterialPropertyBlock();
+        HasConstantMaterial = hasConstantMaterial;
         _renderers = GetComponentsInChildren<Renderer>(true);
         _materialSlots = new Material[_renderers.Length][];
         for (int i = 0; i < _renderers.Length; i++)
             _materialSlots[i] = _renderers[i].sharedMaterials;
+        if (HasConstantMaterial)
+        {
+            _prefabPropertyBlocks = new MaterialPropertyBlock[_renderers.Length][];
+            for (int i = 0; i < _renderers.Length; i++)
+            {
+                _prefabPropertyBlocks[i] = new MaterialPropertyBlock[_materialSlots[i].Length];
+                for (int j = 0; j < _materialSlots[i].Length; j++)
+                {
+                    var block = new MaterialPropertyBlock();
+                    _renderers[i].GetPropertyBlock(block, j);
+                    _prefabPropertyBlocks[i][j] = block;
+                }
+            }
+        }
         _renderer = _renderers[0];
         _color = _renderer.sharedMaterial != null ? _renderer.sharedMaterial.color : Color.white;
         _eventBus = eventBus;
@@ -298,6 +316,7 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
 
     public void ApplyPreviewSmoothness(float value)
     {
+        if (HasConstantMaterial) return;
         foreach (var renderer in _renderers)
         {
             renderer.GetPropertyBlock(_mpb);
@@ -308,6 +327,7 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
 
     public void ApplyPreviewMetallness(float value)
     {
+        if (HasConstantMaterial) return;
         foreach (var renderer in _renderers)
         {
             renderer.GetPropertyBlock(_mpb);
@@ -319,6 +339,7 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
     // PREVIEW — вызывается каждый кадр
     public async Task ApplyVisualPreview(PartVisualProperties visual)
     {
+        if (HasConstantMaterial) return;
 
         Debug.Log($"mmmmmmmTry get visual.MaterialId {visual.MaterialId}");
 
@@ -369,6 +390,29 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
 
     public void Highlight(bool on)
     {
+        if (HasConstantMaterial)
+        {
+            if (highlighted == on) return;
+            highlighted = on;
+            for (int i = 0; i < _renderers.Length; i++)
+            for (int j = 0; j < _materialSlots[i].Length; j++)
+            {
+                var mat = _materialSlots[i][j];
+                if (mat == null || !mat.HasProperty(ShaderIds.BaseColor)) continue;
+                if (on)
+                {
+                    _renderers[i].GetPropertyBlock(_mpb, j);
+                    _mpb.SetColor(ShaderIds.BaseColor, mat.GetColor(ShaderIds.BaseColor) * 1.2f);
+                    _renderers[i].SetPropertyBlock(_mpb, j);
+                }
+                else
+                {
+                    var original = _prefabPropertyBlocks[i][j];
+                    _renderers[i].SetPropertyBlock(original.isEmpty ? null : original, j);
+                }
+            }
+            return;
+        }
 
         //_color = _mpb.GetColor("_BaseColor");
 

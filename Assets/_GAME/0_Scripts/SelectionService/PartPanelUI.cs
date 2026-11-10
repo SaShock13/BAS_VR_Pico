@@ -24,6 +24,7 @@ public class PartPanelUI : MonoBehaviour
     [SerializeField] private Slider _metalnessSlider;
     [SerializeField] private SliderEndDragHandler _metalnessEndDragHandler;
     [SerializeField] private GameObject panel;
+    [SerializeField] private ConfirmationView deletePartConfirmation;
     [SerializeField] private GameObject enterNamePanel;
     [SerializeField] private Button okNameBtn;
     [SerializeField] private TMP_InputField nameInputField;
@@ -213,10 +214,19 @@ public class PartPanelUI : MonoBehaviour
         if (!TryGetPart(out var part)) { Hide(); return; }
         if (changedPart)
         {
+            deletePartConfirmation?.Cancel();
             _colorPicker.gameObject.SetActive(false);
             enterNamePanel.SetActive(false);
         }
         var vm = context.Part;
+        bool editable = !vm.HasConstantMaterial;
+        _materialDropdown.interactable = editable;
+        _presetDropdown.interactable = editable;
+        colorButton.interactable = editable;
+        _smoothnessSlider.interactable = editable;
+        _metalnessSlider.interactable = editable;
+        savePresetBtn.interactable = editable;
+        if (!editable) _colorPicker.gameObject.SetActive(false);
         weight.text = vm.Weight.ToString();
         name.text = vm.Name;
         material.text = vm.Material;
@@ -245,9 +255,13 @@ public class PartPanelUI : MonoBehaviour
     {
         if (!TryGetPart(out var part)) return;
         string instanceId = part.InstanceId;
-        CommitSliders();
-        _eventBus.Publish(new Clean_DeletePartRequest { InstanceId = instanceId, Timestamp = DateTime.UtcNow });
-        _inspector.RefreshSelectedPart();
+        deletePartConfirmation?.Show("Удалить выбранную деталь из сборки?", () =>
+        {
+            if (_selectedPartInstanceId != instanceId || !TryGetPart(out _)) return;
+            CommitSliders();
+            _eventBus.Publish(new Clean_DeletePartRequest { InstanceId = instanceId, Timestamp = DateTime.UtcNow });
+            _inspector.RefreshSelectedPart();
+        });
     }
 
     public void DuplicateSelectedPart()

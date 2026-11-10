@@ -6,6 +6,7 @@ using UnityEngine;
 public class JsonSaveService : ISaveService
 {
     private const string LegacyId = "00000000000000000000000000000001";
+    private const string LegacyGarageId = "00000000000000000000000000000002";
     private readonly string _root;
     private string DirectoryPath => Path.Combine(_root, "Assemblies");
 
@@ -20,6 +21,7 @@ public class JsonSaveService : ISaveService
     public List<AssemblyProjectData> ListProjects()
     {
         ImportLegacy();
+        ImportLegacyGarage();
         var result = new List<AssemblyProjectData>();
         if (!Directory.Exists(DirectoryPath)) return result;
         foreach (var path in Directory.GetFiles(DirectoryPath, "*.json"))
@@ -28,6 +30,7 @@ public class JsonSaveService : ISaveService
             {
                 var entry = Read(Path.GetFileNameWithoutExtension(path));
                 entry.Assembly = null; // The menu retains metadata only, never part graphs.
+                entry.Garage = null;
                 result.Add(entry);
             }
             catch (Exception exception) { Debug.LogWarning($"Cannot read assembly {path}: {exception.Message}"); }
@@ -78,6 +81,55 @@ public class JsonSaveService : ISaveService
         return SelectProject(AssemblyProjectSession.ActiveId).Assembly;
     }
 
+    public GarageSaveData LoadGarage()
+    {
+        var id = AssemblyProjectSession.ActiveId;
+        return string.IsNullOrEmpty(id) ? new GarageSaveData() : Read(id).Garage;
+    }
+
+    public void SaveGarage(GarageSaveData garage)
+    {
+        if (garage?.Drones == null) throw new ArgumentException("Garage data is missing.", nameof(garage));
+        var id = AssemblyProjectSession.ActiveId;
+        var project = string.IsNullOrEmpty(id) ? NewProject(Guid.NewGuid().ToString("N"), null) : Read(id);
+        project.Garage = garage;
+        project.UpdatedAtTicks = DateTime.UtcNow.Ticks;
+        Write(project);
+        Select(project);
+    }
+
+    public bool MoveGarageDroneToAssembly(string garageId)
+    {
+        var id = AssemblyProjectSession.ActiveId;
+        if (string.IsNullOrEmpty(id)) return false;
+        var project = Read(id);
+        var drone = project.Garage.Drones.Find(entry => entry.GarageId == garageId);
+        if (drone?.Assembly?.Parts == null || drone.Assembly.Parts.Count == 0) return false;
+
+        var usedIds = new HashSet<string>();
+        foreach (var part in project.Assembly.Parts) usedIds.Add(part.InstanceId);
+        var replacements = new Dictionary<string, string>();
+        foreach (var part in drone.Assembly.Parts)
+        {
+            if (string.IsNullOrEmpty(part.InstanceId) || replacements.ContainsKey(part.InstanceId))
+                throw new InvalidDataException("Invalid garage part IDs.");
+            var replacement = part.InstanceId;
+            while (!usedIds.Add(replacement)) replacement = Guid.NewGuid().ToString("N");
+            replacements.Add(part.InstanceId, replacement);
+        }
+        foreach (var part in drone.Assembly.Parts)
+        {
+            part.InstanceId = replacements[part.InstanceId];
+            if (!string.IsNullOrEmpty(part.AttachedPartId) && replacements.TryGetValue(part.AttachedPartId, out var parent))
+                part.AttachedPartId = parent;
+        }
+        project.Assembly.Parts.AddRange(drone.Assembly.Parts);
+        project.Garage.Drones.Remove(drone);
+        project.UpdatedAtTicks = DateTime.UtcNow.Ticks;
+        Write(project);
+        return true;
+    }
+
     private static void Select(AssemblyProjectData project)
     {
         AssemblyProjectSession.ActiveId = project.Id;
@@ -124,6 +176,8 @@ public class JsonSaveService : ISaveService
         if (project == null || project.Version != 1 || project.Id != id ||
             string.IsNullOrWhiteSpace(project.Name) || project.Assembly == null || project.Assembly.Parts == null)
             throw new InvalidDataException("Invalid or unsupported assembly save.");
+        project.Garage ??= new GarageSaveData();
+        project.Garage.Drones ??= new List<GarageDroneData>();
         return project;
     }
 
@@ -159,5 +213,24 @@ public class JsonSaveService : ISaveService
             Write(project);
         }
         catch (Exception exception) { Debug.LogWarning($"Cannot import assembly.json: {exception.Message}"); }
+    }
+
+    private void ImportLegacyGarage()
+    {
+        string legacyPath = Path.Combine(_root, "garage.json");
+        string projectPath = FilePath(LegacyGarageId);
+        if (!File.Exists(legacyPath) || File.Exists(projectPath) || File.Exists(projectPath + ".bak")) return;
+        try
+        {
+            var garage = JsonUtility.FromJson<GarageSaveData>(File.ReadAllText(legacyPath));
+            if (garage?.Drones == null) throw new InvalidDataException("Invalid legacy garage save.");
+            if (garage.Drones.Count == 0) return;
+            var project = NewProject(LegacyGarageId, "Старый гараж");
+            project.Garage = garage;
+            project.CreatedAtTicks = File.GetCreationTimeUtc(legacyPath).Ticks;
+            project.UpdatedAtTicks = File.GetLastWriteTimeUtc(legacyPath).Ticks;
+            Write(project);
+        }
+        catch (Exception exception) { Debug.LogWarning($"Cannot import garage.json: {exception.Message}"); }
     }
 }

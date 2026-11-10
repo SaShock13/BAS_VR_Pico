@@ -138,11 +138,11 @@ Transform:
   m_GameObject: {fileID: 2122979543056843249}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.001067549, y: 0.02223981, z: -0.00011926144}
+  m_LocalPosition: {x: 0.0002135098, y: 0.004447962, z: -0.00002385229}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5727475461626666207}
+  m_Father: {fileID: 3637219766457300479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6578896189057474859
 MonoBehaviour:
@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 3637219766457300479}
   - component: {fileID: 2627081890773832156}
   - component: {fileID: 3365389121640179201}
-  - component: {fileID: 2230895403133284349}
+  - component: {fileID: 6932750797124231211}
   m_Layer: 0
   m_Name: Drone1Propeller (1)
   m_TagString: Untagged
@@ -189,6 +189,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5727475461626666207}
+  - {fileID: 3661653554602462325}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2627081890773832156
@@ -231,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: c14d4b1fae89abf49bbd11eccd3c4941, type: 2}
---- !u!114 &2230895403133284349
+--- !u!114 &6932750797124231211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -391,6 +392,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: -8679921383154817045}
-  - {fileID: 3661653554602462325}
   m_Father: {fileID: 3637219766457300479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

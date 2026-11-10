@@ -15,6 +15,7 @@ MonoBehaviour:
   PartId: newparts/Tech/battery1
   LegacyPartIds: []
   PartType: 6
+  HasConstantMaterial: 0
   Prefab: {fileID: 8777026559667588407, guid: 5f2505b110785c341b8a9279cee34ab8, type: 3}
   PrefabAddress: Parts/Tech/battery1
   Mass: 0.18

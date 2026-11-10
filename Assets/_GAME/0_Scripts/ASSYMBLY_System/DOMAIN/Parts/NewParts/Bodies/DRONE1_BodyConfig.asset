@@ -16,6 +16,7 @@ MonoBehaviour:
   LegacyPartIds:
   - newparts/7da98bb0cd06ded4bb5be20a39a60fb4
   PartType: 0
+  HasConstantMaterial: 0
   Prefab: {fileID: 6032232478579123506, guid: 7da98bb0cd06ded4bb5be20a39a60fb4, type: 3}
   PrefabAddress: Parts/Bodies/DRONE1_Body
   Mass: 3

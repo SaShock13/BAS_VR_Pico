@@ -88,11 +88,11 @@ Transform:
   m_GameObject: {fileID: 896623055048093172}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.028107146, y: 0.06696076, z: 0.00015988466}
+  m_LocalPosition: {x: -0.005621429, y: 0.013392152, z: 0.00003197693}
   m_LocalScale: {x: 1.8454902, y: 1.8454902, z: 1.8454899}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1866665740660531797}
+  m_Father: {fileID: 7903775868332177789}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6155992887597994814
 MonoBehaviour:
@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 7903775868332177789}
   - component: {fileID: 938433891245181698}
   - component: {fileID: 7256833923513621541}
-  - component: {fileID: 8840905172424283998}
+  - component: {fileID: 5581747682442720232}
   m_Layer: 0
   m_Name: D11Propeller
   m_TagString: Untagged
@@ -252,6 +252,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1866665740660531797}
+  - {fileID: 5269223337906120554}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &938433891245181698
@@ -294,7 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 5e3472f043b47dc4c92d24e9dd49278d, type: 2}
---- !u!114 &8840905172424283998
+--- !u!114 &5581747682442720232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -455,6 +456,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3770101275446365901}
-  - {fileID: 5269223337906120554}
   m_Father: {fileID: 7903775868332177789}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

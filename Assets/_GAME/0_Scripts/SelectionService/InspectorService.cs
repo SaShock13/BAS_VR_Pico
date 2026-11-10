@@ -119,14 +119,15 @@ public class InspectorService : IDisposable
 
     private PartViewModel MapPart(PartDomainState domain , PartConfig config)
     {
-        var materialDefinition = _materials.Get(domain.VisualProperties.MaterialId);
+        var materialDefinition = config.HasConstantMaterial ? null : _materials.Get(domain.VisualProperties.MaterialId);
 
         return new PartViewModel
         {
             InstanceId = domain.InstanceId,
             Name = config.PartId,
             Color = domain.VisualProperties.Color,
-            Material = materialDefinition.DisplayName,
+            Material = config.HasConstantMaterial ? "Prefab material" : materialDefinition.DisplayName,
+            HasConstantMaterial = config.HasConstantMaterial,
             Smoothness = domain.VisualProperties.Smoothness,
             Metallness = domain.VisualProperties.Metallic,
             Weight = config.Mass

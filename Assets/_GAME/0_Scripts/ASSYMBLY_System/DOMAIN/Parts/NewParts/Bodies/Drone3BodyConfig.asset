@@ -16,6 +16,7 @@ MonoBehaviour:
   LegacyPartIds:
   - newparts/5de892331cc63a146b7546d4ad6e6655
   PartType: 0
+  HasConstantMaterial: 0
   Prefab: {fileID: 3429032412858205396, guid: 5de892331cc63a146b7546d4ad6e6655, type: 3}
   PrefabAddress: Parts/Bodies/Drone3Body
   Mass: 1

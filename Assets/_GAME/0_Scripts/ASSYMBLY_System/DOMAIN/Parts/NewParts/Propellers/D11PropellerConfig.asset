@@ -16,6 +16,7 @@ MonoBehaviour:
   LegacyPartIds:
   - newparts/41b2abb6eacca74418b869e75c991102
   PartType: 3
+  HasConstantMaterial: 0
   Prefab: {fileID: 5903265013995925789, guid: 41b2abb6eacca74418b869e75c991102, type: 3}
   PrefabAddress: Parts/Propellers/D11Propeller
   Mass: 1

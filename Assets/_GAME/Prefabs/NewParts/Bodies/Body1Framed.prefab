@@ -65,7 +65,6 @@ Transform:
   - {fileID: 5960527777527015466}
   - {fileID: 6163631657469067184}
   - {fileID: 8646262292227078281}
-  - {fileID: 5263889633227680837}
   - {fileID: 724941636963997518}
   - {fileID: 3225727881235026264}
   m_Father: {fileID: 1447691721330498093}
@@ -210,7 +209,7 @@ GameObject:
   - component: {fileID: 4972900135593695620}
   - component: {fileID: 8234091160773268046}
   - component: {fileID: 4793784334351017000}
-  - component: {fileID: 2066734020890564132}
+  - component: {fileID: 2411470888521426859}
   m_Layer: 0
   m_Name: EngineSocket1OK
   m_TagString: Untagged
@@ -302,7 +301,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &2066734020890564132
+--- !u!135 &2411470888521426859
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,7 +320,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.16851893
+  m_Radius: 0.8425947
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2482051343154368285
 GameObject:
@@ -380,11 +379,11 @@ Transform:
   m_GameObject: {fileID: 2558252500759800549}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.014299989, y: 0.072, z: 0.053300023}
+  m_LocalPosition: {x: -0.0028599978, y: 0.0144, z: 0.010660005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7544001986196493811}
+  m_Father: {fileID: 1447691721330498093}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5452650291499414238
 MonoBehaviour:
@@ -618,7 +617,7 @@ GameObject:
   - component: {fileID: 2015476620017660518}
   - component: {fileID: 5615931732413707552}
   - component: {fileID: 8459973210212253747}
-  - component: {fileID: 5181603275099126486}
+  - component: {fileID: 78036986280292111}
   m_Layer: 0
   m_Name: EngineSocket1OK (1)
   m_TagString: Untagged
@@ -710,7 +709,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &5181603275099126486
+--- !u!135 &78036986280292111
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -729,7 +728,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.16851893
+  m_Radius: 0.8425947
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3617540872603332855
 GameObject:
@@ -804,7 +803,7 @@ GameObject:
   - component: {fileID: 4370113015456432354}
   - component: {fileID: 5150233203484586416}
   - component: {fileID: 1193105801181199494}
-  - component: {fileID: 6634073000042960423}
+  - component: {fileID: 6579944146207967332}
   m_Layer: 0
   m_Name: SocketElectronicPlate
   m_TagString: Untagged
@@ -895,7 +894,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &6634073000042960423
+--- !u!135 &6579944146207967332
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -914,7 +913,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4497373064523656472
 GameObject:
@@ -1022,7 +1021,7 @@ GameObject:
   - component: {fileID: 3225727881235026264}
   - component: {fileID: 4741824167437027309}
   - component: {fileID: 8289272242268830343}
-  - component: {fileID: 5490706192754080959}
+  - component: {fileID: 6988184238567182553}
   m_Layer: 0
   m_Name: NewParts_LegsSocket
   m_TagString: Untagged
@@ -1113,7 +1112,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &5490706192754080959
+--- !u!135 &6988184238567182553
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1132,7 +1131,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5157927893454138838
 GameObject:
@@ -1424,7 +1423,7 @@ GameObject:
   - component: {fileID: 4395132172527169466}
   - component: {fileID: 5819139402195388893}
   - component: {fileID: 6984951035901392503}
-  - component: {fileID: 8798904195067663688}
+  - component: {fileID: 8499035769298943537}
   m_Layer: 0
   m_Name: EngineSocket1OK (2)
   m_TagString: Untagged
@@ -1516,7 +1515,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &8798904195067663688
+--- !u!135 &8499035769298943537
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1535,7 +1534,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.16851893
+  m_Radius: 0.8425947
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6635259659770439022
 GameObject:
@@ -1580,7 +1579,7 @@ GameObject:
   - component: {fileID: 724941636963997518}
   - component: {fileID: 2320069360633829399}
   - component: {fileID: 8698078454061738874}
-  - component: {fileID: 4220116981472841185}
+  - component: {fileID: 2889695845814835474}
   m_Layer: 0
   m_Name: NewParts_BatterySocket
   m_TagString: Untagged
@@ -1671,7 +1670,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &4220116981472841185
+--- !u!135 &2889695845814835474
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1690,7 +1689,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6719145817236468178
 GameObject:
@@ -1799,7 +1798,7 @@ GameObject:
   - component: {fileID: 1447691721330498093}
   - component: {fileID: 2919722846133349306}
   - component: {fileID: 2866663309182822897}
-  - component: {fileID: 987956461158183935}
+  - component: {fileID: 16505700482428832}
   m_Layer: 0
   m_Name: Body1Framed
   m_TagString: Untagged
@@ -1821,6 +1820,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7544001986196493811}
+  - {fileID: 5263889633227680837}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!54 &2919722846133349306
@@ -1863,7 +1863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 2545c3c0562783a4795049b5c0947500, type: 2}
---- !u!114 &987956461158183935
+--- !u!114 &16505700482428832
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2068,7 +2068,7 @@ GameObject:
   - component: {fileID: 8840479505968977089}
   - component: {fileID: 6466907732132213852}
   - component: {fileID: 5640510900520933513}
-  - component: {fileID: 1626738466248968203}
+  - component: {fileID: 6820224971384333546}
   m_Layer: 0
   m_Name: EngineSocket1OK (3)
   m_TagString: Untagged
@@ -2160,7 +2160,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &1626738466248968203
+--- !u!135 &6820224971384333546
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2179,7 +2179,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.16851893
+  m_Radius: 0.8425947
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7709704027300941510
 GameObject:

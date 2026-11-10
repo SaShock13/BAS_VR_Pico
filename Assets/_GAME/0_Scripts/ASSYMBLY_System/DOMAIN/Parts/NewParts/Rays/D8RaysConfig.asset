@@ -16,6 +16,7 @@ MonoBehaviour:
   LegacyPartIds:
   - newparts/d86c9742213e17c49ad9d8fd68dc0ccf
   PartType: 1
+  HasConstantMaterial: 0
   Prefab: {fileID: 8716650097824971985, guid: d86c9742213e17c49ad9d8fd68dc0ccf, type: 3}
   PrefabAddress: Parts/Rays/D8Rays
   Mass: 3

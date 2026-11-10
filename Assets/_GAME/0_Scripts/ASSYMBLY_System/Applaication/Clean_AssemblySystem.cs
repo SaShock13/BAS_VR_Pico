@@ -301,6 +301,8 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         var partState = GetPartDomainState(command.InstanceId);
 
 
+        if (_configs.Get(partState.PartId).HasConstantMaterial) return;
+
         partState.SetVisual(command.Visual);
 
         _eventBus.Publish(new PartVisualChangedEvent(
@@ -763,7 +765,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
        _container.InjectGameObject(go);
 
 
-        view.Init(instanceId,_eventBus);
+        view.Init(instanceId,_eventBus, config.HasConstantMaterial);
 
 
         Debug.Log($"mmmmmmmmmDomainColor {domainState.VisualProperties.Color}");
@@ -904,7 +906,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         _container.InjectGameObject(go);
 
 
-        view.Init(dublicateInstanceId, _eventBus);
+        view.Init(dublicateInstanceId, _eventBus, config.HasConstantMaterial);
 
         _viewRegistry.Register(dublicateInstanceId, go); // Обязательно регистрировать
 
@@ -1183,6 +1185,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
         _viewRegistry.Clear();
         _parts.Clear();
+        RebuildDrones();
     }
 
     private Dictionary<string, PartDomainState> BuildDomain(AssemblySaveData saveData)
@@ -1220,7 +1223,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
             // Zenject Зависимости прокидывает
             _container.InjectGameObject(go);
 
-            view.Init(domain.InstanceId, _eventBus);
+            view.Init(domain.InstanceId, _eventBus, config.HasConstantMaterial);
 
 
             result.Add(domain.InstanceId, view);

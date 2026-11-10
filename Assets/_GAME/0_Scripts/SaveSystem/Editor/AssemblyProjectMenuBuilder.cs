@@ -1,5 +1,8 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 using System;
+using System.Linq;
+using Unity.XR.CoreUtils;
+using UnityEngine.XR.Interaction.Toolkit.Samples.SpatialKeyboard;
 using TMPro;
 using UnityEditor;
 using UnityEditor.Events;
@@ -74,22 +77,9 @@ public static class AssemblyProjectMenuBuilder
         var input=Input(fresh,new Vector2(0,190));
         ((TMP_Text)input.placeholder).text="Введите имя сборки";
         input.shouldHideSoftKeyboard=true;
-        var keys=new System.Collections.Generic.List<Button>();
-        string[] letters={"1234567890", "ЙЦУКЕНГШЩЗХ", "ФЫВАПРОЛДЖЭ", "ЯЧСМИТЬБЮЁЪ"};
-        for(int row=0;row<letters.Length;row++)
-        for(int col=0;col<letters[row].Length;col++)
-        {
-            string letter=letters[row][col].ToString();
-            var key=Button("Key_"+letter,fresh,letter,new Vector2((col-(letters[row].Length-1)*.5f)*62,105-row*66),new Vector2(56,58));
-            UnityEventTools.AddStringPersistentListener(key.onClick,menu.TypeCharacter,letter);
-            keys.Add(key);
-        }
-        var space=Button("Space",fresh,"Пробел",new Vector2(-115,-165),new Vector2(420,55));
-        UnityEventTools.AddStringPersistentListener(space.onClick,menu.TypeCharacter," "); keys.Add(space);
-        var erase=Button("Backspace",fresh,"Стереть",new Vector2(230,-165),new Vector2(210,55));
-        UnityEventTools.AddPersistentListener(erase.onClick,menu.Backspace); keys.Add(erase);
-        var ok=Button("CreateOK",fresh,"OK",new Vector2(-180,-260),new Vector2(320,64));
-        var cancelNew=Button("Cancel",fresh,"Отмена",new Vector2(180,-260),new Vector2(320,64));
+        ConfigureProjectKeyboard(menu, input);
+        var ok=Button("CreateOK",fresh,"OK",new Vector2(-180,95),new Vector2(320,64));
+        var cancelNew=Button("Cancel",fresh,"Отмена",new Vector2(180,95),new Vector2(320,64));
         var load=Rect("LoadWindow",panel,Vector2.zero,new Vector2(760,620));
         Label("Heading",load,"Загрузить сборки",new Vector2(0,265),new Vector2(720,60),30);
         var rows=new Button[4];
@@ -121,10 +111,38 @@ public static class AssemblyProjectMenuBuilder
         for(int i=0;i<names.Length;i++) so.FindProperty(names[i]).objectReferenceValue=refs[i];
         SetArray(so,"savedRows",rows);
         SetArray(so,"navigationButtons",new[]{create,saves,settings,about,quit,cancelNew,closeLoad,savePrefs,cancelPrefs,closeAbout});
-        SetArray(so,"keyboardKeys",keys.ToArray());
         so.ApplyModifiedPropertiesWithoutUndo();
         foreach(var window in new[]{fresh,load,prefs,credits}) window.gameObject.SetActive(false);
     }
+    public static void ConfigureProjectKeyboard(StartMenu menu, TMP_InputField field)
+    {
+        var scene = menu.gameObject.scene;
+        var roots = scene.GetRootGameObjects();
+        var manager = roots.SelectMany(root => root.GetComponentsInChildren<GlobalNonNativeKeyboard>(true)).SingleOrDefault();
+        if (manager == null)
+        {
+            const string managerPath = "Assets/Samples/XR Interaction Toolkit/3.3.1/Spatial Keyboard/Prefabs/XRI Global Keyboard Manager.prefab";
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(managerPath);
+            manager = ((GameObject)PrefabUtility.InstantiatePrefab(prefab, scene)).GetComponent<GlobalNonNativeKeyboard>();
+        }
+
+        manager.keyboardPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_GAME/Prefabs/PanelKeyboard.prefab");
+        manager.cameraTransform = roots.SelectMany(root => root.GetComponentsInChildren<XROrigin>(true)).Single().Camera.transform;
+        manager.keyboardOffset = new Vector3(0f, -.3f, .65f);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(manager);
+        EditorUtility.SetDirty(manager);
+
+        if (!field.TryGetComponent<XRKeyboardDisplay>(out var display))
+            display = field.gameObject.AddComponent<XRKeyboardDisplay>();
+        field.shouldHideSoftKeyboard = true;
+        display.inputField = field;
+        display.useSceneKeyboard = false;
+        display.updateOnKeyPress = true;
+        display.monitorInputFieldCharacterLimit = true;
+        display.hideKeyboardOnDisable = true;
+        EditorUtility.SetDirty(display);
+    }
+
     private static void SetArray(SerializedObject so,string name,Button[] buttons)
     {
         var array=so.FindProperty(name); array.arraySize=buttons.Length;
@@ -165,11 +183,11 @@ public static class AssemblyProjectMenuBuilder
             var saverData=new SerializedObject(saver);
             saverData.FindProperty("projectName").objectReferenceValue=name;
             saverData.ApplyModifiedPropertiesWithoutUndo();
-            var save=Button("Save",controls,"СОХРАНИТЬ",new Vector2(-225,40),new Vector2(420,60));
-            var exit=Button("SaveExit",controls,"СОХРАНИТЬ И ВЫЙТИ",new Vector2(225,40),new Vector2(420,60));
-            var discard=Button("Discard",controls,"ВЫЙТИ БЕЗ СОХРАНЕНИЯ…",new Vector2(0,-35),new Vector2(600,60));
+            var save=Button("Save",controls,"СОХРАНИТЬ",new Vector2(-325,40),new Vector2(405,60));
+            var exit=Button("SaveExit",controls,"СОХРАНИТЬ И В ГЛАВНОЕ МЕНЮ",new Vector2(220,40),new Vector2(610,60));
+            var discard=Button("Discard",controls,"В ГЛАВНОЕ МЕНЮ БЕЗ СОХРАНЕНИЯ…",new Vector2(0,-35),new Vector2(950,60));
             var confirm=Rect("ConfirmDiscard",controls,new Vector2(0,-110),new Vector2(850,65));
-            var yes=Button("Yes",confirm,"ДА, ВЫЙТИ",new Vector2(-210,0),new Vector2(390,60));
+            var yes=Button("Yes",confirm,"ДА, В ГЛАВНОЕ МЕНЮ",new Vector2(-210,0),new Vector2(390,60));
             var cancel=Button("Cancel",confirm,"ОТМЕНА",new Vector2(210,0),new Vector2(390,60));
             UnityEventTools.AddPersistentListener(save.onClick,saver.SaveActive);
             UnityEventTools.AddPersistentListener(exit.onClick,saver.SaveAndExit);
