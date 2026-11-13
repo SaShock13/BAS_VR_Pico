@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 568e7f8b5fb4c49259f5335e5a77c10b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 25468
+  packageName: UI Examples | uGUI Sample Project
+  packageVersion: 2.0.0
+  assetPath: Assets/Unity UI Samples/Models/Materials/vehicle_rcLand_clean_dome_mat.mat
+  uploadId: 1036574

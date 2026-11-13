@@ -24,6 +24,7 @@ public class PartPanelUI : MonoBehaviour
     [SerializeField] private Slider _metalnessSlider;
     [SerializeField] private SliderEndDragHandler _metalnessEndDragHandler;
     [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject emptyState;
     [SerializeField] private ConfirmationView deletePartConfirmation;
     [SerializeField] private GameObject enterNamePanel;
     [SerializeField] private Button okNameBtn;
@@ -238,6 +239,8 @@ public class PartPanelUI : MonoBehaviour
         _metalnessSlider.SetValueWithoutNotify(vm.Metallness);
         _smoothnessSlider.SetValueWithoutNotify(vm.Smoothness);
         panel.SetActive(true);
+        if (emptyState != null)
+            emptyState.SetActive(false);
     }
 
     private void Hide()
@@ -247,6 +250,8 @@ public class PartPanelUI : MonoBehaviour
         _colorPicker.gameObject.SetActive(false);
         enterNamePanel.SetActive(false);
         panel.SetActive(false);
+        if (emptyState != null)
+            emptyState.SetActive(true);
     }
 
     public void SetPart(string instanceId) => _selectedPartInstanceId = instanceId;

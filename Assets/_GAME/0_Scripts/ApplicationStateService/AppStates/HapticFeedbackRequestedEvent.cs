@@ -4,7 +4,7 @@ public enum ControllerHand
 {
     Left,Right,Both
 }
-internal class HapticFeedbackRequestedEvent:IAppEvent
+public sealed class HapticFeedbackRequestedEvent : IAppEvent
 {
     public float Amplitude { get; set; }
     public float Duration { get; set; }

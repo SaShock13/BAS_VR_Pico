@@ -16,6 +16,8 @@ public class EventBusInstaller : MonoInstaller
             .NonLazy();
 
         Container.BindInitializableExecutionOrder<IEventBus>(-100); 
+        Container.BindInterfacesTo<HapticFeedbackService>().AsSingle();
+        Container.BindInterfacesTo<MenuHapticFeedback>().AsSingle().WithArguments(gameObject.scene);
         if (sfxLibrary != null)
         {
             Container.BindInstance(sfxLibrary);

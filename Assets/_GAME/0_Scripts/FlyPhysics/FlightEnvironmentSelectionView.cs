@@ -8,6 +8,7 @@ public sealed class OpenFlightEnvironmentSelection : IAppEvent
 {
     public string EventId => nameof(OpenFlightEnvironmentSelection);
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+    public string PanelId;
 }
 
 public sealed class ConfirmFlightEnvironmentRequest : IAppEvent
@@ -19,6 +20,7 @@ public sealed class ConfirmFlightEnvironmentRequest : IAppEvent
 
 public sealed class FlightEnvironmentSelectionView : MonoBehaviour
 {
+    [SerializeField] private string panelId;
     [SerializeField] private GameObject panel;
     [SerializeField] private TMP_Text title;
     [SerializeField] private TMP_Text description;
@@ -38,7 +40,11 @@ public sealed class FlightEnvironmentSelectionView : MonoBehaviour
         next.onClick.AddListener(Next);
         confirm.onClick.AddListener(Confirm);
         cancel.onClick.AddListener(Close);
-        _subscription = _bus.Subscribe<OpenFlightEnvironmentSelection>(_ => Open());
+        _subscription = _bus.Subscribe<OpenFlightEnvironmentSelection>(e =>
+        {
+            if (string.Equals(panelId ?? string.Empty, e.PanelId ?? string.Empty))
+                Open();
+        });
     }
 
     private void Open()

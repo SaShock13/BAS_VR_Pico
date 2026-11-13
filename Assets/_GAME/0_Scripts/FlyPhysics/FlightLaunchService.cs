@@ -13,6 +13,7 @@ public class LaunchFlightRequest : IAppEvent
 {
     public string EventId => nameof(LaunchFlightRequest);
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+    public string PanelId;
 }
 
 public sealed class FlightLaunchService : IInitializable, IDisposable
@@ -50,11 +51,11 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
     public void Initialize()
     {
         _modeSubscription = _bus.Subscribe<FlightModeRequest>(e => FlightSession.Mode = e.Mode);
-        _launchSubscription = _bus.Subscribe<LaunchFlightRequest>(_ => Launch());
+        _launchSubscription = _bus.Subscribe<LaunchFlightRequest>(e => Launch(panelId: e.PanelId));
         _environmentSubscription = _bus.Subscribe<ConfirmFlightEnvironmentRequest>(e => Launch(e.EnvironmentId));
     }
 
-    private void Launch(string environmentId = null)
+    private void Launch(string environmentId = null, string panelId = null)
     {
         if (_launching) return;
         var selected = _selection.Current;
@@ -81,7 +82,7 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
         }
         if (environmentId == null)
         {
-            _bus.Publish(new OpenFlightEnvironmentSelection());
+            _bus.Publish(new OpenFlightEnvironmentSelection { PanelId = panelId });
             return;
         }
         var environment = _catalog.Find(environmentId);

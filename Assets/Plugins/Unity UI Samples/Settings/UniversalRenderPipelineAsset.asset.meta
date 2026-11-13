@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a940f9f0400524bba8b67be0d41028fa
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 25468
+  packageName: UI Examples | uGUI Sample Project
+  packageVersion: 2.0.0
+  assetPath: Assets/Unity UI Samples/Settings/UniversalRenderPipelineAsset.asset
+  uploadId: 1036574

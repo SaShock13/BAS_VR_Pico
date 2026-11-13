@@ -14,6 +14,7 @@ public class DronePanelUI : MonoBehaviour
     [SerializeField] private TMP_Text weight;
     [SerializeField] private TMP_Text name;
     [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject emptyState;
     [SerializeField] private Button validateButton;
     [SerializeField] private TMP_Text validationStatus;
     [SerializeField] private TMP_Text validationDetails;
@@ -52,7 +53,7 @@ public class DronePanelUI : MonoBehaviour
         if (changedDrone) nameInputField.SetTextWithoutNotify(context.Drone.Name);
         weight.text = context.Drone.TotalWeight.ToString();
         name.text = context.Drone.Name;
-        panel.SetActive(true);
+        SetPanelVisible(true);
         RenderValidation();
     }
 
@@ -84,7 +85,14 @@ public class DronePanelUI : MonoBehaviour
         _droneId = null;
         weight.text = string.Empty;
         name.text = string.Empty;
-        panel.SetActive(false);
+        SetPanelVisible(false);
+    }
+
+    private void SetPanelVisible(bool visible)
+    {
+        panel.SetActive(visible);
+        if (emptyState != null)
+            emptyState.SetActive(!visible);
     }
 
     private void OnDestroy()
