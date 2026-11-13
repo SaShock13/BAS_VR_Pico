@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using Zenject;
 
-public class SocketView : MonoBehaviour
+public class SocketView : MountPoint
 {
     //#region OLD
 
@@ -18,6 +18,9 @@ public class SocketView : MonoBehaviour
     private IEventBus _eventBus;  /// todo Как получить зависимости Zenject?????????
 
     public string SocketId => _socketId;
+    public override string MountId => SocketId;
+    public override PartType[] AcceptedTypes => AllowedTypes;
+    public override DronePartView Owner => ParentView;
 
     public DronePartView ParentView { get { _parentView = GetComponentInParent<DronePartView>();return _parentView; } }
 
@@ -203,8 +206,12 @@ public class SocketView : MonoBehaviour
             _socketInteractor.hoverEntered.RemoveListener(OnHoverEntered);
             _socketInteractor.hoverExited.RemoveListener(OnHoverExited);
         }
-        if (_hoveredPart != null && _hoveredPart.TryGetComponent<XRGrabInteractable>(out var grab))
-            grab.selectExited.RemoveListener(OnPartReleased);
+        if (_hoveredPart != null)
+        {
+            _hoveredPart.RemoveHoveredSocket(this);
+            if (_hoveredPart.TryGetComponent<XRGrabInteractable>(out var grab))
+                grab.selectExited.RemoveListener(OnPartReleased);
+        }
 
         _previewSystem?.HidePreview();
     }
@@ -237,10 +244,15 @@ public class SocketView : MonoBehaviour
         if (!_assemblySystem.IsCompatibleWithSocket(part.InstanceId, this))
             return;
 
-        if (_hoveredPart != null && _hoveredPart.TryGetComponent<XRGrabInteractable>(out var previousGrab))
-            previousGrab.selectExited.RemoveListener(OnPartReleased);
+        if (_hoveredPart != null)
+        {
+            _hoveredPart.RemoveHoveredSocket(this);
+            if (_hoveredPart.TryGetComponent<XRGrabInteractable>(out var previousGrab))
+                previousGrab.selectExited.RemoveListener(OnPartReleased);
+        }
 
         _hoveredPart = part;
+        part.AddHoveredSocket(this);
 
 
         _isValidHover =
@@ -252,6 +264,7 @@ public class SocketView : MonoBehaviour
             part,
             _previewAnchor,
             _isValidHover);
+        _previewSystem.SetVisible(!part.HasZoneCandidate);
 
         XRGrabInteractable grab =
             part.GetComponent<XRGrabInteractable>();
@@ -282,6 +295,7 @@ public class SocketView : MonoBehaviour
 
         if (_hoveredPart == part)
         {
+            part.RemoveHoveredSocket(this);
             _hoveredPart = null;
         }
 
@@ -294,6 +308,13 @@ public class SocketView : MonoBehaviour
     {
         if (_hoveredPart == null)
             return;
+
+        if (args.isCanceled || _hoveredPart.IsGrabbed ||
+            _hoveredPart.ZoneHandledRelease || _hoveredPart.HasZoneCandidate)
+        {
+            _previewSystem.HidePreview();
+            return;
+        }
 
         if (!_assemblySystem.CanAttach(_hoveredPart.InstanceId, this))
         {
@@ -324,6 +345,8 @@ public class SocketView : MonoBehaviour
             
         //}
     }
+
+    internal void SetPreviewVisible(bool visible) => _previewSystem?.SetVisible(visible);
 
     private void OnPartAttached(PartSocketAttachedEvent @event)
     {

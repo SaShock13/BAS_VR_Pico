@@ -14,7 +14,9 @@ public class PartDomainState
 
 
     public PartLifecycleState LifecycleState { get; private set; }
-    public string AttachedSocketId { get; private set; }
+    public string AttachedMountId { get; private set; }
+    public bool IsAttachedToZone { get; private set; }
+    public string AttachedSocketId => IsAttachedToZone ? null : AttachedMountId;
 
     public string? AttachedPartInstanceId { get; private set; }
 
@@ -40,13 +42,15 @@ public class PartDomainState
     string attachedPartInstanceId,
     string socketId)
     {
+        AttachToMount(attachedPartInstanceId, socketId, false);
+    }
+
+    internal void AttachToMount(string parentId, string mountId, bool isZone)
+    {
         LifecycleState = PartLifecycleState.Installed;
-
-        AttachedPartInstanceId = attachedPartInstanceId;
-        AttachedSocketId = socketId;
-
-
-        Debug.Log($"77777Деталь {InstanceId}  присоединенна к детали {AttachedPartInstanceId} к сокету {AttachedSocketId}");
+        AttachedPartInstanceId = parentId;
+        AttachedMountId = mountId;
+        IsAttachedToZone = isZone;
     }
 
     public void Detach()
@@ -54,6 +58,7 @@ public class PartDomainState
         LifecycleState = PartLifecycleState.Free;
 
         AttachedPartInstanceId = null;
-        AttachedSocketId = null;
+        AttachedMountId = null;
+        IsAttachedToZone = false;
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,6 +67,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         _eventBus.Subscribe<Clean_DeletePartRequest>(OnDeleteRequested);
         _eventBus.Subscribe<Clean_DuiblicatePartRequest>(OnDublicateRequested);
         _eventBus.Subscribe<PartSocketAttachRequest>(OnAttachRequested);
+        _eventBus.Subscribe<PartZoneAttachRequest>(OnZoneAttachRequested);
         _eventBus.Subscribe<PartSocketDetachRequest>(OnDetachRequested);
         _eventBus.Subscribe<ApplyPartVisualCommand>(OnApplyPartVisual);
         _eventBus.Subscribe<PartTransformChangedEvent>(OnPartTransformChanged);
@@ -146,43 +147,122 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
     private void OnAttachRequested(PartSocketAttachRequest request)
     {
-        Debug.Log($"OnAttachRequested {this}");
-
-        var partDomain = GetPartDomainState(request.PartInstanceId);
-        Debug.Log($"partDomain {partDomain}");
-        _viewRegistry.TryGet(partDomain.InstanceId, out var partView);
-        Debug.Log($"partView {partView}");
-
-        _viewRegistry.TryGet(request.AttachedPartId, out var attachedView);
-        Debug.Log($"attachedView {attachedView}");
-
-        var attachedSocket = attachedView.GetSocket(request.AttachedSocketId);
-        Debug.Log($"attachedSocket {attachedSocket}");
-        if (IsCanAttach(partDomain, attachedSocket))
-        {
-            // Прикрепляем домен
-            partDomain.AttachToPartSocket(request.AttachedPartId, request.AttachedSocketId);
-
-
-            // Прикрепляем view
-            partView.AttachTo(attachedSocket.transform); /// TODO Прикреплять нужно во вью по событию!
-
-
-            // Пересчитываем дроны
-           RebuildDrones();
-
-            _eventBus.Publish(new PartSocketAttachedEvent() { Timestamp = DateTime.Now, Position = partView.transform.position, PartInstanceId = request.PartInstanceId, AttachedPartId = request.AttachedPartId, AttachedSocketId = request.AttachedSocketId});
-
-            _eventBus.Publish(new AssemblyChangedEvent { Timestamp = DateTime.Now });  // для Снапшота
-
-            _userActivity.NotifyActivity(); // регистрация активности пользователя (для системы подсказок)
-        }
-        else Debug.Log($"!!!!!! {partView.transform.name} Can NOT be Attached {this}");
-
-
-
+        if (!_viewRegistry.TryGet(request.PartInstanceId, out var part) ||
+            !_viewRegistry.TryGet(request.AttachedPartId, out var owner)) return;
+        var socket = owner.GetSocket(request.AttachedSocketId);
+        if (socket == null || !CanAttach(part.InstanceId, socket)) return;
+        CommitMount(part, socket);
     }
 
+    private void OnZoneAttachRequested(PartZoneAttachRequest request)
+    {
+        if (!_viewRegistry.TryGet(request.PartInstanceId, out var part) ||
+            !_viewRegistry.TryGet(request.ParentInstanceId, out var owner)) return;
+        var zone = owner.GetMountingZone(request.MountId);
+        if (zone == null || !zone.isActiveAndEnabled ||
+            !IsCanAttach(GetPartDomainState(part.InstanceId), zone)) return;
+
+        if (!request.RestorePreviousPosition &&
+            zone.TryProject(part, out var position, out var volume, out bool fits, out _) &&
+            fits && !IntersectsInstalledPart(part, zone, volume))
+        {
+            CommitMount(part, zone, new Pose(position, Quaternion.identity));
+        }
+        else if (part.TryGetPreviousZonePose(zone, out var previous))
+        {
+            var relativeScale = zone.transform.worldToLocalMatrix *
+                Matrix4x4.TRS(zone.transform.position, zone.transform.rotation, part.transform.lossyScale);
+            var previousVolume = MountingBounds.Transform(part.LocalMountingBounds,
+                Matrix4x4.TRS(previous.position, previous.rotation, Vector3.one) * relativeScale);
+            if (!IntersectsInstalledPart(part, zone, previousVolume))
+                CommitMount(part, zone, previous);
+        }
+    }
+
+    private void CommitMount(DronePartView part, MountPoint mount, Pose? localPose = null)
+    {
+        var state = GetPartDomainState(part.InstanceId);
+        if (state.LifecycleState == PartLifecycleState.Installed) return;
+
+        bool isZone = mount is MountingZoneView;
+        var parentId = mount.Owner.InstanceId;
+        state.AttachToMount(parentId, mount.MountId, isZone);
+        part.AttachTo(mount.transform);
+        if (localPose.HasValue)
+        {
+            part.transform.localPosition = localPose.Value.position;
+            part.transform.localRotation = localPose.Value.rotation;
+        }
+
+        RebuildDrones();
+        var now = DateTime.Now;
+        if (isZone)
+            _eventBus.Publish(new PartFreeAttachedEvent { Timestamp = now, Position = part.transform.position });
+        else
+            _eventBus.Publish(new PartSocketAttachedEvent
+            {
+                Timestamp = now,
+                Position = part.transform.position,
+                PartInstanceId = part.InstanceId,
+                AttachedPartId = parentId,
+                AttachedSocketId = mount.MountId
+            });
+        _eventBus.Publish(new AssemblyChangedEvent { Timestamp = now });
+        _userActivity.NotifyActivity();
+    }
+
+    internal bool TryFindMountingZone(DronePartView part, out MountingZoneView bestZone,
+        out Vector3 bestPosition, out bool valid)
+    {
+        bestZone = null;
+        bestPosition = default;
+        valid = false;
+        if (!TryGetPartDomainState(part.InstanceId, out var state) ||
+            state.LifecycleState == PartLifecycleState.Installed) return false;
+
+        float closest = float.PositiveInfinity;
+        Bounds bestVolume = default;
+        foreach (var owner in _zoneOwners)
+        {
+            if (owner == null || !owner.isActiveAndEnabled) continue;
+            foreach (var zone in owner.MountingZones)
+            {
+                if (zone == null || !zone.isActiveAndEnabled ||
+                    !zone.TryProject(part, out var position, out var volume, out bool fits, out float distance) ||
+                    distance >= closest || !IsCanAttach(state, zone)) continue;
+                closest = distance;
+                bestZone = zone;
+                bestPosition = position;
+                bestVolume = volume;
+                valid = fits;
+            }
+        }
+
+        if (bestZone == null) return false;
+        valid = valid && !IntersectsInstalledPart(part, bestZone, bestVolume);
+        return true;
+    }
+
+    private readonly HashSet<DronePartView> _zoneOwners = new HashSet<DronePartView>();
+
+    internal void RegisterZoneOwner(DronePartView view) => _zoneOwners.Add(view);
+    internal void UnregisterZoneOwner(DronePartView view) => _zoneOwners.Remove(view);
+
+    private bool IntersectsInstalledPart(DronePartView part, MountingZoneView zone, Bounds volume)
+    {
+        var worldToZone = zone.transform.worldToLocalMatrix;
+        foreach (var installed in _parts.Values)
+        {
+            if (installed.LifecycleState != PartLifecycleState.Installed ||
+                installed.InstanceId == part.InstanceId || installed.InstanceId == zone.Owner.InstanceId ||
+                !_viewRegistry.TryGet(installed.InstanceId, out var obstacle) || !obstacle.HasMountingBounds ||
+                obstacle.transform.IsChildOf(part.transform)) continue;
+            var obstacleVolume = MountingBounds.Transform(obstacle.LocalMountingBounds,
+                worldToZone * obstacle.transform.localToWorldMatrix);
+            if (MountingBounds.Overlaps(volume, obstacleVolume)) return true;
+        }
+        return false;
+    }
 
     private void OnDetachRequested(PartSocketDetachRequest request)
     {
@@ -236,23 +316,15 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
     public bool CanAttach(string instanceId, SocketView socketView)
     {
-        var partDomain = GetPartDomainState(instanceId);
-
-        if (IsSocketOccupied(socketView.ParentView.InstanceId, socketView.SocketId)) // todo как получить здесь instanceId детали с сокетом? Как еще проверить на занятость сокет?
-        {
-
-            Debug.Log($"33333 Socket is already Occupied!!!! {this}");
-            return false;
-        }
-        Debug.Log($"33333 Socket is FREE!!!! {this}");
-
-        return IsCanAttach(partDomain, socketView);
+        return TryGetPartDomainState(instanceId, out var state) &&
+            state.LifecycleState != PartLifecycleState.Installed &&
+            !IsSocketOccupied(socketView.Owner.InstanceId, socketView.SocketId) &&
+            IsCanAttach(state, socketView);
     }
-
 
     public bool IsCompatibleWithSocket(string instanceId, SocketView socketView)
     {
-        return IsCanAttach(GetPartDomainState(instanceId), socketView);
+        return TryGetPartDomainState(instanceId, out var state) && IsCanAttach(state, socketView);
     }
 
     public bool IsSocketOccupied(string AttachedPartInstanceId, string socketId) // todo   оптимизировать проверку
@@ -268,10 +340,10 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
     /// <param name="partDomain"></param>
     /// <param name="attachedSocket"></param>
     /// <returns></returns>
-    private  bool IsCanAttach(PartDomainState partDomain, SocketView attachedSocket) 
+    private bool IsCanAttach(PartDomainState partDomain, MountPoint mount)
     {
         if (partDomain.Type == DroneAssemblyRules.RootPartType) return false;
-        var parentId = attachedSocket.ParentView.InstanceId;
+        var parentId = mount.Owner.InstanceId;
         for (int depth = 0; !string.IsNullOrEmpty(parentId) && depth < _parts.Count; depth++)
         {
             if (parentId == partDomain.InstanceId) return false;
@@ -280,14 +352,9 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         }
         if (!string.IsNullOrEmpty(parentId)) return false;
 
-        var childConfig =
-        _configs.Get(partDomain.PartId);        
-
-        foreach (var allowedType in attachedSocket.AllowedTypes)
-        {
-            if (allowedType == childConfig.PartType) return true;
-
-        }
+        if (mount.AcceptedTypes == null) return false;
+        foreach (var allowedType in mount.AcceptedTypes)
+            if (allowedType == partDomain.Type) return true;
         return false;
     }
 
@@ -1184,6 +1251,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         }
 
         _viewRegistry.Clear();
+        _zoneOwners.Clear();
         _parts.Clear();
         RebuildDrones();
     }

@@ -7,5 +7,6 @@
     Legs,
     FlyController,
     Battery,
-    Camera
+    Camera,
+    Antenna
 }

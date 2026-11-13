@@ -65,6 +65,21 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
 
     private Vector3 _startPosition;
     private Quaternion _startRotation;
+    private MountingZoneView _previousZone;
+    private Vector3 _previousZonePosition;
+    private Quaternion _previousZoneRotation;
+    private SocketPreviewSystem _zonePreview;
+    private Coroutine _zonePreviewRoutine;
+    private bool _zonePreviewCreated;
+    private readonly HashSet<SocketView> _hoveredSockets = new HashSet<SocketView>();
+    internal MountingZoneView[] MountingZones { get; private set; } = Array.Empty<MountingZoneView>();
+    internal Bounds LocalMountingBounds { get; private set; }
+    internal bool HasMountingBounds { get; private set; }
+    internal bool ZoneHandledRelease { get; private set; }
+    internal bool HasZoneCandidate =>
+        _assembly != null && _assembly.TryFindMountingZone(this, out _, out _, out _);
+    internal void AddHoveredSocket(SocketView socket) => _hoveredSockets.Add(socket);
+    internal void RemoveHoveredSocket(SocketView socket) => _hoveredSockets.Remove(socket);
 
     private Dictionary<string, SocketView> _sockets;
     private Dictionary<PartType, SocketView> _socketsByType;
@@ -109,7 +124,6 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
         }
         else
         {
-            StopAllCoroutines();
             Highlight(false);
         }
     }
@@ -181,6 +195,7 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
 
     private void OnEnable()
     {
+        if (MountingZones.Length > 0) _assembly?.RegisterZoneOwner(this);
         _interactable.hoverFilters.Add(this);
         _interactable.selectFilters.Add(this);
         _interactable.selectExited.AddListener(OnReleased);
@@ -189,6 +204,8 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
 
     private void OnDisable()
     {
+        if (MountingZones.Length > 0) _assembly?.UnregisterZoneOwner(this);
+        ClearZonePreview();
         if (_interactable == null) return;
         _interactable.hoverFilters.Remove(this);
         _interactable.selectFilters.Remove(this);
@@ -198,13 +215,35 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
 
     private void OnGrab(SelectEnterEventArgs arg0)
     {
+        ZoneHandledRelease = false;
+        _previousZone = transform.parent != null ? transform.parent.GetComponent<MountingZoneView>() : null;
+        _previousZonePosition = transform.localPosition;
+        _previousZoneRotation = transform.localRotation;
         _startPosition = transform.position;
         _startRotation = transform.rotation;
         _eventBus?.Publish(new PartGrabStartedEvent { InstanceId = InstanceId });
+        if (_zonePreviewRoutine == null && _assembly != null && _eventBus != null)
+            _zonePreviewRoutine = StartCoroutine(TrackZoneWhileGrabbed());
     }
 
     private void OnReleased(SelectExitEventArgs arg0)
     {
+        if (IsGrabbed || _eventBus == null) return;
+        if (!arg0.isCanceled && _assembly != null &&
+            _assembly.TryFindMountingZone(this, out var zone, out _, out bool valid))
+        {
+            ZoneHandledRelease = true;
+            if (valid)
+                RequestZonePlacement(zone, false);
+            else if (_previousZone == zone)
+                RequestZonePlacement(zone, true);
+        }
+        else if (arg0.isCanceled && _previousZone != null)
+        {
+            RequestZonePlacement(_previousZone, true);
+        }
+        _previousZone = null;
+        ClearZonePreview();
 
 
         Debug.Log($"position {transform.position} rotation {transform.rotation} StartPosition {_startPosition} _startRotation {_startRotation} message {this}");
@@ -223,7 +262,84 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
 
     public SocketView GetSocket(string socketId)
     {
-        return _sockets[socketId];
+        return _sockets != null && socketId != null && _sockets.TryGetValue(socketId, out var socket)
+            ? socket
+            : null;
+    }
+
+    public MountingZoneView GetMountingZone(string mountId)
+    {
+        foreach (var zone in MountingZones)
+            if (zone != null && zone.MountId == mountId) return zone;
+        return null;
+    }
+
+    private IEnumerator TrackZoneWhileGrabbed()
+    {
+        while (IsGrabbed)
+        {
+            yield return null;
+            if (IsGrabbed) UpdateZonePreview();
+        }
+        _zonePreviewRoutine = null;
+    }
+
+    private void UpdateZonePreview()
+    {
+        if (!_assembly.TryFindMountingZone(this, out var zone, out var position, out bool valid))
+        {
+            _zonePreview?.SetVisible(false);
+            SetSocketPreviewsVisible(true);
+            return;
+        }
+
+        SetSocketPreviewsVisible(false);
+        _zonePreview ??= new SocketPreviewSystem(
+            Resources.Load<Material>("Materials/GreenTrtansparent"),
+            Resources.Load<Material>("Materials/FakeTransparentRed"));
+        var pose = new Pose(zone.transform.TransformPoint(position), zone.transform.rotation);
+        if (!_zonePreviewCreated)
+        {
+            _zonePreview.ShowPreview(this, pose, valid);
+            _zonePreviewCreated = true;
+        }
+        else
+        {
+            _zonePreview.UpdatePreview(pose, valid);
+            _zonePreview.SetVisible(true);
+        }
+    }
+
+    private void ClearZonePreview()
+    {
+        if (_zonePreviewRoutine != null) StopCoroutine(_zonePreviewRoutine);
+        _zonePreviewRoutine = null;
+        _zonePreview?.HidePreview();
+        _zonePreviewCreated = false;
+    }
+
+    private void SetSocketPreviewsVisible(bool visible)
+    {
+        foreach (var socket in _hoveredSockets)
+            if (socket != null) socket.SetPreviewVisible(visible);
+    }
+
+    private void RequestZonePlacement(MountingZoneView zone, bool restore)
+    {
+        _eventBus.Publish(new PartZoneAttachRequest
+        {
+            PartInstanceId = InstanceId,
+            ParentInstanceId = zone.Owner.InstanceId,
+            MountId = zone.MountId,
+            RestorePreviousPosition = restore,
+            Timestamp = DateTime.UtcNow
+        });
+    }
+
+    internal bool TryGetPreviousZonePose(MountingZoneView zone, out Pose pose)
+    {
+        pose = new Pose(_previousZonePosition, _previousZoneRotation);
+        return _previousZone == zone;
     }
 
     public void AttachTo(Transform parent)
@@ -312,6 +428,30 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
         _color = _renderer.sharedMaterial != null ? _renderer.sharedMaterial.color : Color.white;
         _eventBus = eventBus;
         InitializeSockets();
+        MountingZones = GetComponentsInChildren<MountingZoneView>(true);
+        foreach (var zone in MountingZones)
+            zone.Initialize(this);
+        if (MountingZones.Length > 0 && isActiveAndEnabled)
+            _assembly?.RegisterZoneOwner(this);
+
+        HasMountingBounds = false;
+        foreach (var renderer in _renderers)
+        {
+            if (!renderer.enabled || renderer.forceRenderingOff || !renderer.gameObject.activeInHierarchy)
+                continue;
+
+            var bounds = MountingBounds.Transform(renderer.localBounds,
+                transform.worldToLocalMatrix * renderer.localToWorldMatrix);
+            if (HasMountingBounds) LocalMountingBounds = Combine(LocalMountingBounds, bounds);
+            else LocalMountingBounds = bounds;
+            HasMountingBounds = true;
+        }
+    }
+
+    private static Bounds Combine(Bounds first, Bounds second)
+    {
+        first.Encapsulate(second);
+        return first;
     }
 
     public void ApplyPreviewSmoothness(float value)

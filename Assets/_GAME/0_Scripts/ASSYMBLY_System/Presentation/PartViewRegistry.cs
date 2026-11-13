@@ -12,6 +12,8 @@ public class PartViewRegistry : IInitializable
 
     private readonly Dictionary<string, GameObject> _views =
         new Dictionary<string, GameObject>();
+    private readonly Dictionary<string, DronePartView> _partViews =
+        new Dictionary<string, DronePartView>();
     
     private DronePartView _visualSelectedView;
 
@@ -46,6 +48,7 @@ public class PartViewRegistry : IInitializable
         if (_views.TryGetValue(@event.InstanceId, out GameObject go))
         {
             _views.Remove(@event.InstanceId);
+            _partViews.Remove(@event.InstanceId);
             if (go != null) GameObject.Destroy(go);
         }
     }
@@ -73,16 +76,7 @@ public class PartViewRegistry : IInitializable
     public bool TryGet(string partId, out DronePartView view)
     {
 
-        _views.TryGetValue(partId, out var go);
-        if(go == null)
-        {
-            view = null;
-            return false;
-        }
-
-        view = go.GetComponent<DronePartView>();        
-        if (view != null) return true;
-        else return false;
+        return _partViews.TryGetValue(partId, out view) && view != null;
     }
 
 
@@ -137,6 +131,7 @@ public class PartViewRegistry : IInitializable
     public void Register(string instanceId, GameObject view)
     {
         _views[instanceId] = view;
+        _partViews[instanceId] = view.GetComponent<DronePartView>();
     }
 
     internal IEnumerable<GameObject> GetAllGOs()
@@ -147,6 +142,7 @@ public class PartViewRegistry : IInitializable
     internal void Clear()
     {
         _views.Clear();
+        _partViews.Clear();
     }
 
     public void Remove(string instanceId)
@@ -154,6 +150,7 @@ public class PartViewRegistry : IInitializable
         if (_views.TryGetValue(instanceId, out GameObject go))
         {
             _views.Remove(instanceId);
+            _partViews.Remove(instanceId);
             if (go != null) GameObject.Destroy(go);
         }
     }

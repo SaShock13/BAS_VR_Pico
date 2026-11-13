@@ -7,6 +7,8 @@ public class SocketPreviewSystem
     private readonly Material _invalidMaterial;
 
     private GameObject _previewRoot;
+    private readonly List<MeshRenderer> _previewRenderers = new List<MeshRenderer>();
+    private bool _isValid;
 
     public SocketPreviewSystem(
         Material validMaterial,
@@ -48,6 +50,7 @@ public class SocketPreviewSystem
 
     public void HidePreview()
     {
+        _previewRenderers.Clear();
         if (_previewRoot != null)
         {
             _previewRoot.SetActive(false);
@@ -109,6 +112,11 @@ public class SocketPreviewSystem
     Transform previewAnchor,
     bool isValid)
     {
+        ShowPreview(sourcePart, new Pose(previewAnchor.position, previewAnchor.rotation), isValid);
+    }
+
+    public void ShowPreview(DronePartView sourcePart, Pose pose, bool isValid)
+    {
         HidePreview();
 
         if (sourcePart == null)
@@ -116,9 +124,8 @@ public class SocketPreviewSystem
 
         _previewRoot = new GameObject("SocketPreview");
 
-        _previewRoot.transform.SetPositionAndRotation(
-            previewAnchor.position,
-            previewAnchor.rotation);
+        _previewRoot.transform.SetPositionAndRotation(pose.position, pose.rotation);
+        _isValid = isValid;
 
         _previewRoot.transform.localScale =
             sourcePart.transform.lossyScale;
@@ -144,6 +151,23 @@ public class SocketPreviewSystem
                 sourceMeshFilter,
                 isValid);
         }
+    }
+
+    public void UpdatePreview(Pose pose, bool isValid)
+    {
+        if (_previewRoot == null) return;
+        _previewRoot.transform.SetPositionAndRotation(pose.position, pose.rotation);
+        if (_isValid == isValid) return;
+        var material = isValid ? _validMaterial : _invalidMaterial;
+        foreach (var renderer in _previewRenderers)
+            renderer.sharedMaterial = material;
+        _isValid = isValid;
+    }
+
+    public void SetVisible(bool visible)
+    {
+        if (_previewRoot != null && _previewRoot.activeSelf != visible)
+            _previewRoot.SetActive(visible);
     }
 
     private void CreateGhostMesh(
@@ -178,6 +202,7 @@ public class SocketPreviewSystem
             UnityEngine.Rendering.ShadowCastingMode.Off;
 
         meshRenderer.receiveShadows = false;
+        _previewRenderers.Add(meshRenderer);
     }
     private Transform GetPreviewTransform(
         Transform source, Dictionary<Transform, Transform> previewTransforms)

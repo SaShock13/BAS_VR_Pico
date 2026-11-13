@@ -1025,6 +1025,55 @@ Transform:
   - {fileID: 45598224686801995}
   m_Father: {fileID: 3663378565364530882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -8.794}
+--- !u!1 &3987455504521702402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 91923320084585472}
+  - component: {fileID: 5596056584202079067}
+  m_Layer: 0
+  m_Name: TopMountingZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &91923320084585472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3987455504521702402}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0465, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4731665129155707992}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5596056584202079067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3987455504521702402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b8ede715035f54a9b1e5bf4712d2b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MountingZoneView
+  _mountId: zone/top
+  _allowedTypes: 0500000008000000
+  _size: {x: 0.12, y: 0.13}
+  _hoverHeight: 0.06
+  _hoverPadding: 0.015
 --- !u!1 &4193860356992809335
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,6 +1208,8 @@ Transform:
   - {fileID: 3385618797844208699}
   - {fileID: 1140861985730535701}
   - {fileID: 8661639392859338400}
+  - {fileID: 91923320084585472}
+  - {fileID: 3441410756667723113}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!54 &6543893096472695839
@@ -1767,6 +1818,55 @@ Transform:
   - {fileID: 3002023542338836672}
   m_Father: {fileID: 3385618797844208699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6463973532648940996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3441410756667723113}
+  - component: {fileID: 8144215387926111327}
+  m_Layer: 0
+  m_Name: BottomMountingZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3441410756667723113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6463973532648940996}
+  serializedVersion: 2
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: -0.00000004371139}
+  m_LocalPosition: {x: 0, y: -0.0466, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4731665129155707992}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8144215387926111327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6463973532648940996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b8ede715035f54a9b1e5bf4712d2b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MountingZoneView
+  _mountId: zone/bottom
+  _allowedTypes: 0500000006000000
+  _size: {x: 0.12, y: 0.13}
+  _hoverHeight: 0.06
+  _hoverPadding: 0.015
 --- !u!1 &6914362764576487170
 GameObject:
   m_ObjectHideFlags: 0

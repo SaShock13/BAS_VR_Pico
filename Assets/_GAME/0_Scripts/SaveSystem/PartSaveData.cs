@@ -8,6 +8,7 @@ public class PartSaveData
     public PartType Type;
     public PartLifecycleState LifecycleState;
     public string AttachedSocketId;
+    public string AttachedZoneId;
     public string AttachedPartId;
     public PartVisualProperties VisualProperties;
 

@@ -19,6 +19,7 @@ public static class PartMapper
             LifecycleState = state.LifecycleState,
             AttachedPartId = state.AttachedPartInstanceId,
             AttachedSocketId = state.AttachedSocketId,
+            AttachedZoneId = state.IsAttachedToZone ? state.AttachedMountId : null,
             VisualProperties = state.VisualProperties 
         };
 
@@ -51,10 +52,12 @@ public static class PartMapper
         // Восстановление логического состояния
         if (data.LifecycleState == PartLifecycleState.Installed)
         {
-            if (string.IsNullOrEmpty(data.AttachedSocketId))
-                throw new Exception($"SocketId is null for installed part {data.InstanceId}");
+            bool isZone = !string.IsNullOrEmpty(data.AttachedZoneId);
+            var mountId = isZone ? data.AttachedZoneId : data.AttachedSocketId;
+            if (string.IsNullOrEmpty(mountId))
+                throw new Exception($"Mount ID is null for installed part {data.InstanceId}");
 
-            state.AttachToPartSocket(data.AttachedPartId, data.AttachedSocketId);
+            state.AttachToMount(data.AttachedPartId, mountId, isZone);
         }
         else
         {
@@ -76,14 +79,14 @@ public static class PartMapper
         {
             viewRegistry.TryGet(data.AttachedPartId, out var parentView);
 
-            var socket = parentView.GetSocket(data.AttachedSocketId);
+            bool isZone = !string.IsNullOrEmpty(data.AttachedZoneId);
+            MountPoint mount = isZone
+                ? parentView.GetMountingZone(data.AttachedZoneId)
+                : parentView.GetSocket(data.AttachedSocketId);
+            if (mount == null)
+                throw new Exception($"Mount not found: {data.AttachedZoneId ?? data.AttachedSocketId}");
 
-            //var socket = socketResolver.Resolve(data.AttachedSocketId);
-
-            if (socket == null)
-                throw new Exception($"Socket not found: {data.AttachedSocketId}");
-
-            view.AttachTo(socket.transform);
+            view.AttachTo(mount.transform);
             view.transform.localPosition = data.Transform.LocalPosition;
             view.transform.localRotation = data.Transform.LocalRotation;
         }
