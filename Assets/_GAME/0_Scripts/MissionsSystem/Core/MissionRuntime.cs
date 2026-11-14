@@ -166,6 +166,7 @@ public class MissionRuntime
     private void Complete()
     {
         State = MissionState.Completed;
+        MissionEvents.TargetChanged?.Invoke(null);
         MissionEvents.MissionCompleted?.Invoke(_definition.MissionName);
         _eventBus?.Publish(new MissionCompletionFeedbackEvent(
             _definition.CompletionMessage,
@@ -182,6 +183,7 @@ public class MissionRuntime
         CancelPendingTransition();
         HideControllerButtonHint();
         State = MissionState.Failed;
+        MissionEvents.TargetChanged?.Invoke(null);
         MissionEvents.MissionFailed?.Invoke(_definition.MissionName,reason);
     }
 

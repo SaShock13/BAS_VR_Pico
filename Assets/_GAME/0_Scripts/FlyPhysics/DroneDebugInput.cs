@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,16 +6,45 @@ public class DroneDebugInput : MonoBehaviour
 {
     public FlightInput CurrentInput { get; private set; }
     public float Vertical { get; private set; }
+    public event Action ViewChangeRequested;
     private InputAction _left, _right;
+    private InputAction _viewChange;
 
     private void Awake()
     {
         _left = new InputAction("FlightLeft", InputActionType.Value, "<XRController>{LeftHand}/primary2DAxis");
         _right = new InputAction("FlightRight", InputActionType.Value, "<XRController>{RightHand}/primary2DAxis");
+        _viewChange = new InputAction("ViewChange", InputActionType.Button);
+        _viewChange.AddBinding("<XRController>{LeftHand}/primary2DAxisClick");
+        _viewChange.AddBinding("<Keyboard>/pageDown");
     }
-    private void OnEnable() { _left.Enable(); _right.Enable(); }
-    private void OnDisable() { _left.Disable(); _right.Disable(); CurrentInput = default; Vertical = 0; }
-    private void OnDestroy() { _left.Dispose(); _right.Dispose(); }
+
+    private void OnEnable()
+    {
+        _left.Enable();
+        _right.Enable();
+        _viewChange.performed += OnViewChange;
+        _viewChange.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _viewChange.performed -= OnViewChange;
+        _viewChange.Disable();
+        _left.Disable();
+        _right.Disable();
+        CurrentInput = default;
+        Vertical = 0;
+    }
+
+    private void OnDestroy()
+    {
+        _left.Dispose();
+        _right.Dispose();
+        _viewChange.Dispose();
+    }
+
+    private void OnViewChange(InputAction.CallbackContext context) => ViewChangeRequested?.Invoke();
     private void Update()
     {
         var left = _left.ReadValue<Vector2>();

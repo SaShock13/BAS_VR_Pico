@@ -16,6 +16,9 @@ public class MissionDefinition : ScriptableObject
     [Min(0f), Tooltip("Seconds. 0 uses the default of 3 seconds.")]
     public float BriefingNotificationDuration;
 
+    [Header("Drone requirements")]
+    public DroneRequirements Requirements = new() { CheckCollisions = false };
+
     public List<MissionStepData> Steps = new();
 
     [Header("Completion feedback")]

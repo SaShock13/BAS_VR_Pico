@@ -29,7 +29,7 @@ public static class DroneValidationStateChecks
         results["a"] = new DroneReadinessResult { IsReady = true };
         bus.Publish(new PartVisualChangedEvent("part", default));
         Check(!state.IsValidated("a"), "Visual edit did not revoke validation");
-        CheckLaunchWarning(bus, state);
+        CheckLaunchWarning(bus);
         CheckValidationToasts();
         state.Dispose();
         Check(bus.Count == 0, "Subscription leak");
@@ -41,10 +41,11 @@ public static class DroneValidationStateChecks
         if (!condition) throw new Exception(error);
     }
 
-    private static void CheckLaunchWarning(TestBus bus, DroneValidationStateService state)
+    private static void CheckLaunchWarning(TestBus bus)
     {
         var selection = new SelectionService { Current = new SelectionTarget(SelectionType.Drone, "a") };
-        var assembly = new Clean_AssemblySystem(bus, null, null, null, null, null, null, selection, null, null);
+        var assembly = new Clean_AssemblySystem(bus, null, null, null, new PartViewRegistry(bus),
+            null, null, selection, null, null);
         var flags = BindingFlags.Instance | BindingFlags.NonPublic;
         var parts = (Dictionary<string, PartDomainState>)typeof(Clean_AssemblySystem).GetField("_parts", flags).GetValue(assembly);
         var drones = (Dictionary<string, DroneDomainState>)typeof(Clean_AssemblySystem).GetField("_drones", flags).GetValue(assembly);
@@ -53,17 +54,29 @@ public static class DroneValidationStateChecks
         drone.partInstanseIds.Add("a");
         drones["a"] = drone;
         var notifications = new NotificationService();
+        using var launchValidation = new DroneValidationStateService(bus, assembly, null, null, notifications);
         ToastNotification? received = null;
         notifications.ToastRequested += message => received = message;
-        using (var launch = new FlightLaunchService(bus, selection, assembly, notifications, state))
+        var catalog = AssetDatabase.LoadAssetAtPath<FlightEnvironmentCatalog>("Assets/_GAME/Configs/FlightEnvironmentCatalog.asset");
+        bool pickerOpened = false;
+        using var picker = bus.Subscribe<OpenFlightMissionSelection>(_ => pickerOpened = true);
+        using (var launch = new FlightLaunchService(bus, selection, assembly, notifications, launchValidation, catalog))
         {
             launch.Initialize();
             bus.Publish(new LaunchFlightRequest());
-            Check(received.HasValue && received.Value.Type == NotificationType.Warning
-                && received.Value.Text.Contains("Валидация не пройдена"), "Missing validation ToastNotification");
-            // A second failed attempt must still report the warning rather than lock launch.
+            Check(!pickerOpened && received.HasValue && received.Value.Type == NotificationType.Warning,
+                "Unchecked drone opened mission selection");
             received = null;
             bus.Publish(new LaunchFlightRequest());
+            Check(!pickerOpened && received.HasValue, "Repeated invalid assembly opened mission selection");
+            received = null;
+            var confirm = new ConfirmFlightMissionRequest { MissionId = catalog.Missions[0].mission.MissionId };
+            bus.Publish(confirm);
+            Check(received.HasValue && received.Value.Type == NotificationType.Error
+                && received.Value.Text.Contains("Миссия не запущена"), "Missing mission validation ToastNotification");
+            // A second failed attempt must still report the warning rather than lock launch.
+            received = null;
+            bus.Publish(confirm);
             Check(received.HasValue, "Repeated rejected launch lost its toast");
         }
     }

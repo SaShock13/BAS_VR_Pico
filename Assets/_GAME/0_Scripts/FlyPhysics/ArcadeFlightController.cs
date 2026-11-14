@@ -42,10 +42,11 @@ public sealed class ArcadeFlightController : MonoBehaviour
         _roll = Mathf.Clamp(_roll - input.Roll * tiltSpeed * dt, -maxTilt, maxTilt);
         _yaw -= input.Yaw * settings.YawSpeed * dt;
         var heading = Quaternion.Euler(0f, _yaw, 0f);
-        _body.MoveRotation(heading * Quaternion.Euler(_pitch, 0f, _roll));
-        var horizontal = heading * new Vector3(-_roll / maxTilt, 0f, _pitch / maxTilt);
-        // Neutral stick hovers; attitude remains where the pilot left it.
-        var acceleration = horizontal * settings.HorizontalAcceleration + Vector3.up * (_input.Vertical * settings.VerticalAcceleration);
-        _body.AddForce(acceleration - Physics.gravity, ForceMode.Acceleration);
+        var attitude = heading * Quaternion.Euler(_pitch, 0f, _roll);
+        _body.MoveRotation(attitude);
+        float hoverThrust = Physics.gravity.magnitude;
+        float stick = _input.Vertical;
+        float thrust = hoverThrust + stick * (stick < 0f ? hoverThrust : settings.VerticalAcceleration);
+        _body.AddForce(attitude * Vector3.up * thrust, ForceMode.Acceleration);
     }
 }

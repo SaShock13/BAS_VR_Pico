@@ -16,6 +16,17 @@ public sealed class DroneReadinessService
         _flight = flight;
     }
 
+    public DroneReadinessResult ValidateAssembly(DroneValidationContext context)
+    {
+        var structuralResult = _structural.Validate(context);
+        return new DroneReadinessResult
+        {
+            IsReady = structuralResult.IsPassed,
+            TotalScore = structuralResult.Score,
+            Groups = { structuralResult }
+        };
+    }
+
     public DroneReadinessResult Validate(
         DroneValidationContext context)
     {

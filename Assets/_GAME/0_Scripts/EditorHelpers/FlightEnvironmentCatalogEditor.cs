@@ -35,6 +35,9 @@ public sealed class FlightEnvironmentCatalogEditor : Editor
             foreach (var name in new[] { "id", "title", "description", "scenePath" })
                 entry.FindPropertyRelative(name).stringValue = "";
         }
+        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("missions"),
+            new UnityEngine.GUIContent("Полётные миссии"), true);
         if (serializedObject.ApplyModifiedProperties()) FlightEnvironmentBuildScenes.Sync((FlightEnvironmentCatalog)target);
     }
 
@@ -74,6 +77,15 @@ public sealed class FlightEnvironmentBuildScenes : IPreprocessBuildWithReport
                 throw new BuildFailedException("Flight environments need titles and distinct environment scenes.");
             if (AssetDatabase.LoadAssetAtPath<SceneAsset>(entry.scenePath) == null)
                 throw new BuildFailedException("Missing environment scene: " + entry.scenePath);
+        }
+        var missionIds = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var entry in catalog.Missions)
+        {
+            var mission = entry?.mission;
+            if (mission == null || string.IsNullOrWhiteSpace(mission.MissionId) || !missionIds.Add(mission.MissionId))
+                throw new BuildFailedException("Flight missions need definitions with unique, nonempty IDs.");
+            if (!ids.Contains(entry.environmentId))
+                throw new BuildFailedException("Missing environment for mission: " + mission.MissionName);
         }
         if (AssetDatabase.LoadAssetAtPath<SceneAsset>(catalog.coreScenePath) == null)
             throw new BuildFailedException("Missing common flight scene.");

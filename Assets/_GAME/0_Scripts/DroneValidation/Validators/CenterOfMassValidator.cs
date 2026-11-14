@@ -28,7 +28,17 @@ public sealed class CenterOfMassValidator
                 Score = 100
             };
 
-        if (distance >
+        if (context.EnforceMissionLimits && context.Requirements.MaxCenterOfMassOffset <= 0f)
+            return result;
+
+        if (context.EnforceMissionLimits &&
+            distance > context.Requirements.MaxCenterOfMassOffset)
+        {
+            result.Messages.Add(new ValidationMessage(ValidationSeverity.Error,
+                $"Смещение центра тяжести {distance:F2} м, предел миссии {context.Requirements.MaxCenterOfMassOffset:F2} м"));
+            result.Score = 0;
+        }
+        else if (!context.EnforceMissionLimits && distance >
             context.Requirements.MaxCenterOfMassOffset)
         {
             result.Messages.Add(

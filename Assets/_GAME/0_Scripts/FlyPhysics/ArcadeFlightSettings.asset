@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArcadeFlightSettings
   horizontalAcceleration: 0.5
   verticalAcceleration: 1.5
-  yawSpeed: 90
-  tiltSpeed: 60
+  yawSpeed: 60
+  tiltSpeed: 35
   maxTilt: 35
   drag: 1.1

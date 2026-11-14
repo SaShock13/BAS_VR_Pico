@@ -206,8 +206,8 @@ public class DronePhysicsStatsBuilder
         physicsData.EstimatedFlightTimeMinutes =
                     CalculateFlightTime(
                         batteryData,
-                        totalMass,
-                        totalMaxThrust);
+                        motors,
+                        hoverThrottle);
 
         physicsData.MaxAvailableThrust =
             totalMaxThrust;
@@ -284,9 +284,17 @@ public class DronePhysicsStatsBuilder
     /// </summary>
     /// <param name="drone"></param>
     /// <returns></returns>
-    public float CalculateFlightTime(BatteryPhysicsData batteryData, float totalMass, float totalMaxThrust)
+    public float CalculateFlightTime(BatteryPhysicsData batteryData,
+        IReadOnlyList<MotorPhysicsData> motors, float hoverThrottle)
     {
-        return 5;
+        if (batteryData == null || hoverThrottle <= 0f || hoverThrottle > 1f)
+            return 0f;
+
+        float current = 0f;
+        foreach (var motor in motors)
+            current += Mathf.Lerp(motor.IdleCurrent, motor.MaxCurrent, hoverThrottle);
+
+        return current > 0f ? batteryData.CapacityMah * 0.06f / current : 0f;
     }
 
 

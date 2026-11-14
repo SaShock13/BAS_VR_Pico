@@ -5,48 +5,47 @@ public class DroneValidationInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.BindInterfacesAndSelfTo<DroneValidationStateService>().AsSingle();
-        Container.Bind<IDroneAnalyzer>()
+        Container.Bind<DroneFocusEffect>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<BackgroundFadeEffect>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<ValidateEffectsSystem>().AsSingle();
+    }
+
+    public static void InstallValidationBindings(DiContainer container)
+    {
+        container.BindInterfacesAndSelfTo<DroneValidationStateService>().AsSingle();
+        container.Bind<IDroneAnalyzer>()
             .To<DroneAnalyzer>()
             .AsSingle();
 
-        Container.Bind<IDroneValidator>()
+        container.Bind<IDroneValidator>()
             .To<ThrustValidator>()
             .AsSingle();
 
-        Container.Bind<IDroneValidator>()
+        container.Bind<IDroneValidator>()
             .To<CenterOfMassValidator>()
             .AsSingle();
 
-        Container.Bind<IDroneValidator>()
+        container.Bind<IDroneValidator>()
             .To<FlightTimeValidator>()
             .AsSingle();
 
-        Container.Bind<IDroneValidator>()
+        container.Bind<IDroneValidator>()
             .To<CollisionValidator>()
             .AsSingle();
-        Container.Bind<IDroneValidator>()
+        container.Bind<IDroneValidator>()
             .To<CompletenessValidator>()
             .AsSingle();
 
 
 
 
-        Container.Bind<DroneValidationService>()
+        container.Bind<DroneValidationService>()
             .AsSingle();
 
-        Container.Bind<StructuralValidator>()
+        container.Bind<StructuralValidator>()
             .AsSingle();
 
-        Container.Bind<DroneReadinessService>()
+        container.Bind<DroneReadinessService>()
             .AsSingle();
-
-
-
-        Container.Bind<DroneFocusEffect>().FromComponentInHierarchy().AsSingle();
-
-        Container.Bind<BackgroundFadeEffect>().FromComponentInHierarchy().AsSingle();
-
-        Container.Bind<ValidateEffectsSystem>().AsSingle();
     }
 }

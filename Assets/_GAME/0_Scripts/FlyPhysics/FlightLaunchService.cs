@@ -26,7 +26,7 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
     private readonly FlightEnvironmentCatalog _catalog;
     private readonly bool _launchStoredDrones;
     private readonly IGarageService _garage;
-    private IDisposable _environmentSubscription;
+    private IDisposable _missionSubscription;
     private IDisposable _modeSubscription, _launchSubscription;
     private bool _launching;
     private FlightLaunchApprovedEvent _pendingLaunch;
@@ -52,10 +52,10 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
     {
         _modeSubscription = _bus.Subscribe<FlightModeRequest>(e => FlightSession.Mode = e.Mode);
         _launchSubscription = _bus.Subscribe<LaunchFlightRequest>(e => Launch(panelId: e.PanelId));
-        _environmentSubscription = _bus.Subscribe<ConfirmFlightEnvironmentRequest>(e => Launch(e.EnvironmentId));
+        _missionSubscription = _bus.Subscribe<ConfirmFlightMissionRequest>(e => Launch(e.MissionId));
     }
 
-    private void Launch(string environmentId = null, string panelId = null)
+    private void Launch(string missionId = null, string panelId = null)
     {
         if (_launching) return;
         var selected = _selection.Current;
@@ -70,29 +70,34 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
             _notifications.Warning("Выберите сохранённый дрон из гаража");
             return;
         }
-        if (!_launchStoredDrones && (_validation == null || !_validation.IsValidated(drone.InstanceId)))
+        if (_catalog == null || _catalog.Missions.Count == 0)
         {
-            _notifications.Warning("Валидация не пройдена. Нажмите «Пройти валидацию» в панели дрона.", 5f);
+            _notifications.Warning("Каталог полётных миссий не настроен");
             return;
         }
-        if (_catalog == null || _catalog.Environments.Count == 0)
+        if (_validation == null)
         {
-            _notifications.Warning("Каталог полётных локаций не настроен");
+            _notifications.Error("Проверка дрона недоступна.");
             return;
         }
-        if (environmentId == null)
+        if (missionId == null)
         {
-            _bus.Publish(new OpenFlightEnvironmentSelection { PanelId = panelId });
+            if (!_validation.ValidateForFlight(drone.InstanceId)) return;
+            _bus.Publish(new OpenFlightMissionSelection { PanelId = panelId });
             return;
         }
-        var environment = _catalog.Find(environmentId);
+        var entry = _catalog.FindMission(missionId);
+        if (entry != null && !_validation.MeetsMissionRequirements(drone.InstanceId, entry.mission.Requirements))
+            return;
+        var environment = entry == null ? null : _catalog.Find(entry.environmentId);
         if (environment == null || !UnityEngine.Application.CanStreamedLevelBeLoaded(environment.scenePath)
             || !UnityEngine.Application.CanStreamedLevelBeLoaded(_catalog.coreScenePath))
         {
             _notifications.Warning("Сцена локации или общая сцена полёта отсутствует в сборке");
             return;
         }
-        FlightSession.EnvironmentId = environmentId;
+        FlightSession.EnvironmentId = environment.id;
+        FlightSession.Mission = entry.mission;
         FlightSession.Drone = stored ?? _assembly.BuildSaveDataForDrone(drone.InstanceId);
         FlightSession.Physics = null;
         if (!_launchStoredDrones) _assembly.Save();
@@ -122,6 +127,6 @@ public sealed class FlightLaunchService : IInitializable, IDisposable
         _pendingLaunch?.Cancel();
         _modeSubscription?.Dispose();
         _launchSubscription?.Dispose();
-        _environmentSubscription?.Dispose();
+        _missionSubscription?.Dispose();
     }
 }

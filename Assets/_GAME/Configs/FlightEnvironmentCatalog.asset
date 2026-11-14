@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e79130c6896e7c34eb191f952356f6f2, type: 3}
   m_Name: FlightEnvironmentCatalog
   m_EditorClassIdentifier: Assembly-CSharp::FlightEnvironmentCatalog
+  missions:
+  - mission: {fileID: 11400000, guid: 1138bc5fbbf96d24d9d42be197287bb2, type: 2}
+    environmentId: training
+  - mission: {fileID: 11400000, guid: 84c95a388af1417418dccf5a990b0544, type: 2}
+    environmentId: obstacles
   coreScenePath: Assets/Scenes/FlightCoreScene.unity
   environments:
   - id: training

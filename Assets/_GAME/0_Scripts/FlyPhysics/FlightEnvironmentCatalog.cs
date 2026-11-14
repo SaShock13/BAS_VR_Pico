@@ -15,6 +15,18 @@ public sealed class FlightEnvironmentCatalog : ScriptableObject
         public string scenePath;
     }
 
+    [Serializable]
+    public sealed class MissionEntry
+    {
+        public MissionDefinition mission;
+        public string environmentId;
+    }
+
+    [SerializeField] private List<MissionEntry> missions = new();
+    public IReadOnlyList<MissionEntry> Missions => missions;
+    public MissionEntry FindMission(string id) =>
+        missions.Find(entry => entry?.mission != null && entry.mission.MissionId == id);
+
     public string coreScenePath = "Assets/Scenes/FlightCoreScene.unity";
     [SerializeField] private List<Entry> environments = new List<Entry>();
     public IReadOnlyList<Entry> Environments => environments;

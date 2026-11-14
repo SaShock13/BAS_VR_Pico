@@ -90,7 +90,7 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
 
 
     [SerializeField] private Renderer _renderer;
-    [SerializeField] private bool _isSnapToSocketPosition = false;
+    [SerializeField] private bool _isSnapToSocketPosition = true;
     [SerializeField] private GameObject highlighter ;  // todo Хайлайт скрвис написать для подсветки. Через Дубликам меша или шейдер
                                                        
     private Material _outlineMaterial;

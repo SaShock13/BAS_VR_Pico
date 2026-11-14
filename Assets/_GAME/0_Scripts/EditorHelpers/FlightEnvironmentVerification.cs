@@ -18,8 +18,9 @@ public static class FlightEnvironmentVerification
         var catalog = AssetDatabase.LoadAssetAtPath<FlightEnvironmentCatalog>(FlightEnvironmentSetup.CatalogPath);
         FlightEnvironmentBuildScenes.Validate(catalog);
         Check(catalog.Environments.Count >= 2, "Expected two environments.");
+        Check(catalog.Missions.Count >= 2, "Expected two missions.");
         var setup = EditorSceneManager.GetSceneManagerSetup();
-        string selectedId = FlightSession.EnvironmentId;
+        var selectedMission = FlightSession.Mission;
         try
         {
             var core = EditorSceneManager.OpenScene(catalog.coreScenePath, OpenSceneMode.Single);
@@ -38,10 +39,13 @@ public static class FlightEnvironmentVerification
                 Check(context.playerSpawn != null && context.droneSpawn != null, "Spawn points missing.");
                 Check(context.playerSpawn.gameObject.scene == scene && context.droneSpawn.gameObject.scene == scene, "Cross-scene spawn reference.");
                 Check(Components<Transform>(scene).All(t => GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(t.gameObject) == 0), "Missing environment script.");
+                foreach (var mission in catalog.Missions.Where(m => m.environmentId == entry.id))
+                    VerifyMission(mission.mission, context);
                 EditorSceneManager.CloseScene(scene, true);
             }
             var constructor = EditorSceneManager.OpenScene("Assets/Scenes/ConstructorScene.unity", OpenSceneMode.Single);
-            var source = Components<FlightEnvironmentSelectionView>(constructor).Single();
+            var source = Components<FlightEnvironmentSelectionView>(constructor).Single(view =>
+                string.IsNullOrEmpty(new SerializedObject(view).FindProperty("panelId").stringValue));
             var clone = UnityEngine.Object.Instantiate(source.gameObject);
             try
             {
@@ -51,21 +55,23 @@ public static class FlightEnvironmentVerification
                 var bus = new EventBus(new ConsoleLogger(), new DiContainer()); bus.Initialize();
                 try
                 {
-                    FlightSession.EnvironmentId = catalog.Environments[0].id;
+                    FlightSession.Mission = catalog.Missions[0].mission;
                     view.Construct(bus, catalog);
                     typeof(FlightEnvironmentSelectionView).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(view, null);
                     string confirmed = null;
-                    using var subscription = bus.Subscribe<ConfirmFlightEnvironmentRequest>(e => confirmed = e.EnvironmentId);
-                    bus.Publish(new OpenFlightEnvironmentSelection());
+                    using var subscription = bus.Subscribe<ConfirmFlightMissionRequest>(e => confirmed = e.MissionId);
+                    bus.Publish(new OpenFlightMissionSelection());
                     Check(panel.activeSelf, "Selection did not open.");
                     ((Button)so.FindProperty("next").objectReferenceValue).onClick.Invoke();
-                    Check(((TMP_Text)so.FindProperty("title").objectReferenceValue).text.Contains(catalog.Environments[1].title), "Second location not rendered.");
+                    Check(((TMP_Text)so.FindProperty("title").objectReferenceValue).text.Contains(catalog.Missions[1].mission.MissionName), "Second mission not rendered.");
+                    Check(((TMP_Text)so.FindProperty("description").objectReferenceValue).text.Contains(
+                        catalog.Find(catalog.Missions[1].environmentId).title), "Mission location not rendered.");
                     ((Button)so.FindProperty("confirm").objectReferenceValue).onClick.Invoke();
-                    Check(confirmed == catalog.Environments[1].id && !panel.activeSelf, "Wrong confirmed location.");
+                    Check(confirmed == catalog.Missions[1].mission.MissionId && !panel.activeSelf, "Wrong confirmed mission.");
                     confirmed = null;
-                    bus.Publish(new OpenFlightEnvironmentSelection());
+                    bus.Publish(new OpenFlightMissionSelection());
                     ((Button)so.FindProperty("previous").objectReferenceValue).onClick.Invoke();
-                    Check(((TMP_Text)so.FindProperty("title").objectReferenceValue).text.Contains(catalog.Environments[catalog.Environments.Count - 1].title), "Previous did not wrap.");
+                    Check(((TMP_Text)so.FindProperty("title").objectReferenceValue).text.Contains(catalog.Missions[catalog.Missions.Count - 1].mission.MissionName), "Previous did not wrap.");
                     ((Button)so.FindProperty("cancel").objectReferenceValue).onClick.Invoke();
                     Check(confirmed == null && !panel.activeSelf, "Cancel launched flight.");
                 }
@@ -76,9 +82,49 @@ public static class FlightEnvironmentVerification
         }
         finally
         {
-            FlightSession.EnvironmentId = selectedId;
+            FlightSession.Mission = selectedMission;
             EditorSceneManager.RestoreSceneManagerSetup(setup);
         }
+    }
+
+    private static void VerifyMission(MissionDefinition mission, FlightEnvironmentContext environment)
+    {
+        Check(environment.missionStart != null && environment.missionPoints != null,
+            "Missing mission points or start zone.");
+        var drone = new GameObject("Mission verification drone");
+        try
+        {
+            var binder = drone.AddComponent<SceneMissionBinder>();
+            typeof(SceneMissionBinder).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic)
+                .Invoke(binder, null);
+            binder.BindFlightEnvironment(environment);
+            var controller = drone.AddComponent<MissionController>();
+            var runtime = MissionFactory.CreateRuntime(mission, binder);
+            var tick = typeof(MissionController).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic);
+            drone.transform.position = environment.droneSpawn.position;
+            controller.ArmFlightMission(runtime, drone.transform, environment.missionStart, environment.missionStartRadius);
+            tick.Invoke(controller, null);
+            Check(controller.State == MissionState.Inactive, "Mission started at spawn.");
+            drone.transform.position = environment.missionStart.position;
+            tick.Invoke(controller, null);
+            Check(controller.State == MissionState.Running, "Mission did not start at its start zone.");
+            while (runtime.CurrentStep is MissionStep step)
+            {
+                if (step is WaitStep)
+                    typeof(WaitStep).GetField("_timer", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(step, float.MaxValue);
+                else
+                {
+                    Check(step.Target != null, "Missing mission step target.");
+                    drone.transform.position = step.Target.position;
+                }
+                tick.Invoke(controller, null);
+                Check(runtime.CurrentStep != step, "Mission step did not advance.");
+            }
+            Check(controller.State == MissionState.Completed, "Mission did not complete.");
+            controller.StopMission();
+            Debug.Log("PASS: start, steps and completion for " + mission.MissionName);
+        }
+        finally { UnityEngine.Object.DestroyImmediate(drone); }
     }
 
     private static T[] Components<T>(Scene scene) where T : Component => scene.GetRootGameObjects().SelectMany(r => r.GetComponentsInChildren<T>(true)).ToArray();

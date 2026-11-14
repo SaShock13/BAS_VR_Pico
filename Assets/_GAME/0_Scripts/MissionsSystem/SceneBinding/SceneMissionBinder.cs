@@ -37,6 +37,14 @@ public class SceneMissionBinder : MonoBehaviour
         }
     }
 
+    public void BindFlightEnvironment(FlightEnvironmentContext environment)
+    {
+        _points.Clear();
+        foreach (var point in environment.missionPoints)
+            if (point != null) _points.Add(point.Id, point);
+        Cargo = environment.cargo;
+    }
+
     public MissionPoint GetPoint(MissionPointId id)
     {
         if (_points.TryGetValue(id, out var point))

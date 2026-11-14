@@ -19,7 +19,9 @@ public sealed class ThrustValidator
         float mass = context.physicsData.TotalMass;
 
         float ratio =
-            thrust / mass;
+            mass > 0f && Physics.gravity.magnitude > 0f
+                ? thrust / (mass * Physics.gravity.magnitude)
+                : 0f;
 
         ValidationGroupResult result =
             new()
@@ -28,6 +30,9 @@ public sealed class ThrustValidator
                 Score = 100
             };
 
+
+        if (context.EnforceMissionLimits && context.Requirements.MinThrustToWeightRatio <= 0f)
+            return result;
 
         if(ratio <= 1 )
         {

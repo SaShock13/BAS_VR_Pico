@@ -25,13 +25,16 @@ public sealed class FlightTimeValidator
                 Score = 100
             };
 
+        if (context.EnforceMissionLimits && context.Requirements.MinFlightTimeMinutes <= 0f)
+            return result;
+
         if (flightTime <
             context.Requirements.MinFlightTimeMinutes)
         {
             result.Messages.Add(
                 new ValidationMessage(
                     ValidationSeverity.Error,
-                    $"Недостаточное время полета.Время полета : {flightTime} мин, Требуется {context.Requirements.MinFlightTimeMinutes:F1} мин. Увеличьте емкость аккумулятора или снизьте потребление "));
+                    GetFailureReason(context, flightTime)));
 
             result.Score = 0;
         }
@@ -47,5 +50,17 @@ public sealed class FlightTimeValidator
 
 
         return result;
+    }
+
+    private static string GetFailureReason(DroneValidationContext context, float flightTime)
+    {
+        var physics = context.physicsData;
+        if (physics.Battery == null || physics.Battery.CapacityMah <= 0f)
+            return "Не удалось оценить время полёта: отсутствуют данные о ёмкости аккумулятора.";
+        if (physics.HoverThrottle <= 0f || physics.HoverThrottle > 1f)
+            return "Не удалось оценить время полёта: тяги моторов недостаточно для висения.";
+        if (flightTime <= 0f)
+            return "Не удалось оценить время полёта: проверьте ток потребления моторов.";
+        return $"Время полёта {flightTime:F1} мин, требуется {context.Requirements.MinFlightTimeMinutes:F1} мин.";
     }
 }

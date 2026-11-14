@@ -51,13 +51,47 @@ public sealed class DroneValidationStateService : IInitializable, IDisposable
         ShowValidationResult(result);
     }
 
-    private void ShowValidationResult(DroneReadinessResult result)
+    public bool MeetsMissionRequirements(string droneId, DroneRequirements requirements)
+    {
+        DroneReadinessResult result;
+        try
+        {
+            result = Check(droneId, requirements ?? new DroneRequirements { CheckCollisions = false }, true);
+        }
+        catch (Exception exception)
+        {
+            UnityEngine.Debug.LogException(exception);
+            result = null;
+        }
+        if (result == null)
+        {
+            _notifications.Error("Миссия не запущена: не удалось проверить выбранный дрон.");
+            return false;
+        }
+        if (!result.IsReady) PublishValidationToast(result, "Миссия не запущена");
+        return result.IsReady;
+    }
+
+    public bool ValidateForFlight(string droneId)
+    {
+        var result = Validate(droneId);
+        if (result == null)
+            _notifications.Warning("Валидация сборки не пройдена. Не удалось проверить выбранный дрон.");
+        else if (!result.IsReady)
+            PublishValidationToast(result, "Валидация сборки не пройдена");
+        return result?.IsReady == true;
+    }
+
+    private void ShowValidationResult(DroneReadinessResult result) =>
+        PublishValidationToast(result, result.StatusText);
+
+    private void PublishValidationToast(DroneReadinessResult result, string heading)
     {
         var details = result.GetDetailsText();
         if (details.Length == 0)
         {
             if (result.IsReady) _notifications.Info(result.StatusText);
-            else _notifications.Warning(result.StatusText);
+            else _notifications.Warning(heading);
             return;
         }
 
@@ -78,7 +112,7 @@ public sealed class DroneValidationStateService : IInitializable, IDisposable
                     length = i;
                     break;
                 }
-            var text = result.StatusText + "\n" + details.Substring(0, length);
+            var text = heading + "\n" + details.Substring(0, length);
             if (result.IsReady) _notifications.Info(text, 6f);
             else _notifications.Warning(text, 6f);
             details = details.Substring(length).TrimStart();
@@ -92,34 +126,41 @@ public sealed class DroneValidationStateService : IInitializable, IDisposable
 
     public DroneReadinessResult Validate(string droneId)
     {
+        if (string.IsNullOrEmpty(droneId)) return null;
+        // Revoke the previous manual result before running checks.
+        if (_results.Remove(droneId)) Changed?.Invoke();
+        var result = Check(droneId, null, false);
+        if (result == null) return null;
+        _results[droneId] = result;
+        Changed?.Invoke();
+        return result;
+    }
+
+    private DroneReadinessResult Check(string droneId, DroneRequirements requirements, bool enforceMissionLimits)
+    {
         if (!_assembly.TryGetDroneForPart(droneId, out var drone) || drone.InstanceId != droneId)
             return null;
         var root = _assembly.GetViewById(droneId);
         if (root == null) return null;
-        // Revoke the old result before running checks, including when a validator throws.
-        _results.Remove(droneId);
-        Changed?.Invoke();
-        var parts = drone.partInstanseIds.Select(_assembly.GetPartDomainState).ToList();
-        var result = _readiness.Validate(new DroneValidationContext
+        var parts = new List<PartDomainState>(drone.partInstanseIds.Count);
+        foreach (var partId in drone.partInstanseIds)
+        {
+            if (!_assembly.TryGetPartDomainState(partId, out var part) ||
+                !part.isLoaded || _assembly.GetViewById(partId) == null)
+                return null;
+            parts.Add(part);
+        }
+        var context = new DroneValidationContext
         {
             Drone = drone,
             Parts = parts,
             PartsByType = parts.GroupBy(p => _configs.Get(p.PartId).PartType)
                 .ToDictionary(g => g.Key, g => g.ToList()),
             droneTransform = root.transform,
-            Requirements = new DroneRequirements
-            {
-                MinFlightTimeMinutes = 4f,
-                MinThrustToWeightRatio = 1.8f,
-                MaxCenterOfMassOffset = 0.2f,
-                RequireCamera = true,
-                CheckCollisions = true
-                
-            }
-        });
-        _results[droneId] = result;
-        Changed?.Invoke();
-        return result;
+            Requirements = requirements,
+            EnforceMissionLimits = enforceMissionLimits
+        };
+        return enforceMissionLimits ? _readiness.Validate(context) : _readiness.ValidateAssembly(context);
     }
 
     public void Invalidate()

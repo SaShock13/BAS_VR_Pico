@@ -1793,7 +1793,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0412\u042B\u0411\u041E\u0420 \u041B\u041E\u041A\u0410\u0426\u0418\u0418"
+  m_text: "\u0412\u042B\u0411\u041E\u0420 \u041C\u0418\u0421\u0421\u0418\u0418"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8b185ae259c9b6546a309613f08b1324, type: 2}
   m_sharedMaterial: {fileID: 3163591187811411887, guid: 8b185ae259c9b6546a309613f08b1324, type: 2}
@@ -2454,6 +2454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2eb3dc149c9a14cb7d7b3d18c52875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlightEnvironmentSelectionView
+  panelId: 
   panel: {fileID: 1416295177}
   title: {fileID: 161901086}
   description: {fileID: 513536390}
@@ -2476,6 +2477,7 @@ MonoBehaviour:
   arcadeToggle: {fileID: 853161684}
   launchButton: {fileID: 795890163}
   modeLabel: {fileID: 1189923691}
+  panelId: 
 --- !u!4 &534783597 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8476315437356634720, guid: 7c69de4a447d4ed4eafb3d0cf4b66d83, type: 3}

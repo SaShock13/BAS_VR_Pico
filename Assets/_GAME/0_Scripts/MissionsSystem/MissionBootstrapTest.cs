@@ -39,6 +39,8 @@ public class MissionBootstrapTest : MonoBehaviour
 
     public void StartTestMission()
     {
+        if (FlightSession.Mission != null)
+            return;
         if (controller == null || mission == null || binder == null)
         {
             Debug.LogError("Mission bootstrap references are not assigned.", this);

@@ -161,7 +161,7 @@ public static class FlightEnvironmentSetup
         var panel = Rect(flight.transform, "EnvironmentSelection", new Vector2(1100, 510), new Vector2(0, 180));
         panel.anchoredPosition3D = new Vector3(0, 180, -5);
         panel.gameObject.AddComponent<Image>().color = new Color(.025f, .045f, .06f, 1);
-        Text(panel, "Header", "ВЫБОР ЛОКАЦИИ", new Vector2(1020, 70), new Vector2(0, 205), 38);
+        Text(panel, "Header", "ВЫБОР МИССИИ", new Vector2(1020, 70), new Vector2(0, 205), 38);
         var title = Text(panel, "Location", "", new Vector2(840, 90), new Vector2(0, 95), 40);
         var description = Text(panel, "Description", "", new Vector2(940, 120), new Vector2(0, -20), 30);
         var previous = Button(panel, "Previous", "<", new Vector2(-480, 95), 90);

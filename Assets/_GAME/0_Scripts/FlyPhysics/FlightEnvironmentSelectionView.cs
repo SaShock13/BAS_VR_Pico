@@ -4,18 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public sealed class OpenFlightEnvironmentSelection : IAppEvent
+public sealed class OpenFlightMissionSelection : IAppEvent
 {
-    public string EventId => nameof(OpenFlightEnvironmentSelection);
+    public string EventId => nameof(OpenFlightMissionSelection);
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
     public string PanelId;
 }
 
-public sealed class ConfirmFlightEnvironmentRequest : IAppEvent
+public sealed class ConfirmFlightMissionRequest : IAppEvent
 {
-    public string EventId => nameof(ConfirmFlightEnvironmentRequest);
+    public string EventId => nameof(ConfirmFlightMissionRequest);
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-    public string EnvironmentId;
+    public string MissionId;
 }
 
 public sealed class FlightEnvironmentSelectionView : MonoBehaviour
@@ -40,7 +40,7 @@ public sealed class FlightEnvironmentSelectionView : MonoBehaviour
         next.onClick.AddListener(Next);
         confirm.onClick.AddListener(Confirm);
         cancel.onClick.AddListener(Close);
-        _subscription = _bus.Subscribe<OpenFlightEnvironmentSelection>(e =>
+        _subscription = _bus.Subscribe<OpenFlightMissionSelection>(e =>
         {
             if (string.Equals(panelId ?? string.Empty, e.PanelId ?? string.Empty))
                 Open();
@@ -49,11 +49,11 @@ public sealed class FlightEnvironmentSelectionView : MonoBehaviour
 
     private void Open()
     {
-        var selected = _catalog.Find(FlightSession.EnvironmentId);
+        var selected = _catalog.FindMission(FlightSession.Mission == null ? null : FlightSession.Mission.MissionId);
         _index = 0;
         if (selected != null)
-            for (int i = 0; i < _catalog.Environments.Count; i++)
-                if (_catalog.Environments[i] == selected) _index = i;
+            for (int i = 0; i < _catalog.Missions.Count; i++)
+                if (_catalog.Missions[i] == selected) _index = i;
         Render();
         panel.SetActive(true);
     }
@@ -62,19 +62,27 @@ public sealed class FlightEnvironmentSelectionView : MonoBehaviour
     private void Next() { _index++; Render(); }
     private void Render()
     {
-        int count = _catalog.Environments.Count;
+        int count = _catalog.Missions.Count;
         _index = count == 0 ? 0 : (_index + count) % count;
-        var entry = count == 0 ? null : _catalog.Environments[_index];
-        title.text = entry == null ? "Нет доступных локаций" : entry.title + "  " + (_index + 1) + "/" + count;
-        description.text = entry == null ? "Добавьте окружения в FlightEnvironmentCatalog" : entry.description;
-        confirm.interactable = entry != null;
+        var entry = count == 0 ? null : _catalog.Missions[_index];
+        var mission = entry?.mission;
+        var environment = entry == null ? null : _catalog.Find(entry.environmentId);
+        title.text = mission == null ? "Нет доступной миссии" : mission.MissionName + "  " + (_index + 1) + "/" + count;
+        description.text = mission == null ? string.Empty :
+            $"Локация: {environment?.title ?? "не назначена"}\n{mission.Briefing}";
+        var requirements = mission?.Requirements?.Describe();
+        if (!string.IsNullOrEmpty(requirements))
+            description.text += $"\nТребования к дрону: {requirements}";
+        else if (mission != null)
+            description.text += "\nТребования к дрону: базовая комплектность";
+        confirm.interactable = mission != null && environment != null;
         previous.interactable = next.interactable = count > 1;
     }
 
     private void Confirm()
     {
-        if (_catalog.Environments.Count == 0) return;
-        _bus.Publish(new ConfirmFlightEnvironmentRequest { EnvironmentId = _catalog.Environments[_index].id });
+        if (!confirm.interactable) return;
+        _bus.Publish(new ConfirmFlightMissionRequest { MissionId = _catalog.Missions[_index].mission.MissionId });
         Close();
     }
     public void Close() => panel.SetActive(false);

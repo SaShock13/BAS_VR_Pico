@@ -1421,6 +1421,8 @@ MonoBehaviour:
   arcadeFlightSettings: {fileID: 11400000, guid: 7f155d9531d40344bb17c63d82547334, type: 2}
   environmentCatalog: {fileID: 11400000, guid: 1d9de3585ab3396448df6ae10e8b9dc0, type: 2}
   playerRoot: {fileID: 1448158244}
+  missionController: {fileID: 847074560}
+  missionBinder: {fileID: 847074562}
 --- !u!4 &473584525
 Transform:
   m_ObjectHideFlags: 0
@@ -1689,7 +1691,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847074558}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1201f472c8f379e42bf802322bac74de, type: 3}
   m_Name: 
@@ -2603,6 +2605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flightEnvironmentCatalog: {fileID: 11400000, guid: 1d9de3585ab3396448df6ae10e8b9dc0, type: 2}
+  launchStoredDrones: 0
   partConfigs:
   - {fileID: 11400000, guid: b33c535633ee7114daf9271869a56caf, type: 2}
   - {fileID: 11400000, guid: b73ce8181bd5abd43af371a46b53b194, type: 2}

@@ -12,6 +12,7 @@ public class MissionWorldMarker : MonoBehaviour
 
     private Transform _target;
     private Transform _player;
+    private int _displayedMeters = -1;
 
     public void Initialize(Transform player)
     {
@@ -30,7 +31,7 @@ public class MissionWorldMarker : MonoBehaviour
 
     private void Update()
     {
-        if (_target == null)
+        if (_target == null || _player == null)
             return;
 
         float animatedOffset =
@@ -45,14 +46,18 @@ public class MissionWorldMarker : MonoBehaviour
                 _player.position,
                 _target.position);
 
-        distanceText.text =
-            $"{distance:F0}m";
+        int meters = Mathf.RoundToInt(distance);
+        if (meters == _displayedMeters)
+            return;
+        _displayedMeters = meters;
+        distanceText.SetText("{0}m", meters);
     }
 
     private void OnTargetChanged(
         Transform target)
     {
         _target = target;
+        _displayedMeters = -1;
 
         markerRoot.SetActive(
             target != null);

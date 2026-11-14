@@ -31,6 +31,7 @@ public class AssemblyInstaller : MonoInstaller
         Container.Bind<ISelectionService>().To<SelectionService>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<Clean_AssemblySystem>().AsSingle();
+        DroneValidationInstaller.InstallValidationBindings(Container);
         Container.BindInterfacesTo<FlightLaunchService>().AsSingle()
             .WithArguments(launchStoredDrones);
         Container.BindInterfacesAndSelfTo<AssemblyGrabModeService>().AsSingle();

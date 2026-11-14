@@ -9,6 +9,12 @@ public sealed class ToastNotificationView : MonoBehaviour
     [SerializeField] private Vector3 _headOffset = new(0f, -0.25f, 1.5f);
     private Canvas _canvas;
 
+    public void SetViewer(Camera viewer)
+    {
+        _viewer = viewer;
+        AttachToViewer();
+    }
+
     public bool AttachToViewer()
     {
         if (_canvas == null) _canvas = GetComponent<Canvas>();
