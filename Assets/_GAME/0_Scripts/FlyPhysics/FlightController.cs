@@ -15,6 +15,7 @@ public class FlightController : MonoBehaviour
     [SerializeField] private float _maxPitchRate = 1.5f;
     [SerializeField] private float _maxRollRate = 1.5f;
     [SerializeField] private float _maxYawRate = 1f;
+    [SerializeField, Range(1f, 80f)] private float _maxControlTilt = 35f;
 
     [Header("Stabilization")]
     [SerializeField] private float _pitchGain = 0.2f;
@@ -65,11 +66,10 @@ public class FlightController : MonoBehaviour
         Vector3 localAngularVelocity =
             _rb.transform.InverseTransformDirection(_rb.angularVelocity);
 
-        float desiredPitchRate =
-            input.Pitch * _maxPitchRate;
-
-        float desiredRollRate =
-            -input.Roll * _maxRollRate;
+        var rates = FlightControlRates.Calculate(_input.ControlMode, input, _rb.rotation,
+            new Vector2(_maxPitchRate, _maxRollRate) * Mathf.Rad2Deg, _maxControlTilt) * Mathf.Deg2Rad;
+        float desiredPitchRate = rates.x;
+        float desiredRollRate = rates.y;
 
         float desiredYawRate =
             -input.Yaw * _maxYawRate;

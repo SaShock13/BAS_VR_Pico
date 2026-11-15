@@ -17,6 +17,7 @@ public class LeftHandMenu : MonoBehaviour
     [SerializeField, Min(0.1f)] private float longPressDuration = 1f;
 
     private GameObject menuObj, _visibleMenu;
+    private FlightMenuView _flightMenu;
     private DiContainer _container;
     private IEventBus _events;
     private Coroutine _hold, _animation;
@@ -86,6 +87,12 @@ public class LeftHandMenu : MonoBehaviour
     private void Start()
     {
         menuObj = sceneMenu != null ? sceneMenu : _container.InstantiatePrefab(menuPrefab, menuTransform);
+        _flightMenu = menuObj.GetComponent<FlightMenuView>();
+        if (_flightMenu != null)
+        {
+            NotifyPartsMenuVisibility();
+            return;
+        }
         Prepare(menuObj);
         Prepare(systemMenu);
         NotifyPartsMenuVisibility();
@@ -106,6 +113,11 @@ public class LeftHandMenu : MonoBehaviour
     private void OnPress(InputAction.CallbackContext context)
     {
         if (menuObj == null || _pressedAction != null || !context.action.IsPressed()) return;
+        if (_flightMenu != null)
+        {
+            _flightMenu.TogglePause();
+            return;
+        }
         _pressedAction = context.action;
         _pressedAt = Time.realtimeSinceStartupAsDouble;
         _longTriggered = false;
@@ -142,6 +154,11 @@ public class LeftHandMenu : MonoBehaviour
 
     public void ToggleMenu()
     {
+        if (_flightMenu != null)
+        {
+            _flightMenu.TogglePause();
+            return;
+        }
         if (systemMenu != null && _visibleMenu == systemMenu)
         {
             HideMenu();

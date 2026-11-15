@@ -2,6 +2,45 @@
     "version": 1,
     "name": "XRI Default Input Actions",
     "maps": [
+{
+            "name": "Flight",
+            "id": "cb9ce943-70e3-9b97-58e2-007e6d61d0dc",
+            "actions": [
+                {
+                    "name": "ModeSwitch",
+                    "type": "Button",
+                    "id": "822fff53-306f-5cb1-e565-8f443cbf1702",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2d6288e9-a566-37a8-a49a-badba1f565e9",
+                    "path": "<XRController>{RightHand}/primary2DAxisClick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ModeSwitch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88cfd5c9-4079-6954-509d-63756748a5ef",
+                    "path": "<Keyboard>/pageUp",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ModeSwitch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
         {
             "name": "XRI Head",
             "id": "09ff3ccc-21b4-4346-a3a2-7c978b5af892",

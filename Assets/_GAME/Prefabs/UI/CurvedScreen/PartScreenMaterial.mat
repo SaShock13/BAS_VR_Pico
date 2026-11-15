@@ -47,6 +47,6 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _WindowFill: {r: 0, g: 0, b: 0, a: 0.9137255}
+    - _WindowFill: {r: 0.095, g: 0.052, b: 0.016, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

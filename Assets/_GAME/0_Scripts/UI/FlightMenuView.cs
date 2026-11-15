@@ -7,104 +7,110 @@ using Zenject;
 public sealed class FlightMenuView : MonoBehaviour
 {
     [SerializeField] private TMP_Text pauseLabel;
+    [SerializeField] private string resumeText = "Продолжить";
+    [SerializeField] private Button settingsButton, modesButton, restartButton;
+    [SerializeField] private Button hudSettingsButton, settingsBackButton, hudBackButton, modesBackButton;
+    [SerializeField] private Toggle fpvToggle;
+    [SerializeField] private Toggle[] hudToggles;
+    [SerializeField] private Button[] modeButtons;
+    [SerializeField] private GameObject[] _mainButtons;
+    [SerializeField] private RectTransform _hudPage;
+    [SerializeField] private RectTransform _settingsPage;
+    [SerializeField] private RectTransform _modePage;
+    [SerializeField, Min(0f)] private float menuDistance = 1.45f;
+    [SerializeField, Min(0.001f)] private float menuScale = 0.055f;
+
     private IEventBus _bus;
     private IDisposable _pauseSubscription;
-    private GameObject[] _mainButtons;
-    private RectTransform _hudPage;
+    private Camera _playerCamera;
+    private string _flightScenePath;
 
     [Inject]
     public void Construct(IEventBus bus)
     {
         _bus = bus;
         _pauseSubscription = bus.Subscribe<PauseStateChangedEvent>(e =>
-            pauseLabel.text = e.IsPaused ? "Продолжить" : "Пауза");
+        {
+            if (e.PausedState != AppState.Flight) return;
+            if (e.IsPaused)
+            {
+                pauseLabel.text = resumeText;
+                PlaceInFrontOfCamera();
+            }
+            gameObject.SetActive(e.IsPaused);
+        });
     }
 
     public void TogglePause() => _bus.Publish(new ToggleFlightPauseRequest());
     public void ReturnToAssembly() => _bus.Publish(new ReturnToAssemblyRequest());
 
+    private void PlaceInFrontOfCamera()
+    {
+        var origin = GetComponentInParent<Unity.XR.CoreUtils.XROrigin>();
+        if (origin != null) _playerCamera = origin.Camera;
+        var camera = _playerCamera != null ? _playerCamera : Camera.main;
+        if (camera == null) return;
+        transform.SetParent(null, false);
+        var forward = Vector3.ProjectOnPlane(camera.transform.forward, Vector3.up);
+        if (forward.sqrMagnitude < 0.001f) forward = Vector3.forward;
+        forward.Normalize();
+        transform.SetPositionAndRotation(camera.transform.position + forward * menuDistance,
+            Quaternion.LookRotation(forward, Vector3.up));
+        transform.localScale = Vector3.one * menuScale;
+        var group = GetComponent<CanvasGroup>();
+        if (group != null)
+        {
+            group.interactable = true;
+            group.blocksRaycasts = true;
+        }
+        GetComponentInChildren<Canvas>(true).worldCamera = camera;
+    }
+
     private void Start()
     {
-        var pauseButton = pauseLabel.GetComponentInParent<Button>();
-        var canvas = (RectTransform)pauseButton.transform.parent;
-        var buttons = canvas.GetComponentsInChildren<Button>(true);
-        _mainButtons = new GameObject[buttons.Length + 1];
-        for (int i = 0; i < buttons.Length; i++)
-            _mainButtons[i] = buttons[i].gameObject;
+        _flightScenePath = gameObject.scene.path;
+        settingsButton.onClick.AddListener(() => ShowPage(_settingsPage));
+        modesButton.onClick.AddListener(() => ShowPage(_modePage));
+        restartButton.onClick.AddListener(() =>
+            _bus.Publish(new RestartFlightRequest { ScenePath = _flightScenePath }));
+        hudSettingsButton.onClick.AddListener(() => ShowPage(_hudPage));
+        settingsBackButton.onClick.AddListener(() => ShowPage(null));
+        hudBackButton.onClick.AddListener(() => ShowPage(_settingsPage));
+        modesBackButton.onClick.AddListener(() => ShowPage(null));
 
-        _mainButtons[buttons.Length] = CreateButton(canvas, "Настройки HUD", -210f, () => ShowHudPage(true));
-        _hudPage = CreateRect(canvas, "HUD Settings", Vector2.zero, new Vector2(800f, 630f));
-        for (int i = 0; i < FlightHud.FieldNames.Length; i++)
-            CreateHudToggle(i);
-        CreateButton(_hudPage, "Назад", -275f, () => ShowHudPage(false));
-        ShowHudPage(false);
+        fpvToggle.SetIsOnWithoutNotify(FlightSession.DroneFirstPersonEnabled);
+        fpvToggle.onValueChanged.AddListener(value => FlightSession.DroneFirstPersonEnabled = value);
+
+        for (int i = 0; i < hudToggles.Length; i++)
+        {
+            int index = i;
+            hudToggles[i].SetIsOnWithoutNotify(FlightSession.IsHudFieldVisible(index));
+            hudToggles[i].onValueChanged.AddListener(value => FlightSession.SetHudFieldVisible(index, value));
+        }
+
+        for (int i = 0; i < modeButtons.Length; i++)
+        {
+            var mode = (FlightControlMode)i;
+            modeButtons[i].onClick.AddListener(() =>
+            {
+                DroneDebugInput.SelectControlMode(mode);
+                ShowPage(null);
+            });
+        }
+
+        ShowPage(null);
     }
 
-    private void OnDisable()
-    {
-        if (_hudPage != null) ShowHudPage(false);
-    }
+    private void OnDisable() => ShowPage(null);
 
-    private void ShowHudPage(bool show)
+    private void ShowPage(RectTransform page)
     {
-        foreach (var button in _mainButtons) button.SetActive(!show);
-        _hudPage.gameObject.SetActive(show);
-    }
+        foreach (var button in _mainButtons)
+            button.SetActive(page == null);
 
-    private void CreateHudToggle(int index)
-    {
-        string label = FlightHud.FieldNames[index];
-        var row = CreateRect(_hudPage, label, new Vector2(0f, 270f - index * 61f), new Vector2(800f, 54f));
-        var background = row.gameObject.AddComponent<Image>();
-        background.color = new Color(0.09f, 0.13f, 0.17f, 0.98f);
-        var box = CreateRect(row, "Checkbox", new Vector2(-350f, 0f), new Vector2(38f, 38f));
-        var boxImage = box.gameObject.AddComponent<Image>();
-        boxImage.color = new Color(0.23f, 0.32f, 0.4f);
-        boxImage.raycastTarget = false;
-        var check = CreateLabel(box, "✓", Vector2.zero, new Vector2(38f, 38f));
-        if (!check.font.HasCharacter('✓')) check.text = "X";
-        CreateLabel(row, label, new Vector2(30f, 0f), new Vector2(680f, 60f),
-            TextAlignmentOptions.MidlineLeft);
-        var toggle = row.gameObject.AddComponent<Toggle>();
-        toggle.targetGraphic = background;
-        toggle.graphic = check;
-        toggle.SetIsOnWithoutNotify(FlightSession.IsHudFieldVisible(index));
-        toggle.onValueChanged.AddListener(visible => FlightSession.SetHudFieldVisible(index, visible));
-    }
-
-    private GameObject CreateButton(RectTransform parent, string label, float y, Action clicked)
-    {
-        var rect = CreateRect(parent, label, new Vector2(0f, y), new Vector2(800f, 90f));
-        var image = rect.gameObject.AddComponent<Image>();
-        image.color = new Color(0.15f, 0.23f, 0.3f);
-        var button = rect.gameObject.AddComponent<Button>();
-        button.targetGraphic = image;
-        button.onClick.AddListener(() => clicked());
-        CreateLabel(rect, label, Vector2.zero, rect.sizeDelta);
-        return rect.gameObject;
-    }
-
-    private TMP_Text CreateLabel(RectTransform parent, string text, Vector2 position, Vector2 size,
-        TextAlignmentOptions alignment = TextAlignmentOptions.Center)
-    {
-        var rect = CreateRect(parent, "Label", position, size);
-        var label = rect.gameObject.AddComponent<TextMeshProUGUI>();
-        label.font = pauseLabel.font;
-        label.fontSize = 34f;
-        label.alignment = alignment;
-        label.raycastTarget = false;
-        label.text = text;
-        return label;
-    }
-
-    private static RectTransform CreateRect(RectTransform parent, string name, Vector2 position, Vector2 size)
-    {
-        var rect = (RectTransform)new GameObject(name, typeof(RectTransform)).transform;
-        rect.gameObject.layer = parent.gameObject.layer;
-        rect.SetParent(parent, false);
-        rect.anchoredPosition = position;
-        rect.sizeDelta = size;
-        return rect;
+        _settingsPage.gameObject.SetActive(page == _settingsPage);
+        _hudPage.gameObject.SetActive(page == _hudPage);
+        _modePage.gameObject.SetActive(page == _modePage);
     }
 
     private void OnDestroy() => _pauseSubscription?.Dispose();

@@ -3,6 +3,7 @@
 /// </summary>
 public static class FlightSession  
 {
+    internal static bool DroneFirstPersonEnabled { get; set; } = true;
     public static string EnvironmentId;
     public static MissionDefinition Mission;
     public static AssemblySaveData Drone;
