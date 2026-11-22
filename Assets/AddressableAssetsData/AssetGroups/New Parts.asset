@@ -30,6 +30,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 114e027a10cd27144b04a77f8ba19947
+    m_Address: Parts/Arm/R2_Frame_Arm_225mm
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 13ab735fcf602944d825d5493cee8ed2
     m_Address: Parts/Rays/D7Rays2
     m_ReadOnly: 0
@@ -55,8 +60,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28ebd29d13209404d8b07b4e97bcf913
+    m_Address: Parts/BottomPlate/R2_FrameBottomPlate
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 291d92fc1b4d7a04fa7b215c5152b03b
     m_Address: Parts/Rays/D6Rays
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 294e20586626efc409203a98ec2a97e9
+    m_Address: Parts/TopPlate/R1_FrameTopPlate
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -77,6 +92,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3632035f72af4c745bf0bb2f2ffd2177
     m_Address: Parts/Bodies/D6Body
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36a78d2874b62d74c99f682852b71ea2
+    m_Address: Parts/UnderPlate/R1_FrameUnderPlate
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -102,6 +122,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 41b2abb6eacca74418b869e75c991102
     m_Address: Parts/Propellers/D11Propeller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 478c3ad51f5dcfd498fba6781c21f868
+    m_Address: Parts/Motor/BFM MT2206 1900KV
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 488476ef5fb895a48b60acbdbdca5480
+    m_Address: Parts/Propellers/PROP_Ethix_P35
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -150,6 +180,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6881700f20441e546832e1a73241ced7
+    m_Address: Parts/BottomPlate/R1_FrameBottomPlate
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 692d637561f94824e9793df292931742
+    m_Address: Parts/Motor/BFM MT1804 2480KV
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6dffebbf78e383544a2b1f2eadab08d2
     m_Address: Parts/Tech/Engine11
     m_ReadOnly: 0
@@ -157,6 +197,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 71388192e34bf8c4fbad73fb162825ba
     m_Address: Parts/Tech/Engine12
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 718f93b7716bbd644bbb2c5637afaa3f
+    m_Address: Parts/Propellers/PROP_HQProp_T43x35x3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 74e3024415aed654dafb4853a18cc85a
+    m_Address: Parts/Propellers/PROP_DALPROP_Cyclone_T5045C
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -170,6 +220,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77aeb8ce9b55dd944b9f1f9c85bc09c5
+    m_Address: Parts/Arm/R2_Frame_Arm_14in
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7a7e3c47f9187c54e9bdc410d8e5ce52
     m_Address: Parts/Rays/D7Rays
     m_ReadOnly: 0
@@ -177,6 +232,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7b01c72793c3b1e4bac78079abdb4b2e
     m_Address: Parts/Bodies/Drone1Body
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b039e0512fb5694aa65c37ed7c61e62
+    m_Address: Parts/Motor/BFM 1103 11000KV
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -195,6 +255,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ac06232a3d1830409bcc0fc3f93d917
+    m_Address: Parts/Motor/BFM 0802 19500KV
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8b13d86a0f8d07e4397a67b14ed214bf
     m_Address: Parts/Tech/MainBoard
     m_ReadOnly: 0
@@ -210,8 +275,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 948871906df263a4fa578f6bc2e31c97
+    m_Address: Parts/Arm/R2_Frame_Arm_12in
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9f6020ded7d5f274cb25afcb562da426
     m_Address: Parts/Propellers/Drone4Propeller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a05bcb250ead911469adb0d889352d82
+    m_Address: Parts/Propellers/PROP_Gemfan_Hurricane_51433
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -222,6 +297,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a308436c2f1b1f24fb65cc05872bf009
     m_Address: Parts/NonOriginal/Propeller1 4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a4abf58be661c874d8ca501d84f03239
+    m_Address: Parts/TopPlate/R2_FrameTopPlate
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -255,6 +335,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c5a0ab693da9c1b4db311cfb659133b7
+    m_Address: Parts/Motor/BFM ECO II 2306 2400KV
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c679341da585e9a4380098af60219489
     m_Address: Parts/Bodies/Drone2Body
     m_ReadOnly: 0
@@ -277,6 +362,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d5d1cd843e2621746be425869a137f5e
     m_Address: Parts/Bodies/D8Body
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d686ee1d54c18cb4eae4fa6b35147b87
+    m_Address: Parts/Arm/R1_Frame_Arm5
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -307,6 +397,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e1175181171d4aa45b3ad640c89d7c7c
     m_Address: Parts/Propellers/D7Propeller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e38c7ac792c671343b50929513812394
+    m_Address: Parts/Propellers/PROP_Gemfan_6030
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

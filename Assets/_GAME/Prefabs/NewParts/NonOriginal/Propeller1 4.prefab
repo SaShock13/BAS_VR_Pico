@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 8745649657662757237}
   - component: {fileID: 8736111222478545976}
   - component: {fileID: 546579297074343149}
-  - component: {fileID: 8969219253533669739}
+  - component: {fileID: 7109982464023071803}
   m_Layer: 0
   m_Name: Propeller1 4
   m_TagString: Untagged
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 3fda9b41750b75547bafbde609d5aa2a, type: 2}
---- !u!114 &8969219253533669739
+--- !u!114 &7109982464023071803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -458,6 +458,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &7917457924023847060
 GameObject:
   m_ObjectHideFlags: 0

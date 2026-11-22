@@ -1,6 +1,6 @@
 public static class DroneAssemblyRules
 {
-    public const PartType RootPartType = PartType.Rays;
+    public const PartType RootPartType = PartType.BottomPlate;
     public const string BodySocketId = "mount/Body/root";
 
     public static bool IsRoot(PartDomainState part) =>

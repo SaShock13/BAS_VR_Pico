@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 5131114915459630388}
   - component: {fileID: 5900651646097407357}
   - component: {fileID: 1182770598325922256}
-  - component: {fileID: 5725258618538706085}
+  - component: {fileID: 1844351722325747853}
   m_Layer: 0
   m_Name: D10Legs
   m_TagString: Untagged
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: b2d41b691b7549644b4bc4e7161d3461, type: 2}
---- !u!114 &5725258618538706085
+--- !u!114 &1844351722325747853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -347,6 +347,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &1723020629394376275
 GameObject:
   m_ObjectHideFlags: 0

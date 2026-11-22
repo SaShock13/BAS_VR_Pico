@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 7441205134226704418}
   - component: {fileID: 3520497172982050005}
   - component: {fileID: 8017193348833668139}
-  - component: {fileID: 2687726459169976879}
+  - component: {fileID: 4138065664292761898}
   m_Layer: 0
   m_Name: LegsSockets
   m_TagString: Untagged
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &2687726459169976879
+--- !u!135 &4138065664292761898
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -408,7 +408,7 @@ GameObject:
   - component: {fileID: 3959123049352002458}
   - component: {fileID: 4688217307793695837}
   - component: {fileID: 3938632981588017152}
-  - component: {fileID: 5612312864690261057}
+  - component: {fileID: 3654215615034056871}
   m_Layer: 0
   m_Name: Drone2Body
   m_TagString: Shell
@@ -473,7 +473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 18b8decaea3c6204a93fa65e98e1809b, type: 2}
---- !u!114 &5612312864690261057
+--- !u!114 &3654215615034056871
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 4983740130702821539}
   - component: {fileID: 2195612776195205119}
   - component: {fileID: 7937530922501367974}
-  - component: {fileID: 3350862878244023389}
+  - component: {fileID: 1752744901058856134}
   m_Layer: 0
   m_Name: NewParts_BatterySocket
   m_TagString: Untagged
@@ -705,7 +705,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &3350862878244023389
+--- !u!135 &1752744901058856134
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -768,7 +768,7 @@ GameObject:
   - component: {fileID: 2165604080821769793}
   - component: {fileID: 1462295374846200651}
   - component: {fileID: 2752230101619461803}
-  - component: {fileID: 8974759594347899448}
+  - component: {fileID: 3072928400870324230}
   m_Layer: 0
   m_Name: NewParts_FlyControllerSocket
   m_TagString: Untagged
@@ -859,7 +859,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &8974759594347899448
+--- !u!135 &3072928400870324230
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -955,7 +955,7 @@ GameObject:
   - component: {fileID: 485884163169203239}
   - component: {fileID: 8904943003790326090}
   - component: {fileID: 3595000864689293610}
-  - component: {fileID: 6253702648317998636}
+  - component: {fileID: 8811149665443093973}
   m_Layer: 0
   m_Name: NewParts_RaysSocket
   m_TagString: Untagged
@@ -1046,7 +1046,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &6253702648317998636
+--- !u!135 &8811149665443093973
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1111,6 +1111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &7439520382396884939
 GameObject:
   m_ObjectHideFlags: 0

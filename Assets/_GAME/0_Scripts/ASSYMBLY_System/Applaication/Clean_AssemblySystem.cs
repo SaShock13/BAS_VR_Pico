@@ -503,7 +503,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
 
             Debug.Log($"00000000 Check part.InstanceId {part.InstanceId}");
-            // A detached rays/frame part is the stable drone root.
+            // A detached bottom plate is the stable drone root.
             if (part.Type != DroneAssemblyRules.RootPartType)
                 continue;
 
@@ -1347,7 +1347,9 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         foreach (var body in domains.Values)
         {
             if (body.Type != PartType.Body || !string.IsNullOrEmpty(body.AttachedPartInstanceId)) continue;
-            var rays = domains.Values.FirstOrDefault(p => p.Type == DroneAssemblyRules.RootPartType &&
+            // This migration describes the old Body -> Rays layout specifically.
+            // Do not apply it to new root types with designer-authored mounting zones.
+            var rays = domains.Values.FirstOrDefault(p => p.Type == PartType.Rays &&
                 p.AttachedPartInstanceId == body.InstanceId);
             if (rays == null) continue;
             var raysView = views[rays.InstanceId];

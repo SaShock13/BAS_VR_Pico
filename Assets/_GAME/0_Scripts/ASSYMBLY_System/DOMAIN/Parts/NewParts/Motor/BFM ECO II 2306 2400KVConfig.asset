@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16f6ff99ba2a43f4295bfe1a15924934, type: 3}
+  m_Name: BFM ECO II 2306 2400KVConfig
+  m_EditorClassIdentifier: Assembly-CSharp::MotorConfig
+  PartId: newparts/Motor/BFM ECO II 2306 2400KV
+  LegacyPartIds: []
+  PartType: 2
+  HasConstantMaterial: 1
+  Prefab: {fileID: 4363996792104423752, guid: c5a0ab693da9c1b4db311cfb659133b7, type: 3}
+  PrefabAddress: Parts/Motor/BFM ECO II 2306 2400KV
+  Mass: 1
+  LocalCenterOfMass: {x: -0.000015792699, y: 0.0068565193, z: -0.000028158538}
+  MaxThrust: 18
+  ResponseSpeed: 18
+  RotationDirection: 0
+  MaxRPM: 42000
+  MixData:
+    PitchFactor: -1
+    RollFactor: -1
+    YawFactor: 1
+  IdleCurrent: 1.2
+  MaxCurrent: 40

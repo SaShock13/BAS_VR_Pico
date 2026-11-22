@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ed0de78d734a3408861cd23a1dfe4f, type: 3}
+  m_Name: R2_Frame_Arm_14inConfig
+  m_EditorClassIdentifier: Assembly-CSharp::PartConfig
+  PartId: newparts/Arm/R2_Frame_Arm_14in
+  LegacyPartIds: []
+  PartType: 12
+  HasConstantMaterial: 1
+  Prefab: {fileID: 162311217783667780, guid: 77aeb8ce9b55dd944b9f1f9c85bc09c5, type: 3}
+  PrefabAddress: Parts/Arm/R2_Frame_Arm_14in
+  Mass: 3
+  LocalCenterOfMass: {x: 0.08332377, y: -0.0020000078, z: -0.00058133155}

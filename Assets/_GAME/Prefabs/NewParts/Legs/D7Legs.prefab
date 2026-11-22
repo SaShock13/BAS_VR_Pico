@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7614242278614408281}
   - component: {fileID: 3704420278963207793}
   - component: {fileID: 4408136103170933243}
-  - component: {fileID: 5647092106480821307}
+  - component: {fileID: 1038802377575803653}
   m_Layer: 0
   m_Name: D7Legs
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 6ad6bad5dad736a4192ba86dd23b0011, type: 2}
---- !u!114 &5647092106480821307
+--- !u!114 &1038802377575803653
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -589,6 +589,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &5088365781217913818
 GameObject:
   m_ObjectHideFlags: 0

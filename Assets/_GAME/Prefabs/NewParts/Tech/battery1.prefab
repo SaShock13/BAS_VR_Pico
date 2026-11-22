@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &4880816662616470325
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +357,7 @@ GameObject:
   - component: {fileID: 1849187271226038944}
   - component: {fileID: 7865895251465963167}
   - component: {fileID: 8357380763205776872}
-  - component: {fileID: 1375174451718724}
+  - component: {fileID: 7267679617946163282}
   m_Layer: 0
   m_Name: battery1
   m_TagString: Untagged
@@ -419,7 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 99feddf28a4605647ba094e47f12f38f, type: 2}
---- !u!114 &1375174451718724
+--- !u!114 &7267679617946163282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

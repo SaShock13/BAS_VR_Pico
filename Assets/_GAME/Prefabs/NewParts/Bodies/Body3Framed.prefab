@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 2138938973400742533}
   - component: {fileID: 5341240363329907405}
   - component: {fileID: 2199445135682572843}
-  - component: {fileID: 438122551285762928}
+  - component: {fileID: 1946704051506166377}
   m_Layer: 0
   m_Name: EngineSocket1OK (6)
   m_TagString: Untagged
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &438122551285762928
+--- !u!135 &1946704051506166377
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 7418561033625509301}
   - component: {fileID: 1648642859128860846}
   - component: {fileID: 1332925646222237860}
-  - component: {fileID: 6533111789835612320}
+  - component: {fileID: 7457061964057309991}
   m_Layer: 0
   m_Name: Body3Framed
   m_TagString: DronParent
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 379f4686a18ff9549ad4805b71f437c4, type: 2}
---- !u!114 &6533111789835612320
+--- !u!114 &7457061964057309991
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -531,7 +531,7 @@ GameObject:
   - component: {fileID: 3890390661285846521}
   - component: {fileID: 295113196066107140}
   - component: {fileID: 1719017678678445488}
-  - component: {fileID: 4241071439893591964}
+  - component: {fileID: 4073227056518453520}
   m_Layer: 0
   m_Name: EngineSocket1OK (4)
   m_TagString: Untagged
@@ -623,7 +623,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &4241071439893591964
+--- !u!135 &4073227056518453520
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -686,7 +686,7 @@ GameObject:
   - component: {fileID: 8317860826027405510}
   - component: {fileID: 6867442794947144710}
   - component: {fileID: 7664031667079568381}
-  - component: {fileID: 7951651984827254185}
+  - component: {fileID: 6911391288420654500}
   m_Layer: 0
   m_Name: EngineSocket1OK (3)
   m_TagString: Untagged
@@ -778,7 +778,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &7951651984827254185
+--- !u!135 &6911391288420654500
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -810,7 +810,7 @@ GameObject:
   - component: {fileID: 5103076543704492955}
   - component: {fileID: 1520475311240241285}
   - component: {fileID: 2920708549253052618}
-  - component: {fileID: 5429274846987319738}
+  - component: {fileID: 1432705853331011140}
   m_Layer: 0
   m_Name: NewParts_BatterySocket
   m_TagString: Untagged
@@ -901,7 +901,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &5429274846987319738
+--- !u!135 &1432705853331011140
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1314,7 +1314,7 @@ GameObject:
   - component: {fileID: 5616804108819139287}
   - component: {fileID: 580288352304946721}
   - component: {fileID: 7153155520469190475}
-  - component: {fileID: 3646633097671099263}
+  - component: {fileID: 8478978984095100005}
   m_Layer: 0
   m_Name: EngineSocket1OK (7)
   m_TagString: Untagged
@@ -1406,7 +1406,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &3646633097671099263
+--- !u!135 &8478978984095100005
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1845,7 +1845,7 @@ GameObject:
   - component: {fileID: 1313671332974882557}
   - component: {fileID: 2158555442257018244}
   - component: {fileID: 155567460593510092}
-  - component: {fileID: 6111714405738241920}
+  - component: {fileID: 1449226973813127203}
   m_Layer: 0
   m_Name: SocketElectronicPlate
   m_TagString: Untagged
@@ -1936,7 +1936,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &6111714405738241920
+--- !u!135 &1449226973813127203
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1968,7 +1968,7 @@ GameObject:
   - component: {fileID: 4041268085464019082}
   - component: {fileID: 9185080886440839696}
   - component: {fileID: 839795897595676025}
-  - component: {fileID: 5796102210861518680}
+  - component: {fileID: 7370266200103362481}
   m_Layer: 0
   m_Name: EngineSocket1OK (1)
   m_TagString: Untagged
@@ -2060,7 +2060,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &5796102210861518680
+--- !u!135 &7370266200103362481
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2289,7 +2289,7 @@ GameObject:
   - component: {fileID: 7405950187998353637}
   - component: {fileID: 8758015809447951639}
   - component: {fileID: 2520766540319042786}
-  - component: {fileID: 7549119395582176042}
+  - component: {fileID: 4734385406168329641}
   m_Layer: 0
   m_Name: EngineSocket1OK (5)
   m_TagString: Untagged
@@ -2381,7 +2381,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &7549119395582176042
+--- !u!135 &4734385406168329641
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2603,7 +2603,7 @@ GameObject:
   - component: {fileID: 4773978566989133957}
   - component: {fileID: 6371910814242161449}
   - component: {fileID: 7311940661966346738}
-  - component: {fileID: 6182359373578497962}
+  - component: {fileID: 4077521332019107927}
   m_Layer: 0
   m_Name: EngineSocket1OK (2)
   m_TagString: Untagged
@@ -2695,7 +2695,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &6182359373578497962
+--- !u!135 &4077521332019107927
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3129,7 +3129,7 @@ GameObject:
   - component: {fileID: 7377757396328768404}
   - component: {fileID: 7822957293466041870}
   - component: {fileID: 1512977585837727569}
-  - component: {fileID: 8067684072259338186}
+  - component: {fileID: 1046470434394977283}
   m_Layer: 0
   m_Name: NewParts_LegsSocket
   m_TagString: Untagged
@@ -3220,7 +3220,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &8067684072259338186
+--- !u!135 &1046470434394977283
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3379,7 +3379,7 @@ GameObject:
   - component: {fileID: 8594292300353703223}
   - component: {fileID: 3916871294527175213}
   - component: {fileID: 1431984958951759981}
-  - component: {fileID: 3026369541194588927}
+  - component: {fileID: 5784261771061804299}
   m_Layer: 0
   m_Name: EngineSocket1OK (8)
   m_TagString: Untagged
@@ -3471,7 +3471,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &3026369541194588927
+--- !u!135 &5784261771061804299
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3712,6 +3712,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &9206709791418737120
 GameObject:
   m_ObjectHideFlags: 0

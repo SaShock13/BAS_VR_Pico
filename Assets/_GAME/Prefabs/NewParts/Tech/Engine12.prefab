@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 4114675212211820467}
   - component: {fileID: 3402729167237745510}
   - component: {fileID: 6591649284435966666}
-  - component: {fileID: 2131632026118267616}
+  - component: {fileID: 3359388975056858442}
   m_Layer: 0
   m_Name: NewParts_PropellerSocket
   m_TagString: Untagged
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &2131632026118267616
+--- !u!135 &3359388975056858442
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 1099949556829074432}
   - component: {fileID: 186683830444624530}
   - component: {fileID: 5668716584808086297}
-  - component: {fileID: 5477999351446628843}
+  - component: {fileID: 5832924222742827618}
   m_Layer: 0
   m_Name: Engine12
   m_TagString: Untagged
@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 1192dc1481b6635448b333a4ea6f81da, type: 2}
---- !u!114 &5477999351446628843
+--- !u!114 &5832924222742827618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -533,6 +533,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &7799756924685389918
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,7 +691,7 @@ GameObject:
   - component: {fileID: 744242307959785824}
   - component: {fileID: 5443423824100316795}
   - component: {fileID: 8350992457052108742}
-  - component: {fileID: 2774678037913523780}
+  - component: {fileID: 7298253783321308537}
   m_Layer: 0
   m_Name: EngineSocket1OK (4)
   m_TagString: Untagged
@@ -780,7 +783,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &2774678037913523780
+--- !u!135 &7298253783321308537
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -136,6 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &2603707312135694215
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +235,7 @@ GameObject:
   - component: {fileID: 5033182204803813316}
   - component: {fileID: 1900447773634621293}
   - component: {fileID: 727268528079025373}
-  - component: {fileID: 5161462390001629752}
+  - component: {fileID: 6749558690761551600}
   m_Layer: 0
   m_Name: D11Legs
   m_TagString: Untagged
@@ -297,7 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 6b95fcb95c32d1d49ba6dff101529465, type: 2}
---- !u!114 &5161462390001629752
+--- !u!114 &6749558690761551600
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

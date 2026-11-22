@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 907684431593679506}
   - component: {fileID: 5423486799636336209}
   - component: {fileID: 6539204946577977974}
-  - component: {fileID: 1636888932133485142}
+  - component: {fileID: 5668457197872558548}
   m_Layer: 0
   m_Name: Gears4 4
   m_TagString: Untagged
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 56756f833ec891e42ab68cecbef1523f, type: 2}
---- !u!114 &1636888932133485142
+--- !u!114 &5668457197872558548
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -394,3 +394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}

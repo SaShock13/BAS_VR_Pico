@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2019274108654434304}
   - component: {fileID: 5090976584651876907}
   - component: {fileID: 3623999137314405068}
-  - component: {fileID: 7036953214213766430}
+  - component: {fileID: 3250286214237615907}
   m_Layer: 0
   m_Name: Drone4Propeller
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 4c4667c5e8d049946870dc1e6b859913, type: 2}
---- !u!114 &7036953214213766430
+--- !u!114 &3250286214237615907
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -282,6 +282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &6649668613838743601
 GameObject:
   m_ObjectHideFlags: 0

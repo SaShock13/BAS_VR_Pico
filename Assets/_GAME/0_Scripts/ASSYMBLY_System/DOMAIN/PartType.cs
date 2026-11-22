@@ -8,5 +8,15 @@
     FlyController,
     Battery,
     Camera,
-    Antenna
+    Antenna,
+    BottomPlate,
+    TopPlate,
+    UnderPlate,
+    Arm,
+    Esc,
+    RadioReceiverWithAntenna,
+    VideoUnit,
+    VideoAntenna,
+    FrameStandoff,
+    GpsModule
 }

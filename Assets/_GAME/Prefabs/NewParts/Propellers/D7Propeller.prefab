@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4483905407397792167}
   - component: {fileID: 4461504692723955926}
   - component: {fileID: 93665817708909416}
-  - component: {fileID: 3824982172008612083}
+  - component: {fileID: 6881210572014307748}
   m_Layer: 0
   m_Name: D7Propeller
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: df1d757416f9ed241830f1c782416511, type: 2}
---- !u!114 &3824982172008612083
+--- !u!114 &6881210572014307748
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -394,3 +394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}

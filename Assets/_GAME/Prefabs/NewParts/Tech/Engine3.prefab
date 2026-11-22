@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 3505095548192610438}
   - component: {fileID: 8432956932948837653}
   - component: {fileID: 477154877740292310}
-  - component: {fileID: 3033346088796252852}
+  - component: {fileID: 5120235290152404202}
   m_Layer: 0
   m_Name: Engine3
   m_TagString: Untagged
@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 93c22e51df3e276449456358dfb0f053, type: 2}
---- !u!114 &3033346088796252852
+--- !u!114 &5120235290152404202
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -612,6 +612,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &9045470657002292120
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,7 +626,7 @@ GameObject:
   - component: {fileID: 7308637189055388975}
   - component: {fileID: 7642527059175626977}
   - component: {fileID: 3443250087794062142}
-  - component: {fileID: 3453267780344464979}
+  - component: {fileID: 6366059711765775031}
   m_Layer: 0
   m_Name: PropellerSocket
   m_TagString: Untagged
@@ -715,7 +718,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!135 &3453267780344464979
+--- !u!135 &6366059711765775031
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

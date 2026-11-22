@@ -96,6 +96,15 @@ public static class NewPartsMigration
 
     private static PartType InferType(string path)
     {
+        var folders = Path.GetDirectoryName(path.Substring(Root.Length + 1))
+            .Split(new[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
+        for (int i = folders.Length - 1; i >= 0; i--)
+        {
+            if (Enum.TryParse(folders[i], true, out PartType type) &&
+                string.Equals(folders[i], Enum.GetName(typeof(PartType), type), StringComparison.OrdinalIgnoreCase))
+                return type;
+        }
+
         if (path.Contains("/Bodies/")) return PartType.Body;
         if (path.Contains("/Rays/") || Path.GetFileName(path).StartsWith("D7Rays")) return PartType.Rays;
         if (path.Contains("/Legs/") || Path.GetFileName(path).StartsWith("Gears")) return PartType.Legs;
@@ -240,6 +249,7 @@ public static class NewPartsMigration
         if (name.StartsWith("NewParts_", StringComparison.Ordinal) && name.EndsWith("Socket", StringComparison.Ordinal) &&
             Enum.TryParse(name.Substring(9, name.Length - 15), out PartType generatedType)) return generatedType;
         if (name.StartsWith("EngineSocket") || name.StartsWith("MotorSocket")) return PartType.Motor;
+        if (name.StartsWith("ArmSocket", StringComparison.Ordinal)) return PartType.Arm;
         if (name.StartsWith("PropellerSocket")) return PartType.Propeller;
         if (name.StartsWith("SocketElectronicPlate") || name.StartsWith("ControllerSocket")) return PartType.FlyController;
         if (name.StartsWith("BatterySocket")) return PartType.Battery;
@@ -278,7 +288,9 @@ public static class NewPartsMigration
             var view = target.GetComponent<SocketView>() ?? target.gameObject.AddComponent<SocketView>();
             var data = new SerializedObject(view);
             var id = data.FindProperty("_socketId");
-            if (string.IsNullOrWhiteSpace(id.stringValue) || !usedIds.Add(id.stringValue))
+            bool legacyArmId = anchor.type == PartType.Arm &&
+                id.stringValue.StartsWith("mount/Motor/", StringComparison.Ordinal);
+            if (legacyArmId || string.IsNullOrWhiteSpace(id.stringValue) || !usedIds.Add(id.stringValue))
             {
                 do { id.stringValue = "mount/" + anchor.type + "/" + index++; } while (!usedIds.Add(id.stringValue));
             }

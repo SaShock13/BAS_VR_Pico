@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16f6ff99ba2a43f4295bfe1a15924934, type: 3}
+  m_Name: BFM MT1804 2480KVConfig
+  m_EditorClassIdentifier: Assembly-CSharp::MotorConfig
+  PartId: newparts/Motor/BFM MT1804 2480KV
+  LegacyPartIds: []
+  PartType: 2
+  HasConstantMaterial: 1
+  Prefab: {fileID: 7125468080505302888, guid: 692d637561f94824e9793df292931742, type: 3}
+  PrefabAddress: Parts/Motor/BFM MT1804 2480KV
+  Mass: 1
+  LocalCenterOfMass: {x: 0.0000009347258, y: 0.0056972983, z: -0.000002330169}
+  MaxThrust: 18
+  ResponseSpeed: 18
+  RotationDirection: 0
+  MaxRPM: 42000
+  MixData:
+    PitchFactor: -1
+    RollFactor: -1
+    YawFactor: 1
+  IdleCurrent: 1.2
+  MaxCurrent: 40

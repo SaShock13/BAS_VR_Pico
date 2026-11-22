@@ -134,6 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &2484110564125304100
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +288,7 @@ GameObject:
   - component: {fileID: 2325766342918374126}
   - component: {fileID: 6941954077822107888}
   - component: {fileID: 2378319748873676124}
-  - component: {fileID: 4482707058146756200}
+  - component: {fileID: 348175529413816262}
   m_Layer: 0
   m_Name: Drone2Legs
   m_TagString: Untagged
@@ -350,7 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: f9b63cbf1f30c4f438f748b32ed8b0fd, type: 2}
---- !u!114 &4482707058146756200
+--- !u!114 &348175529413816262
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1111658595877177694}
   - component: {fileID: 151492511918938750}
   - component: {fileID: 1698371476240368370}
-  - component: {fileID: 3590428441283316659}
+  - component: {fileID: 8806571929267076872}
   m_Layer: 0
   m_Name: Legs5
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: b5d6932075ad40442887d712d443b55e, type: 2}
---- !u!114 &3590428441283316659
+--- !u!114 &8806571929267076872
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -434,6 +434,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &4611002531056565637
 GameObject:
   m_ObjectHideFlags: 0

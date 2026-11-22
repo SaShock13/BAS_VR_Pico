@@ -106,6 +106,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &4546884711515559031
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +233,7 @@ GameObject:
   - component: {fileID: 7903775868332177789}
   - component: {fileID: 938433891245181698}
   - component: {fileID: 7256833923513621541}
-  - component: {fileID: 5581747682442720232}
+  - component: {fileID: 1074211298288703151}
   m_Layer: 0
   m_Name: D11Propeller
   m_TagString: Untagged
@@ -295,7 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 5e3472f043b47dc4c92d24e9dd49278d, type: 2}
---- !u!114 &5581747682442720232
+--- !u!114 &1074211298288703151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

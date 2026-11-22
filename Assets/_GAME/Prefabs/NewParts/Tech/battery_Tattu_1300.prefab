@@ -165,6 +165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &4880816662616470325
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,7 +481,7 @@ GameObject:
   - component: {fileID: 7865895251465963167}
   - component: {fileID: 8357380763205776872}
   - component: {fileID: 5405134387028678804}
-  - component: {fileID: 3006020778616060367}
+  - component: {fileID: 5611340054493260741}
   m_Layer: 0
   m_Name: battery_Tattu_1300
   m_TagString: Untagged
@@ -564,7 +567,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.104948774, y: 0.09105688, z: 0.28599998}
   m_Center: {x: 0.0120744, y: 0.0015703477, z: 0}
---- !u!114 &3006020778616060367
+--- !u!114 &5611340054493260741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

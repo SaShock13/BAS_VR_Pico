@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9da6088af571f479c78034e5a6e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CenterOfMassMarker
+  ShowCOM: 1
+  COMSize: 0.03
+  meshRoot: {fileID: 0}
 --- !u!1 &3204735663152225545
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +234,7 @@ GameObject:
   - component: {fileID: 7083103465999817599}
   - component: {fileID: 2813216876843029574}
   - component: {fileID: 4448679697537180781}
-  - component: {fileID: 6472879728179725717}
+  - component: {fileID: 7801189745745463975}
   m_Layer: 0
   m_Name: Gears1 4
   m_TagString: Untagged
@@ -296,7 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartViewConfigLink
   Config: {fileID: 11400000, guid: 218187bbc9ab6c04aa0c258ae668dfe5, type: 2}
---- !u!114 &6472879728179725717
+--- !u!114 &7801189745745463975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
