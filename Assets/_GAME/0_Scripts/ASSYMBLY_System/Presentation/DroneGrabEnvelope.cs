@@ -1,6 +1,7 @@
 using UnityEngine;
 
-// Uses the frame's existing broad collider; no extra physics shape or runtime tick.
+// Retains legacy collider references. Assembly routing fits this shape to its own part,
+// while flight can restore the authored shape. No extra physics shape or runtime tick.
 public sealed class DroneGrabEnvelope : MonoBehaviour
 {
     [SerializeField] private BoxCollider mainCollider;

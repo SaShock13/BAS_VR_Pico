@@ -138,13 +138,13 @@ public class GarageSceneBootstrap : MonoBehaviour
 
     private void OnHoverExit(HoverExitEventArgs arg0)
     {
-        _highlightService.Exit();
+        _highlightService.Exit(arg0.interactorObject);
     }
 
     private void OnHoverEnter(HoverEnterEventArgs arg0)
     {
         var view = arg0.interactableObject.transform.GetComponent<DronePartView>();
-        _highlightService.Enter(view);
+        _highlightService.Enter(view, arg0.interactorObject);
     }
 
     private void OnDisable()
@@ -156,6 +156,7 @@ public class GarageSceneBootstrap : MonoBehaviour
             interactor.selectEntered.RemoveListener(OnSelectEntered);
             interactor.hoverEntered.RemoveListener(OnHoverEnter);
             interactor.hoverExited.RemoveListener(OnHoverExit);
+            _highlightService?.Exit(interactor);
         }
     }
 

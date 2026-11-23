@@ -209,8 +209,6 @@ public class SocketView : MountPoint
         if (_hoveredPart != null)
         {
             _hoveredPart.RemoveHoveredSocket(this);
-            if (_hoveredPart.TryGetComponent<XRGrabInteractable>(out var grab))
-                grab.selectExited.RemoveListener(OnPartReleased);
         }
 
         _previewSystem?.HidePreview();
@@ -247,8 +245,6 @@ public class SocketView : MountPoint
         if (_hoveredPart != null)
         {
             _hoveredPart.RemoveHoveredSocket(this);
-            if (_hoveredPart.TryGetComponent<XRGrabInteractable>(out var previousGrab))
-                previousGrab.selectExited.RemoveListener(OnPartReleased);
         }
 
         _hoveredPart = part;
@@ -266,13 +262,6 @@ public class SocketView : MountPoint
             _isValidHover);
         _previewSystem.SetVisible(!part.HasZoneCandidate);
 
-        XRGrabInteractable grab =
-            part.GetComponent<XRGrabInteractable>();
-
-        if (grab != null)
-        {
-            grab.selectExited.AddListener(OnPartReleased);
-        }
     }
 
     private void OnHoverExited(
@@ -285,17 +274,11 @@ public class SocketView : MountPoint
         if (part == null)
             return;
 
-        XRGrabInteractable grab =
-            part.GetComponent<XRGrabInteractable>();
-
-        if (grab != null)
-        {
-            grab.selectExited.RemoveListener(OnPartReleased);
-        }
-
         if (_hoveredPart == part)
         {
-            part.RemoveHoveredSocket(this);
+            // XR may end hover while delivering the last hand's release. Keep the candidate
+            // for DronePartView.OnReleased, which rechecks proximity and compatibility.
+            if (part.IsGrabbed) part.RemoveHoveredSocket(this);
             _hoveredPart = null;
         }
 
@@ -303,47 +286,24 @@ public class SocketView : MountPoint
             _previewSystem.HidePreview();
     }
 
-    private void OnPartReleased(
-        SelectExitEventArgs args)
+    internal bool CanAttachOnRelease(DronePartView part)
     {
-        if (_hoveredPart == null)
-            return;
+        return part != null && isActiveAndEnabled && AttachPoint != null &&
+            _eventBus != null && _assemblySystem != null &&
+            (!(_socketInteractor is HoverOnlySocketInteractor mountInteractor) ||
+                mountInteractor.IsMountCandidate(part.transform)) &&
+            _assemblySystem.CanAttach(part.InstanceId, this);
+    }
 
-        if (args.isCanceled || _hoveredPart.IsGrabbed ||
-            _hoveredPart.ZoneHandledRelease || _hoveredPart.HasZoneCandidate)
+    internal void AttachOnRelease(DronePartView part)
+    {
+        _eventBus.Publish(new PartSocketAttachRequest
         {
-            _previewSystem.HidePreview();
-            return;
-        }
-
-        if (!_assemblySystem.CanAttach(_hoveredPart.InstanceId, this))
-        {
-            Debug.Log("INVALID ATTACH");
-
-            _previewSystem.HidePreview();
-
-            return;
-        }
-
-
-        _parentView = GetComponentInParent<DronePartView>();
-        var parentPartId = ParentView.InstanceId;
-        var childPartId = _hoveredPart.GetComponent<DronePartView>().InstanceId;
-        var socketId = SocketId;
-
-        // запрос на аттач
-        _eventBus.Publish(new PartSocketAttachRequest { PartInstanceId = childPartId, AttachedPartId = parentPartId, AttachedSocketId = socketId, Timestamp = DateTime.Now });
-
-
-        //bool success =
-        //    _assemblySystem.TryAttach(
-        //        _socketId,
-        //        _hoveredPart.InstanceId);
-
-        //if (success)
-        //{
-            
-        //}
+            PartInstanceId = part.InstanceId,
+            AttachedPartId = Owner.InstanceId,
+            AttachedSocketId = SocketId,
+            Timestamp = DateTime.UtcNow
+        });
     }
 
     internal void SetPreviewVisible(bool visible) => _previewSystem?.SetVisible(visible);

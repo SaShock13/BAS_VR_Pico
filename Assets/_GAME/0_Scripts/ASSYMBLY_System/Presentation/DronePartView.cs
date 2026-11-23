@@ -16,6 +16,7 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
     private bool _partInteractionAllowed = true;
     public bool canProcess => isActiveAndEnabled;
     public bool IsGrabbed => _interactable != null && _interactable.isSelected;
+    public XRGrabInteractable GrabInteractable => _interactable;
     public DroneGrabEnvelope GrabEnvelope { get; private set; }
 
     public bool Process(IXRHoverInteractor interactor, IXRHoverInteractable interactable) => _partInteractionAllowed;
@@ -215,6 +216,7 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
 
     private void OnGrab(SelectEnterEventArgs arg0)
     {
+        _hoveredSockets.Clear();
         ZoneHandledRelease = false;
         _previousZone = transform.parent != null ? transform.parent.GetComponent<MountingZoneView>() : null;
         _previousZonePosition = transform.localPosition;
@@ -242,6 +244,24 @@ public class DronePartView : MonoBehaviour,IHighlightable, IXRHoverFilter, IXRSe
         {
             RequestZonePlacement(_previousZone, true);
         }
+        else if (!arg0.isCanceled)
+        {
+            // Resolve the previewed socket before transform notifications can rebuild XR routing.
+            // A per-socket selectExited listener can lose its candidate during that rebuild.
+            SocketView bestSocket = null;
+            float closest = float.PositiveInfinity;
+            foreach (var socket in _hoveredSockets)
+            {
+                if (socket == null || !socket.CanAttachOnRelease(this)) continue;
+                float distance = (transform.position - socket.AttachPoint.position).sqrMagnitude;
+                if (distance >= closest) continue;
+                closest = distance;
+                bestSocket = socket;
+            }
+            if (bestSocket != null) bestSocket.AttachOnRelease(this);
+        }
+        SetSocketPreviewsVisible(false);
+        _hoveredSockets.Clear();
         _previousZone = null;
         ClearZonePreview();
 

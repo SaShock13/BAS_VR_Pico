@@ -304,10 +304,16 @@ public static class NewPartsMigration
             interactor.interactionLayers = -1;
             interactor.attachTransform = attach;
             interactor.showInteractableHoverMeshes = false;
-            foreach (var old in target.GetComponents<Collider>()) UnityEngine.Object.DestroyImmediate(old);
-            var trigger = target.gameObject.AddComponent<SphereCollider>();
-            trigger.isTrigger = true;
-            trigger.radius = 0.1f / Mathf.Max(0.001f, Mathf.Abs(target.lossyScale.x), Mathf.Abs(target.lossyScale.y), Mathf.Abs(target.lossyScale.z));
+            // Keep authored shapes, dimensions and references (including mount-proximity regions).
+            // Migration must not replace tuned sockets with overlapping 10 cm spheres.
+            var triggers = target.GetComponents<Collider>().Where(c => c.isTrigger).ToArray();
+            if (triggers.Length == 0)
+            {
+                var trigger = target.gameObject.AddComponent<SphereCollider>();
+                trigger.isTrigger = true;
+                float worldRadius = Mathf.Clamp(Mathf.Min(bounds.size.x, bounds.size.z) * 0.15f, 0.006f, 0.02f);
+                trigger.radius = worldRadius / Mathf.Max(0.001f, Mathf.Abs(target.lossyScale.x), Mathf.Abs(target.lossyScale.y), Mathf.Abs(target.lossyScale.z));
+            }
             data.FindProperty("_socketInteractor").objectReferenceValue = interactor;
             data.FindProperty("_previewAnchor").objectReferenceValue = attach;
             data.ApplyModifiedPropertiesWithoutUndo();

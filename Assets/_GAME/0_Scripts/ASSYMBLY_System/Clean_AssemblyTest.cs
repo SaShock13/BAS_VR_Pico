@@ -139,6 +139,15 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     private void OnDisable()
     {
+        foreach (var interactor in _interactors)
+        {
+            if (interactor == null) continue;
+            interactor.selectEntered.RemoveListener(OnSelectEntered);
+            interactor.selectExited.RemoveListener(OnSelectExited);
+            interactor.hoverEntered.RemoveListener(OnHoverEnter);
+            interactor.hoverExited.RemoveListener(OnHoverExit);
+            _highlightService?.Exit(interactor);
+        }
         leftTriggerAction.action.performed -= OnLeftTrigger;
         rightTriggerAction.action.performed -= OnRightTrigger;
     }
@@ -192,7 +201,7 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     private void OnHoverExit(HoverExitEventArgs arg0)
     {
-        _highlightService.Exit();
+        _highlightService.Exit(arg0.interactorObject);
     }
 
 
@@ -237,7 +246,7 @@ public class Clean_AssemblyTest : MonoBehaviour
             return;
         }
 
-        _highlightService.Enter(view);
+        _highlightService.Enter(view, arg0.interactorObject);
     }
 
     private void OnSelectExited(SelectExitEventArgs args)

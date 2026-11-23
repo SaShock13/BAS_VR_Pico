@@ -493,6 +493,8 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 9060470072153669173}
+  _mountCompetitors: []
 --- !u!135 &9060470072153669173
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -512,7 +514,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.16851893
+  m_Radius: 0.02527784
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5335460047888534447
 GameObject:
@@ -643,8 +645,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.14426629, y: 0.0077781677, z: 0.028311253}
-  m_Center: {x: 0.058501594, y: 0.0024797916, z: -0.0022318363}
+  m_Size: {x: 0.14357877, y: 0.0060000047, z: 0.029149314}
+  m_Center: {x: 0.05926389, y: -0.0025000004, z: -0.0020492822}
 --- !u!114 &1560487543261636567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,6 +880,8 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 6081628795777205646}
+  _mountCompetitors: []
 --- !u!135 &6081628795777205646
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -897,5 +901,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.02
+  m_Radius: 0.015
   m_Center: {x: 0, y: 0, z: 0}

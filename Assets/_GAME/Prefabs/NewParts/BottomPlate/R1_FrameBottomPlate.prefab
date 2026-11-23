@@ -249,7 +249,7 @@ Transform:
   m_GameObject: {fileID: 1183972312917400420}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.258819, z: 0, w: 0.9659259}
-  m_LocalPosition: {x: 0.0123, y: -0.0033, z: -0.0049}
+  m_LocalPosition: {x: 0.0123, y: 0, z: -0.0049}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -324,6 +324,15 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 2232043868958002526}
+  _mountCompetitors:
+  - {fileID: 4047515607367765285}
+  - {fileID: 2492455753067547472}
+  - {fileID: 6410196787447275058}
+  - {fileID: 5171706088803265306}
+  - {fileID: 5385934419483465322}
+  - {fileID: 6514957378664015183}
+  - {fileID: 4043348261777325333}
 --- !u!135 &2232043868958002526
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -343,7 +352,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.018
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1201598687646249558
 GameObject:
@@ -479,6 +488,8 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 8962770341026906639}
+  _mountCompetitors: []
 --- !u!135 &8962770341026906639
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -498,7 +509,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1685189
+  m_Radius: 0.025277834
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1266185061080120340
 GameObject:
@@ -618,7 +629,7 @@ Transform:
   m_GameObject: {fileID: 1615535866757568322}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -691,7 +702,7 @@ Transform:
   m_GameObject: {fileID: 1747924233496668256}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.9659258, z: 0, w: 0.2588191}
-  m_LocalPosition: {x: -0.0183, y: -0.0033, z: -0.005}
+  m_LocalPosition: {x: -0.0183, y: 0, z: -0.005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -766,6 +777,15 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 389322603299825689}
+  _mountCompetitors:
+  - {fileID: 4047515607367765285}
+  - {fileID: 2492455753067547472}
+  - {fileID: 6410196787447275058}
+  - {fileID: 6224614249866536097}
+  - {fileID: 5385934419483465322}
+  - {fileID: 6514957378664015183}
+  - {fileID: 4043348261777325333}
 --- !u!135 &389322603299825689
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -785,7 +805,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.018
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1944151928548896083
 GameObject:
@@ -846,7 +866,7 @@ Transform:
   m_GameObject: {fileID: 2196471738489043741}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0.0132, y: -0.0033, z: -0.0572}
+  m_LocalPosition: {x: 0.0132, y: 0, z: -0.0572}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -921,6 +941,15 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 3273997573665066306}
+  _mountCompetitors:
+  - {fileID: 4047515607367765285}
+  - {fileID: 2492455753067547472}
+  - {fileID: 6410196787447275058}
+  - {fileID: 6224614249866536097}
+  - {fileID: 5171706088803265306}
+  - {fileID: 5385934419483465322}
+  - {fileID: 6514957378664015183}
 --- !u!135 &3273997573665066306
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -940,7 +969,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.018
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2237618059652147558
 GameObject:
@@ -973,6 +1002,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6259767245452352500}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2272963267856047453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9149390956428163049}
+  m_Layer: 0
+  m_Name: NewPartsAttachPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9149390956428163049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2272963267856047453}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8319848802057981499}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2374956296630688970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,7 +1061,7 @@ Transform:
   m_GameObject: {fileID: 2374956296630688970}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.0188, y: -0.0033, z: -0.0202}
+  m_LocalPosition: {x: -0.0188, y: 0, z: -0.0202}
   m_LocalScale: {x: 1, y: 1, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1076,6 +1136,15 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 8544706575730813}
+  _mountCompetitors:
+  - {fileID: 4047515607367765285}
+  - {fileID: 2492455753067547472}
+  - {fileID: 6410196787447275058}
+  - {fileID: 6224614249866536097}
+  - {fileID: 5171706088803265306}
+  - {fileID: 6514957378664015183}
+  - {fileID: 4043348261777325333}
 --- !u!135 &8544706575730813
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1095,7 +1164,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.018
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2607803831738161444
 GameObject:
@@ -1132,6 +1201,7 @@ Transform:
   - {fileID: 4002409996025181487}
   - {fileID: 1380101751900966955}
   - {fileID: 8363721138324922645}
+  - {fileID: 8319848802057981499}
   m_Father: {fileID: 8861306379477659369}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2697856316467437902
@@ -1237,6 +1307,11 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 6083576860741344383}
+  _mountCompetitors:
+  - {fileID: 241485527404571675}
+  - {fileID: 4218310597019871878}
+  - {fileID: 2086884076434165517}
 --- !u!135 &6083576860741344383
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1256,7 +1331,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.16851893
+  m_Radius: 0.02527784
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2755957554037930427
 GameObject:
@@ -1486,6 +1561,11 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 2121345548207313271}
+  _mountCompetitors:
+  - {fileID: 4218310597019871878}
+  - {fileID: 1513929771040632293}
+  - {fileID: 2086884076434165517}
 --- !u!135 &2121345548207313271
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1505,7 +1585,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.16851893
+  m_Radius: 0.02527784
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3506677375628039825
 GameObject:
@@ -1673,6 +1753,11 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 1784754634549039702}
+  _mountCompetitors:
+  - {fileID: 241485527404571675}
+  - {fileID: 4218310597019871878}
+  - {fileID: 1513929771040632293}
 --- !u!135 &1784754634549039702
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1692,7 +1777,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.16851893
+  m_Radius: 0.02527784
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3644247583634611149
 GameObject:
@@ -1827,6 +1912,9 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 8234436323322120686}
+  _mountCompetitors:
+  - {fileID: 2097168061649070402}
 --- !u!135 &8234436323322120686
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1846,7 +1934,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.02
+  m_Radius: 0.012
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3822199508202004673
 GameObject:
@@ -2134,6 +2222,9 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 2394212658256505399}
+  _mountCompetitors:
+  - {fileID: 6686923619744946400}
 --- !u!135 &2394212658256505399
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2153,7 +2244,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.02
+  m_Radius: 0.012
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4628987442535973598
 GameObject:
@@ -2214,7 +2305,7 @@ Transform:
   m_GameObject: {fileID: 4672951220996691349}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.9659258, z: 0, w: 0.2588191}
-  m_LocalPosition: {x: -0.0126, y: -0.0033, z: -0.043}
+  m_LocalPosition: {x: -0.0126, y: 0, z: -0.043}
   m_LocalScale: {x: 1, y: 1, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2289,6 +2380,15 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 6214937421845162806}
+  _mountCompetitors:
+  - {fileID: 4047515607367765285}
+  - {fileID: 2492455753067547472}
+  - {fileID: 6224614249866536097}
+  - {fileID: 5171706088803265306}
+  - {fileID: 5385934419483465322}
+  - {fileID: 6514957378664015183}
+  - {fileID: 4043348261777325333}
 --- !u!135 &6214937421845162806
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2308,7 +2408,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.018
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4687337291881653417
 GameObject:
@@ -2605,6 +2705,11 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 6525368523055745293}
+  _mountCompetitors:
+  - {fileID: 241485527404571675}
+  - {fileID: 1513929771040632293}
+  - {fileID: 2086884076434165517}
 --- !u!135 &6525368523055745293
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2624,8 +2729,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.16851893
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.02527784
+  m_Center: {x: 0.000000029802322, y: 0, z: 0}
 --- !u!1 &5287869199632959555
 GameObject:
   m_ObjectHideFlags: 0
@@ -2771,8 +2876,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.13188896, y: 0.19858384, z: 0.2277198}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.03154593, y: 0.008540262, z: 0.07689478}
+  m_Center: {x: 0, y: 0.000000003958121, z: 0.004352767}
 --- !u!1 &6106004573141724121
 GameObject:
   m_ObjectHideFlags: 0
@@ -3147,7 +3252,7 @@ Transform:
   m_GameObject: {fileID: 6476440812886653474}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0.0129, y: -0.0033, z: -0.0342}
+  m_LocalPosition: {x: 0.0129, y: 0, z: -0.0342}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3222,6 +3327,15 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 7958008556518755019}
+  _mountCompetitors:
+  - {fileID: 2492455753067547472}
+  - {fileID: 6410196787447275058}
+  - {fileID: 6224614249866536097}
+  - {fileID: 5171706088803265306}
+  - {fileID: 5385934419483465322}
+  - {fileID: 6514957378664015183}
+  - {fileID: 4043348261777325333}
 --- !u!135 &7958008556518755019
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3241,7 +3355,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.018
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6611008305213283368
 GameObject:
@@ -3271,7 +3385,7 @@ Transform:
   m_GameObject: {fileID: 6611008305213283368}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0121, y: -0.0033, z: -0.0115}
+  m_LocalPosition: {x: 0.0121, y: 0, z: -0.0115}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3346,6 +3460,15 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 6336402889603404242}
+  _mountCompetitors:
+  - {fileID: 4047515607367765285}
+  - {fileID: 6410196787447275058}
+  - {fileID: 6224614249866536097}
+  - {fileID: 5171706088803265306}
+  - {fileID: 5385934419483465322}
+  - {fileID: 6514957378664015183}
+  - {fileID: 4043348261777325333}
 --- !u!135 &6336402889603404242
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3365,7 +3488,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.018
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6699375154776310494
 GameObject:
@@ -3502,6 +3625,8 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 8913268200015454587}
+  _mountCompetitors: []
 --- !u!135 &8913268200015454587
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3521,7 +3646,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.02
+  m_Radius: 0.015
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7339901830622148809
 GameObject:
@@ -3649,6 +3774,131 @@ Transform:
   - {fileID: 8577663637187038040}
   m_Father: {fileID: 4438102546177268567}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8330251322918901439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8319848802057981499}
+  - component: {fileID: 821077664603773172}
+  - component: {fileID: 6940341520129003568}
+  - component: {fileID: 7784286524856373909}
+  m_Layer: 0
+  m_Name: UnderPlateSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8319848802057981499
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330251322918901439}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.006, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9149390956428163049}
+  m_Father: {fileID: 4752867695233422118}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &821077664603773172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330251322918901439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7644bec2d2f076348b035207c30e90bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SocketView
+  AllowedTypes: 0b000000
+  AttachPoint: {fileID: 9149390956428163049}
+  _socketInteractor: {fileID: 6940341520129003568}
+  _socketId: mount/UnderPlate/0
+  _previewAnchor: {fileID: 9149390956428163049}
+  _validPreviewMaterial: {fileID: 0}
+  _invalidPreviewMaterial: {fileID: 0}
+--- !u!114 &6940341520129003568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330251322918901439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6fe736eef8d9b4eb9486ab194b0bc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverOnlySocketInteractor
+  m_InteractionManager: {fileID: 0}
+  m_InteractionLayers:
+    m_Bits: 4294967295
+  m_Handedness: 0
+  m_AttachTransform: {fileID: 9149390956428163049}
+  m_KeepSelectedTargetValid: 1
+  m_DisableVisualsWhenBlockedInGroup: 1
+  m_StartingSelectedInteractable: {fileID: 0}
+  m_StartingTargetFilter: {fileID: 0}
+  m_AutoFindParentInteractableInHierarchy: 0
+  m_ParentInteractableObject: {fileID: 0}
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_ShowInteractableHoverMeshes: 0
+  m_InteractableHoverMeshMaterial: {fileID: 0}
+  m_InteractableCantHoverMeshMaterial: {fileID: 0}
+  m_SocketActive: 1
+  m_InteractableHoverScale: 1
+  m_RecycleDelayTime: 1
+  m_HoverSocketSnapping: 0
+  m_SocketSnappingRadius: 0.1
+  m_SocketScaleMode: 0
+  m_FixedScale: {x: 1, y: 1, z: 1}
+  m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 7784286524856373909}
+  _mountCompetitors: []
+--- !u!135 &7784286524856373909
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330251322918901439}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.015
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8532379593199856574
 GameObject:
   m_ObjectHideFlags: 0
@@ -3677,7 +3927,7 @@ Transform:
   m_GameObject: {fileID: 8532379593199856574}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.9659258, z: 0, w: 0.2588191}
-  m_LocalPosition: {x: -0.0147, y: -0.0033, z: -0.0608}
+  m_LocalPosition: {x: -0.0147, y: 0, z: -0.0608}
   m_LocalScale: {x: 1, y: 1, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3752,6 +4002,15 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  _mountProximityCollider: {fileID: 3802637079810801511}
+  _mountCompetitors:
+  - {fileID: 4047515607367765285}
+  - {fileID: 2492455753067547472}
+  - {fileID: 6410196787447275058}
+  - {fileID: 6224614249866536097}
+  - {fileID: 5171706088803265306}
+  - {fileID: 5385934419483465322}
+  - {fileID: 4043348261777325333}
 --- !u!135 &3802637079810801511
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3771,7 +4030,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.018
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8867220662373256766
 GameObject:
