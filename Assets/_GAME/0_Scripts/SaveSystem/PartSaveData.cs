@@ -11,6 +11,8 @@ public class PartSaveData
     public string AttachedZoneId;
     public string AttachedPartId;
     public PartVisualProperties VisualProperties;
+    public bool HasArmCoverOffset;
+    public float ArmCoverOffset;
 
     public TransformSaveData Transform;
 }

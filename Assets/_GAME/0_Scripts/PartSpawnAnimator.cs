@@ -24,6 +24,8 @@ public class PartSpawnAnimator : MonoBehaviour
     private Vector3 _targetPosition;
     private static readonly Dictionary<Transform, Vector3> TargetScales = new();
 
+    public static bool IsAnimating(Transform part) => TargetScales.ContainsKey(part);
+
     public static Vector3 GetStableLocalScale(Transform part) =>
         TargetScales.TryGetValue(part, out var scale) ? scale : part.localScale;
 

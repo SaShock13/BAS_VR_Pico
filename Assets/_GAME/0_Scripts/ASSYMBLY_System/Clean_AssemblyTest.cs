@@ -207,18 +207,18 @@ public class Clean_AssemblyTest : MonoBehaviour
 
     private void OnLeftTrigger(InputAction.CallbackContext ctx)
     {
-        TrySelect(_leftInteractor);
+        TrySelect(_leftInteractor, ControllerHand.Left);
     }
     
 
     private void OnRightTrigger(InputAction.CallbackContext ctx)
     {
-        TrySelect(_rightInteractor);
+        TrySelect(_rightInteractor, ControllerHand.Right);
     }
 
-    private void TrySelect(NearFarInteractor interactor)
+    private void TrySelect(NearFarInteractor interactor, ControllerHand hand)
     {
-        if (interactor.interactablesHovered.Count == 0)
+        if (interactor == null || interactor.interactablesHovered.Count == 0)
             return;
 
         var hovered = interactor.interactablesHovered[0];
@@ -232,6 +232,19 @@ public class Clean_AssemblyTest : MonoBehaviour
         Selection.Select(new SelectionTarget(
             SelectionType.Part,
             part.InstanceId));
+
+        _eventBus.Publish(new PlaySFXRequest
+        {
+            SFXId = SFXId.PartSelected,
+            Position = part.transform.position
+        });
+        _eventBus.Publish(new HapticFeedbackRequestedEvent
+        {
+            Hand = hand,
+            Amplitude = 0.15f,
+            Duration = 0.035f,
+            Timestamp = DateTime.UtcNow
+        });
     }
 
 

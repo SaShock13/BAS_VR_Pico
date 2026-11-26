@@ -25,6 +25,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0474e7465e4042a45ba534bdbb92bae4
+    m_Address: Parts/ArmCover/R2_Arm_Cover_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 04de7315ed04a2d409812b5aae822769
+    m_Address: Parts/MotorCover/MC_07_Double_Halo
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0e8a133dc54fa614bbaad563ebec7d92
     m_Address: Parts/Legs/Drone3Legs
     m_ReadOnly: 0
@@ -62,6 +72,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1dff7c461499f8042be38db140836059
     m_Address: Parts/Propellers/PROP_HQProp_35x28x3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ef0b596606ebfc4ba43481380e78ad1
+    m_Address: Parts/ArmCover/R2_Arm_Cover_1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -105,6 +120,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 325a6bfba25eb9a4993d7ec17d37c951
+    m_Address: Parts/MotorCover/MC_01_Low_Bumper
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35b4ffd28611e4240a129e3d75a1b91e
+    m_Address: Parts/ArmCover/R2_Arm_Cover_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3632035f72af4c745bf0bb2f2ffd2177
     m_Address: Parts/Bodies/D6Body
     m_ReadOnly: 0
@@ -130,13 +155,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f2f22c8865d56e4ebd6d9a31b055a0c
+    m_Address: Parts/MotorCover/MC_09_Louver_Cage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ff5b8a0712b70c4aa5ac1b8821cf200
     m_Address: Parts/Tech/Engine2
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 407505a4872405b41bc8cce21a32294f
+    m_Address: Parts/MotorCover/MC_06_Hex_Bumper
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 41b2abb6eacca74418b869e75c991102
     m_Address: Parts/Propellers/D11Propeller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 421a1d335d61e514d830fa2921fef1dc
+    m_Address: Parts/MotorCover/MC_03_Faceted_Vented
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -265,6 +305,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b6513ae73381a545b9bd31bb12a1e84
+    m_Address: Parts/ArmCover/R2_Arm_Cover_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7da98bb0cd06ded4bb5be20a39a60fb4
     m_Address: Parts/Bodies/DRONE1_Body
     m_ReadOnly: 0
@@ -275,6 +320,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 80e80b7c39260c6439e4fc6c8d711150
+    m_Address: Parts/MotorCover/MC_10_Twin_Skid
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 88eed3d23af221f44805dd8036877de2
     m_Address: Parts/Tech/battery_Tattu_1300
     m_ReadOnly: 0
@@ -282,6 +332,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 89b673cb0e1fbe044a1b4abd7076a97f
     m_Address: Parts/Propellers/PROP_HQProp_6x35x3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89c1d4c389700b6409633102a67b6083
+    m_Address: Parts/MotorCover/MC_08_Petal_Armor
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -307,6 +362,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 948871906df263a4fa578f6bc2e31c97
     m_Address: Parts/Arm/R2_Frame_Arm_12in
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 992a0a741548da1499ce0dd20b50ddab
+    m_Address: Parts/MotorCover/MC_02_Open_Roll_Cage
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -370,6 +430,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bdb1343cf59d4514e8e0ad9b3f8b6bd7
+    m_Address: Parts/MotorCover/MC_04_Crescent_Shield
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c01b0ffc02d3d8e4cba14befe7dae3df
     m_Address: Parts/Propellers/PROP_HQProp_5x45x3_V2
     m_ReadOnly: 0
@@ -390,6 +455,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c6e35de7b7072cd4ab2ec627262c8893
+    m_Address: Parts/MotorCover/MC_05_Turbine_Decor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c81383c1071faad4a99be20ba3eb1374
     m_Address: Parts/D7Rays 1
     m_ReadOnly: 0
@@ -407,6 +477,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cba791fee8c468544b631b2132e5f876
     m_Address: Parts/Propellers/PROP_Gemfan_7040
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf5cb211d57f15e4bac84b506876c8c0
+    m_Address: Parts/ArmCover/R2_Arm_Cover_5
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

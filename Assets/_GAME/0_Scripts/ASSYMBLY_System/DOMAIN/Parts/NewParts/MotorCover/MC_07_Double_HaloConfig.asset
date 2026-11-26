@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ed0de78d734a3408861cd23a1dfe4f, type: 3}
+  m_Name: MC_07_Double_HaloConfig
+  m_EditorClassIdentifier: Assembly-CSharp::PartConfig
+  PartId: newparts/MotorCover/MC_07_Double_Halo
+  LegacyPartIds: []
+  PartType: 20
+  HasConstantMaterial: 0
+  Prefab: {fileID: 3263266597193531127, guid: 04de7315ed04a2d409812b5aae822769, type: 3}
+  PrefabAddress: Parts/MotorCover/MC_07_Double_Halo
+  Mass: 0.006
+  LocalCenterOfMass: {x: 0.000004740432, y: 0.004802067, z: -0.0000043315813}

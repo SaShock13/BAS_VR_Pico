@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ed0de78d734a3408861cd23a1dfe4f, type: 3}
+  m_Name: MC_10_Twin_SkidConfig
+  m_EditorClassIdentifier: Assembly-CSharp::PartConfig
+  PartId: newparts/MotorCover/MC_10_Twin_Skid
+  LegacyPartIds: []
+  PartType: 20
+  HasConstantMaterial: 0
+  Prefab: {fileID: 7505727032343943179, guid: 80e80b7c39260c6439e4fc6c8d711150, type: 3}
+  PrefabAddress: Parts/MotorCover/MC_10_Twin_Skid
+  Mass: 0.006
+  LocalCenterOfMass: {x: -0.00063752197, y: 0.005975507, z: 0.0006375294}

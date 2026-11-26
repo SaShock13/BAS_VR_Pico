@@ -330,7 +330,7 @@ public static class NewPartsMigration
         anchors.Add((t, type));
     }
 
-    private static int RegisterInScenes(List<PartConfig> configs)
+    public static int RegisterInScenes(List<PartConfig> configs)
     {
         int count = 0;
         var active = SceneManager.GetActiveScene();

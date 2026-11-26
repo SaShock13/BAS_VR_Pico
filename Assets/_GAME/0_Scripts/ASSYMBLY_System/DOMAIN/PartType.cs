@@ -18,5 +18,7 @@
     VideoUnit,
     VideoAntenna,
     FrameStandoff,
-    GpsModule
+    GpsModule,
+    ArmCover,
+    MotorCover
 }

@@ -27,6 +27,7 @@ public class FlightSceneBootsttrap : MonoBehaviour
     private Transform _viewDrone;
     private Camera _playerCamera;
     private Camera _droneCamera;
+    private IRenderDistanceSettings _renderDistanceSettings;
     private bool _playerCameraWasEnabled;
     private Vector3 _firstPersonOffset;
     private Vector3 _thirdPersonOffset;
@@ -100,6 +101,8 @@ public class FlightSceneBootsttrap : MonoBehaviour
     private void OnDestroy()
     {
         _menuPauseSubscription?.Dispose();
+        _renderDistanceSettings?.UnregisterCamera(_droneCamera);
+        _renderDistanceSettings?.UnregisterCamera(_feedCamera);
         if (_heldController != null) SetHeldControllerVisible(false);
         if (_fpvFeed != null) Destroy(_fpvFeed);
         _hud?.Destroy();
@@ -139,6 +142,7 @@ public class FlightSceneBootsttrap : MonoBehaviour
         cameraObject.transform.SetParent(transform, false);
         _droneCamera = cameraObject.AddComponent<Camera>();
         _droneCamera.CopyFrom(_playerCamera);
+        _renderDistanceSettings?.RegisterCamera(_droneCamera);
         _droneCamera.enabled = false;
         cameraObject.tag = "MainCamera";
         SetupFpvController();
@@ -242,6 +246,7 @@ public class FlightSceneBootsttrap : MonoBehaviour
         feed.transform.SetParent(transform, false);
         _feedCamera = feed.AddComponent<Camera>();
         _feedCamera.CopyFrom(_droneCamera);
+        _renderDistanceSettings?.RegisterCamera(_feedCamera);
         _feedCamera.stereoTargetEye = StereoTargetEyeMask.None;
         _feedCamera.targetTexture = _fpvFeed;
         _feedCamera.aspect = (float)_fpvFeed.width / _fpvFeed.height;
@@ -375,6 +380,9 @@ public class FlightSceneBootsttrap : MonoBehaviour
         _view = FlightView.Player;
         SetHeldControllerVisible(!_menuPaused);
     }
+
+    [Inject]
+    public void ConstructRenderDistance(IRenderDistanceSettings settings) => _renderDistanceSettings = settings;
 
     [Inject]
     public void Construct(Clean_AssemblySystem assemblySystem, DronePhysicsStatsBuilder physicsBuilder,

@@ -120,4 +120,16 @@ MonoBehaviour:
     Priority: 96
     MaxConcurrent: 1
     Output: {fileID: 0}
+  - Id: 9
+    Clips:
+    - {fileID: 8300000, guid: f94559ac4932edd459200c1f129edc52, type: 3}
+    Volume: 0.35
+    PitchRange: {x: 1.1, y: 1.1}
+    SpatialBlend: 0
+    MinDistance: 1
+    MaxDistance: 20
+    Loop: 0
+    Priority: 64
+    MaxConcurrent: 2
+    Output: {fileID: 0}
   _maxVoices: 16

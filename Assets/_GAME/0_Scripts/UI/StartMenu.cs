@@ -8,6 +8,7 @@ using Zenject;
 
 public class StartMenu : MonoBehaviour
 {
+    [SerializeField] private QuitGameView quitGame;
     [SerializeField] private TMP_Text startBtnText;
     [SerializeField] private Button startBtn;
     [SerializeField] private TMP_InputField projectName;
@@ -60,8 +61,8 @@ public class StartMenu : MonoBehaviour
     public void OpenSettings() { if (!_loading) ShowWindow(settingsWindow); }
     public void OpenAbout() { if (!_loading) ShowWindow(aboutWindow); }
     public void CloseWindow() { if (!_loading) ShowWindow(mainWindow); }
-    public void AcceptSettings() { CloseWindow(); } // Placeholder: there are no editable settings yet.
-    public void Quit() { if (!_loading) Application.Quit(); }
+    public void AcceptSettings() { CloseWindow(); }
+    public void Quit() { if (!_loading) quitGame.Request(); }
     private void ShowWindow(GameObject window)
     {
         foreach (var panel in new[] { mainWindow, newWindow, loadWindow, settingsWindow, aboutWindow })

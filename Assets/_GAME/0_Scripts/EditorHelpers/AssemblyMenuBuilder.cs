@@ -55,7 +55,7 @@ public static class AssemblyMenuBuilder
             .Select(guid => AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(guid)))
             .OrderBy(source => source.name, StringComparer.OrdinalIgnoreCase).ToArray();
         PartType[] categoryTypes = { PartType.Rays, PartType.Body, PartType.Propeller, PartType.Legs, PartType.Motor };
-        var categorized = new List<GameObject>[6];
+        var categorized = new List<GameObject>[7];
         for (int i = 0; i < categorized.Length; i++) categorized[i] = new List<GameObject>();
         foreach (var source in sources)
         {
@@ -63,7 +63,7 @@ public static class AssemblyMenuBuilder
             if (link == null || link.Config == null)
                 throw new InvalidOperationException("Migrate the part before adding it to the menu: " + source.name);
             int category = Array.IndexOf(categoryTypes, link.Config.PartType);
-            categorized[category < 0 ? 5 : category].Add(source);
+            categorized[ArmCoverScaleService.IsCover(link.Config.PartType) ? 6 : category < 0 ? 5 : category].Add(source);
         }
         var contents = PrefabUtility.LoadPrefabContents(PrefabPath);
         try
@@ -250,14 +250,14 @@ public static class AssemblyMenuBuilder
 
         var samples = new GameObject("Samples").transform;
         samples.SetParent(canvasRect, false);
-        var buttons = new Button[6];
-        var groups = new GameObject[6];
-        string[] labels = { "РАМА", "КОРПУС", "ВИНТ", "ШАССИ", "ДВИЖКИ", "ЭЛЕКТРОНИКА" };
-        string[] names = { "Frame", "Body", "Propeller", "Chassis", "Motors", "Other" };
+        var buttons = new Button[7];
+        var groups = new GameObject[7];
+        string[] labels = { "РАМА", "КОРПУС", "ВИНТ", "ШАССИ", "ДВИЖКИ", "ЭЛЕКТРОНИКА", "Корпусные детали" };
+        string[] names = { "Frame", "Body", "Propeller", "Chassis", "Motors", "Other", "Bodywork" };
         Button previous = MakeButton(canvasRect, "Previous", "<", -630, 125);
         for (int i = 0; i < labels.Length; i++)
         {
-            buttons[i] = MakeButton(canvasRect, names[i], labels[i], -450 + 180 * i, 165);
+            buttons[i] = MakeButton(canvasRect, names[i], labels[i], -480 + 160 * i, 150);
             groups[i] = new GameObject(names[i] + "Parts");
             groups[i].transform.SetParent(samples, false);
             // Reserved area above the category buttons; no demo parts or placeholder labels.

@@ -188,6 +188,8 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
         var parentId = mount.Owner.InstanceId;
         state.AttachToMount(parentId, mount.MountId, isZone);
         part.AttachTo(mount.transform);
+        if (ArmCoverScaleService.IsCover(state.Type) && !isZone && GetPartDomainState(parentId).Type == PartType.Arm)
+            part.transform.localPosition = new Vector3(state.ArmCoverOffset, 0, 0);
         if (localPose.HasValue)
         {
             part.transform.localPosition = localPose.Value.position;
@@ -947,6 +949,7 @@ public class Clean_AssemblySystem : IInitializable, IAssemblyQuery
 
         // 2. Создание доменного состояния
         PartDomainState domainState = new PartDomainState(dublicateInstanceId, partId, config.PartType, oldDomain.VisualProperties);
+        domainState.SetArmCoverOffset(oldDomain.ArmCoverOffset);
 
 
         _parts.Add(dublicateInstanceId, domainState);

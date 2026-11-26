@@ -18,15 +18,22 @@ public sealed class MenuTooltipPanel : MonoBehaviour
         _owner = owner;
         _label.text = message;
 
-        const float padding = 12f;
-        const float maxTextWidth = 320f;
+        var source = control.GetComponentInChildren<TMP_Text>();
+        _label.fontSize = source ? source.fontSize * 0.8f : control.rect.height * 0.28f;
+        if (source) _label.font = source.font;
+        float padding = _label.fontSize * 0.35f;
+        float maxTextWidth = Mathf.Max(1f, control.rect.width * 0.95f - 2f * padding);
         float textWidth = Mathf.Clamp(_label.GetPreferredValues(message).x, 1f, maxTextWidth);
         float textHeight = _label.GetPreferredValues(message, textWidth, 0f).y;
         _panel.sizeDelta = new Vector2(textWidth + 2f * padding, textHeight + 2f * padding);
-        var top = control.TransformPoint(new Vector3(control.rect.center.x, control.rect.yMax, 0f));
-        var position = transform.InverseTransformPoint(top);
-        position.y += 8f;
-        _panel.localPosition = position;
+        _label.rectTransform.offsetMin = Vector2.one * padding;
+        _label.rectTransform.offsetMax = -Vector2.one * padding;
+        // Measure in the control's units, including nested menu scaling.
+        var relativeScale = transform.InverseTransformVector(control.TransformVector(Vector3.right)).magnitude;
+        _panel.localScale = Vector3.one * relativeScale;
+        _panel.rotation = control.rotation;
+        _panel.position = control.TransformPoint(new Vector3(control.rect.center.x,
+            control.rect.yMax + control.rect.height * 0.12f, -0.01f));
         _panel.SetAsLastSibling();
         _panel.gameObject.SetActive(true);
     }

@@ -46,8 +46,16 @@ namespace ColorPicker
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            // Curved UI supplies pointer.position in render-texture pixels, while
+            // its event camera is the XR camera for sorting against world UI.
+            // Convert those pixels using the camera that actually drew the palette.
+            var canvasCamera = _paletteImage.canvas.worldCamera;
+            var pointerCamera = eventData.pressEventCamera;
+            if (eventData.pointerPressRaycast.module is CurvedScreenRaycaster &&
+                canvasCamera != null && canvasCamera.targetTexture != null)
+                pointerCamera = canvasCamera;
             if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    _rectTransform, eventData.position, eventData.pressEventCamera, out var localPoint))
+                    _rectTransform, eventData.position, pointerCamera, out var localPoint))
             {
                 return;
             }

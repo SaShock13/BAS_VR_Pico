@@ -112,6 +112,7 @@ public static class AssemblyProjectMenuBuilder
         SetArray(so,"savedRows",rows);
         SetArray(so,"navigationButtons",new[]{create,saves,settings,about,quit,cancelNew,closeLoad,savePrefs,cancelPrefs,closeAbout});
         so.ApplyModifiedPropertiesWithoutUndo();
+        RenderDistanceMenuSetup.ConfigureBoot(menu);
         foreach(var window in new[]{fresh,load,prefs,credits}) window.gameObject.SetActive(false);
     }
     public static void ConfigureProjectKeyboard(StartMenu menu, TMP_InputField field)

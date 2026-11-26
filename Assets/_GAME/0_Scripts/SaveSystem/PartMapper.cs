@@ -20,7 +20,9 @@ public static class PartMapper
             AttachedPartId = state.AttachedPartInstanceId,
             AttachedSocketId = state.AttachedSocketId,
             AttachedZoneId = state.IsAttachedToZone ? state.AttachedMountId : null,
-            VisualProperties = state.VisualProperties 
+            VisualProperties = state.VisualProperties,
+            HasArmCoverOffset = ArmCoverScaleService.IsCover(state.Type),
+            ArmCoverOffset = state.ArmCoverOffset
         };
 
         
@@ -44,6 +46,11 @@ public static class PartMapper
             throw new ArgumentNullException(nameof(data));
 
         var state = new PartDomainState(data.InstanceId, data.PartId, data.Type, data.VisualProperties);
+        // Older saves stored the fitted offset only in an installed part's local transform.
+        state.SetArmCoverOffset(data.HasArmCoverOffset ? data.ArmCoverOffset :
+            ArmCoverScaleService.IsCover(data.Type) && data.LifecycleState == PartLifecycleState.Installed &&
+            string.IsNullOrEmpty(data.AttachedZoneId) && data.Transform != null
+                ? data.Transform.LocalPosition.x : 0f);
 
         //// Восстановление визуальных параметров
        

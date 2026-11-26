@@ -38,6 +38,7 @@ public class AssemblyInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<PartHighlightService>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<PartTransformAdjustmentService>().AsSingle();
+        Container.BindInterfacesAndSelfTo<ArmCoverScaleService>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<UserActivityService>().AsSingle();
 

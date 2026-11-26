@@ -22,6 +22,13 @@ public class PartDomainState
 
     public PartVisualProperties VisualProperties { get; private set; }
     public PartType Type { get; private set; }
+    public float ArmCoverOffset { get; private set; }
+
+    public void SetArmCoverOffset(float offset)
+    {
+        if ((Type != PartType.ArmCover && Type != PartType.MotorCover) || float.IsNaN(offset) || float.IsInfinity(offset)) return;
+        ArmCoverOffset = Mathf.Clamp(offset, -0.1f, 0.1f);
+    }
 
     public PartDomainState(string instanceId, string partId, PartType type, PartVisualProperties visual)
     {
