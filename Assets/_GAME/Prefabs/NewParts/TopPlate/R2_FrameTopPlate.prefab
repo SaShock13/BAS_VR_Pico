@@ -663,7 +663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MountingZoneView
   _mountId: zone/top
-  _allowedTypes: 
+  _allowedTypes: 06000000
   _size: {x: 0.03, y: 0.18}
   _hoverHeight: 0.25
   _hoverPadding: 0.05

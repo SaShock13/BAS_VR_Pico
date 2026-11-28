@@ -21,15 +21,34 @@ public class DronePhysicsSimulation : MonoBehaviour
     private float _totalCurrent;  // Общее потребление тока
 
     private BatteryPhysicsData _battery;
+    private bool _motorsRunning;
+    private DroneDebugInput _flightInput;
+
+    public void SetMotorsRunning(bool running)
+    {
+        if (_motorsRunning == running) return;
+        _motorsRunning = running;
+        if (running) return;
+        foreach (var motor in _motors)
+        {
+            motor.TargetThrottle = 0f;
+            motor.CurrentThrottle = 0f;
+            motor.CurrentThrust = 0f;
+            motor.CurrentDraw = 0f;
+        }
+        if (_battery != null) _battery.CurrentDraw = 0f;
+    }
 
     [SerializeField] private bool isVoltageAffects = false ; // Учитывать ли текущий напряжение для рассчета тяги моторов
 
     public void Initialize(
         DronePhysicsData physicsData
-        ,IReadOnlyList<DronePartView> motorViews
+        ,IReadOnlyList<DronePartView> motorViews, DroneDebugInput flightInput = null
         )
     {
         _motors.Clear();
+        _flightInput = flightInput;
+        _motorsRunning = flightInput == null;
 
         ApplyRigidbodyData(physicsData);
 
@@ -70,6 +89,8 @@ public class DronePhysicsSimulation : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_flightInput != null) SetMotorsRunning(_flightInput.isActiveAndEnabled && _flightInput.MotorsRunning);
+        if (!_motorsRunning || _battery == null) return;
         SimulateMotors();
 
         SimulateBattery();

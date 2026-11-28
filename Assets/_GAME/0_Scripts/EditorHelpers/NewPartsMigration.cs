@@ -110,7 +110,7 @@ public static class NewPartsMigration
         if (path.Contains("/Legs/") || Path.GetFileName(path).StartsWith("Gears")) return PartType.Legs;
         if (path.Contains("/Propellers/") || Path.GetFileName(path).StartsWith("Propeller")) return PartType.Propeller;
         if (Path.GetFileName(path).StartsWith("Engine")) return PartType.Motor;
-        if (Path.GetFileName(path) == "MainBoard.prefab") return PartType.FlyController;
+        if (Path.GetFileName(path) == "MainBoard.prefab" || Path.GetFileName(path).StartsWith("FlyghtController", StringComparison.Ordinal)) return PartType.FlyController;
         if (Path.GetFileName(path).StartsWith("battery", StringComparison.OrdinalIgnoreCase)) return PartType.Battery;
         throw new InvalidOperationException("Unknown part category: " + path);
     }

@@ -13,6 +13,8 @@ public class FlightSceneBootsttrap : MonoBehaviour
     [SerializeField] private Transform spawnPointTransform;
     [SerializeField] private FlightController _flightController;
     [SerializeField] private DroneDebugInput _input;
+    [SerializeField] private AudioClip droneEngineSound;
+    private FlightMotorEffects _motorEffects;
     [SerializeField] private ArcadeFlightSettings arcadeFlightSettings;
     [SerializeField] private FlightEnvironmentCatalog environmentCatalog;
     [SerializeField] private Transform playerRoot;
@@ -27,6 +29,8 @@ public class FlightSceneBootsttrap : MonoBehaviour
     private Transform _viewDrone;
     private Camera _playerCamera;
     private Camera _droneCamera;
+    private AudioListener _playerListener;
+    private AudioListener _droneListener;
     private IRenderDistanceSettings _renderDistanceSettings;
     private bool _playerCameraWasEnabled;
     private Vector3 _firstPersonOffset;
@@ -87,6 +91,7 @@ public class FlightSceneBootsttrap : MonoBehaviour
 
     private void OnDisable()
     {
+        _motorEffects?.Stop();
         _input.ViewChangeRequested -= ChangeView;
         RestorePlayerView();
         _hud?.SetVisible(false);
@@ -119,6 +124,8 @@ public class FlightSceneBootsttrap : MonoBehaviour
         }
 
         _playerCamera = origin.Camera;
+        _playerListener = _playerCamera.GetComponent<AudioListener>();
+        if (_playerListener == null) _playerListener = _playerCamera.gameObject.AddComponent<AudioListener>();
         _viewDrone = drone;
 
         // Project visual bounds onto the drone's forward axis so the camera clears different builds.
@@ -144,6 +151,8 @@ public class FlightSceneBootsttrap : MonoBehaviour
         _droneCamera.CopyFrom(_playerCamera);
         _renderDistanceSettings?.RegisterCamera(_droneCamera);
         _droneCamera.enabled = false;
+        _droneListener = cameraObject.AddComponent<AudioListener>();
+        _droneListener.enabled = false;
         cameraObject.tag = "MainCamera";
         SetupFpvController();
         SetupHeldController(origin.transform);
@@ -189,10 +198,13 @@ public class FlightSceneBootsttrap : MonoBehaviour
             SetHeldControllerVisible(false);
             _playerCameraWasEnabled = _playerCamera.enabled;
             _playerCamera.enabled = false;
+            _playerListener.enabled = false;
+            _droneListener.enabled = true;
             _droneCamera.enabled = true;
             SetInterfaceCamera(_droneCamera);
         }
         _view = next;
+        _motorEffects?.SetFirstPerson(next == FlightView.FirstPerson);
         if (next == FlightView.ThirdPerson)
             _thirdPersonHeading = Quaternion.Euler(0f, _viewDrone.eulerAngles.y, 0f);
         UpdateDroneCameraPose(true);
@@ -203,6 +215,7 @@ public class FlightSceneBootsttrap : MonoBehaviour
 
     private void LateUpdate()
     {
+        _motorEffects?.Refresh();
         if (_hud != null && _previewedVignetteRadius != vignetteClearRadius)
         {
             _previewedVignetteRadius = vignetteClearRadius;
@@ -237,7 +250,7 @@ public class FlightSceneBootsttrap : MonoBehaviour
         _leftHand = _leftHandVisual.transform.parent;
         _rightHand = _rightHandVisual.transform.parent;
         _heldController = Instantiate(_fpvController.gameObject, transform, false).transform;
-        _heldController.localScale = Vector3.one * 0.48f;
+        _heldController.localScale = Vector3.one * 0.24f;
         _heldLeftStick = _heldController.Find("Sphere001");
         _heldRightStick = _heldController.Find("Sphere002");
 
@@ -369,6 +382,9 @@ public class FlightSceneBootsttrap : MonoBehaviour
     private void RestorePlayerView()
     {
         if (_view == FlightView.Player) return;
+        if (_droneListener != null) _droneListener.enabled = false;
+        if (_playerListener != null) _playerListener.enabled = true;
+        _motorEffects?.SetFirstPerson(false);
         if (_droneCamera != null) _droneCamera.enabled = false;
         if (_fpvController != null) _fpvController.gameObject.SetActive(false);
         if (_playerCamera != null)
@@ -489,6 +505,11 @@ public class FlightSceneBootsttrap : MonoBehaviour
         await System.Threading.Tasks.Task.Yield();
         if (this == null || root == null) return;
         SetupFlightViews(root.transform);
+        var propellers = new List<DronePartView>();
+        foreach (var view in root.GetComponentsInChildren<DronePartView>(true))
+            if (_assemblySystem.GetPartDomainState(view.InstanceId)?.Type == PartType.Propeller)
+                propellers.Add(view);
+        _motorEffects = new FlightMotorEffects(root.transform, _input, droneEngineSound, propellers);
         if (FlightSession.Mission != null)
         {
             if (environment.missionStart == null)
@@ -517,7 +538,7 @@ public class FlightSceneBootsttrap : MonoBehaviour
         }
         var data = _physicsBuilder.Build(states, root);
         FlightSession.Physics = data;
-        simulation.Initialize(data, motors);
+        simulation.Initialize(data, motors, _input);
         simulation.enabled = true;
         _flightController.Initialize(_input, simulation, body);
         _flightController.enabled = true;

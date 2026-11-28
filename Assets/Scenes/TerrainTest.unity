@@ -2012,6 +2012,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b08f6c412184f6a4f8e1ed11abe593fa, type: 2}
   - {fileID: 11400000, guid: fcfc3d090cf8cde45870b776eeeaab7a, type: 2}
   - {fileID: 11400000, guid: 170519c825686df4fb1248268628875e, type: 2}
+  - {fileID: 11400000, guid: 29b100a50a4134d429f070bddddfe450, type: 2}
+  - {fileID: 11400000, guid: 9621e38f1d22aa74f8881076c3cd7d54, type: 2}
+  - {fileID: 11400000, guid: 5f42eb1ee7637db4a9cc5ec84cb579b3, type: 2}
+  - {fileID: 11400000, guid: 5c00a1eb6b39b6647812e3d8b6b80cbf, type: 2}
+  partHoverInfoPrefab: {fileID: 0}
+  partInfoViewer: {fileID: 0}
   spawnAnimator: {fileID: 0}
   vfxLibrary: {fileID: 0}
 --- !u!114 &1225735307

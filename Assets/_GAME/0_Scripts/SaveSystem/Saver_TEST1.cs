@@ -11,6 +11,15 @@ public class Saver_TEST1 : MonoBehaviour
     private INotificationService _notifications;
     private InputAction _save, _load;
     private bool _busy;
+    private IDisposable _portalSubscription;
+    [Inject]
+    public void ConnectPortal(IEventBus events)
+    {
+        _portalSubscription = events.Subscribe<GaragePortalRequest>(request =>
+        {
+            if (!request.ReturnToAssembly) SaveAndOpenGarage();
+        });
+    }
     [Inject] public void Construct(Clean_AssemblySystem assembly, INotificationService notifications)
     { _assembly = assembly; _notifications = notifications; }
     private void Awake()
@@ -34,7 +43,7 @@ public class Saver_TEST1 : MonoBehaviour
     }
     private void OnEnable() { _save.Enable(); _load.Enable(); }
     private void OnDisable() { _save.Disable(); _load.Disable(); }
-    private void OnDestroy() { _save.Dispose(); _load.Dispose(); }
+    private void OnDestroy() { _portalSubscription?.Dispose(); _save.Dispose(); _load.Dispose(); }
     private void OnSave(InputAction.CallbackContext _) { SaveActive(); }
     private void OnLoad(InputAction.CallbackContext _) { ReloadActive(); }
     public void SaveActive()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class UndoRedoView : MonoBehaviour
@@ -14,10 +15,10 @@ public class UndoRedoView : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadMinus))
+        if (Keyboard.current != null && Keyboard.current.numpadMinusKey.wasPressedThisFrame)
             _assemblySystem.Undo();
 
-        if (Input.GetKeyDown(KeyCode.KeypadPlus))
+        if (Keyboard.current != null && Keyboard.current.numpadPlusKey.wasPressedThisFrame)
             _assemblySystem.Redo();
     }
 

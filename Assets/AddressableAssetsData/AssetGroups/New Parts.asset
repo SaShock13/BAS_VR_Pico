@@ -125,6 +125,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3505e85250e6a514c963a2dd07c03b75
+    m_Address: Parts/Esc/ESC_30_5x30_5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 35b4ffd28611e4240a129e3d75a1b91e
     m_Address: Parts/ArmCover/R2_Arm_Cover_2
     m_ReadOnly: 0
@@ -265,6 +270,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7275767c4631856488b2bf0a68a4bacf
+    m_Address: Parts/Tech/FlyghtController_30_5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 74e3024415aed654dafb4853a18cc85a
     m_Address: Parts/Propellers/PROP_DALPROP_Cyclone_T5045C
     m_ReadOnly: 0
@@ -346,7 +356,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8b13d86a0f8d07e4397a67b14ed214bf
-    m_Address: Parts/Tech/MainBoard
+    m_Address: Parts/Tech/FlyghtController
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -485,6 +495,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d17659f78e26d584a85a9ad3f419ff99
+    m_Address: Parts/Esc/ESC_20x20
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d5d1cd843e2621746be425869a137f5e
     m_Address: Parts/Bodies/D8Body
     m_ReadOnly: 0
@@ -517,6 +532,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dd3e7fc8445db39499a8e3a50df07269
     m_Address: Parts/Bodies/Body5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de8d3827a67afd14a978c82f84cbf893
+    m_Address: Parts/Esc/ESC_Single
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

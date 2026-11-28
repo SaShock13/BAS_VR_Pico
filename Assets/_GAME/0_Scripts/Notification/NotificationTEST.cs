@@ -1,5 +1,6 @@
 ﻿using Pico.Platform;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class NotificationTEST : MonoBehaviour
@@ -11,13 +12,13 @@ public class NotificationTEST : MonoBehaviour
     {
 
 
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if (Keyboard.current != null && Keyboard.current.digit0Key.wasPressedThisFrame)
         {
             _notifications.Info("Информационное сообщение тестовое");
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Alpha9))
+        if (Keyboard.current != null && Keyboard.current.digit9Key.wasPressedThisFrame)
         {
             _notifications.ShowWorld("Батарея разряжена", transform, NotificationType.Warning);
         }

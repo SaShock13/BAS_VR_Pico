@@ -60,6 +60,13 @@ public class FlightController : MonoBehaviour
     private void FixedUpdate()
     {
         if (!_enabled) return;
+        if (!_input.MotorsRunning)
+        {
+            _pitchPID.Reset();
+            _rollPID.Reset();
+            _yawPID.Reset();
+            return;
+        }
 
         FlightInput input = _input.CurrentInput;
 

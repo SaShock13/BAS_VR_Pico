@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public sealed class TabletMissionPresenter : MonoBehaviour
@@ -39,7 +40,7 @@ public sealed class TabletMissionPresenter : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
         {
             _content.SetActive(!_content.activeInHierarchy);
         }

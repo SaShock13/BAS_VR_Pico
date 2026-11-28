@@ -34,6 +34,7 @@ public sealed class ArcadeFlightController : MonoBehaviour
         float tiltSpeed = settings.TiltSpeed;
         float drag = settings.Drag;
         if (_body.linearDamping != drag) _body.linearDamping = drag;
+        if (!_input.MotorsRunning) return;
         var input = _input.CurrentInput;
         float dt = Time.fixedDeltaTime;
         var rates = FlightControlRates.Calculate(_input.ControlMode, input, _body.rotation,

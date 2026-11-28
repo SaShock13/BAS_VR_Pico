@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ed0de78d734a3408861cd23a1dfe4f, type: 3}
   m_Name: R1_Frame_Arm5Config
   m_EditorClassIdentifier: Assembly-CSharp::PartConfig
+  DisplayName: "\u041B\u0443\u0447 R1"
+  Description: "\u042D\u043B\u0435\u043C\u0435\u043D\u0442 \u0441\u0431\u043E\u0440\u043A\u0438
+    \u0440\u0430\u043C\u044B \u0434\u0440\u043E\u043D\u0430. \u041D\u0430 \u043B\u0443\u0447
+    \u043A\u0440\u0435\u043F\u0438\u0442\u0441\u044F \u043C\u043E\u0442\u043E\u0440."
+  AdditionalInfo: 
+  InfoCharacteristics: []
   PartId: newparts/Arm/R1_Frame_Arm5
   LegacyPartIds: []
   PartType: 12

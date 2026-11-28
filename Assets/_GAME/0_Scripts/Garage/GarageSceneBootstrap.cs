@@ -9,6 +9,7 @@ public class GarageSceneBootstrap : MonoBehaviour
 {
     [SerializeField]
     private Transform[] _slots;
+    [SerializeField] private MeshRenderer[] _pedestals;
     [SerializeField]
     private float _rotationSpeed = 2;
      [SerializeField]
@@ -39,6 +40,18 @@ public class GarageSceneBootstrap : MonoBehaviour
     private IEventBus _eventBus;
     private bool _loadingGarage = true;
     private bool _leaving;
+    private System.IDisposable _portalSubscription;
+
+    [Inject]
+    public void ConnectPortal(IEventBus events)
+    {
+        _portalSubscription = events.Subscribe<GaragePortalRequest>(request =>
+        {
+            if (request.ReturnToAssembly) ReturnToAssembly();
+        });
+    }
+
+    private void OnDestroy() => _portalSubscription?.Dispose();
 
     public void ReturnToAssembly() => Leave(MenuNavigationService.ConstructorSceneName);
     public void ReturnToMainMenu() => Leave("BootMenu");
@@ -122,6 +135,7 @@ public class GarageSceneBootstrap : MonoBehaviour
                 _slots[i].position);
 
             droneTransform.SetParent(_slots[i]);
+            PlaceDroneOnPedestal(droneTransform, i);
 
             loadedNames.Add((droneTransform.GetComponent<DronePartView>().InstanceId, drones[i].metaData?.Name));
 
@@ -134,6 +148,28 @@ public class GarageSceneBootstrap : MonoBehaviour
 
 
 
+    }
+
+    private void PlaceDroneOnPedestal(Transform drone, int index)
+    {
+        if (_pedestals == null || index >= _pedestals.Length || _pedestals[index] == null) return;
+
+        // Measure once after loading, before selection outlines are initialized.
+        var renderers = drone.GetComponentsInChildren<MeshRenderer>();
+        var bounds = new Bounds();
+        bool hasBounds = false;
+        foreach (var renderer in renderers)
+        {
+            if (!renderer.enabled || !renderer.gameObject.activeInHierarchy) continue;
+            if (!hasBounds) bounds = renderer.bounds;
+            else bounds.Encapsulate(renderer.bounds);
+            hasBounds = true;
+        }
+        if (!hasBounds) return;
+
+        var top = _pedestals[index].bounds;
+        var center = new Vector3(top.center.x, top.max.y + 0.1f + bounds.extents.y, top.center.z);
+        drone.position += center - bounds.center;
     }
 
     private void OnHoverExit(HoverExitEventArgs arg0)
@@ -186,18 +222,18 @@ public class GarageSceneBootstrap : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.F11))
+        if (Keyboard.current != null && Keyboard.current.f11Key.wasPressedThisFrame)
         {
             RequestClearGarage();
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if (Keyboard.current != null && Keyboard.current.digit0Key.wasPressedThisFrame)
         {
             ReturnToAssembly();
         }
 
-        if (Input.GetKeyDown(KeyCode.F4) && !_loadingGarage && !_leaving &&
+        if (Keyboard.current != null && Keyboard.current.f4Key.wasPressedThisFrame && !_loadingGarage && !_leaving &&
             TryGetSelectedDrone(out var drone, out var saved))
         {
             _garage.Delete(saved.GarageId);

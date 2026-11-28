@@ -6,6 +6,9 @@ public class DroneDebugInput : MonoBehaviour
 {
     public FlightInput CurrentInput { get; private set; }
     public float Vertical { get; private set; }
+    public bool MotorsRunning { get; private set; }
+    public event Action<bool> MotorsRunningChanged;
+    private InputAction _motorToggle;
     public event Action ViewChangeRequested;
     private InputAction _left, _right;
     private InputAction _viewChange;
@@ -18,6 +21,8 @@ public class DroneDebugInput : MonoBehaviour
     {
         ControlMode = FlightSession.Mode == FlightMode.Arcade ? FlightControlMode.AcroTrainer : FlightControlMode.Acro;
         _modeSwitch = InputSystem.actions?.FindAction("Flight/ModeSwitch");
+        _motorToggle = InputSystem.actions?.FindAction("Flight/MotorToggle");
+        if (_motorToggle == null) Debug.LogError("Missing Flight/MotorToggle in project-wide Input Actions.", this);
         if (_modeSwitch == null) Debug.LogError("Missing Flight/ModeSwitch in project-wide Input Actions.", this);
         _left = new InputAction("FlightLeft", InputActionType.Value, "<XRController>{LeftHand}/primary2DAxis");
         _right = new InputAction("FlightRight", InputActionType.Value, "<XRController>{RightHand}/primary2DAxis");
@@ -29,6 +34,11 @@ public class DroneDebugInput : MonoBehaviour
     private void OnEnable()
     {
         ControlModeSelected += ApplyControlMode;
+        if (_motorToggle != null)
+        {
+            _motorToggle.performed += OnMotorToggle;
+            _motorToggle.Enable();
+        }
         if (_modeSwitch != null)
         {
             _modeSwitch.performed += OnModeSwitch;
@@ -43,6 +53,8 @@ public class DroneDebugInput : MonoBehaviour
     private void OnDisable()
     {
         ControlModeSelected -= ApplyControlMode;
+        if (_motorToggle != null) _motorToggle.performed -= OnMotorToggle;
+        SetMotorsRunning(false);
         if (_modeSwitch != null) _modeSwitch.performed -= OnModeSwitch;
         _viewChange.performed -= OnViewChange;
         _viewChange.Disable();
@@ -60,6 +72,17 @@ public class DroneDebugInput : MonoBehaviour
     }
 
     private void OnViewChange(InputAction.CallbackContext context) => ViewChangeRequested?.Invoke();
+    private void OnMotorToggle(InputAction.CallbackContext context)
+    {
+        if (Time.timeScale > 0f) SetMotorsRunning(!MotorsRunning);
+    }
+
+    private void SetMotorsRunning(bool running)
+    {
+        if (MotorsRunning == running) return;
+        MotorsRunning = running;
+        MotorsRunningChanged?.Invoke(running);
+    }
     private void OnModeSwitch(InputAction.CallbackContext context)
     {
         if (Time.timeScale == 0f) return;

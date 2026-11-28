@@ -91,7 +91,7 @@ internal sealed class FlightHud
 
     private static Texture2D CreateVignetteTexture(float radius)
     {
-        const int size = 96;
+        const int size = 512;
         var texture = new Texture2D(size, size, TextureFormat.RGBA32, false)
         {
             name = "FPV Vignette",
@@ -99,13 +99,12 @@ internal sealed class FlightHud
             filterMode = FilterMode.Bilinear
         };
         var pixels = new Color32[size * size];
-        float clearRadius = radius * 0.70f;
-        float edge = clearRadius + 0.11f;
         for (int y = 0; y < size; y++)
         for (int x = 0; x < size; x++)
         {
             var uv = new Vector2(x, y) * (2f / (size - 1)) - Vector2.one;
-            float alpha = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(clearRadius, edge, uv.magnitude));
+            float distance = new Vector2(uv.x / 0.3f, uv.y / 0.42f).magnitude;
+            float alpha = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.985f, 1.015f, distance));
             pixels[y * size + x] = new Color32(0, 0, 0, (byte)(alpha * 255f));
         }
         texture.SetPixels32(pixels);
@@ -115,9 +114,8 @@ internal sealed class FlightHud
 
     public void SetVignetteAppearance(float opacity, float scale)
     {
-        _vignette.color = new Color(1f, 1f, 1f, opacity);
-        float inset = (1f - scale) * 0.5f;
-        _vignette.uvRect = new Rect(inset, inset, scale, scale);
+        _vignette.color = Color.white;
+        _vignette.uvRect = new Rect(0f, 0f, 1f, 1f);
     }
 
     private RectTransform CreateStick(Transform parent, float x)
@@ -188,13 +186,17 @@ internal sealed class FlightHud
         _vignette.gameObject.SetActive(showVignette);
         if (showVignette)
         {
+            _canvas.transform.localScale = new Vector3(
+                1.2f * 0.3f * 0.60f / (projection.m00 * 365f),
+                1.2f * 0.42f * 0.60f / (projection.m11 * 190f), 0.002f);
             float depth = Mathf.Max(camera.nearClipPlane + 0.02f, 0.18f);
             var viewSpan = camera.ViewportToWorldPoint(new Vector3(1f, 1f, depth))
                 - camera.ViewportToWorldPoint(new Vector3(0f, 0f, depth));
             var localSpan = camera.transform.InverseTransformVector(viewSpan);
             _vignette.rectTransform.localPosition = Vector3.forward * ((depth - 1.2f) / 0.002f);
+            var canvasScale = _canvas.transform.localScale;
             _vignette.rectTransform.sizeDelta = new Vector2(
-                (localSpan.x + 0.09f) / 0.002f, localSpan.y * 1.06f / 0.002f);
+                localSpan.x / canvasScale.x, localSpan.y / canvasScale.y);
         }
         ApplyVisibility();
         _nextRefresh = 0f;

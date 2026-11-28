@@ -302,7 +302,7 @@ public class Clean_AssemblyTest : MonoBehaviour
     private void Update()
     {  
 
-        if (Input.GetKeyDown(KeyCode.Y))
+        if (Keyboard.current != null && Keyboard.current.yKey.wasPressedThisFrame)
         {
             StartCoroutine( CreateTestPartsCoroutine());   /// Костыль - друг за другом создавать Не получается из Addressables , Нужно либо с  паузами либо механизм ожидания окончания создания
 
@@ -311,22 +311,22 @@ public class Clean_AssemblyTest : MonoBehaviour
             //_eventBus.Publish(new Clean_CreatePartRequestEvent { PartId = rndId, Timestamp = DateTime.UtcNow });
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Keyboard.current != null && Keyboard.current.iKey.wasPressedThisFrame)
             partPanel?.DeleteSelectedPart();
         if (Keyboard.current != null && Keyboard.current.uKey.wasPressedThisFrame)
             _eventBus.Publish(new LaunchFlightRequest());
 
-        if (Input.GetKeyDown(KeyCode.F6))
+        if (Keyboard.current != null && Keyboard.current.f6Key.wasPressedThisFrame)
         {
             PutSelectedDroneToGarage();
             
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Keyboard.current != null && Keyboard.current.digit1Key.wasPressedThisFrame)
             projectSaver?.SaveAndOpenGarage();
 
-        if (Input.GetKeyDown(KeyCode.F11))
+        if (Keyboard.current != null && Keyboard.current.f11Key.wasPressedThisFrame)
         {
             RequestClearAssembly();
         }

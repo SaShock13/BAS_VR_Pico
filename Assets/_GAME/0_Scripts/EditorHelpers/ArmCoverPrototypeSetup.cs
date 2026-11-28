@@ -143,7 +143,7 @@ public static class ArmCoverPrototypeSetup
         finally { PrefabUtility.UnloadPrefabContents(root); }
     }
 
-    internal static void AddMenuEntry(PartConfig config)
+    internal static void AddMenuEntry(PartConfig config, string rowName = null)
     {
         var root = PrefabUtility.LoadPrefabContents(MenuPath);
         try
@@ -152,7 +152,7 @@ public static class ArmCoverPrototypeSetup
             var so = new SerializedObject(publisher); var entries = so.FindProperty("entries");
             for (int i = 0; i < entries.arraySize; i++)
                 if (entries.GetArrayElementAtIndex(i).FindPropertyRelative("config").objectReferenceValue == config) return;
-            var row = root.GetComponentsInChildren<ObjectRowManager>(true).FirstOrDefault(r => r.name == "BodyworkParts")
+            var row = root.GetComponentsInChildren<ObjectRowManager>(true).FirstOrDefault(r => r.name == (rowName ?? "BodyworkParts"))
                 ?? root.GetComponentsInChildren<ObjectRowManager>(true).First(r => r.name == "OtherParts");
             var slot = Rect(config.Prefab.name, row.transform, new Vector2(210, 210), Vector2.zero);
             slot.gameObject.AddComponent<PartViewConfigLink>().Config = config;
@@ -241,9 +241,10 @@ public static class ArmCoverPrototypeSetup
         var data = new SerializedObject(owner);
         data.FindProperty("controls").objectReferenceValue = wrapper.gameObject;
         data.FindProperty("fittingContent").objectReferenceValue = group.gameObject;
-        var sections = data.FindProperty("standardSections"); sections.arraySize = 2;
+        var legacyAdjustment = panelObject.transform.Find("AdjustmentPanel");
+        var sections = data.FindProperty("standardSections"); sections.arraySize = legacyAdjustment != null ? 2 : 1;
         sections.GetArrayElementAtIndex(0).objectReferenceValue = panelObject.transform.Find("InfoPanel").gameObject;
-        sections.GetArrayElementAtIndex(1).objectReferenceValue = panelObject.transform.Find("AdjustmentPanel").gameObject;
+        if (legacyAdjustment != null) sections.GetArrayElementAtIndex(1).objectReferenceValue = legacyAdjustment.gameObject;
         data.FindProperty("dimensions").objectReferenceValue = dimensions;
         data.FindProperty("gizmoLabel").objectReferenceValue = toggle.GetComponentInChildren<TMP_Text>();
         data.FindProperty("gizmo").objectReferenceValue = gizmo.transform;

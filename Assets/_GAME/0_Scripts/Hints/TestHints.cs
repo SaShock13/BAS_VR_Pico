@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class TestHints : MonoBehaviour
@@ -14,7 +15,7 @@ public class TestHints : MonoBehaviour
     void Update()
     {
 
-        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //if (Keyboard.current != null && Keyboard.current.digit1Key.wasPressedThisFrame)
         //{
         //    if (!isHintStarted)
         //    {

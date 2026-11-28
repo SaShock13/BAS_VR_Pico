@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DroneView : MonoBehaviour
 {
@@ -9,12 +10,12 @@ public class DroneView : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Keyboard.current != null && Keyboard.current.xKey.wasPressedThisFrame)
         {
             //mainTrigger.enabled = false;
             mainTriggerGO.SetActive(false);
         }
-        if (Input.GetKeyUp(KeyCode.X))
+        if (Keyboard.current != null && Keyboard.current.xKey.wasReleasedThisFrame)
         {
 
             //mainTrigger.enabled = true;

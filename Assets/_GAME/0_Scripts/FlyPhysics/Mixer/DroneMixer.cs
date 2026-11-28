@@ -9,7 +9,6 @@ public class DroneMixer
     {
 
 
-        Debug.Log($"******Input throttle - {input.Throttle} RollCorrection - {input.RollCorrection} YawCorrection - {input.YawCorrection} PitchCorrection - {input.PitchCorrection} ");
         foreach (DroneMotorRuntime motor in motors)
         {
             float output =
@@ -26,7 +25,6 @@ public class DroneMixer
             motor.TargetThrottle = output;
 
 
-            Debug.Log($"********motor  output {output}");
         }
     }
 }

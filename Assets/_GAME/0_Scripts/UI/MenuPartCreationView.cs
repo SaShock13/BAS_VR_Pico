@@ -19,7 +19,19 @@ public class MenuPartCreationView : MonoBehaviour
     private IEventBus _eventBus;
 
     [Inject]
-    public void Construct(IEventBus eventBus) => _eventBus = eventBus;
+    public void Construct(IEventBus eventBus)
+    {
+        _eventBus = eventBus;
+        if (entries == null) return;
+        foreach (var entry in entries)
+        {
+            if (entry.button == null || entry.config == null) continue;
+            var hover = entry.button.GetComponent<PartInfoPreviewHover>();
+            if (hover == null) hover = entry.button.gameObject.AddComponent<PartInfoPreviewHover>();
+            hover.Configure(entry.config, eventBus);
+            if (entry.button.TryGetComponent<MenuTooltip>(out var tooltip)) tooltip.enabled = false;
+        }
+    }
 
     public void RequestCreatePart(int index)
     {

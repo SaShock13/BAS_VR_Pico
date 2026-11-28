@@ -7,7 +7,6 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 
 [DisallowMultipleComponent]
-[RequireComponent(typeof(Selectable))]
 public sealed class MenuTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField, TextArea] private string tooltipText;
@@ -27,24 +26,36 @@ public sealed class MenuTooltip : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         if (!isActiveAndEnabled ||
             eventData is not TrackedDeviceEventData { interactor: XRRayInteractor or NearFarInteractor } ||
-            string.IsNullOrWhiteSpace(tooltipText) ||
-            !_hoveringPointers.Add(eventData.pointerId) || _hoveringPointers.Count != 1)
+            string.IsNullOrWhiteSpace(tooltipText))
             return;
-
-        _pending = StartCoroutine(ShowAfterDelay());
+        BeginHover(eventData.pointerId);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (_hoveringPointers.Remove(eventData.pointerId) && _hoveringPointers.Count == 0)
+        EndHover(eventData.pointerId);
+    }
+
+    public void BeginHover(int pointerId)
+    {
+        if (!isActiveAndEnabled || string.IsNullOrWhiteSpace(tooltipText) ||
+            !_hoveringPointers.Add(pointerId) || _hoveringPointers.Count != 1) return;
+        _pending = StartCoroutine(ShowAfterDelay());
+    }
+
+    public void EndHover(int pointerId)
+    {
+        if (_hoveringPointers.Remove(pointerId) && _hoveringPointers.Count == 0)
             Hide();
     }
 
-    private void OnDisable()
+    public void CancelHover()
     {
         _hoveringPointers.Clear();
         Hide();
     }
+
+    private void OnDisable() => CancelHover();
 
     private IEnumerator ShowAfterDelay()
     {

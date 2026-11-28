@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 public class TestValidateEffects : MonoBehaviour
@@ -21,7 +22,7 @@ public class TestValidateEffects : MonoBehaviour
     private void Update()
     {
 
-        //if (Input.GetKeyDown(KeyCode.B))
+        //if (Keyboard.current != null && Keyboard.current.bKey.wasPressedThisFrame)
         //{
 
 
@@ -35,7 +36,7 @@ public class TestValidateEffects : MonoBehaviour
         //    Debug.Log($"_validateEffectsSystem.Enter(); {this}");
         //    _validateEffectsSystem.Enter();
         //}
-        //if (Input.GetKeyDown(KeyCode.V))
+        //if (Keyboard.current != null && Keyboard.current.vKey.wasPressedThisFrame)
         //{
         //    _validateEffectsSystem.Exit();
         //}

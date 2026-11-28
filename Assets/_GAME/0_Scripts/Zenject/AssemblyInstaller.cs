@@ -8,6 +8,8 @@ public class AssemblyInstaller : MonoInstaller
     [UnityEngine.Serialization.FormerlySerializedAs("skipAssemblySaveBeforeFlight")]
     [SerializeField] private bool launchStoredDrones;
     [SerializeField] private List<PartConfig> partConfigs;
+    [SerializeField] private PartHoverInfoView partHoverInfoPrefab;
+    [SerializeField] private Transform partInfoViewer;
 
     [SerializeField] private PartSpawnAnimator spawnAnimator;
     [SerializeField] private VFXLibrary vfxLibrary;
@@ -36,6 +38,9 @@ public class AssemblyInstaller : MonoInstaller
             .WithArguments(launchStoredDrones);
         Container.BindInterfacesAndSelfTo<AssemblyGrabModeService>().AsSingle();
         Container.BindInterfacesAndSelfTo<PartHighlightService>().AsSingle();
+        if (partHoverInfoPrefab != null && partInfoViewer != null)
+            Container.BindInterfacesTo<PartHoverInfoPresenter>().AsSingle()
+                .WithArguments(partHoverInfoPrefab, partInfoViewer, gameObject.scene);
 
         Container.BindInterfacesAndSelfTo<PartTransformAdjustmentService>().AsSingle();
         Container.BindInterfacesAndSelfTo<ArmCoverScaleService>().AsSingle();

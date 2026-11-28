@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using Zenject;
 
@@ -31,20 +32,20 @@ public class PhysicsBuilderTester : MonoBehaviour
     private void Update()
     {
        
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Keyboard.current != null && Keyboard.current.pKey.wasPressedThisFrame)
         {
             FindDrone();
             RunTest();
         }
 
 
-        //if (Input.GetKeyDown(KeyCode.T))
+        //if (Keyboard.current != null && Keyboard.current.tKey.wasPressedThisFrame)
         //{
         //    _droneRb.AddTorque(
         //        Vector3.forward * 20f,
         //        ForceMode.Impulse);
         //}
-        //if (Input.GetKeyDown(KeyCode.F))
+        //if (Keyboard.current != null && Keyboard.current.fKey.wasPressedThisFrame)
         //{
         //    _droneRb.AddForceAtPosition(
         //        Vector3.up * 20f,
